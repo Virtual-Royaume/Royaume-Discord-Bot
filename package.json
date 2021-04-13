@@ -2,7 +2,7 @@
   "name": "royaume-bot",
   "version": "1.0.0",
   "description": "The Discord bot of Royaume",
-  "main": "index.js",
+  "main": "Main.js",
   "scripts": {
     "start": "node ."
   },

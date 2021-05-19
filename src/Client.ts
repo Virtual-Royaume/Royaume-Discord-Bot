@@ -31,6 +31,15 @@ export default class Client {
             console.log(Constants.prefix + "The bot has been started !");
         });
     }
+
+    public sendSimpleEmbed(message: string, channel: discord.TextChannel|discord.DMChannel){
+        let embed = new discord.MessageEmbed();
+
+        embed.setColor(Constants.color);
+        embed.setDescription(message);        
+
+        channel.send(embed);
+    }
 }
 
 console.log(Constants.prefix + "Sarting in progress...");

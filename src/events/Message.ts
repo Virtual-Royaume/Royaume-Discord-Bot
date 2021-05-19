@@ -1,4 +1,4 @@
-//const discord = require("discord.js");
+/*const discord = require("discord.js");
 const constants = require("../utils/Constants");
 const embed = require("../utils/Embed");
 
@@ -103,4 +103,4 @@ bot.on("message", msg => {
             });
         break;
     }
-});
+});*/

@@ -1,7 +1,7 @@
-const constants = require("../utils/Constants");
+/*const constants = require("../utils/Constants");
 const embed = require("../utils/Embed");
 
-bot.on("guildMemberAdd", (member) => {
+bot.on("guildMemberAdd", (member) => {*/
     /*embed.send(
         "Bienvenue <@" + member.id + "> !\n\n" +
 
@@ -22,7 +22,7 @@ bot.on("guildMemberAdd", (member) => {
 
         bot.channels.cache.get(constants.CHANNEL_GENERAL)
     );*/
-
+        /*
     embed.send(
         "Bienvenue <@" + member.id + ">, tu es dans le salon de vérification des nouveaux membres !\n\n" +
 
@@ -43,4 +43,4 @@ bot.on("guildMemberAdd", (member) => {
     bot.channels.cache.get(constants.CHANNEL_VERIF).send("<@" + member.id + ">").then(mentionMsg => mentionMsg.delete());
 
     member.roles.add(bot.guilds.cache.first().roles.cache.filter(role => role.name === "verif").first());
-});
+});*/

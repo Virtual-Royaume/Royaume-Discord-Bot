@@ -6,19 +6,21 @@ import Constants from "./constants/Constants";
 import EventMap from "./modules/EventMap";
 import CommandMap from "./modules/CommandMap";
 
-export default class Client {
+export default class Client extends discord.Client {
 
-    public static instance: discord.Client;
+    public static instance: Client;
 
     public eventMap: EventMap|null = null;
     public commandMap: CommandMap|null = null;
 
     constructor(){
-        // Create bot instance and login it :
-        Client.instance = new discord.Client();
-        Client.instance.login(readFileSync(__dirname + "/resources/token.txt", {encoding: "utf-8"}));
+        super();
 
-        Client.instance.on("ready", () => {
+        // Create bot instance and login it :
+        Client.instance = this;
+        this.login(readFileSync(__dirname + "/resources/token.txt", {encoding: "utf-8"}));
+
+        this.on("ready", () => {
             // Load events :
             console.log(Constants.prefix + "Loading events...");
             this.eventMap = new EventMap();

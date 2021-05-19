@@ -4,7 +4,8 @@
   "description": "The Discord bot of Royaume",
   "main": "build/Client.js",
   "scripts": {
-    "start": "nodemon --exec ts-node ./src/Client.ts",
+    "start": "tsc && node .",
+    "dev": "nodemon --exec ts-node ./src/Client.ts",
     "build": "tsc"
   },
   "repository": {

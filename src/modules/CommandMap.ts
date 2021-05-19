@@ -1,5 +1,5 @@
 import Client from "../Client";
-import { Message } from "discord.js";
+import { Message, TextChannel } from "discord.js";
 
 export default class CommandMap {
     
@@ -11,7 +11,10 @@ export default class CommandMap {
         });*/
 
         Client.instance.on("message", (msg: Message) => {
-            console.log(msg.content);
+            if(msg.channel instanceof TextChannel){
+                //Client.instance.sendSimpleEmbed("tgm", msg.channel);
+                console.log(msg.content);
+            }
         });
     }
 }

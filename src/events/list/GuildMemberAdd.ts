@@ -4,7 +4,7 @@ import ChannelIDs from "../../constants/ChannelIDs";
 
 export default class GuildMemberAdd {
     
-    public run(member: GuildMember){
+    public async run(member: GuildMember){
         /*Client.instance.embed.sendSimple(
             "Bienvenue <@" + member.id + "> !\n\n" +
     

@@ -17,7 +17,9 @@ export default class CommandManager {
 
     // public readonly commands: {[key: string]: Command} = {};
     public readonly commands: Collection<string, Command> = new Collection();
-    public readonly aliases: Collection<string, string> = new Collection();
+    public readonly aliases: Collection<string, Command> = new Collection();
+    public readonly categories: string[] = [];
+    public readonly categoriesWithCommands: Collection<string, Collection<string, Command>> = new Collection();
 
     constructor() {
         // Registers commands (TODO : auto load) :
@@ -52,7 +54,7 @@ export default class CommandManager {
             let args: string[] = message.content.split(" ");
             let commandString = args.shift()?.substring(Constants.commandPrefix.length).toLowerCase();
             // @ts-ignore
-            let command = this.commands.get(commandString) || this.getCommandByName(this.aliases.get(commandString));
+            let command =  this.getCommandByName(commandString) || this.getCommandByAlias(commandString);
 
             if (command) {
                 command.run(args, message)
@@ -60,8 +62,12 @@ export default class CommandManager {
         });
     }
 
-    public getCommandByName(commandName: string): Command | undefined | null {
+    public getCommandByName(commandName: string) : Command | undefined | null {
         return typeof this.commands.get(commandName) !== "undefined" ? this.commands.get(commandName) : null;
+    }
+
+    public getCommandByAlias(commandName: string) : Command | undefined | null {
+        return typeof this.aliases.get(commandName) !== "undefined" ? this.aliases.get(commandName) : null;
     }
 
     private loadCommand(commandPath: string, commandName: string, commandCategory: string): void {
@@ -72,11 +78,20 @@ export default class CommandManager {
             if (cmd.getOptions().aliases) {
                 // @ts-ignore
                 cmd.getOptions().aliases.forEach(alias => {
-                    this.aliases.set(alias, cmd.getName())
+                    this.aliases.set(alias, cmd)
                 })
             }
-        } catch (e) {
 
+            if (!this.categories.includes(commandCategory)) {
+                this.categories.push(commandCategory)
+                this.categoriesWithCommands.set(commandCategory, new Collection<string, Command>())
+            }
+
+            // @ts-ignore
+            this.categoriesWithCommands.get(commandCategory).set(cmd.getName(), cmd);
+
+        } catch (e) {
+            Client.instance.logger.error(`Error: ${e}`)
         }
     }
 }

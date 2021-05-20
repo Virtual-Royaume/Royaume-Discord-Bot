@@ -2,10 +2,10 @@ import { Message } from "discord.js";
 
 export default abstract class Command {
 
-    public name: string;
-    public description: string;
-    public category: string;
-    public options: object;
+    private readonly name: string;
+    private readonly description: string;
+    private readonly category: string;
+    private readonly options: object;
 
     constructor(name: string, description: string, category: string, options = {}){
         this.name = name;

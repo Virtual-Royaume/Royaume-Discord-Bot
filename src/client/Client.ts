@@ -3,8 +3,6 @@ import { Client as DiscordClient } from "discord.js";
 import { createConnection, Connection } from "typeorm";
 import { readFileSync } from "fs";
 
-import Constants from "../constants/Constants";
-
 import EventMap from "../modules/EventMap";
 import CommandMap from "../modules/CommandMap";
 

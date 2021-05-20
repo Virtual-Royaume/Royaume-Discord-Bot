@@ -4,7 +4,7 @@ import Constants from "../../constants/Constants";
 
 export default class Embed {
 
-    public sendSimpleEmbed(message: string, channel: TextChannel|DMChannel){
+    public sendSimple(message: string, channel: TextChannel|DMChannel){
         let embed = new MessageEmbed();
 
         embed.setColor(Constants.color);

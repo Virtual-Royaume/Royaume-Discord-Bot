@@ -111,6 +111,3 @@ token.txt
 
 # Ignore TS compiled
 build/
-
-# Ignore orm config update
-ormconfig.json

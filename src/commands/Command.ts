@@ -13,4 +13,16 @@ export default abstract class Command {
     }
 
     public abstract run(args: any[], message: Message) : void;
+
+    public getName() : string {
+        return this.name;
+    }
+
+    public getCategory() : string {
+        return this.category;
+    }
+
+    public getDescription() : string {
+        return this.description;
+    }
 }

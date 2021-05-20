@@ -1,4 +1,6 @@
-import * as discord from "discord.js";
+import { TextChannel, DMChannel, MessageEmbed } from "discord.js";
+import { Client as DiscordClient } from "discord.js";
+
 import { readFileSync } from "fs";
 
 import Constants from "./constants/Constants";
@@ -6,7 +8,7 @@ import Constants from "./constants/Constants";
 import EventMap from "./modules/EventMap";
 import CommandMap from "./modules/CommandMap";
 
-export default class Client extends discord.Client {
+export default class Client extends DiscordClient {
 
     public static instance: Client;
 
@@ -34,8 +36,8 @@ export default class Client extends discord.Client {
         });
     }
 
-    public sendSimpleEmbed(message: string, channel: discord.TextChannel|discord.DMChannel){
-        let embed = new discord.MessageEmbed();
+    public sendSimpleEmbed(message: string, channel: TextChannel|DMChannel){
+        let embed = new MessageEmbed();
 
         embed.setColor(Constants.color);
         embed.setDescription(message);        

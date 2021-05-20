@@ -22,10 +22,6 @@ export default class CommandManager {
     public readonly categoriesWithCommands: Collection<string, Collection<string, Command>> = new Collection();
 
     constructor() {
-        // Registers commands (TODO : auto load) :
-        // this.commands["accept"] = new Accept();
-        // this.commands["role"] = new Role();
-
         // Register commands automatically
         Client.instance.logger.info(`=-=-=-=-=-=-=- Loading command(s) -=-=-=-=-=-=-=`);
         readdir(path.join(__dirname, 'list'), (err, categories) => {
@@ -77,12 +73,9 @@ export default class CommandManager {
             this.commands.set(cmd.getName(), cmd)
             Client.instance.logger.info(`Command ${cmd.getName()} has been loaded !`)
             // @ts-ignore
-            if (cmd.getOptions().aliases) {
-                // @ts-ignore
-                cmd.getOptions().aliases.forEach(alias => {
-                    this.aliases.set(alias, cmd)
-                })
-            }
+            cmd.getOptions().aliases.forEach(alias => {
+                this.aliases.set(alias, cmd)
+            })
 
             if (!this.categories.includes(commandCategory)) {
                 this.categories.push(commandCategory)

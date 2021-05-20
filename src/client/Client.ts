@@ -3,8 +3,8 @@ import { Client as DiscordClient, Guild } from "discord.js";
 import { createConnection, Connection } from "typeorm";
 import { readFileSync } from "fs";
 
-import EventMap from "../modules/EventMap";
-import CommandMap from "../modules/CommandMap";
+import EventManager from "../events/EventManager";
+import CommandManager from "../commands/CommandManager";
 
 import Logger from "./components/Logger";
 import Embed from "./components/Embed";
@@ -16,12 +16,11 @@ export default class Client extends DiscordClient {
     public static instance: Client;
 
     // Database connection :
-    // @ts-ignore
     public readonly database: Connection;
 
-    // Modules :
-    public readonly eventMap: EventMap;
-    public readonly commandMap: CommandMap;
+    // Events and commands managers :
+    public readonly eventManager: EventManager;
+    public readonly commandManager: CommandManager;
 
     // Client components :
     public readonly logger: Logger;
@@ -39,13 +38,12 @@ export default class Client extends DiscordClient {
         this.logger = new Logger();
         this.embed = new Embed();
 
-        // Load events :
+        // Load events and commands managers :
         this.logger.info("Loading events...");
-        this.eventMap = new EventMap();
+        this.eventManager = new EventManager();
 
-        //Load commands :
         this.logger.info("Loading commands...");
-        this.commandMap = new CommandMap();
+        this.commandManager = new CommandManager();
 
         // Connect to database :
         this.logger.info("Connecting to mysql database...");

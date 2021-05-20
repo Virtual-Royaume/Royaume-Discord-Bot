@@ -1,5 +1,6 @@
 import { Client as DiscordClient } from "discord.js";
 
+import { createConnection, Connection } from "typeorm";
 import { readFileSync } from "fs";
 
 import Constants from "../constants/Constants";
@@ -9,9 +10,15 @@ import CommandMap from "../modules/CommandMap";
 
 import Embed from "./components/Embed";
 
+import "reflect-metadata";
+
 export default class Client extends DiscordClient {
 
     public static instance: Client;
+
+    // Database connection :
+    // @ts-ignore
+    public readonly database: Connection|null;
 
     // Modules :
     public readonly eventMap: EventMap;
@@ -26,6 +33,10 @@ export default class Client extends DiscordClient {
         // Create bot instance and login it :
         Client.instance = this;
         this.login(readFileSync(__dirname + "/../resources/token.txt", {encoding: "utf-8"}));
+
+        // Connect to database :
+        console.log(Constants.prefix + "Connecting to mysql database...");
+        createConnection().then(connection => (this as any).database = connection).catch(error => { throw new Error(error) });
 
         // Load client components :
         console.log(Constants.prefix + "Loading client components...");

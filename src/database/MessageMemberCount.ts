@@ -18,5 +18,16 @@ export default class MessageMemberCount extends BaseEntity {
 
     @Column()
     count: number;
+
+    @AfterUpdate()
+    checkStepUp(){
+        if(this.count % 100 === 0){
+            Client.instance.embed.sendSimple(
+                "<@" + this.userId + "> vient de passer le cap des " + this.count + " messages envoyés !", 
+                <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.command)
+            );
+
+            Client.instance.logger.wow(this.username + " vient de passer le cap des " + this.count + " messages envoyés !");
+        }
     }
 }

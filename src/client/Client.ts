@@ -8,6 +8,7 @@ import Constants from "../constants/Constants";
 import EventMap from "../modules/EventMap";
 import CommandMap from "../modules/CommandMap";
 
+import Logger from "./components/Logger";
 import Embed from "./components/Embed";
 
 import "reflect-metadata";
@@ -25,6 +26,7 @@ export default class Client extends DiscordClient {
     public readonly commandMap: CommandMap;
 
     // Client components :
+    public readonly logger: Logger;
     public readonly embed: Embed;
 
     constructor(){
@@ -34,28 +36,29 @@ export default class Client extends DiscordClient {
         Client.instance = this;
         this.login(readFileSync(__dirname + "/../resources/token.txt", {encoding: "utf-8"}));
 
-        // Connect to database :
-        console.log(Constants.prefix + "Connecting to mysql database...");
-        createConnection().then(connection => (this as any).database = connection).catch(error => { throw new Error(error) });
-
         // Load client components :
-        console.log(Constants.prefix + "Loading client components...");
+        (new Logger().info("Loading client components..."));
+        this.logger = new Logger();
         this.embed = new Embed();
 
         // Load events :
-        console.log(Constants.prefix + "Loading events...");
+        this.logger.info("Loading events...");
         this.eventMap = new EventMap();
 
         //Load commands :
-        console.log(Constants.prefix + "Loading commands...");
+        this.logger.info("Loading commands...");
         this.commandMap = new CommandMap();
+
+        // Connect to database :
+        this.logger.info("Connecting to mysql database...");
+        createConnection().then(connection => (this as any).database = connection).catch(error => { throw new Error(error) });
 
         this.on("ready", () => {
             // Finish :
-            console.log(Constants.prefix + "The bot has been started !");
+            this.logger.wow("The bot has been started !");
         });
     }
 }
 
-console.log(Constants.prefix + "Sarting in progress...");
+(new Logger()).info("Sarting in progress...");
 new Client();

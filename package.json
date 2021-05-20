@@ -20,7 +20,10 @@
   "homepage": "https://github.com/Virtual-Royaume/Royaume-Bot#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.32"
   },
   "devDependencies": {
     "@types/node": "^15.3.0",

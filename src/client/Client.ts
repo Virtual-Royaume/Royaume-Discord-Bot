@@ -39,15 +39,6 @@ export default class Client extends DiscordClient {
             console.log(Constants.prefix + "The bot has been started !");
         });
     }
-
-    public sendSimpleEmbed(message: string, channel: TextChannel|DMChannel){
-        let embed = new MessageEmbed();
-
-        embed.setColor(Constants.color);
-        embed.setDescription(message);        
-
-        channel.send(embed);
-    }
 }
 
 console.log(Constants.prefix + "Sarting in progress...");

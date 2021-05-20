@@ -26,7 +26,7 @@ export default class GuildMemberAdd {
             <TextChannel>Client.instance.channels.cache.get(ChannelIDs.general)
         );*/
 
-        let verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(ChannelIDs.verif);
+        const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(ChannelIDs.verif);
             
         Client.instance.embed.sendSimple(
             "Bienvenue <@" + member.id + ">, tu es dans le salon de vérification des nouveaux membres !\n\n" +
@@ -47,7 +47,7 @@ export default class GuildMemberAdd {
         
         verifChannel.send("<@" + member.id + ">").then(mentionMsg => mentionMsg.delete());
 
-        let role = Client.instance.getGuild().roles.cache.filter(role => role.name === "verif").first(); 
+        const role = Client.instance.getGuild().roles.cache.filter(role => role.name === "verif").first(); 
 
         if(role) member.roles.add(role);
     }

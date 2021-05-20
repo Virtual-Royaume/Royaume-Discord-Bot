@@ -22,15 +22,19 @@ export default class Client extends DiscordClient {
         Client.instance = this;
         this.login(readFileSync(__dirname + "/resources/token.txt", {encoding: "utf-8"}));
 
+        // Load client components :
+        console.log(Constants.prefix + "Loading client components...");
+        this.embed = new Embed();
+
+        // Load events :
+        console.log(Constants.prefix + "Loading events...");
+        this.eventMap = new EventMap();
+
+        //Load commands :
+        console.log(Constants.prefix + "Loading commands...");
+        this.commandMap = new CommandMap();
+
         this.on("ready", () => {
-            // Load events :
-            console.log(Constants.prefix + "Loading events...");
-            this.eventMap = new EventMap();
-
-            //Load commands :
-            console.log(Constants.prefix + "Loading commands...");
-            this.commandMap = new CommandMap();
-
             // Finish :
             console.log(Constants.prefix + "The bot has been started !");
         });

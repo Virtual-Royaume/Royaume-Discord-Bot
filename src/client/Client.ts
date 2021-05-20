@@ -1,20 +1,22 @@
-import { TextChannel, DMChannel, MessageEmbed } from "discord.js";
 import { Client as DiscordClient } from "discord.js";
 
 import { readFileSync } from "fs";
 
-import Constants from "./constants/Constants";
+import Constants from "../constants/Constants";
 
-import EventMap from "./modules/EventMap";
-import CommandMap from "./modules/CommandMap";
+import EventMap from "../modules/EventMap";
+import CommandMap from "../modules/CommandMap";
+
 import Embed from "./components/Embed";
 
 export default class Client extends DiscordClient {
 
     public static instance: Client;
 
-    public eventMap: EventMap|null = null;
-    public commandMap: CommandMap|null = null;
+    // Modules :
+    public readonly eventMap: EventMap;
+    public readonly commandMap: CommandMap;
+
     // Client components :
     public readonly embed: Embed;
 

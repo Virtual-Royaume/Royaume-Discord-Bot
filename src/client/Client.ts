@@ -67,7 +67,7 @@ export default class Client extends DiscordClient {
         }
     }
 
-    private loadActivity(): void {
+    private loadActivity() : void {
         let i = 0;
         setInterval(() => {
             this.getGuild().members.fetch().then((members) => {

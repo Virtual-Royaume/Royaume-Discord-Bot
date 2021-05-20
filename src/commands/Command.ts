@@ -5,11 +5,13 @@ export default abstract class Command {
     public name: string;
     public description: string;
     public category: string;
+    public options: object;
 
-    constructor(name: string, description: string, category: string){
+    constructor(name: string, description: string, category: string, options = {}){
         this.name = name;
         this.description = description;
         this.category = category;
+        this.options = options;
     }
 
     public abstract run(args: any[], message: Message) : void;
@@ -24,5 +26,9 @@ export default abstract class Command {
 
     public getDescription() : string {
         return this.description;
+    }
+
+    public getOptions() : object {
+        return this.options;
     }
 }

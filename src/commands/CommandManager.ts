@@ -17,6 +17,7 @@ export default class CommandManager {
 
     // public readonly commands: {[key: string]: Command} = {};
     public readonly commands: Collection<string, Command> = new Collection();
+    public readonly aliases: Collection<string, string> = new Collection();
 
     constructor() {
         // Registers commands (TODO : auto load) :
@@ -51,7 +52,7 @@ export default class CommandManager {
             let args: string[] = message.content.split(" ");
             let commandString = args.shift()?.substring(Constants.commandPrefix.length).toLowerCase();
             // @ts-ignore
-            let command = this.commands.get(commandString);
+            let command = this.commands.get(commandString) || this.getCommandByName(this.aliases.get(commandString));
 
             if (command) {
                 command.run(args, message)
@@ -59,10 +60,21 @@ export default class CommandManager {
         });
     }
 
+    public getCommandByName(commandName: string): Command | undefined | null {
+        return typeof this.commands.get(commandName) !== "undefined" ? this.commands.get(commandName) : null;
+    }
+
     private loadCommand(commandPath: string, commandName: string, commandCategory: string): void {
         try {
             const cmd: Command = new (require(`${commandPath}${path.sep}${commandName}`).default);
             this.commands.set(cmd.getName(), cmd)
+            // @ts-ignore
+            if (cmd.getOptions().aliases) {
+                // @ts-ignore
+                cmd.getOptions().aliases.forEach(alias => {
+                    this.aliases.set(alias, cmd.getName())
+                })
+            }
         } catch (e) {
 
         }

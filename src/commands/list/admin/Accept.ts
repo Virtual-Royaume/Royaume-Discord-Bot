@@ -7,11 +7,15 @@ export default class Accept extends Command {
         super(
             "accept",
             "Permet d'accepter un membre dans le serveur",
-            "modération"
+            "modération",
+            {
+                aliases: ["bonjour"]
+            }
         );
     }
 
     public run(args: any[], message: Message): void {
+        message.channel.send('wsh')
         /*if(args.length < 2){
             embed.send("Vous devez faire ``-accept (ID de l'utilisateur) (ID de son message de présentation)`` !", message.channel)
             return;

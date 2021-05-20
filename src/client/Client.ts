@@ -25,7 +25,7 @@ export default class Client extends DiscordClient {
 
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(readFileSync(__dirname + "/resources/token.txt", {encoding: "utf-8"}));
+        this.login(readFileSync(__dirname + "/../resources/token.txt", {encoding: "utf-8"}));
 
         // Load client components :
         console.log(Constants.prefix + "Loading client components...");

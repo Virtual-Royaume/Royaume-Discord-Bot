@@ -7,6 +7,7 @@ import Constants from "./constants/Constants";
 
 import EventMap from "./modules/EventMap";
 import CommandMap from "./modules/CommandMap";
+import Embed from "./components/Embed";
 
 export default class Client extends DiscordClient {
 
@@ -14,6 +15,8 @@ export default class Client extends DiscordClient {
 
     public eventMap: EventMap|null = null;
     public commandMap: CommandMap|null = null;
+    // Client components :
+    public readonly embed: Embed;
 
     constructor(){
         super();

@@ -1,4 +1,5 @@
-import { Message } from "discord.js";
+import { GuildMember, Message, TextChannel, Role as DRole } from "discord.js";
+import Client from "../../../client/Client";
 import Command from "../../Command";
 
 export default class Role extends Command {
@@ -12,13 +13,14 @@ export default class Role extends Command {
     }
 
     public run(args: any[], message: Message): void {
-        /*let rolesWithCategory = {
+        const rolesWithCategory: {[category: string]: string[]} = {
             Travail: ["dev", "sneakers", "graphisme", "crypto", "drop"],
             Jeux: ["mini-games", "csgo", "sea-of-thieves"],
-            Divertissement: ["film"]
+            Divertissement: ["film", "667"]
         };
-        
-        let roles = [].concat(...Object.values(rolesWithCategory));
+
+        let roles: string[] = [];
+        roles = roles.concat(...Object.values(rolesWithCategory));
 
         if(args.length === 0 || roles.indexOf(args[0]) == -1){
             Client.instance.embed.sendSimple(
@@ -28,26 +30,34 @@ export default class Role extends Command {
 
             let rolesList = "**__Liste des rôles disponibles__**\n\n";
 
-            for([category, roles] of Object.entries(rolesWithCategory)){
+            for(const [category, roles] of Object.entries(rolesWithCategory)){
                 rolesList += "**" + category + " :** " + roles.join(", ") + "\n\n";
             }
 
-            embed.send(rolesList, message.channel);
+            Client.instance.embed.sendSimple(rolesList, <TextChannel>message.channel);
             return;
         }
 
-        let member = message.member;
-        let role = args[0];
-        let roleInstance = message.guild.roles.cache.filter(r => r.name === role).first();
+        const member: GuildMember|null = message.member;
+        const role: string = args[0];
+        const roleInstance: DRole|undefined = message.guild?.roles.cache.filter(r => r.name === role).first();
 
-        if(member.roles.cache.filter(r => r.name === role).size > 0){
-            member.roles.remove(roleInstance);
-
-            embed.send("Votre rôle **" + role + "** a bien été supprimé.", message.channel);
-        } else {
-            member.roles.add(roleInstance);
-
-            embed.send("Vous avez desormais le rôle **" + role + "** !", message.channel);
-        }*/
+        if(member && roleInstance){
+            if(member.roles.cache.filter(r => r.name === role).size > 0){
+                member.roles.remove(roleInstance);
+    
+                Client.instance.embed.sendSimple(
+                    "Votre rôle **" + role + "** a bien été supprimé.",
+                    <TextChannel>message.channel
+                );
+            } else {
+                member.roles.add(roleInstance);
+    
+                Client.instance.embed.sendSimple(
+                    "Vous avez desormais le rôle **" + role + "** !",
+                    <TextChannel>message.channel
+                );
+            }
+        }
     }
 }

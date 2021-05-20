@@ -2,10 +2,10 @@
   "name": "royaume-bot",
   "version": "1.0.0",
   "description": "The Discord bot of Royaume",
-  "main": "build/Client.js",
+  "main": "build/client/Client.js",
   "scripts": {
     "start": "tsc && node .",
-    "dev": "nodemon --exec ts-node ./src/Client.ts",
+    "dev": "nodemon --exec ts-node ./src/client/Client.ts",
     "build": "tsc"
   },
   "repository": {

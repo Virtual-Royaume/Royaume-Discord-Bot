@@ -5,13 +5,13 @@ export default abstract class Command {
     private readonly name: string;
     private readonly description: string;
     private readonly category: string;
-    private readonly options: object;
+    private readonly aliases: string[];
 
-    constructor(name: string, description: string, category: string, options = {}){
+    constructor(name: string, description: string, category: string, aliases: string[] = []){
         this.name = name;
         this.description = description;
         this.category = category;
-        this.options = options;
+        this.aliases = aliases;
     }
 
     public abstract run(args: any[], message: Message) : void;
@@ -28,7 +28,7 @@ export default abstract class Command {
         return this.description;
     }
 
-    public getOptions() : object {
-        return this.options;
+    public getAliases() : string[] {
+        return this.aliases;
     }
 }

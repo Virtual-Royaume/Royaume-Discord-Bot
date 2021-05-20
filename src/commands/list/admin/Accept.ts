@@ -8,9 +8,7 @@ export default class Accept extends Command {
             "accept",
             "Permet d'accepter un membre dans le serveur",
             "modération",
-            {
-                aliases: ["bonjour"]
-            }
+            ["bonjour"]
         );
     }
 

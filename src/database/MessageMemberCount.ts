@@ -1,4 +1,7 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import { TextChannel } from "discord.js";
+import { AfterUpdate, BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import Client from "../client/Client";
+import ChannelIDs from "../constants/ChannelIDs";
 
 @Entity()
 export default class MessageMemberCount extends BaseEntity {
@@ -15,4 +18,5 @@ export default class MessageMemberCount extends BaseEntity {
 
     @Column()
     count: number;
+    }
 }

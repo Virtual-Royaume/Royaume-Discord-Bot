@@ -5,27 +5,6 @@ import ChannelIDs from "../../constants/ChannelIDs";
 export default class GuildMemberAdd {
     
     public async run(member: GuildMember){
-        /*Client.instance.embed.sendSimple(
-            "Bienvenue <@" + member.id + "> !\n\n" +
-    
-            "**Le Royaume** est un serveur privé amical où la bonne ambiance est donc obligatoire ! " +
-            "Ici on parle principalement de programmation, trading (notamment de crypto-monnaie), " + 
-            "graphisme, sneakers et d'autres choses encore. Parfois on joue ou on regarde des films " + 
-            "ensemble aussi... 🍿\n\n" +
-            
-            "Les rôles que vous voyez sur votre droite sont définis selon votre activité ainsi que " + 
-            "l'importance que vous portez au Royaume !\n\n" +
-    
-            "Pour pouvoir accéder aux différents salons de la catégorie travail vous pouvez faire la " + 
-            "commande ``-role`` dans <#" + ChannelIDs.command + "> et choisir les rôles qui vous " + 
-            "correspondent.\n\n" + 
-            
-            "Pour finir, on aimerait avoir une petite présentation de vous, parlez nous de vos projets, " + 
-            "vos ambitions ainsi de ce que vous savez faire sur internet !",
-    
-            <TextChannel>Client.instance.channels.cache.get(ChannelIDs.general)
-        );*/
-
         const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(ChannelIDs.verif);
             
         Client.instance.embed.sendSimple(

@@ -1,4 +1,4 @@
-import { Client as DiscordClient } from "discord.js";
+import { Client as DiscordClient, Guild } from "discord.js";
 
 import { createConnection, Connection } from "typeorm";
 import { readFileSync } from "fs";
@@ -55,6 +55,16 @@ export default class Client extends DiscordClient {
             // Finish :
             this.logger.wow("The bot has been started !");
         });
+    }
+
+    public getGuild() : Guild {
+        let guild: Guild|undefined = Client.instance.guilds.cache.first();
+
+        if(guild instanceof Guild){
+            return guild;
+        } else {
+            throw new Error("Unable to get the Guild instance");
+        }
     }
 }
 

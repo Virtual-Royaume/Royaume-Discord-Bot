@@ -1,15 +1,15 @@
-import { TextChannel, DMChannel, MessageEmbed } from "discord.js";
+import { TextChannel, DMChannel, MessageEmbed, Message } from "discord.js";
 
 import Constants from "../../constants/Constants";
 
 export default class Embed {
 
-    public sendSimple(message: string, channel: TextChannel|DMChannel){
+    public sendSimple(message: string, channel: TextChannel|DMChannel) : Promise<Message> {
         let embed = new MessageEmbed();
 
         embed.setColor(Constants.color);
         embed.setDescription(message);        
 
-        channel.send(embed);
+        return channel.send(embed);
     }
 }

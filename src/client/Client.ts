@@ -51,7 +51,7 @@ export default class Client extends DiscordClient {
 
         this.on("ready", () => {
             // Finish :
-            this.logger.wow("The bot has been started !");
+            this.logger.info("The bot has been started !");
 
             this.loadActivity();
         });

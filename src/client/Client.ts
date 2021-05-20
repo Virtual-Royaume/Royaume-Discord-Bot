@@ -38,16 +38,16 @@ export default class Client extends DiscordClient {
         this.logger = new Logger();
         this.embed = new Embed();
 
+        // Connect to database :
+        this.logger.info("Connecting to mysql database...");
+        createConnection().then(connection => (this as any).database = connection).catch(error => { throw new Error(error) });
+
         // Load events and commands managers :
         this.logger.info("Loading events...");
         this.eventManager = new EventManager();
 
         this.logger.info("Loading commands...");
         this.commandManager = new CommandManager();
-
-        // Connect to database :
-        this.logger.info("Connecting to mysql database...");
-        createConnection().then(connection => (this as any).database = connection).catch(error => { throw new Error(error) });
 
         this.on("ready", () => {
             // Finish :

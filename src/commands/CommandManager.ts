@@ -27,6 +27,7 @@ export default class CommandManager {
         // this.commands["role"] = new Role();
 
         // Register commands automatically
+        Client.instance.logger.info(`=-=-=-=-=-=-=- Loading command(s) -=-=-=-=-=-=-=`);
         readdir(path.join(__dirname, 'list'), (err, categories) => {
             categories.forEach((category) => {
 
@@ -74,6 +75,7 @@ export default class CommandManager {
         try {
             const cmd: Command = new (require(`${commandPath}${path.sep}${commandName}`).default);
             this.commands.set(cmd.getName(), cmd)
+            Client.instance.logger.info(`Command ${cmd.getName()} has been loaded !`)
             // @ts-ignore
             if (cmd.getOptions().aliases) {
                 // @ts-ignore

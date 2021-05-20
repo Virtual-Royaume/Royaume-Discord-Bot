@@ -111,3 +111,6 @@ token.txt
 
 # Ignore TS compiled
 build/
+
+# Ignore idea directory Jetbrain
+.idea/

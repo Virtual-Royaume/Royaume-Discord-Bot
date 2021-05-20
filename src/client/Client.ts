@@ -52,6 +52,8 @@ export default class Client extends DiscordClient {
         this.on("ready", () => {
             // Finish :
             this.logger.wow("The bot has been started !");
+
+            this.loadActivity();
         });
     }
 
@@ -63,6 +65,19 @@ export default class Client extends DiscordClient {
         } else {
             throw new Error("Unable to get the Guild instance");
         }
+    }
+
+    private loadActivity(): void {
+        let i = 0;
+        setInterval(() => {
+            this.getGuild().members.fetch().then((members) => {
+                const activities = [
+                    'royaume.world',
+                    `${members.size} Member(s)`
+                ];
+                this.user?.setActivity(`${activities[i++ & activities.length]}`, { type: "PLAYING" })
+            })
+        },10000)
     }
 }
 

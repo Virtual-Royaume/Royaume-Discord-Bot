@@ -17,7 +17,7 @@ export default class Client extends DiscordClient {
 
     // Database connection :
     // @ts-ignore
-    public readonly database: Connection|null;
+    public readonly database: Connection;
 
     // Modules :
     public readonly eventMap: EventMap;

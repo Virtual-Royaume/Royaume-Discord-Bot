@@ -12,6 +12,7 @@ export default class Message {
     public async run(message: Msg){
         if(message.author.bot) return;
 
+        // Count the number of messages sent by members :
         const memberMsgCount = await MessageMemberCount.findOne({userId: message.author.id});
 
         if(memberMsgCount){

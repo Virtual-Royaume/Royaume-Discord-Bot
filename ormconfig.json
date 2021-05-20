@@ -8,9 +8,6 @@
    "synchronize": true,
    "logging": false,
    "entities": [
-      "src/database/entities/**/*.ts"
-   ],
-   "subscribers": [
-      "src/database/subscribers/**/*.ts"
+      "src/database/**/*.ts"
    ]
 }

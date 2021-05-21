@@ -67,6 +67,10 @@ export default class CommandManager {
         return typeof this.aliases.get(commandName) !== "undefined" ? this.aliases.get(commandName) : null;
     }
 
+    public getCategoryCommands(categoryName: string) : Collection<string, Command> | undefined | null {
+        return typeof this.categoriesWithCommands.get(categoryName) !== "undefined" ? this.categoriesWithCommands.get(categoryName) : null;
+    }
+
     private loadCommand(commandPath: string, commandName: string, commandCategory: string): void {
         try {
             const cmd: Command = new (require(`${commandPath}${path.sep}${commandName}`).default);

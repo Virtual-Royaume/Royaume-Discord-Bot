@@ -1,9 +1,14 @@
 import { GuildMember, TextChannel } from "discord.js";
 import Client from "../../client/Client";
 import ChannelIDs from "../../constants/ChannelIDs";
+import Event from "../Event";
 
-export default class GuildMemberAdd {
-    
+export default class GuildMemberAdd extends Event {
+
+    constructor() {
+        super("guildMemberAdd");
+    }
+
     public async run(member: GuildMember){
         const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(ChannelIDs.verif);
             

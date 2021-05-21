@@ -1,6 +1,10 @@
 export default abstract class Event {
 
-    constructor(public name: string){}
+    public readonly name: string;
+
+    constructor(name: string){
+        this.name = name;
+    }
 
     public abstract run(...args: any[]) : void;
 }

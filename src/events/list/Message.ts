@@ -2,7 +2,14 @@ import { Message as Msg, TextChannel } from "discord.js";
 
 import MessageMemberCount from "../../database/MessageMemberCount";
 
-export default class Message {
+import Event from "../Event";
+
+
+export default class Message extends Event {
+
+    constructor() {
+        super("message");
+    }
 
     public async run(message: Msg){
         if(message.author.bot) return;

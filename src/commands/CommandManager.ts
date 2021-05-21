@@ -7,9 +7,6 @@ import Constants from "../constants/Constants";
 
 import Command from "./Command";
 
-import Accept from "./list/admin/Accept";
-import Role from "./list/utils/Role";
-
 import {readdir} from "fs";
 import path from 'path';
 

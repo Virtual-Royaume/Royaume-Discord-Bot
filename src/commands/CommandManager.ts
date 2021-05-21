@@ -22,14 +22,14 @@ export default class CommandManager {
         // Register commands automatically
         readdir(path.join(__dirname, 'list'), (err, categories) => {
             categories.forEach((category) => {
+        // Register commands automatically :
+        readdirSync(path.join(__dirname, "list")).forEach(category => {
+            let commandsOfCategory = readdirSync(path.join(__dirname, "list", category));
 
-                readdir(path.join(__dirname, 'list', category), (err, commands) => {
-                    commands.filter(files => files.endsWith('.ts')).forEach((cmd) => {
-                        this.loadCommand(path.join(__dirname, 'list', category), cmd, category);
-                    })
-                })
+            commandsOfCategory.filter(file => file.endsWith(".ts")).forEach(command => {
+                this.loadCommand(path.join(__dirname, "list", category, command), category);
             })
-        })
+        });
 
         // Call commands methods :
         Client.instance.on("message", message => {

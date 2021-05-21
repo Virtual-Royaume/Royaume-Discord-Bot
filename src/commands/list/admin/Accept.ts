@@ -10,7 +10,8 @@ export default class Accept extends Command {
             "accept",
             "Permet d'accepter un membre dans le serveur",
             "modération",
-            ["bonjour"]
+            ["bonjour"],
+            '[ID de l\'utilisateur] [ID de son message de présentation]'
         );
     }
 

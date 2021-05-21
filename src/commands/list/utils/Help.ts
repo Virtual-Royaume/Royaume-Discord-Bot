@@ -50,7 +50,7 @@ export default class Help extends Command {
 
             //@ts-ignore
             const commands = categoriesWithCommands.get(args[0]).map((command) => {
-                return '`' + Constants.commandPrefix + '' + command.name + '`\n' +
+                return '`' + Constants.commandPrefix + '' + command.name + ' ' + command.usage + '`\n' +
                     command.description;
             });
 

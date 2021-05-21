@@ -8,7 +8,9 @@ export default class Role extends Command {
         super(
             "role",
             "Permet de choisir ses rôles",
-            "utils"
+            "utils",
+            [],
+            "[le rôle que vous souhaitez obtenir ou retirer]"
         );
     }
 

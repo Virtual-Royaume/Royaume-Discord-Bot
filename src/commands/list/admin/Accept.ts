@@ -1,4 +1,6 @@
-import { Message } from "discord.js";
+import { GuildMember, Message, TextChannel } from "discord.js";
+import Client from "../../../client/Client";
+import ChannelIDs from "../../../constants/ChannelIDs";
 import Command from "../../Command";
 
 export default class Accept extends Command {
@@ -13,52 +15,86 @@ export default class Accept extends Command {
     }
 
     public run(args: any[], message: Message): void {
-        message.channel.send('wsh')
-        /*if(args.length < 2){
-            embed.send("Vous devez faire ``-accept (ID de l'utilisateur) (ID de son message de présentation)`` !", message.channel)
+        // Check args count :
+        if(args.length < 2){
+            Client.instance.embed.sendSimple(
+                "Vous devez faire ``-accept (ID de l'utilisateur) (ID de son message de présentation)`` !",
+                <TextChannel>message.channel
+            );
             return;
         }
         
-        let memberInstance = bot.guilds.cache.first().members.cache.get(args[0]);
+        // Get member, channel and messages instance and verify if it exist :
+        const memberInstance: GuildMember|undefined = Client.instance.getGuild().members.cache.get(args[0]);
+        const verifChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.verif);
+
+        if(!verifChannel){
+            Client.instance.embed.sendSimple(
+                "Le salon de vérification est introuvable...",
+                <TextChannel>message.channel
+            );
+            return;
+        }
         
-        bot.guilds.cache.first().channels.cache.get(constants.CHANNEL_VERIF).messages.fetch(args[1]).then(messageInstance => {
+        verifChannel.messages.fetch(args[1]).then(messageInstance => {
             if(!memberInstance){
-                embed.send("Cette utilisateur n'est pas sur le Discord.", message.channel);
+                Client.instance.embed.sendSimple(
+                    "Cette utilisateur n'est pas sur le Discord.",
+                    <TextChannel>message.channel
+                );
                 return;
             }
             
             if(!messageInstance){
-                embed.send("Ce message de présentation n'existe pas.", message.channel);
+                Client.instance.embed.sendSimple(
+                    "Ce message de présentation n'existe pas.",
+                    <TextChannel>message.channel
+                );
                 return;
             }
 
-            let rolesCache = bot.guilds.cache.first().roles.cache;
+            // Edit member roles :
+            const rolesCache = Client.instance.getGuild().roles.cache;
 
-            memberInstance.roles.remove(rolesCache.filter(role => role.name === "verif").first());
-            memberInstance.roles.add(rolesCache.filter(role => role.name === "Ecuyer").first());
+            const roleVerif = rolesCache.filter(role => role.name === "verif").first();
+            const roleEcuyer = rolesCache.filter(role => role.name === "Ecuyer").first();
 
-            embed.send(
+            if(roleVerif && roleEcuyer){
+                memberInstance.roles.remove(roleVerif);
+                memberInstance.roles.add(rolesCache);
+            } else {
+                Client.instance.embed.sendSimple(
+                    "Impossible d'éditer les rôles du membre un des rôles suivant n'est pas accessible : verif, Ecuyer.",
+                    <TextChannel>message.channel
+                );
+            }
+
+            // Send welcome message with new member presentation :
+            Client.instance.embed.sendSimple(
                 "Bienvenue officiellement parmis nous <@" + memberInstance.id + "> !\n\n" +
                 
                 "Les rôles que vous voyez sur votre droite sont définis selon votre activité ainsi que " + 
                 "l'importance que vous portez au Royaume !\n\n" +
 
                 "Pour pouvoir accéder aux différents salons de la catégorie travail vous pouvez faire la " + 
-                "commande ``-role`` dans <#" + constants.CHANNEL_COMMAND + "> et choisir les rôles qui vous " + 
+                "commande ``-role`` dans <#" + ChannelIDs.command + "> et choisir les rôles qui vous " + 
                 "correspondent.\n\n",
 
-                bot.channels.cache.get(constants.CHANNEL_GENERAL)
+                <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
             );
 
-            embed.send(
+            Client.instance.embed.sendSimple(
                 "**Voici la présentation de <@" + memberInstance.id + "> :**\n\n" +
                 
                 messageInstance.content,
 
-                bot.channels.cache.get(ChannelIDs.general)
+                <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
             );
 
-            bot.channels.cache.get(constants.CHANNEL_GENERAL).send("<@" + memberInstance.id + ">").then(mentionMsg => mentionMsg.delete());
-        });*/
+            // Mention the new member :
+            const generalChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general);
+
+            if(generalChannel) generalChannel.send("<@" + memberInstance.id + ">").then(mentionMsg => mentionMsg.delete());
+        });
     }
 }

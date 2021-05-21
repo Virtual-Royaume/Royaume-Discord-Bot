@@ -71,17 +71,19 @@ export default class Client extends DiscordClient {
         }
     }
 
-    private loadActivity() : void {
+    private async loadActivity() {
         let i = 0;
-        setInterval(() => {
-            this.getGuild().members.fetch().then((members) => {
-                const activities = [
-                    'royaume.world',
-                    `${members.size} Member(s)`
-                ];
-                this.user?.setActivity(`${activities[i++ & activities.length]}`, { type: "PLAYING" })
-            })
-        },10000)
+
+        setInterval(async () => {
+            const membersCount: number = (await this.getGuild().members.fetch()).size;
+
+            const activities = [
+                'royaume.world',
+                `${membersCount} Member(s)`
+            ];
+
+            this.user?.setActivity(`${activities[i++ % activities.length]}`, { type: "PLAYING" })
+        }, 10000)
     }
 }
 

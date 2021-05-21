@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Virtual-Royaume/Royaume-Bot#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "colors": "^1.4.0",
     "discord.js": "^12.5.3",
     "fs": "^0.0.1-security",

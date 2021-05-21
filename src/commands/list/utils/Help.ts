@@ -15,7 +15,7 @@ export default class Help extends Command {
         );
     }
 
-    run(args: any[], message: Message): void {
+    run(args: any[], message: Message) : void {
 
         const commandManager = Client.instance.commandManager;
 
@@ -25,7 +25,7 @@ export default class Help extends Command {
                 return '`' + category + '`';
             });
 
-            const embed = new MessageEmbed()
+            message.channel.send(new MessageEmbed()
                 .setTitle("Liste des catégories disponibles")
                 .setColor(Constants.color)
                 .setDescription(
@@ -33,8 +33,7 @@ export default class Help extends Command {
                     "Liste des catégories disponibles :\n" +
                     categories.join(", ") +
                     "\n\nPour utiliser l'une des catégories citées ci-dessus, faites `" + Constants.commandPrefix + "help [catégorie]`"
-                );
-            message.channel.send(embed);
+                ));
         }
 
         if (args.length > 0) {
@@ -61,8 +60,8 @@ export default class Help extends Command {
 
             message.channel.send(embed).then((msg) => {
 
-                let page = 0;
                 const totalPage = (commands.length / 10);
+                let page = 0;
 
                 let timeout = setTimeout(() => {
                     msg.delete();
@@ -81,17 +80,17 @@ export default class Help extends Command {
                     timeout.refresh();
 
                     if (messageReaction.emoji.name === nextEmoji) {
-                        if(page < totalPage) page++;
+                        if (page < totalPage) page++;
                     }
                     if (messageReaction.emoji.name === beforeEmoji) {
-                        if(page > 0) page--;
+                        if (page > 0) page--;
                     }
 
-                    let editEmbed = new MessageEmbed()
+                    messageReaction.message.edit(new MessageEmbed()
                         .setTitle(`Commandes de la catégorie ${args[0]}`)
                         .setColor(Constants.color)
-                        .setDescription(commands.slice(0, (page + 1) * 10).join('\n\n'));
-                    messageReaction.message.edit(editEmbed);
+                        .setDescription(commands.slice(0, (page + 1) * 10).join('\n\n'))
+                    );
                 });
             });
         }

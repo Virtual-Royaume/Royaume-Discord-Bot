@@ -31,14 +31,14 @@ export default class Client extends DiscordClient {
 
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(readFileSync(__dirname + "/../resources/token.txt", {encoding: "utf-8"}));
+        this.login(readFileSync(__dirname + "/../resources/_token.txt", {encoding: "utf-8"}));
 
         // Load client components :
         this.logger = new Logger();
         this.embed = new Embed();
 
         // Connect to database :
-        const ormConfig: string = require("../resources/configs/ormconfig.json"); 
+        const ormConfig: string = require("../resources/configs/_ormconfig.json");
 
         createConnection(ormConfig).then(connection => {
             (this as any).database = connection;

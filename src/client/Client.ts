@@ -34,24 +34,28 @@ export default class Client extends DiscordClient {
         this.login(readFileSync(__dirname + "/../resources/token.txt", {encoding: "utf-8"}));
 
         // Load client components :
-        (new Logger().info("Loading client components..."));
         this.logger = new Logger();
         this.embed = new Embed();
 
         // Connect to database :
-        this.logger.info("Connecting to mysql database...");
-        createConnection().then(connection => (this as any).database = connection).catch(error => { throw new Error(error) });
+        const ormConfig: string = require("../resources/configs/ormconfig.json"); 
+
+        createConnection(ormConfig).then(connection => {
+            (this as any).database = connection;
+
+            this.logger.success("Successful connection to the database");
+        }).catch(error => { throw new Error(error) });
 
         // Load events and commands managers :
-        this.logger.info("Loading events...");
         this.eventManager = new EventManager();
+        this.logger.success("Events loaded"); // TODO: add event count and list
 
-        this.logger.info("Loading commands...");
         this.commandManager = new CommandManager();
+        this.logger.success("Commands loaded"); // TODO: add commands count and list
 
         this.on("ready", () => {
             // Finish :
-            this.logger.info("The bot has been started !");
+            this.logger.success("Client has been started");
 
             this.loadActivity();
         });
@@ -81,5 +85,5 @@ export default class Client extends DiscordClient {
     }
 }
 
-(new Logger()).info("Sarting in progress...");
+(new Logger()).info("Sarting in progress (events, commands, database connection and client)...");
 new Client();

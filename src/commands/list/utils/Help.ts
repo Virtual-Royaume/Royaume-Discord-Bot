@@ -88,7 +88,6 @@ export default class Help extends Command {
                     if (messageReaction.emoji.name === nextEmoji) page = (page++ % commands.length);
                     if (messageReaction.emoji.name === beforeEmoji) page = (page-- % commands.length);
 
-                    page = (page++ % commands.length)
                     let editEmbed = new MessageEmbed()
                         .setTitle(`Commandes de la catégorie ${args[0]}`)
                         .setColor(Constants.color)

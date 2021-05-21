@@ -1,0 +1,13 @@
+{
+   "type": "mysql",
+   "host": "45.145.167.145",
+   "port": 3306,
+   "username": "royaume",
+   "password": "Ask Bluzzi for the password",
+   "database": "royaume",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/database/**/*.ts"
+   ]
+}

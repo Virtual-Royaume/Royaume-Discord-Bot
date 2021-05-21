@@ -1,9 +1,6 @@
-import { Message as Msg, TextChannel } from "discord.js";
-
-import MessageMemberCount from "../../database/MessageMemberCount";
-
+import { Message as Msg } from "discord.js";
+import User from "../../database/User";
 import Event from "../Event";
-
 
 export default class Message extends Event {
 
@@ -14,22 +11,50 @@ export default class Message extends Event {
     public async run(message: Msg){
         if(message.author.bot) return;
 
-        // Count the number of messages sent by members :
-        const memberMsgCount = await MessageMemberCount.findOne({userId: message.author.id});
+        // Update count the number of messages sent by members :
+        const user: User|undefined = await User.findOne({userId: message.author.id});
 
-        if(memberMsgCount){
-            memberMsgCount.count = memberMsgCount.count + 1;
-            memberMsgCount.username = message.author.username;
+        if(user){
+            const channelIds: {[key: string]: string} = {
+                "786216771723198514": "general",
+    
+                "778044698685866025": "games",
+                "829662265942343692": "musique",
+    
+                "798164233443213322": "dropShipping",
+                "732392873667854372": "developpement",
+                "779129024327712783": "trading",
+                "768996501049311243": "graphisme",
+                "789126328082235412": "sneakers",
+            }
 
-            MessageMemberCount.save(memberMsgCount);
+            if(Object.keys(channelIds).includes(message.channel.id)){
+                const channelName: string = channelIds[message.channel.id];
+
+                // @ts-ignore
+                user.messageCount[channelName] = user.messageCount[channelName] + 1;
+                user.save();   
+            }
         } else {
-            let newMember = new MessageMemberCount();
+            const newUser = new User();
 
-            newMember.userId = message.author.id;
-            newMember.username = message.author.username;
-            newMember.count = 1;
+            newUser.userId = message.author.id;
+            newUser.username = message.author.username;
 
-            newMember.save();
+            newUser.messageCount = {
+                general: 0,
+        
+                games: 0,
+                musique: 0,
+        
+                dropShipping: 0,
+                developpement: 0,
+                trading: 0,
+                graphisme: 0,
+                sneakers: 0
+            };
+
+            newUser.save();
         }
     }
 }

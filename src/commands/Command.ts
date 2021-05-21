@@ -2,10 +2,10 @@ import { Message } from "discord.js";
 
 export default abstract class Command {
 
-    private readonly name: string;
-    private readonly description: string;
-    private readonly category: string;
-    private readonly aliases: string[];
+    public readonly name: string;
+    public readonly description: string;
+    public readonly category: string;
+    public readonly aliases: string[];
 
     constructor(name: string, description: string, category: string, aliases: string[] = []){
         this.name = name;
@@ -15,20 +15,4 @@ export default abstract class Command {
     }
 
     public abstract run(args: any[], message: Message) : void;
-
-    public getName() : string {
-        return this.name;
-    }
-
-    public getCategory() : string {
-        return this.category;
-    }
-
-    public getDescription() : string {
-        return this.description;
-    }
-
-    public getAliases() : string[] {
-        return this.aliases;
-    }
 }

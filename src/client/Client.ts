@@ -26,19 +26,25 @@ export default class Client extends DiscordClient {
     public readonly logger: Logger;
     public readonly embed: Embed;
 
+    // Resources folder :
+    public readonly resources: string;
+
     constructor(){
         super();
 
+        // Save resources folder path :
+        this.resources = __dirname + "/../../resources/";
+
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(readFileSync(__dirname + "/../resources/token.txt", {encoding: "utf-8"}));
+        this.login(readFileSync(this.resources + "token.txt", {encoding: "utf-8"}));
 
         // Load client components :
         this.logger = new Logger();
         this.embed = new Embed();
 
         // Connect to database :
-        const ormConfig: string = require("../resources/configs/ormconfig.json");
+        const ormConfig: string = require(this.resources + "configs/ormconfig.json");
 
         createConnection(ormConfig).then(connection => {
             (this as any).database = connection;

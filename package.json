@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "The Discord bot of Royaume",
   "main": "build/client/Client.js",
-  "type": "module",
   "scripts": {
     "start": "tsc && node .",
     "dev": "nodemon --exec ts-node ./src/client/Client.ts",

@@ -13,11 +13,7 @@ export default class Role extends Command {
     }
 
     public run(args: any[], message: Message): void {
-        const rolesWithCategory: {[category: string]: string[]} = {
-            Travail: ["dev", "sneakers", "graphisme", "crypto", "drop"],
-            Jeux: ["mini-games", "csgo", "sea-of-thieves"],
-            Divertissement: ["film", "667"]
-        };
+        const rolesWithCategory: {[category: string]: string[]} = require("../../../resources/configs/role-category.json");
 
         let roles: string[] = [];
         roles = roles.concat(...Object.values(rolesWithCategory));

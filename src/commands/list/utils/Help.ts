@@ -49,19 +49,20 @@ export default class Help extends Command {
             }
 
             //@ts-ignore
-            let commands = categoriesWithCommands.get(args[0]).map((command) => {
+            const commands = categoriesWithCommands.get(args[0]).map((command) => {
                 return '`' + Constants.commandPrefix + '' + command.name + '`\n' +
                     command.description;
-            }).slice(0, 10);
+            });
 
             const embed = new MessageEmbed()
                 .setTitle(`Commandes de la catégorie ${args[0]}`)
                 .setColor(Constants.color)
-                .setDescription(commands.join('\n\n'));
+                .setDescription(commands.slice(0, 10).join('\n\n'));
 
             message.channel.send(embed).then((msg) => {
 
                 let page = 0;
+                const totalPage = (commands.length / 10);
 
                 let timeout = setTimeout(() => {
                     msg.delete();
@@ -79,14 +80,12 @@ export default class Help extends Command {
                     messageReaction.users.remove(user.id);
                     timeout.refresh();
 
-                    //@ts-ignore
-                    let commands = categoriesWithCommands.get(args[0]).map((command) => {
-                        return '`' + Constants.commandPrefix + '' + command.name + '`\n' +
-                            command.description;
-                    });
-
-                    if (messageReaction.emoji.name === nextEmoji) page = (page++ % commands.length);
-                    if (messageReaction.emoji.name === beforeEmoji) page = (page-- % commands.length);
+                    if (messageReaction.emoji.name === nextEmoji) {
+                        if(page < totalPage) page++;
+                    }
+                    if (messageReaction.emoji.name === beforeEmoji) {
+                        if(page > 0) page--;
+                    }
 
                     let editEmbed = new MessageEmbed()
                         .setTitle(`Commandes de la catégorie ${args[0]}`)

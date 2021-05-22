@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import Client from "../../../client/Client";
 import Command from "../../Command";
-import Constants from "./../../../constants/Constants";
+import AppDiscord from "./../../../constants/AppDiscord";
 
 export default class Youtube extends Command {
 
@@ -33,7 +33,7 @@ export default class Youtube extends Command {
             max_uses: 0,
             unique: true,
             target_type: 2,
-            target_application_id: Constants.fishington,
+            target_application_id: AppDiscord.fishington,
           }
         })
         .then((invite: {code: string}): void => {

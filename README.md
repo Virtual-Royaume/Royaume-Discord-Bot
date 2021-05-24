@@ -1,6 +1,6 @@
 # Bot du Royaume
 
-**Comment contribuer ?**  
+### Comment contribuer ?  
 Pour chaque contribution vous devrez créer une branch depuis la branch "main" et faire vos commits sur celle-ci, il faudra aussi mettre en place une pull request à partir de votre branch (cette option sera affichée directement sur [cette page](https://github.com/Virtual-Royaume/Royaume-Discord-Bot) une fois votre branch crée).
 
 Une fois que vous avez fini de travailler sur vos ajouts vous devrez mentionner Bluzzi dans le salon #développement du Discord avec le lien de votre pull request, à partir de la vous pouvez laisser cette branch, Bluzzi s'occupera de la merge avec la branch main.
@@ -11,7 +11,7 @@ Bonne pratiques :
 ![](https://i.imgur.com/3DbSPUl.png)
 - ne pas laisser trop longtemps une branch sans demander à la merge pour éviter d'avoir trop de changement entre votre branch et la branch main (ou alors pensez à combiner la branch main avec la votre une fois de temps en temps)
 
-**Quelques trucs à savoir avant de passés à l'action :**  
+### Quelques trucs à savoir avant de passés à l'action :  
 Dans le dossier "resources" à la racine du projet il y a des fichiers avec un tiret du bas devant leur nom, vous devrez créer une copie de ses fichiers (attention : sans les supprimer) en retirant le tiret du bas. Ensuite vous devrez complèter quelques informations dans ses fichiers (tout sera expliqué à l'intérieur de ses fichiers).
 
 Vous pouvez lancer le projet en mode développement via la commande ``npm run dev`` dans votre console. Une fois cela fait, le bot se lancera et il redémarrera après chaque sauvegarde d'un fichier du projet.
@@ -22,6 +22,6 @@ Pour créer une commande ou un event, il vous suffit uniquement de copier/collé
 
 Si vous ne savez pas quoi faire mais que vous avez envie de participer au développement, il y a une liste des choses à faire ci-dessous !
 
-**Une liste des choses que vous pouvez faire :**  
+### Une liste des choses que vous pouvez faire :
 > Ici vous pouvez ajouter des fonctionnalités que vous aimeriez voir sur le bot même si vous ne souhaitez pas vous en occuper. Si vous voulez vous occuper d'une des choses à faire, ajouter votre pseudo sur la ligne.
 - [ ] Ajouter des choses à faire...

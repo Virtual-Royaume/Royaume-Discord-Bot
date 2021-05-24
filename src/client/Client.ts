@@ -29,6 +29,9 @@ export default class Client extends DiscordClient {
     // Resources folder :
     public readonly resources: string;
 
+    // Dev team :
+    private team: Collection<string, TeamMember>;
+
     constructor(){
         super();
 
@@ -79,9 +82,13 @@ export default class Client extends DiscordClient {
     }
 
     public async getAdmins() : Promise<Collection<string, TeamMember> | void> {
-        let owner = (await this.fetchApplication()).owner;
+        if(!this.team){
+            let owner = (await this.fetchApplication()).owner;
 
-        if(owner instanceof Team) return owner.members;
+            if(owner instanceof Team) this.team = owner.members;
+        }
+
+        return this.team;
     }
 }
 

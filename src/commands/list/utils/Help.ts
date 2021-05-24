@@ -1,4 +1,4 @@
-import {Message, MessageEmbed} from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 
 import Command from "../../Command";
 import Client from "../../../client/Client";
@@ -11,16 +11,16 @@ export default class Help extends Command {
             "help",
             "Permet de voir la liste des commandes",
             "utils",
-            ["?"]
+            {
+                aliases: ["h"]
+            }
         );
     }
 
     run(args: any[], message: Message) : void {
-
         const commandManager = Client.instance.commandManager;
 
         if (args.length === 0) {
-
             let categories = commandManager.categories.map((category) => {
                 return '`' + category + '`';
             });

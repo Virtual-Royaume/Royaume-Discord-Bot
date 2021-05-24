@@ -9,8 +9,12 @@ export default class Role extends Command {
             "role",
             "Permet de choisir ses rôles",
             "utils",
-            [],
-            "[le rôle que vous souhaitez obtenir ou retirer]"
+            {
+                usage: [
+                    {type: "required", usage: "le rôle que vous souhaitez obtenir ou retirer"}
+                ],
+                aliases: ["r"]
+            }
         );
     }
 
@@ -22,7 +26,7 @@ export default class Role extends Command {
 
         if(args.length === 0 || roles.indexOf(args[0]) == -1){
             Client.instance.embed.sendSimple(
-                "Vous devez faire ``-role (le rôle que vous souhaitez obtenir ou retirer)`` !", 
+                this.getFormattedUsage(), 
                 <TextChannel>message.channel
             );
 

@@ -58,6 +58,7 @@ export default class CommandManager {
             if(!message.content.startsWith(Constants.commandPrefix)) return;
             if(message.content.length <= Constants.commandPrefix.length) return;
 
+            // Check if the order is executed in the command channel :
             if(message.channel.id !== ChannelIDs.command){
                 Client.instance.embed.sendSimple(
                     "Vous ne pouvez pas faire de commande en dehors du salon <#" + ChannelIDs.command + ">.",
@@ -66,13 +67,16 @@ export default class CommandManager {
                 return;
             }
 
+            // Get args and command name in variable :
             const args: string[] = message.content.split(" ");
             const commandName: string|undefined = args.shift()?.substring(Constants.commandPrefix.length).toLowerCase();
 
             if(!commandName) return;
 
+            // Get command instance if it exist :
             const command = this.commands.get(commandName) || this.commandsAliases.get(commandName);
 
+            // If the command exist, check permissions and run the command :
             if(command){
                 if(command.additionalParams.permissions && command.additionalParams.permissions.length > 0){
                     const admins = await Client.instance.getAdmins();

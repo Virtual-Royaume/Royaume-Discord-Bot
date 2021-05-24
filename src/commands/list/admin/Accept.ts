@@ -10,8 +10,13 @@ export default class Accept extends Command {
             "accept",
             "Permet d'accepter un membre dans le serveur",
             "modération",
-            ["bonjour"],
-            '[ID de l\'utilisateur] [ID de son message de présentation]'
+            {
+                usage: [
+                    {type: "required", usage: "ID de l'utilisateur"},
+                    {type: "required", usage: "ID de son message de présentation"}
+                ],
+                aliases: ["a"]
+            }
         );
     }
 
@@ -19,7 +24,7 @@ export default class Accept extends Command {
         // Check args count :
         if(args.length < 2){
             Client.instance.embed.sendSimple(
-                "Vous devez faire ``-accept (ID de l'utilisateur) (ID de son message de présentation)`` !",
+                this.getFormattedUsage(),
                 <TextChannel>message.channel
             );
             return;

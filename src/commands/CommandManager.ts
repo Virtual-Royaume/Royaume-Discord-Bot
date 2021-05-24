@@ -32,7 +32,15 @@ export default class CommandManager {
                 this.commands.set(command.name, command);
 
                 // Save command instance by aliases :
-                command.aliases.forEach(alias => this.commandsAliases.set(alias, command));
+                if(command.additionalParams.aliases){
+                    command.additionalParams.aliases.forEach(alias => {
+                        if(this.commandsAliases.get(alias)){
+                            Client.instance.logger.warning("Registering \"" + alias + "\" alias for \"" + command.name + "\" command is impossible because this alias is already used for the \"" + this.commandsAliases.get(alias)?.name + "\" command");
+                        } else {
+                            this.commandsAliases.set(alias, command);
+                        }
+                    });
+                }
 
                 // Check if the command category exist and add it if it does not exist :
                 if(!this.categories.includes(command.category)){

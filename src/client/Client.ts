@@ -1,4 +1,4 @@
-import { Client as DiscordClient, Guild } from "discord.js";
+import { Client as DiscordClient, Collection, Guild, Team, TeamMember } from "discord.js";
 
 import { createConnection, Connection } from "typeorm";
 import { readFileSync } from "fs";
@@ -76,6 +76,12 @@ export default class Client extends DiscordClient {
         } else {
             throw new Error("Unable to get the Guild instance");
         }
+    }
+
+    public async getAdmins() : Promise<Collection<string, TeamMember> | void> {
+        let owner = (await this.fetchApplication()).owner;
+
+        if(owner instanceof Team) return owner.members;
     }
 }
 

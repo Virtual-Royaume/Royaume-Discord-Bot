@@ -1,4 +1,4 @@
-import {Collection, TextChannel} from "discord.js";
+import {Collection, Permissions, TextChannel} from "discord.js";
 
 import Client from "../client/Client";
 
@@ -54,7 +54,7 @@ export default class CommandManager {
         });
 
         // Call commands methods :
-        Client.instance.on("message", message => {
+        Client.instance.on("message", async message => {
             if(!message.content.startsWith(Constants.commandPrefix)) return;
             if(message.content.length <= Constants.commandPrefix.length) return;
 
@@ -71,9 +71,42 @@ export default class CommandManager {
 
             if(!commandName) return;
 
-            let command = this.commands.get(commandName) || this.commandsAliases.get(commandName);
+            const command = this.commands.get(commandName) || this.commandsAliases.get(commandName);
 
-            if(command) command.run(args, message);
+            if(command){
+                if(command.additionalParams.permissions && command.additionalParams.permissions.length > 0){
+                    const admins = await Client.instance.getAdmins();
+                    const member = message.member;
+
+                    if(!member){
+                        Client.instance.embed.sendSimple("Erreur lors de l'excution de la commande...", <TextChannel>message.channel);
+                        Client.instance.logger.warning("Unable to retrieve the member instance in the command permissions check of the " + this.constructor.name + " class.")
+                        return;
+                    }
+
+                    let hasPermission: boolean = command.additionalParams.permissions.every(permission => {
+                        if(permission === "TEAM_ADMIN"){
+                            if(admins){
+                                return admins.get(member.id);
+                            } else {
+                                Client.instance.logger.warning("Unable to get the list of bot admins, the check of the \"TEAM_ADMIN\" command permission failed in the " + this.constructor.name + " class");
+                            
+                                return false;
+                            }
+                        } else {
+                            return member.permissions.has(Permissions.FLAGS[permission]);
+                        }
+                    });
+
+                    if(hasPermission){
+                        command.run(args, message);
+                    } else {
+                        Client.instance.embed.sendSimple("Vous n'avez pas la permission d'utiliser cette commande. Permissions requises : " + command.additionalParams.permissions.join(", ") + ".", <TextChannel>message.channel);
+                    }
+                } else {
+                    command.run(args, message);
+                }
+            }
         });
     }
 }

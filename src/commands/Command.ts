@@ -32,4 +32,14 @@ export default abstract class Command {
 
     public abstract run(args: any[], message: Message) : void;
 
+    protected getFormattedUsage() : string {
+        if(this.additionalParams.usage){
+            return "Utilisation : ``" + Constants.commandPrefix + this.name + this.formattedUsage + "``";
+        } else {
+            Client.instance.logger.warning("The [command: " + this.name + ", class: " + this.constructor.name + "] command uses the getFormattedUsage() method but no usage is specified in the AdditionalCommandParams interface of this command's constructor.");
+
+            return "Erreur, aucun usage n'est disponible pour cette commande.";
+        }
+    }
+
 }

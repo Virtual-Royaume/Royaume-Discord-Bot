@@ -8,7 +8,7 @@ Une fois que vous avez fini de travailler sur vos ajouts vous devrez mentionner 
 Bonne pratiques :
 - créer une branch différente pour chaque changement/ajout, exemple : si vous travaillez sur la modification du système de commande vous ne devriez pas mettre des commits sur un système d'expérience selon le nombre de messages des utilisateurs
 - mettre un nom et une description sur vos pull requests, on s'y retrouve mieux comme ça ! Exemple :
-![](https://i.imgur.com/3DbSPUl.png)
+![](https://i.imgur.com/zmjPGdC.png)
 - ne pas laisser trop longtemps une branch sans demander à la merge pour éviter d'avoir trop de changement entre votre branch et la branch main (ou alors pensez à combiner la branch main avec la votre une fois de temps en temps)
 
 ### Quelques trucs à savoir avant de passés à l'action :  

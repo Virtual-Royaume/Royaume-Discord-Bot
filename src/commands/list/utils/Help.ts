@@ -74,6 +74,7 @@ export default class Help extends Command {
                 msg.react(beforeEmoji);
                 msg.react(nextEmoji);
 
+                // use this https://discord.js.org/#/docs/main/stable/class/ReactionCollector instead of messageReactionAdd event
                 /*Client.instance.on('messageReactionAdd', (messageReaction, user) => {
                     if (user.bot) return;
                     messageReaction.users.remove(user.id);

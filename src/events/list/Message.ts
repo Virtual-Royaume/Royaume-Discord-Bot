@@ -4,7 +4,7 @@ import Event from "../Event";
 
 export default class Message extends Event {
 
-    constructor() {
+    constructor(){
         super("message");
     }
 

@@ -5,7 +5,7 @@ import Event from "../Event";
 
 export default class GuildMemberAdd extends Event {
 
-    constructor() {
+    constructor(){
         super("guildMemberAdd");
     }
 

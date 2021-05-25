@@ -44,7 +44,7 @@ export default class Help extends Command {
 
             if(!categoriesWithCommands.has(args[0])){
                 Client.instance.embed.sendSimple(
-                    "La catégorie `" + args[0] + "` n'existe pas !",
+                    "La catégorie ``" + args[0] + "`` n'existe pas !",
                     message.channel
                 );
 

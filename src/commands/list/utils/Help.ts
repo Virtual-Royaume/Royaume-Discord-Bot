@@ -74,7 +74,7 @@ export default class Help extends Command {
                 msg.react(beforeEmoji);
                 msg.react(nextEmoji);
 
-                Client.instance.on('messageReactionAdd', (messageReaction, user) => {
+                /*Client.instance.on('messageReactionAdd', (messageReaction, user) => {
                     if (user.bot) return;
                     messageReaction.users.remove(user.id);
                     timeout.refresh();
@@ -91,7 +91,7 @@ export default class Help extends Command {
                         .setColor(Constants.color)
                         .setDescription(commands.slice(0, (page + 1) * 10).join('\n\n'))
                     );
-                });
+                });*/
             });
         }
     }

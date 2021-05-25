@@ -60,7 +60,7 @@ export default class Client extends DiscordClient {
         this.logger.success(this.eventManager.eventListenerCount + " events loaded");
 
         this.commandManager = new CommandManager();
-        this.logger.success(this.commandManager.commands.size + " commands loaded"); // TODO: add commands count and list
+        this.logger.success(this.commandManager.commands.size + " commands loaded");
 
         this.on("ready", () => {
             // Set activity :

@@ -20,6 +20,8 @@ Partout dans le projet, vous pouvez facilement accéder à l'instance du Client 
 
 Pour créer une commande ou un event, il vous suffit uniquement de copier/collé un fichier de commande/event existant et de le ranger dans une catégorie de commande ou dans le dossier "list" des events. C'est tout, l'event ou la commande sera automatiquement chargée au lancement du bot.
 
+Côté base de donnée nous utilisons [TypeORM](https://typeorm.io/#/) (relié à MySQL) c'est un [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping). Nous avons choisi d'utiliser le pattern d'entité [Active Record](https://typeorm.io/#/active-record-data-mapper) et les [Entity Listener](https://typeorm.io/#/listeners-and-subscribers). Vous pouvez accéder à la connexion de la base de donnée via ``Client.instance.database`` partout dans le projet.
+
 Si vous ne savez pas quoi faire mais que vous avez envie de participer au développement, il y a une liste des choses à faire ci-dessous !
 
 ### Une liste des choses que vous pouvez faire :

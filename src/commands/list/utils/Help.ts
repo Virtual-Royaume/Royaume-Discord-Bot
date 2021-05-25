@@ -20,30 +20,36 @@ export default class Help extends Command {
     run(args: any[], message: Message) : void {
         const commandManager = Client.instance.commandManager;
 
-        if (args.length === 0) {
-                return '`' + category + '`';
-            const categories = commandManager.categories.map((category) => {
+        if(args.length === 0){
+            const categories = commandManager.categories.map(category => {
+                return "``" + category + "``";
             });
 
-            message.channel.send(new MessageEmbed()
-                .setTitle("Liste des catégories disponibles")
-                .setColor(Constants.color)
-                .setDescription(
-                    "Pour exécuter une commande, vous devez utiliser le préfixe `" + Constants.commandPrefix + "` suivi de la commande souhaitée\n\n" +
-                    "Liste des catégories disponibles :\n" +
-                    categories.join(", ") +
-                    "\n\nPour utiliser l'une des catégories citées ci-dessus, faites `" + Constants.commandPrefix + "help [catégorie]`"
-                ));
+            const embed = new MessageEmbed();
+
+            embed.setTitle("Liste des catégories disponibles");
+            embed.setColor(Constants.color);
+            embed.setDescription(
+                "Pour exécuter une commande, vous devez utiliser le préfixe `" + Constants.commandPrefix + "` suivi de la commande souhaitée\n\n" +
+
+                "Liste des catégories disponibles :\n" + 
+                categories.join(", ") + "\n\n" +
+
+                "Pour utiliser l'une des catégories citées ci-dessus, faites ``" + Constants.commandPrefix + "help [catégorie]``"
+            );
+
+            message.channel.send(embed);
         }
 
-        if (args.length > 0) {
-
+        if(args.length > 0){
             const categoriesWithCommands = commandManager.categoriesWithCommands;
-            if (!categoriesWithCommands.has(args[0])) {
+
+            if(!categoriesWithCommands.has(args[0])){
                 Client.instance.embed.sendSimple(
                     "La catégorie `" + args[0] + "` n'existe pas !",
                     message.channel
                 );
+
                 return;
             }
 
@@ -53,23 +59,23 @@ export default class Help extends Command {
                     command.description; // TODO : fix command.usage
             });
 
-            const embed = new MessageEmbed()
-                .setTitle(`Commandes de la catégorie ${args[0]}`)
-                .setColor(Constants.color)
-                .setDescription(commands.slice(0, 10).join('\n\n'));
+            const embed = new MessageEmbed();
 
-            message.channel.send(embed).then((msg) => {
+            embed.setTitle("Commandes de la catégorie " + args[0]);
+            embed.setColor(Constants.color);
+            embed.setDescription(commands.slice(0, 10).join("\n\n"));
 
+            message.channel.send(embed).then(msg => {
                 const totalPage = (commands.length / 10);
                 let page = 0;
 
                 const timeout = setTimeout(() => {
                     msg.delete();
                     message.delete();
-                }, 30000)
+                }, 30000);
 
-                const beforeEmoji = `◀`;
-                const nextEmoji = `▶`;
+                const beforeEmoji = "◀";
+                const nextEmoji = "▶";
 
                 msg.react(beforeEmoji);
                 msg.react(nextEmoji);

@@ -26,7 +26,6 @@ Si vous ne savez pas quoi faire mais que vous avez envie de participer au dével
 
 ### Une liste des choses que vous pouvez faire :
 > Ici vous pouvez ajouter des fonctionnalités que vous aimeriez voir sur le bot même si vous ne souhaitez pas vous en occuper. Si vous voulez vous occuper d'une des choses à faire, ajouter votre pseudo sur la ligne.
-- [ ] **BLUZZI -** revoir le système d'event en détail pour corriger quelques problèmes
 - [ ] **BLUZZI -** mettre dans une configuration (.json) quelques options disponible dans les constants (ça sera + logique et plus simple pour la modification du prefix par exemple)
 - [ ] **BLUZZI -** enregistrer le temps de vocal des membres dans une base de donnée (pour les futurs statistiques)
 - [ ] **SHAY -** regrouper les intégrations vocal en 1-2 commandes qui permettra de stocké plusieurs intégrations (syntaxe : https://discord.com/channels/732251741999071303/732392873667854372/845691629037420544)

@@ -57,7 +57,7 @@ export default class Client extends DiscordClient {
 
         // Load events and commands managers :
         this.eventManager = new EventManager();
-        this.logger.success(this.eventManager.events.length + " events loaded"); // TODO: add event count and list
+        this.logger.success(this.eventManager.eventListenerCount + " events loaded");
 
         this.commandManager = new CommandManager();
         this.logger.success(this.commandManager.commands.size + " commands loaded"); // TODO: add commands count and list

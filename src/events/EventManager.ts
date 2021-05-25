@@ -13,8 +13,6 @@ export default class EventManager {
         const eventFiles = readdirSync(path.join(__dirname, "list"));
 
         eventFiles.forEach(file => {
-            delete require.cache[file];
-
             const event: Event = new (require(path.join(__dirname, "list", file)).default);
 
             // @ts-ignore : it can't be undefined because I check if it is defined on the same line

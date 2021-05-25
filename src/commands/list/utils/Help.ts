@@ -39,9 +39,7 @@ export default class Help extends Command {
             );
 
             message.channel.send(embed);
-        }
-
-        if(args.length > 0){
+        } else {
             const categoriesWithCommands = commandManager.categoriesWithCommands;
 
             if(!categoriesWithCommands.has(args[0])){
@@ -54,8 +52,8 @@ export default class Help extends Command {
             }
 
             //@ts-ignore
-            const commands = categoriesWithCommands.get(args[0]).map((command) => {
-                return '`' + Constants.commandPrefix + '' + command.name + /*' ' + command.usage + */'`\n' +
+            const commands = categoriesWithCommands.get(args[0]).map(command => {
+                return "``" + Constants.commandPrefix + "" + command.name + /*' ' + command.usage + */"``\n" +
                     command.description; // TODO : fix command.usage
             });
 
@@ -102,5 +100,4 @@ export default class Help extends Command {
             });
         }
     }
-
 }

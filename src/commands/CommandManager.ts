@@ -14,10 +14,9 @@ export default class CommandManager {
 
     public readonly commands: Collection<string, Command> = new Collection();
     public readonly commandsAliases: Collection<string, Command> = new Collection();
+    public readonly categoriesWithCommands: Collection<string, Collection<string, Command>> = new Collection();
 
     public readonly categories: string[] = [];
-
-    public readonly categoriesWithCommands: Collection<string, Collection<string, Command>> = new Collection();
 
     constructor(){
         // Register commands automatically :

@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import {CollectorFilter, Message, MessageEmbed, MessageReaction, User} from "discord.js";
 
 import Command from "../../Command";
 import Client from "../../../client/Client";
@@ -32,7 +32,7 @@ export default class Help extends Command {
             embed.setDescription(
                 "Pour exécuter une commande, vous devez utiliser le préfixe `" + Constants.commandPrefix + "` suivi de la commande souhaitée\n\n" +
 
-                "Liste des catégories disponibles :\n" + 
+                "Liste des catégories disponibles :\n" +
                 categories.join(", ") + "\n\n" +
 
                 "Pour utiliser l'une des catégories citées ci-dessus, faites ``" + Constants.commandPrefix + "help [catégorie]``"
@@ -67,36 +67,42 @@ export default class Help extends Command {
                 const totalPage = (commands.length / 10);
                 let page = 0;
 
-                const timeout = setTimeout(() => {
-                    msg.delete();
-                    message.delete();
-                }, 30000);
-
                 const beforeEmoji = "◀";
                 const nextEmoji = "▶";
 
                 msg.react(beforeEmoji);
                 msg.react(nextEmoji);
 
-                // use this https://discord.js.org/#/docs/main/stable/class/ReactionCollector instead of messageReactionAdd event
-                /*Client.instance.on('messageReactionAdd', (messageReaction, user) => {
-                    if (user.bot) return;
-                    messageReaction.users.remove(user.id);
-                    timeout.refresh();
+                const filter: CollectorFilter = (reaction: MessageReaction, user: User)=> {
+                    return reaction.emoji.name === beforeEmoji || reaction.emoji.name === nextEmoji;
+                }
+                const collector = msg.createReactionCollector(filter, { time: 30000 });
 
-                    if (messageReaction.emoji.name === nextEmoji) {
-                        if (page < totalPage) page++;
+                collector.on('collect', (reaction: MessageReaction, user: User)  =>{
+                    if (user.bot) return;
+
+                    collector.resetTimer();
+
+                    reaction.users.remove(user.id);
+
+                    if (reaction.emoji.name === nextEmoji) {
+                        if ((page + 1) < totalPage) page++;
                     }
-                    if (messageReaction.emoji.name === beforeEmoji) {
+                    if (reaction.emoji.name === beforeEmoji) {
                         if (page > 0) page--;
                     }
 
-                    messageReaction.message.edit(new MessageEmbed()
+                    reaction.message.edit(new MessageEmbed()
                         .setTitle(`Commandes de la catégorie ${args[0]}`)
                         .setColor(Constants.color)
-                        .setDescription(commands.slice(0, (page + 1) * 10).join('\n\n'))
+                        .setDescription(commands.slice(page * 10, (page + 1) * 10).join('\n\n'))
                     );
-                });*/
+                });
+
+                collector.on('end', (collected) => {
+                    msg.delete();
+                    message.delete();
+                });
             });
         }
     }

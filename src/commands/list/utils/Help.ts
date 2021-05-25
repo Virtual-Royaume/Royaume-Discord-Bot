@@ -21,8 +21,8 @@ export default class Help extends Command {
         const commandManager = Client.instance.commandManager;
 
         if (args.length === 0) {
-            let categories = commandManager.categories.map((category) => {
                 return '`' + category + '`';
+            const categories = commandManager.categories.map((category) => {
             });
 
             message.channel.send(new MessageEmbed()
@@ -38,7 +38,7 @@ export default class Help extends Command {
 
         if (args.length > 0) {
 
-            let categoriesWithCommands = commandManager.categoriesWithCommands;
+            const categoriesWithCommands = commandManager.categoriesWithCommands;
             if (!categoriesWithCommands.has(args[0])) {
                 Client.instance.embed.sendSimple(
                     "La catégorie `" + args[0] + "` n'existe pas !",
@@ -63,13 +63,13 @@ export default class Help extends Command {
                 const totalPage = (commands.length / 10);
                 let page = 0;
 
-                let timeout = setTimeout(() => {
+                const timeout = setTimeout(() => {
                     msg.delete();
                     message.delete();
                 }, 30000)
 
-                let beforeEmoji = `◀`;
-                let nextEmoji = `▶`;
+                const beforeEmoji = `◀`;
+                const nextEmoji = `▶`;
 
                 msg.react(beforeEmoji);
                 msg.react(nextEmoji);

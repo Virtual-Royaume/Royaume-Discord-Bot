@@ -17,7 +17,7 @@ export default class EventManager {
 
             // @ts-ignore : it can't be undefined because I check if it is defined on the same line
             this.events.set(event.name, this.events.get(event.name) ? this.events.get(event.name).concat(event) : [event]);
-            Client.instance.on(event.name, (...args) => event.run(...args));
+            Client.instance.on(event.name, async (...args) => event.run(...args));
             // @ts-ignore : we are in the constructor
             this.eventListenerCount++;
         });

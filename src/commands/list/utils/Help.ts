@@ -6,7 +6,7 @@ import Constants from "../../../constants/Constants";
 
 export default class Help extends Command {
 
-    constructor() {
+    constructor(){
         super(
             "help",
             "Permet de voir la liste des commandes",
@@ -17,7 +17,7 @@ export default class Help extends Command {
         );
     }
 
-    run(args: any[], message: Message) : void {
+    public async run(args: any[], message: Message) : void {
         const commandManager = Client.instance.commandManager;
 
         if (args.length === 0) {

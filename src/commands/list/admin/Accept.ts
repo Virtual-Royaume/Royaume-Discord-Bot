@@ -20,7 +20,7 @@ export default class Accept extends Command {
         );
     }
 
-    public run(args: any[], message: Message): void {
+    public async run(args: any[], message: Message): void {
         // Check args count :
         if(args.length < 2){
             Client.instance.embed.sendSimple(

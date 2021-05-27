@@ -18,7 +18,7 @@ export default class Role extends Command {
         );
     }
 
-    public run(args: any[], message: Message): void {
+    public async run(args: any[], message: Message): void {
         const rolesWithCategory: {[category: string]: string[]} = require(Client.instance.resources + "/configs/role-category.json");
 
         let roles: string[] = [];

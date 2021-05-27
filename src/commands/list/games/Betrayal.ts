@@ -13,7 +13,7 @@ export default class Youtube extends Command {
         );
     }
 
-    public run(args: any[], message: Message): void {
+    public async run(args: any[], message: Message): void {
       if (!message.member?.voice.channelID) {
         Client.instance.embed.sendSimple(
           "Vous devez être dans un salon vocal !",

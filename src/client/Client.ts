@@ -64,7 +64,7 @@ export default class Client extends DiscordClient {
 
         this.on("ready", () => {
             // Set activity :
-            this.user?.setActivity("royaume.world", {type: "WATCHING"});
+            this.user?.setActivity("royaume.world", {type: "STREAMING", url: "https://twitch.tv/jedxds"});
 
             // Finish :
             this.logger.success("Client has been started");

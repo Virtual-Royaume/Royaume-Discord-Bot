@@ -17,7 +17,7 @@ export default class Help extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : void {
+    public async run(args: any[], message: Message) {
         const commandManager = Client.instance.commandManager;
 
         if (args.length === 0) {

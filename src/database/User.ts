@@ -1,5 +1,5 @@
 import { TextChannel } from "discord.js";
-import { AfterUpdate, BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import { AfterInsert, BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, PrimaryColumn } from "typeorm";
 import Client from "../client/Client";
 import ChannelIDs from "../constants/ChannelIDs";
 
@@ -30,18 +30,25 @@ export default class User extends BaseEntity {
         sneakers: number
     };
 
+    @Column()
+    totalMessageCount: number;
+
     @Column({default: true})
     alwaysInTheServer: boolean;
 
-    @AfterUpdate()
-    checkStepUp(){
-        /*if(this.count % 100 === 0){
+    @BeforeUpdate()
+    beforeUpdate(){
+        this.totalMessageCount = Object.values(this.messageCount).reduce((a, b) => a + b);
+
+        if(this.totalMessageCount % 1000 === 0){
             Client.instance.embed.sendSimple(
-                "<@" + this.userId + "> vient de passer le cap des " + this.count + " messages envoyés !", 
-                <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.command)
+                "<@" + this.userId + "> vient de passer le cap des " + this.totalMessageCount.toLocaleString("fr-FR") + " messages envoyés ! 🎉", 
+                <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
             );
 
-            Client.instance.logger.wow(this.username + " vient de passer le cap des " + this.count + " messages envoyés !");
-        }*/
+            Client.instance.logger.wow(
+                this.username + " vient de passer le cap des " + this.totalMessageCount.toLocaleString("fr-FR") + " messages envoyés !"
+            );
+        }
     }
 }

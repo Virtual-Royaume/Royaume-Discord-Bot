@@ -11,7 +11,7 @@ export default class TaskManager {
         readdirSync(path.join(__dirname, "list")).forEach(file => {
             const task: Task = new (require(path.join(__dirname, "list", file)).default);
         
-            const interval: NodeJS.Timeout = setInterval(() => task.run(interval), task.interval);
+            const interval: NodeJS.Timeout = setInterval(async () => task.run(interval), task.interval);
 
             // @ts-ignore : we are in the constructor
             this.taskListenerCount++;

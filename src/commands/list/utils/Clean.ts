@@ -1,8 +1,6 @@
 import { Message, TextChannel } from "discord.js";
 import Client from "../../../client/Client";
-import ChannelIDs from "../../../constants/ChannelIDs";
 import Command from "../../Command";
-import AppDiscord from "./../../../constants/AppDiscord";
 
 export default class Clean extends Command {
 

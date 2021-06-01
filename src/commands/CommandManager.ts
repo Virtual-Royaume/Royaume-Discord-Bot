@@ -56,6 +56,7 @@ export default class CommandManager {
         Client.instance.on("message", async message => {
             if(!message.content.startsWith(Constants.commandPrefix)) return;
             if(message.content.length <= Constants.commandPrefix.length) return;
+            if(!(message.channel instanceof TextChannel)) return;
 
             // Check if the order is executed in the command channel :
             if(message.channel.id !== ChannelIDs.command){

@@ -12,6 +12,11 @@ Bonne pratiques :
 - ne pas laisser trop longtemps une branch sans demander à la merge pour éviter d'avoir trop de changement entre votre branch et la branch main (ou alors pensez à combiner la branch main avec la votre une fois de temps en temps)
 
 ### Quelques trucs à savoir avant de passés à l'action :  
+Voici les versions recommandées de NodeJS et NPM :  
+| NodeJS  |   NPM   |
+|---------|---------|
+| 14.17.0 | 6.14.13 |
+
 Dans le dossier "resources" à la racine du projet il y a des fichiers avec un tiret du bas devant leur nom, vous devrez créer une copie de ses fichiers (attention : sans les supprimer) en retirant le tiret du bas. Ensuite vous devrez complèter quelques informations dans ses fichiers (tout sera expliqué à l'intérieur de ses fichiers).
 
 Vous pouvez lancer le projet en mode développement via la commande ``npm run dev`` dans votre console. Une fois cela fait, le bot se lancera et il redémarrera après chaque sauvegarde d'un fichier du projet.

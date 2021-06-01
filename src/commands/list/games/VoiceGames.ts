@@ -81,7 +81,7 @@ export default class VoiceGames extends Command {
             );
 
             Client.instance.embed.sendSimple(
-                "Votre jeu a bien était lancé, vous pouvez le rejoindre via cette invitation : https://discord.gg/" + invite.code,
+                "Votre jeu (**" + selectedIntegration.name + "**) a bien était lancé, vous pouvez le rejoindre via cette invitation : https://discord.gg/" + invite.code,
                 <TextChannel>message.channel
             );
         });

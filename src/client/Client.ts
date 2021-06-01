@@ -97,5 +97,5 @@ export default class Client extends DiscordClient {
     }
 }
 
-(new Logger()).info("Sarting in progress (events, commands, database connection and client)...");
+(new Logger()).info("Sarting in progress (events, commands, tasks, database connection and client)...");
 new Client();

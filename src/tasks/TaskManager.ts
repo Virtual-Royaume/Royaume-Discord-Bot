@@ -4,7 +4,7 @@ import Task from "./Task";
 
 export default class TaskManager {
 
-    public readonly tasks: Task[];
+    public readonly tasks: Task[] = [];
     public readonly taskListenerCount: number = 0;
 
     constructor(){

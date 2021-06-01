@@ -51,7 +51,7 @@ export default class WatchTogether extends Command {
             );
 
             Client.instance.embed.sendSimple(
-                "Votre activité a bien était lancé, vous pouvez la rejoindre via cette invitation : https://discord.gg/" + invite.code,
+                "Votre activité (**Youtube Together**) a bien était lancé, vous pouvez la rejoindre via cette invitation : https://discord.gg/" + invite.code,
                 <TextChannel>message.channel
             );
         });

@@ -21,7 +21,7 @@ export default class VoiceGames extends Command {
             "games",
             {
                 usage: [
-                    {type: "required", usage: "nom de l'intégration"}
+                    {type: "required", usage: "id de l'intégration"}
                 ],
                 aliases: ["vg"]
             }

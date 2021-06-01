@@ -9,7 +9,7 @@ export default class GuildMemberAdd extends Event {
         super("guildMemberAdd");
     }
 
-    public async run(member: GuildMember){
+    public async run(member: GuildMember) : Promise<void> {
         const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(ChannelIDs.verif);
             
         Client.instance.embed.sendSimple(

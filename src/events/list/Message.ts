@@ -8,7 +8,7 @@ export default class Message extends Event {
         super("message");
     }
 
-    public async run(message: Msg){
+    public async run(message: Msg) : Promise<void> {
         if(message.author.bot) return;
 
         // Update count the number of messages sent by members :

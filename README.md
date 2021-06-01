@@ -31,3 +31,4 @@ Si vous ne savez pas quoi faire mais que vous avez envie de participer au dével
 - **ROMAIN -** finir la commande help
 - créer une commande pour clear les messages
 - faire en sorte que quand on démarre le bot en mode dev ça le save dans une variable pour évité les problemes comme la double incrémentation du nombre de message des membres en base de donnée
+- faire un check voir si le dossier list existe pour les events, tasks et commandes

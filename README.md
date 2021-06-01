@@ -30,3 +30,4 @@ Si vous ne savez pas quoi faire mais que vous avez envie de participer au dével
 - [ ] **BLUZZI -** enregistrer le temps de vocal des membres dans une base de donnée (pour les futurs statistiques)
 - [ ] **SHAY -** regrouper les intégrations vocal en 1-2 commandes qui permettra de stocké plusieurs intégrations (syntaxe : https://discord.com/channels/732251741999071303/732392873667854372/845691629037420544)
 - [ ] **ROMAIN -** finir la commande help
+- [ ] **BLUZZI -** mettre async les tasks

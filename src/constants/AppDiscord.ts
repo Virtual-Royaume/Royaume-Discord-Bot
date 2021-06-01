@@ -8,4 +8,3 @@ export default class AppDiscord {
     public static pokerNight: string = "755827207812677713";
     public static fishington: string = "814288819477020702";
 }
-

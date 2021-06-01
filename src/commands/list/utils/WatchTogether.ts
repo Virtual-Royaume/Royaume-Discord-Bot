@@ -43,7 +43,7 @@ export default class WatchTogether extends Command {
             }
         }).then((invite: {code: string}) : void => {
             Client.instance.embed.sendSimple(
-                "<@" + message.author.id + "> a lancé un Youtube Together !\n\n" +
+                "<@" + message.author.id + "> a lancé **Youtube Together** !\n\n" +
 
                 "[Rejoindre l'activité](https://discord.gg/" + invite.code + ")",
 

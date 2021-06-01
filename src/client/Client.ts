@@ -5,6 +5,7 @@ import { readFileSync } from "fs";
 
 import EventManager from "../events/EventManager";
 import CommandManager from "../commands/CommandManager";
+import TaskManager from "../tasks/TaskManager";
 
 import Logger from "./components/Logger";
 import Embed from "./components/Embed";
@@ -21,6 +22,7 @@ export default class Client extends DiscordClient {
     // Events and commands managers :
     public readonly eventManager: EventManager;
     public readonly commandManager: CommandManager;
+    public readonly taskManager: TaskManager;
 
     // Client components :
     public readonly logger: Logger;
@@ -55,12 +57,15 @@ export default class Client extends DiscordClient {
             this.logger.success("Successful connection to the database");
         }).catch(error => { throw new Error(error) });
 
-        // Load events and commands managers :
+        // Load events, commands and tasks managers :
         this.eventManager = new EventManager();
         this.logger.success(this.eventManager.eventListenerCount + " events loaded");
 
         this.commandManager = new CommandManager();
         this.logger.success(this.commandManager.commands.size + " commands loaded");
+
+        this.taskManager = new TaskManager();
+        this.logger.success(this.taskManager.taskListenerCount + " tasks loaded");
 
         this.on("ready", () => {
             // Set activity :

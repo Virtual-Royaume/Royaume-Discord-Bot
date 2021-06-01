@@ -25,7 +25,6 @@
     "discord.js": "^12.5.3",
     "fs": "^0.0.1-security",
     "mysql": "^2.18.1",
-    "node": "^16.1.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.32"
   },

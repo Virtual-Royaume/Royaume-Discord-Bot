@@ -34,5 +34,6 @@ Si vous ne savez pas quoi faire mais que vous avez envie de participer au dével
 - **BLUZZI -** mettre dans une configuration (.json) quelques options disponible dans les constants (ça sera + logique et plus simple pour la modification du prefix par exemple)
 - **BLUZZI -** enregistrer le temps de vocal des membres dans une base de donnée (pour les futurs statistiques)
 - **ROMAIN -** finir la commande help
-- faire en sorte que quand on démarre le bot en mode dev ça le save dans une variable pour évité les problemes comme la double incrémentation du nombre de message des membres en base de donnée
+- faire en sorte que quand on démarre le bot en mode dev ça le save dans une variable pour évité les problèmes comme la double incrémentation du nombre de message des membres en base de donnée
 - faire un check voir si le dossier list existe pour les events, tasks et commandes
+- faire un système pour autorisé les commandes du style -clean hors du salon de commande

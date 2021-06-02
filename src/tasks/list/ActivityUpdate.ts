@@ -28,7 +28,7 @@ export default class ServerActivityUpdate extends Task {
         }
 
         Client.instance.getGuild().voiceStates.cache.forEach(voiceState => {
-            if(voiceState.member && !voiceState.selfMute && voiceState.channel?.id !== ChannelIDs.afk){
+            if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel?.id !== ChannelIDs.afk){
                 this.vocalInLastMinute.push(voiceState.member.id);
             }
         });

@@ -10,6 +10,8 @@ import TaskManager from "../tasks/TaskManager";
 import Logger from "./components/Logger";
 import Embed from "./components/Embed";
 
+import ServerActivity from "../database/ServerActivity";
+
 import "reflect-metadata";
 
 export default class Client extends DiscordClient {
@@ -33,6 +35,9 @@ export default class Client extends DiscordClient {
 
     // Dev team :
     private team: Collection<string, TeamMember>;
+
+    // ServerActivity (database entity)
+    private serverActivity: ServerActivity|undefined;
 
     constructor(){
         super();
@@ -94,6 +99,16 @@ export default class Client extends DiscordClient {
         }
 
         return this.team;
+    }
+
+    public async getServerActivity() : Promise<ServerActivity> {
+        if(!this.serverActivity){
+            this.serverActivity = await ServerActivity.findOne({date: new Date(new Date().setHours(0, 0, 0, 0))});
+
+            if(!this.serverActivity) this.serverActivity = await new ServerActivity().save();
+        }
+
+        return this.serverActivity;
     }
 }
 

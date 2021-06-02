@@ -32,7 +32,9 @@ export default class Clean extends Command {
             Client.instance.embed.sendSimple(
                 "**" + args[0] + "** message(s) supprimé(s). Ce message sera lui aussi supprimé dans quelques secondes...",
                 message.channel
-            ).then(msg => msg.delete({timeout: 10000 /* 10 secondes */}))
+            ).then(msg => {
+                if(!msg.deleted) msg.delete({timeout: 10000 /* 10 secondes */});
+            });
         });
     }
 }

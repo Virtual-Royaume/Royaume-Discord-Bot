@@ -11,6 +11,12 @@ export default class Message extends Event {
     public async run(message: Msg) : Promise<void> {
         if(message.author.bot) return;
 
+        // Update number of messages in server activity :
+        const serverActivity = await Client.instance.getServerActivity();
+        
+        serverActivity.messageCount++;
+        serverActivity.save();
+
         // Update count the number of messages sent by members :
         const user: User|undefined = await User.findOne({userId: message.author.id});
 

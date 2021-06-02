@@ -9,7 +9,7 @@ export default class Accept extends Command {
         super(
             "accept",
             "Permet d'accepter un membre dans le serveur",
-            "modération",
+            "admin",
             {
                 usage: [
                     {type: "required", usage: "ID de l'utilisateur"},

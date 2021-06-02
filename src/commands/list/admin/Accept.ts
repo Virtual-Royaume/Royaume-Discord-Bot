@@ -15,7 +15,8 @@ export default class Accept extends Command {
                     {type: "required", usage: "ID de l'utilisateur"},
                     {type: "required", usage: "ID de son message de présentation"}
                 ],
-                aliases: ["a"]
+                aliases: ["a"],
+                permissions: ["ADMINISTRATOR"]
             }
         );
     }

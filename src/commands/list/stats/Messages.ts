@@ -9,7 +9,7 @@ export default class WatchTogether extends Command {
         super(
             "messages",
             "Voir le classement du nombre de message envoyé",
-            "utils",
+            "statistiques",
             {
                 aliases: ["msg"]
             }

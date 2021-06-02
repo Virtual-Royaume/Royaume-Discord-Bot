@@ -8,7 +8,7 @@ export default class Clean extends Command {
         super(
             "clean",
             "Permet de supprimer plusieurs messages en même temps",
-            "modération",
+            "admin",
             {
                 usage: [
                     {type: "required", usage: "nombre entre 1 et 100"}

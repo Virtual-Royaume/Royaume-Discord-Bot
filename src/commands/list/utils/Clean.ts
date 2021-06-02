@@ -28,11 +28,11 @@ export default class Clean extends Command {
             return;
         }
 
-        (message.channel as TextChannel).bulkDelete(Number(args[0])).then(() => {
+        (message.channel as TextChannel).bulkDelete(Number(args[0]) + 1).then(() => {
             Client.instance.embed.sendSimple(
-                args[0] + " message(s) supprimé(s). Ce message sera lui aussi supprimé dans quelques secondes...",
+                "**" + args[0] + "** message(s) supprimé(s). Ce message sera lui aussi supprimé dans quelques secondes...",
                 message.channel
-            ).then(msg => msg.delete({timeout: 5000 /* 4 secondes */}))
+            ).then(msg => msg.delete({timeout: 10000 /* 10 secondes */}))
         });
     }
 }

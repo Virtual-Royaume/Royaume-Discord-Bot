@@ -25,7 +25,7 @@ export default class Message extends Event {
                 "732392873667854372": "developpement",
                 "779129024327712783": "trading",
                 "768996501049311243": "graphisme",
-                "789126328082235412": "sneakers",
+                "789126328082235412": "sneakers"
             }
 
             if(Object.keys(channelIds).includes(message.channel.id)){

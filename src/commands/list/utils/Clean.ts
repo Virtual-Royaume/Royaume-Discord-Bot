@@ -11,7 +11,7 @@ export default class Clean extends Command {
             "utils",
             {
                 usage: [
-                    {type: "required", usage: "Nombre entre 2 et 100"}
+                    {type: "required", usage: "nombre entre 1 et 100"}
                 ],
                 aliases: ["cl"]
             }
@@ -19,19 +19,20 @@ export default class Clean extends Command {
     }
 
     public async run(args: any[], message: Message) : Promise<void> {
-        if(!args[0] || isNaN(args[0]) || args[0] > 100 || args[0] < 2) {
+        if(!args[0] || isNaN(args[0]) || args[0] < 1 || args[0] > 100){
             Client.instance.embed.sendSimple(
                 this.getFormattedUsage(),
-                <TextChannel>message.channel
+                message.channel
             );
+
             return;
         }
-        if(message.channel instanceof TextChannel) {
-            message.channel.bulkDelete(+args[0] + +1).catch(error => console.log(error))
+
+        (message.channel as TextChannel).bulkDelete(Number(args[0])).then(() => {
             Client.instance.embed.sendSimple(
-                args[0] + " message(s) supprimé(s)",
-                <TextChannel>message.channel
-            ).then(message => message.delete({timeout: 4000 /* 4 secondes */}))
-        } 
+                args[0] + " message(s) supprimé(s). Ce message sera lui aussi supprimé dans quelques secondes...",
+                message.channel
+            ).then(msg => msg.delete({timeout: 5000 /* 4 secondes */}))
+        });
     }
 }

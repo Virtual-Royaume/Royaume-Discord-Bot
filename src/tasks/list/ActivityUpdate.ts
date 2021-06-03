@@ -1,5 +1,9 @@
+import dayjs from "dayjs";
+import { User } from "discord.js";
 import Client from "../../client/Client";
 import ChannelIDs from "../../constants/ChannelIDs";
+import Member from "../../database/member/Member";
+import MemberActivity from "../../database/member/MemberActivity";
 import ServerActivity from "../../database/ServerActivity";
 import Task from "../Task"
 
@@ -12,6 +16,12 @@ export default class ServerActivityUpdate extends Task {
     }
 
     public async run(timeout: NodeJS.Timeout) : Promise<void> {
+        // Reset message of the month :
+        if(dayjs().format("DD-HH-mm") === "01-00-00"){
+            Client.instance.database.createQueryBuilder().update(MemberActivity).set({voiceMinute: 0}).execute();
+        }
+
+        // Get server activity :
         const serverActivity = await ServerActivity.getServerActivity();
 
         // Update daily member count :

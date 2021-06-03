@@ -1,5 +1,7 @@
 import { Message as Msg } from "discord.js";
-import User from "../../database/User";
+import Client from "../../client/Client";
+import ServerActivity from "../../database/ServerActivity";
+//import User from "../../database/member/Member";
 import Event from "../Event";
 
 export default class Message extends Event {
@@ -12,15 +14,15 @@ export default class Message extends Event {
         if(message.author.bot) return;
 
         // Update number of messages in server activity :
-        const serverActivity = await Client.instance.getServerActivity();
+        const serverActivity = await ServerActivity.getServerActivity();
         
         serverActivity.messageCount++;
         serverActivity.save();
 
         // Update count the number of messages sent by members :
-        const user: User|undefined = await User.findOne({userId: message.author.id});
+        //const user: User|undefined = await User.findOne({userId: message.author.id});
 
-        if(user){
+        /*if(user){
             const channelIds: {[key: string]: string} = {
                 "786216771723198514": "general",
     
@@ -61,6 +63,6 @@ export default class Message extends Event {
             };
 
             newUser.save();
-        }
+        }*/
     }
 }

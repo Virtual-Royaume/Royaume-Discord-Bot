@@ -1,5 +1,5 @@
 import { TextChannel } from "discord.js";
-import { AfterInsert, AfterUpdate, BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import { AfterUpdate, BaseEntity, BeforeUpdate, Column, Entity, PrimaryColumn } from "typeorm";
 import Client from "../../client/Client";
 import ChannelIDs from "../../constants/ChannelIDs";
 import Member from "./Member";
@@ -58,7 +58,7 @@ export default class MemberActivity extends BaseEntity {
     }
 
 
-    @AfterInsert()
+    @BeforeUpdate()
     updateGlobalMessageCount(){
         this.totalMessageCount = this.generalMessageCount + this.gamesMessageCount + 
             this.musiqueMessageCount + this.dropShippingMessageCount + this.developpementMessageCount +

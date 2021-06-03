@@ -1,10 +1,11 @@
 import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import daysjs from "dayjs";
 
 @Entity()
 export default class ServerActivity extends BaseEntity {
 
-    @PrimaryColumn()
-    date: Date = new Date(new Date().setHours(0, 0, 0, 0));
+    @PrimaryColumn({type: "date"})
+    date: string = daysjs().format("YYYY-MM-DD");
 
     @Column()
     voiceMinute: number = 0;
@@ -19,8 +20,10 @@ export default class ServerActivity extends BaseEntity {
     private static serverActivity: ServerActivity|undefined;
 
     public static async getServerActivity() : Promise<ServerActivity> {
+        const date = daysjs().format("YYYY-MM-DD");
+
         if(!this.serverActivity){
-            this.serverActivity = await ServerActivity.findOne({date: new Date(new Date().setHours(0, 0, 0, 0))});
+            this.serverActivity = await ServerActivity.findOne({date: date});
 
             if(!this.serverActivity) this.serverActivity = await new ServerActivity().save();
         }

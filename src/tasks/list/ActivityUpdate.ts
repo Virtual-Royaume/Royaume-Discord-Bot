@@ -5,7 +5,7 @@ import Task from "../Task"
 
 export default class ServerActivityUpdate extends Task {
 
-    private vocalInLastMinute: string[] = [];
+    private vocalInLastMinute: User[] = [];
 
     constructor(){
         super(60000 /* 1 minute */);
@@ -23,14 +23,19 @@ export default class ServerActivityUpdate extends Task {
         for(let i = this.vocalInLastMinute.length; i > 0; i--){
             serverActivity.voiceMinute++;
             
-            let userId = this.vocalInLastMinute.shift();
+            let user = this.vocalInLastMinute.shift();
 
-            //TODO : update UserActivity
+            if(user){
+                let member = await Member.getMember(user);
+
+                member.activity.voiceMinute++;
+                member.save();
+            }
         }
 
         Client.instance.getGuild().voiceStates.cache.forEach(voiceState => {
             if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel?.id !== ChannelIDs.afk){
-                this.vocalInLastMinute.push(voiceState.member.id);
+                this.vocalInLastMinute.push(voiceState.member.user);
             }
         });
 

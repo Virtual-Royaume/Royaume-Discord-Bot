@@ -1,5 +1,6 @@
 import Client from "../../client/Client";
 import ChannelIDs from "../../constants/ChannelIDs";
+import ServerActivity from "../../database/ServerActivity";
 import Task from "../Task"
 
 export default class ServerActivityUpdate extends Task {
@@ -11,7 +12,7 @@ export default class ServerActivityUpdate extends Task {
     }
 
     public async run(timeout: NodeJS.Timeout) : Promise<void> {
-        const serverActivity = await Client.instance.getServerActivity();
+        const serverActivity = await ServerActivity.getServerActivity();
 
         // Update daily member count :
         if(Client.instance.getGuild().memberCount > serverActivity.memberCount){

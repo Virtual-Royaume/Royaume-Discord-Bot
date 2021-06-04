@@ -19,14 +19,17 @@ export default class Message extends Event {
         serverActivity.messageCount++;
         serverActivity.save();
 
-        // Update count of messages sent by members per channel :
+        // Update count of messages sent by members per channel and month message count :
         const member = await Member.getMember(message.author);
         const columnOfChannel = MemberActivity.channelIdsToColumnName[message.channel.id];
+
+        member.activity.monthMessageCount++;
 
         if(columnOfChannel){
             // @ts-ignore
             member.activity[columnOfChannel]++;
-            member.save();
         }
+
+        member.save();
     }
 }

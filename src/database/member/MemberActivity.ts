@@ -64,8 +64,6 @@ export default class MemberActivity extends BaseEntity {
             this.musiqueMessageCount + this.dropShippingMessageCount + this.developpementMessageCount +
             this.tradingMessageCount + this.graphismeMessageCount + this.sneakersMessageCount;
 
-        this.monthMessageCount++;
-
         this.save();
     }
 

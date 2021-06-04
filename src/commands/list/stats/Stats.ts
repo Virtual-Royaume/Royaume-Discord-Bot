@@ -25,9 +25,9 @@ export default class Stats extends Command {
         })).reverse();
 
         const data = [
-            {columnName: "voiceMinute", description: "Temps de vocal des utilisateurs en minute"},
-            {columnName: "messageCount", description: "Nombre de message envoyé"},
-            {columnName: "memberCount", description: "Nombre de membre présent sur le serveur"},
+            {columnName: "voiceMinute", description: "Temps de vocal des utilisateurs en minutes"},
+            {columnName: "messageCount", description: "Nombre de messages envoyés"},
+            {columnName: "memberCount", description: "Nombre de membres présents sur le serveur"},
         ];
 
         data.forEach(type => {

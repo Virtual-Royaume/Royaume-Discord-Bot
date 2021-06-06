@@ -9,8 +9,6 @@ import Task from "../Task"
 
 export default class ServerActivityUpdate extends Task {
 
-    private vocalInLastMinute: User[] = [];
-
     constructor(){
         super(60000 /* 1 minute */);
     }
@@ -30,24 +28,27 @@ export default class ServerActivityUpdate extends Task {
         }
 
         // Update voice time (member, server global) :
-        for(let i = this.vocalInLastMinute.length; i > 0; i--){
-            serverActivity.voiceMinute++;
-            
-            let user = this.vocalInLastMinute.shift();
-
-            if(user){
-                let member = await Member.getMember(user);
-
-                member.activity.voiceMinute++;
-                member.save();
-            }
-        }
+        let memberVoiceList: User[] = [];
 
         Client.instance.getGuild().voiceStates.cache.forEach(voiceState => {
-            if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel?.id !== ChannelIDs.afk){
-                this.vocalInLastMinute.push(voiceState.member.user);
+            if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel && voiceState.channel.id !== ChannelIDs.afk){
+                memberVoiceList.push(voiceState.member.user);
             }
         });
+
+        memberVoiceList.forEach(async user => {
+            serverActivity.voiceMinute++;
+
+            let member = await Member.getMember(user);
+
+            member.activity.voiceMinute++;
+            member.save();
+        });
+
+        Client.instance.logger.info(
+            memberVoiceList.length + " valid members in a voice channel (" + 
+            memberVoiceList.map(voiceMember => voiceMember.username).join(", ") + ")"
+        ); 
 
         // Save data :
         serverActivity.save();

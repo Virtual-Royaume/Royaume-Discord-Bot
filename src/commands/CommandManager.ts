@@ -76,8 +76,26 @@ export default class CommandManager {
             // Get command instance if it exist :
             const command = this.commands.get(commandName) || this.commandsAliases.get(commandName);
 
-            // If the command exist, check permissions and run the command :
-            if(command){
+            // If the command exists, check arguments and permissions then run the command :
+            if(command) {
+                
+                //Checks if required arguments are provided, if any
+                if(command.additionalParams.usage && command.additionalParams.usage.length > 0) {
+                    let hasRequiredArgs = command.additionalParams.usage.every((usageParam, index) => {
+                        if(usageParam.type === "required") {
+                            return args.length > index;
+                        } else return true;
+                    });
+                    if(!hasRequiredArgs) {
+                        Client.instance.embed.sendSimple(
+                            command.getFormattedUsage(),
+                            <TextChannel> message.channel
+                        );
+                        return;
+                    }
+                }
+
+                //Checks if permissions are met, if any
                 if(command.additionalParams.permissions && command.additionalParams.permissions.length > 0){
                     const admins = await Client.instance.getAdmins();
                     const member = message.member;
@@ -94,7 +112,7 @@ export default class CommandManager {
                                 return admins.get(member.id);
                             } else {
                                 Client.instance.logger.warning("Unable to get the list of bot admins, the check of the \"TEAM_ADMIN\" command permission failed in the " + this.constructor.name + " class");
-                            
+
                                 return false;
                             }
                         } else {

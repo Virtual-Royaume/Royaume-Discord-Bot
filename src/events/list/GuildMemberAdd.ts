@@ -1,6 +1,7 @@
 import { GuildMember, TextChannel } from "discord.js";
 import Client from "../../client/Client";
 import ChannelIDs from "../../constants/ChannelIDs";
+import Member from "../../database/member/Member";
 import Event from "../Event";
 
 export default class GuildMemberAdd extends Event {
@@ -10,6 +11,8 @@ export default class GuildMemberAdd extends Event {
     }
 
     public async run(member: GuildMember) : Promise<void> {
+        if(member.user.bot) return;
+        
         const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(ChannelIDs.verif);
             
         Client.instance.embed.sendSimple(
@@ -34,5 +37,12 @@ export default class GuildMemberAdd extends Event {
         const role = Client.instance.getGuild().roles.cache.filter(role => role.name === "verif").first(); 
 
         if(role) member.roles.add(role);
+
+        let memberDB = await Member.getMember(member.user);
+
+        if(memberDB.alwaysInTheServer === false){
+            memberDB.alwaysInTheServer = true;
+            memberDB.save();
+        }
     }
 }

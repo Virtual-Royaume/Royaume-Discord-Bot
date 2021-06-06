@@ -26,7 +26,7 @@ export default class TopVoice extends Command {
         let columnName: string;
         let category: string;
 
-        if(!args[0] || (!["total", "mois"].includes(args[0]) && !(message.mentions.channels.first() instanceof TextChannel))){
+        if((!["total", "mois"].includes(args[0]) && !(message.mentions.channels.first() instanceof TextChannel))){
             Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
 
             return;

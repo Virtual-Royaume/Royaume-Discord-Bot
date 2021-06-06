@@ -29,7 +29,7 @@ export default class VoiceGames extends Command {
     }
 
     public async run(args: any[], message: Message) : Promise<void> {
-        if(args.length < 1 || !Object.keys(this.integrationsByCodeName).includes(args[0])){
+        if(!Object.keys(this.integrationsByCodeName).includes(args[0])){
             Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
 
             let integrationList = "__**Liste des intégrations**__\n\n";

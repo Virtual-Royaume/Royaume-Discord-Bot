@@ -67,9 +67,11 @@ export default class MemberActivity extends BaseEntity {
         this.save();
     }
 
+    private stepUpAnnoucement: number;
+
     @AfterUpdate()
     async stepUp(){
-        if(this.totalMessageCount % 1000 === 0){
+        if(this.totalMessageCount && this.totalMessageCount !== this.stepUpAnnoucement && this.totalMessageCount % 1000 === 0){
             Client.instance.embed.sendSimple(
                 "<@" + this.userId + "> vient de passer le cap des " + this.totalMessageCount.toLocaleString("fr-FR") + " messages envoyés ! 🎉", 
                 <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
@@ -80,6 +82,8 @@ export default class MemberActivity extends BaseEntity {
             if(member) Client.instance.logger.wow(
                 member.username + " vient de passer le cap des " + this.totalMessageCount.toLocaleString("fr-FR") + " messages envoyés !"
             );
+
+            this.stepUpAnnoucement = this.totalMessageCount;
         }
     }
 }

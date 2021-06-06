@@ -32,7 +32,7 @@ export default abstract class Command {
 
     public abstract run(args: any[], message: Message) : void;
 
-    protected getFormattedUsage() : string {
+    public getFormattedUsage() : string {
         if(this.additionalParams.usage){
             return "Utilisation : ``" + Constants.commandPrefix + this.name + this.formattedUsage + "``";
         } else {

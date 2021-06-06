@@ -45,11 +45,6 @@ export default class ServerActivityUpdate extends Task {
             member.save();
         });
 
-        Client.instance.logger.info(
-            memberVoiceList.length + " valid members in a voice channel (" + 
-            memberVoiceList.map(voiceMember => voiceMember.username).join(", ") + ")"
-        ); 
-
         // Save data :
         serverActivity.save();
     }

@@ -9,6 +9,8 @@ export default class GuildMemberRemove extends Event {
     }
 
     public async run(member: GuildMember) : Promise<void> {
+        if(member.user.bot) return;
+        
         const memberDB = await Member.getMember(member.user);
 
         memberDB.alwaysInTheServer = false;

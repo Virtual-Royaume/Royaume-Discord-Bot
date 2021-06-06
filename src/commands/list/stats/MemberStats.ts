@@ -28,7 +28,7 @@ export default class WatchTogether extends Command {
             member = message.member;
         }
 
-        if(!(member instanceof GuildMember)){
+        if(!(member instanceof GuildMember) || member.user.bot){
             Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
 
             return;

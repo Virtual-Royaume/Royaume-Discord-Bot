@@ -20,7 +20,7 @@ export default class Clean extends Command {
     }
 
     public async run(args: any[], message: Message) : Promise<void> {
-        if(!args[0] || isNaN(args[0]) || args[0] < 1 || args[0] > 100){
+        if(isNaN(args[0]) || args[0] < 1 || args[0] > 100){
             Client.instance.embed.sendSimple(
                 this.getFormattedUsage(),
                 message.channel

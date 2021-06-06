@@ -24,7 +24,7 @@ export default class Role extends Command {
         let roles: string[] = [];
         roles = roles.concat(...Object.values(rolesWithCategory));
 
-        if(args.length === 0 || roles.indexOf(args[0]) == -1){
+        if(roles.indexOf(args[0]) == -1){
             Client.instance.embed.sendSimple(
                 this.getFormattedUsage(), 
                 <TextChannel>message.channel

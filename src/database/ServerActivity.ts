@@ -22,7 +22,7 @@ export default class ServerActivity extends BaseEntity {
     public static async getServerActivity() : Promise<ServerActivity> {
         const date = dayjs().format("YYYY-MM-DD");
 
-        if(!this.serverActivity){
+        if(!this.serverActivity || this.serverActivity.date !== dayjs().format("YYYY-MM-DD")){
             this.serverActivity = await ServerActivity.findOne({date: date});
 
             if(!this.serverActivity) this.serverActivity = await new ServerActivity().save();

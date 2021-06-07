@@ -2,7 +2,7 @@ import {Collection, Permissions, TextChannel} from "discord.js";
 
 import Client from "../client/Client";
 
-import ChannelIDs from "../constants/ChannelIDs";
+import { ChannelIDs } from "../constants/ChannelIDs";
 import Constants from "../constants/Constants";
 
 import Command from "./Command";
@@ -58,15 +58,6 @@ export default class CommandManager {
             if(message.content.length <= Constants.commandPrefix.length) return;
             if(!(message.channel instanceof TextChannel)) return;
 
-            // Check if the order is executed in the command channel :
-            if(message.channel.id !== ChannelIDs.command){
-                Client.instance.embed.sendSimple(
-                    "Vous ne pouvez pas faire de commande en dehors du salon <#" + ChannelIDs.command + ">.",
-                    <TextChannel>message.channel
-                );
-                return;
-            }
-
             // Get args and command name in variable :
             const args: string[] = message.content.split(" ");
             const commandName: string|undefined = args.shift()?.substring(Constants.commandPrefix.length).toLowerCase();
@@ -76,8 +67,34 @@ export default class CommandManager {
             // Get command instance if it exist :
             const command = this.commands.get(commandName) || this.commandsAliases.get(commandName);
 
-            // If the command exists, check arguments and permissions then run the command :
+            // If the command exists, check arguments, channel and permissions then run the command :
             if(command){
+
+                // Checks if command is executed from an allowed channel
+                if(command.additionalParams.allowedchannels && command.additionalParams.allowedchannels.length > 0) {
+                    if(command.additionalParams.allowedchannels !== "EVERY") {
+                        const isChannelAllowed = command.additionalParams.allowedchannels.includes(message.channel.id as ChannelIDs);
+                        if(!isChannelAllowed) {
+                            let formattedAllowedChannels: string = "";
+                            command.additionalParams.allowedchannels.forEach((channel, index, array) => {
+                                formattedAllowedChannels += `<#${channel.toString()}>`;
+                                if(index < array.length - 1) formattedAllowedChannels += ", ";
+                            });
+                            Client.instance.embed.sendSimple(
+                                "Vous ne pouvez pas exécuter cette commande dans ce salon. Salons autorisés : " + formattedAllowedChannels,
+                                <TextChannel>message.channel
+                            );
+                            return;
+                        }
+                    }
+                } else if(message.channel.id !== ChannelIDs.commandes) {
+                    Client.instance.embed.sendSimple(
+                        "Vous ne pouvez pas exécuter cette commande en dehors du salon <#" + ChannelIDs.commandes + ">.",
+                        <TextChannel>message.channel
+                    );
+                    return;
+                }
+
                 // Checks if required arguments are provided, if any :
                 if(command.additionalParams.usage && command.additionalParams.usage.length > 0){
                     const hasRequiredArgs = command.additionalParams.usage.every((usageParam, index) => {

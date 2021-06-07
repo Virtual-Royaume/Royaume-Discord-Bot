@@ -33,9 +33,9 @@ Si vous ne savez pas quoi faire mais que vous avez envie de participer au dével
 > Ici vous pouvez ajouter des fonctionnalités que vous aimeriez voir sur le bot même si vous ne souhaitez pas vous en occuper. Si vous voulez vous occuper d'une des choses à faire, ajouter votre pseudo sur la ligne.
 - passage vers la v13 de DiscordJS pour le support des slash commandes et des boutons
 - **BLUZZI -** mettre dans une configuration (.json) quelques options disponible dans les constants (ça sera + logique et plus simple pour la modification du prefix par exemple)
-- **ROMAIN -** finir la commande help
 - faire en sorte que quand on démarre le bot en mode dev ça le save dans une variable pour évité les problèmes comme la double incrémentation du nombre de message des membres en base de donnée
 - faire un check voir si le dossier list existe pour les events, tasks et commandes
 - faire un système pour autorisé les commandes du style -clean hors du salon de commande
 - warning quand on a deux commandes du même nom qui sont save
 - mettre à jour l'username et la photo de profil des membres dans la database tout les X temps
+- Ajouter un icon pour la catégorie de commande affiché dans l'embed de la commande help

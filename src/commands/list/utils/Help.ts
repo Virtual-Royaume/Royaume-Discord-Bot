@@ -6,6 +6,8 @@ import Constants from "../../../constants/Constants";
 
 export default class Help extends Command {
 
+    private controlers = ["◀️", "▶️"];
+
     constructor() {
         super(
             "help",
@@ -17,88 +19,86 @@ export default class Help extends Command {
         );
     }
 
-    run(args: any[], message: Message) : void {
-        const commandManager = Client.instance.commandManager;
+    public async run(args: any[], message: Message) : Promise<void> {
+        message.channel.send(this.getHelpEmbed(args[0])).then(msg => this.helpUpdater(msg, args[0]));
+    }
 
-        if(args.length === 0){
-            const categories = commandManager.categories.map(category => {
-                return "``" + category + "``";
-            });
+    private helpUpdater(message: Message, category: string|null = null){
+        // Add controler reactions :
+        this.controlers.forEach(emoji => message.react(emoji));
 
-            const embed = new MessageEmbed();
+        // Create collector for updates :
+        let collector = message.createReactionCollector(
+            (reaction, user) => this.controlers.includes(reaction.emoji.name) && user.id !== (Client.instance.user?.id ?? ""), 
+            {time: 1000 * 60 * 60 * 24} // 24 hours
+        );
 
-            embed.setTitle("Liste des catégories disponibles");
-            embed.setColor(Constants.color);
-            embed.setDescription(
-                "Pour exécuter une commande, vous devez utiliser le préfixe `" + Constants.commandPrefix + "` suivi de la commande souhaitée\n\n" +
+        collector.on("collect", (reaction, user) => {
+            collector.stop();
 
-                "Liste des catégories disponibles :\n" +
-                categories.join(", ") + "\n\n" +
+            // Remove the reaction :
+            message.reactions.resolve(reaction.emoji.name)?.users.remove(user);
 
-                "Pour utiliser l'une des catégories citées ci-dessus, faites ``" + Constants.commandPrefix + "help [catégorie]``"
-            );
+            // Get the new page :
+            let categories = Client.instance.commandManager.categories;
+            let newCategoryIndex = category ? categories.indexOf(category) : null;
+            let newCategory: string;
 
-            message.channel.send(embed);
-        } else {
-            const categoriesWithCommands = commandManager.categoriesWithCommands;
-
-            if(!categoriesWithCommands.has(args[0])){
-                Client.instance.embed.sendSimple(
-                    "La catégorie ``" + args[0] + "`` n'existe pas !",
-                    message.channel
-                );
-
-                return;
+            if(newCategoryIndex !== null){
+                newCategory = reaction.emoji.name === "◀️" ? categories[newCategoryIndex - 1] : categories[newCategoryIndex + 1];
+            } else {
+                newCategory = reaction.emoji.name === "◀️" ? categories[categories.length - 1] : categories[0];
             }
 
-            //@ts-ignore
-            const commands = categoriesWithCommands.get(args[0]).map(command => {
-                return "``" + Constants.commandPrefix + command.name + /*' ' + command.usage + */"``\n" +
-                    command.description; // TODO : fix command.usage
-            });
+            // Update the message :
+            message.edit(this.getHelpEmbed(newCategory)).then(msg => this.helpUpdater(msg, newCategory));
+        });
+    }
 
-            const embed = new MessageEmbed();
+    private getHelpEmbed(category: string|null = null) : MessageEmbed {
+        // Create base of embed :
+        let embed = new MessageEmbed();
 
-            embed.setTitle("Commandes de la catégorie " + args[0]);
-            embed.setColor(Constants.color);
-            embed.setDescription(commands.slice(0, 10).join("\n\n"));
+        embed.setColor(Constants.color);
+        
+        // Add content of the first page :
+        if(!category || !Client.instance.commandManager.categories.includes(category)){
+            embed.setTitle("Fonctionnement et liste des catégorie de commandes");
 
-            message.channel.send(embed).then(msg => {
-                const totalPage = (commands.length / 10);
-                let page = 0;
+            embed.setDescription(
+                "Pour utiliser une commande, vous devez écrire ``" + Constants.commandPrefix + "`` suivi du nom de la commande.\n\n" +
 
-                const beforeEmoji = "◀";
-                const nextEmoji = "▶";
+                "Pour voir les commandes disponibles, faites ``" + Constants.commandPrefix + "help <nom de la catégorie de commande>`` " +
+                "ou utilisez les réactions ci-dessous.\n\n" +
 
-                msg.react(beforeEmoji);
-                msg.react(nextEmoji);
+                "Voici la liste des catégories de commande : ``" + Client.instance.commandManager.categories.join("``, ``") + "``."
+            );
+        } else {
+            embed.setTitle("Catégorie " + (category.charAt(0).toUpperCase() + category.slice(1)));
 
-                const filter: CollectorFilter = (reaction: MessageReaction, user: User)=> {
-                    return reaction.emoji.name === beforeEmoji || reaction.emoji.name === nextEmoji;
-                }
-                const collector = msg.createReactionCollector(filter, { time: 30000 });
+            // @ts-ignore : this is checked above
+            Client.instance.commandManager.categoriesWithCommands.get(category).forEach(command => {
+                embed.addField(
+                    "``" + Constants.commandPrefix + command.name + (command.additionalParams.aliases ? "/" + command.additionalParams.aliases.join("/") : "") +
+                    (command.formattedUsage.length > 0 ? command.formattedUsage : "") + "``",
 
-                collector.on('collect', (reaction: MessageReaction, user: User)  =>{
-                    if (user.bot) return;
-
-                    collector.resetTimer();
-
-                    reaction.users.remove(user.id);
-
-                    if (reaction.emoji.name === nextEmoji) {
-                        if ((page + 1) < totalPage) page++;
-                    }
-                    if (reaction.emoji.name === beforeEmoji) {
-                        if (page > 0) page--;
-                    }
-
-                    reaction.message.edit(new MessageEmbed()
-                        .setTitle(`Commandes de la catégorie ${args[0]}`)
-                        .setColor(Constants.color)
-                        .setDescription(commands.slice(page * 10, (page + 1) * 10).join('\n\n'))
-                    );
-                });
+                    command.description
+                );
             });
         }
+
+        // Add the footer with current page :
+        let categories = [...Client.instance.commandManager.categories];
+
+        categories.splice(0, 0, "page d'aide");
+
+        let categoriesFooter = categories.join(" - ");
+
+        let replace = category !== null ? category : "page d'aide";
+
+        embed.setFooter(categoriesFooter.replace(replace, replace.toUpperCase()));
+
+        // Return the embed :
+        return embed;
     }
 }

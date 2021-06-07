@@ -1,4 +1,4 @@
-import {CollectorFilter, Message, MessageEmbed, MessageReaction, User} from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 
 import Command from "../../Command";
 import Client from "../../../client/Client";
@@ -12,7 +12,7 @@ export default class Help extends Command {
         super(
             "help",
             "Permet de voir la liste des commandes",
-            "utils",
+            "information",
             {
                 aliases: ["h"]
             }

@@ -58,6 +58,7 @@ export default class VoiceGames extends Command {
         };
     
         const instance: any = Client.instance;
+        // @ts-ignore : TODO remove this (djs v13 master problem)
         const generalChannel = Client.instance.getGuild().channels.cache.get(ChannelIDs.general);
 
         if(!generalChannel || !(generalChannel instanceof TextChannel)) return;

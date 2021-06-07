@@ -13,6 +13,7 @@ export default class GuildMemberAdd extends Event {
     public async run(member: GuildMember) : Promise<void> {
         if(member.user.bot) return;
         
+        // @ts-ignore : TODO remove this (djs v13 master problem)
         const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(ChannelIDs.verif);
             
         Client.instance.embed.sendSimple(

@@ -31,6 +31,7 @@ export default class ServerActivityUpdate extends Task {
         let memberVoiceList: User[] = [];
 
         Client.instance.getGuild().voiceStates.cache.forEach(voiceState => {
+            // @ts-ignore : TODO remove this (djs v13 master problem)
             if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel && voiceState.channel.id !== ChannelIDs.afk){
                 memberVoiceList.push(voiceState.member.user);
             }

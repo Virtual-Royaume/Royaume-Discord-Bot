@@ -43,7 +43,8 @@ export default class TopVoice extends Command {
 
         for(let i = 0; i < topVoiceOfPage.length; i++){
             const member = topVoiceOfPage[i];
-            const guildMember = Client.instance.getGuild().members.cache.get(member.userId);
+            // @ts-ignore : TODO remove this (djs v13 master problem)
+            const guildMember = Client.instance.getGuild().members.cache.get(BigInt(member.userId));
             
             let memberName: string;
 

@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed, ReactionEmoji } from "discord.js";
 
 import Command from "../../Command";
 import Client from "../../../client/Client";
@@ -29,7 +29,7 @@ export default class Help extends Command {
 
         // Create collector for updates :
         let collector = message.createReactionCollector(
-            (reaction, user) => this.controlers.includes(reaction.emoji.name) && user.id !== (Client.instance.user?.id ?? ""), 
+            (reaction, user) => this.controlers.includes(reaction.emoji.identifier) && user.id !== (Client.instance.user?.id ?? ""),
             {time: 1000 * 60 * 60 * 24} // 24 hours
         );
 
@@ -37,7 +37,7 @@ export default class Help extends Command {
             collector.stop();
 
             // Remove the reaction :
-            message.reactions.resolve(reaction.emoji.name)?.users.remove(user);
+            message.reactions.resolve((reaction.emoji as ReactionEmoji).reaction).users.remove(user);
 
             // Get the new page :
             let categories = Client.instance.commandManager.categories;

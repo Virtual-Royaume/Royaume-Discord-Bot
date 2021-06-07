@@ -1,9 +1,9 @@
 export default class ChannelIDs {
     
-    public static general: string = "786216771723198514";
-    public static command: string = "736677048214618213";
-    public static verif: string = "837678344451129404";
+    public static general: bigint = 786216771723198514n;
+    public static command: bigint = 736677048214618213n;
+    public static verif: bigint = 837678344451129404n;
 
-    public static afk: string = "832042763675631688";
+    public static afk: bigint = 832042763675631688n;
 }
 

@@ -28,7 +28,8 @@ export default class WatchTogether extends Command {
         };
     
         const instance: any = Client.instance;
-        const generalChannel = Client.instance.getGuild().channels.cache.get(ChannelIDs.general);
+        // @ts-ignore : TODO remove this (djs v13 master problem)
+        const generalChannel = Client.instance.getGuild().channels.cache.get(BigInt(ChannelIDs.general));
 
         if(!generalChannel || !(generalChannel instanceof TextChannel)) return;
     

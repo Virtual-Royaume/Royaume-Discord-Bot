@@ -74,6 +74,7 @@ export default class MemberActivity extends BaseEntity {
         if(this.totalMessageCount && this.totalMessageCount !== this.stepUpAnnoucement && this.totalMessageCount % 1000 === 0){
             Client.instance.embed.sendSimple(
                 "<@" + this.userId + "> vient de passer le cap des " + this.totalMessageCount.toLocaleString("fr-FR") + " messages envoyés ! 🎉", 
+                // @ts-ignore : TODO remove this (djs v13 master problem)
                 <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
             );
 

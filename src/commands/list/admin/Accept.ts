@@ -24,6 +24,7 @@ export default class Accept extends Command {
     public async run(args: any[], message: Message) : Promise<void> {
         // Get member, channel and messages instance and verify if it exist :
         const memberInstance: GuildMember|undefined = Client.instance.getGuild().members.cache.get(args[0]);
+        // @ts-ignore : TODO remove this (djs v13 master problem)
         const verifChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.verif);
 
         if(!verifChannel){
@@ -78,6 +79,7 @@ export default class Accept extends Command {
                 "commande ``-role`` dans <#" + ChannelIDs.command + "> et choisir les rôles qui vous " + 
                 "correspondent.\n\n",
 
+                // @ts-ignore : TODO remove this (djs v13 master problem)
                 <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
             );
 
@@ -86,10 +88,12 @@ export default class Accept extends Command {
                 
                 messageInstance.content,
 
+                // @ts-ignore : TODO remove this (djs v13 master problem)
                 <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
             );
 
             // Mention the new member :
+            // @ts-ignore : TODO remove this (djs v13 master problem)
             const generalChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general);
 
             if(generalChannel) generalChannel.send("<@" + memberInstance.id + ">").then(mentionMsg => mentionMsg.delete());

@@ -59,13 +59,14 @@ export default class CommandManager {
             if(!(message.channel instanceof TextChannel)) return;
 
             // Check if the order is executed in the command channel :
-            if(message.channel.id !== ChannelIDs.command){
+            // @ts-ignore : TODO remove this (djs v13 master problem)
+            /*if(message.channel.id !== ChannelIDs.command){
                 Client.instance.embed.sendSimple(
                     "Vous ne pouvez pas faire de commande en dehors du salon <#" + ChannelIDs.command + ">.",
                     <TextChannel>message.channel
                 );
                 return;
-            }
+            }*/
 
             // Get args and command name in variable :
             const args: string[] = message.content.split(" ");

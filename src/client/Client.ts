@@ -35,7 +35,7 @@ export default class Client extends DiscordClient {
     private team: Collection<string, TeamMember>;
 
     constructor(){
-        super();
+        super({intents: []});
 
         // Save resources folder path :
         this.resources = __dirname + "/../../resources/";
@@ -86,9 +86,10 @@ export default class Client extends DiscordClient {
         }
     }
 
-    public async getAdmins() : Promise<Collection<string, TeamMember> | void> {
+    public getAdmins() : Collection<string, TeamMember> | void {
         if(!this.team){
-            let owner = (await this.fetchApplication()).owner;
+            // @ts-ignore : it won't be null if we call it after the bot is correctly started 
+            let owner = this.application.owner;
 
             if(owner instanceof Team) this.team = owner.members;
         }

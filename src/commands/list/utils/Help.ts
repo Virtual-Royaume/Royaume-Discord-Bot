@@ -98,11 +98,6 @@ export default class Help extends Command {
                         .setDescription(commands.slice(page * 10, (page + 1) * 10).join('\n\n'))
                     );
                 });
-
-                collector.on('end', (collected) => {
-                    msg.delete();
-                    message.delete();
-                });
             });
         }
     }

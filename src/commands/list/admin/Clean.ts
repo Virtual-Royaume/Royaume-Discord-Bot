@@ -14,7 +14,8 @@ export default class Clean extends Command {
                     {type: "required", usage: "nombre entre 1 et 100"}
                 ],
                 aliases: ["cl"],
-                permissions: ["ADMINISTRATOR"]
+                permissions: ["ADMINISTRATOR"],
+                allowedchannels: "EVERY"
             }
         );
     }

@@ -1,6 +1,6 @@
-import { GuildMember, Message, TextChannel } from "discord.js";
+import {GuildMember, Message, TextChannel} from "discord.js";
 import Client from "../../../client/Client";
-import ChannelIDs from "../../../constants/ChannelIDs";
+import {ChannelIDs} from "../../../constants/ChannelIDs";
 import Command from "../../Command";
 
 export default class Accept extends Command {
@@ -75,7 +75,7 @@ export default class Accept extends Command {
                 "l'importance que vous portez au Royaume !\n\n" +
 
                 "Pour pouvoir accéder aux différents salons de la catégorie travail vous pouvez faire la " + 
-                "commande ``-role`` dans <#" + ChannelIDs.command + "> et choisir les rôles qui vous " + 
+                "commande ``-role`` dans <#" + ChannelIDs.commandes + "> et choisir les rôles qui vous " +
                 "correspondent.\n\n",
 
                 <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)

@@ -77,20 +77,21 @@ export default class CommandManager {
             const command = this.commands.get(commandName) || this.commandsAliases.get(commandName);
 
             // If the command exists, check arguments and permissions then run the command :
-            if(command) {
-
-                //Checks if required arguments are provided, if any
-                if(command.additionalParams.usage && command.additionalParams.usage.length > 0) {
-                    let hasRequiredArgs = command.additionalParams.usage.every((usageParam, index) => {
-                        if(usageParam.type === "required") {
+            if(command){
+                // Checks if required arguments are provided, if any :
+                if(command.additionalParams.usage && command.additionalParams.usage.length > 0){
+                    const hasRequiredArgs = command.additionalParams.usage.every((usageParam, index) => {
+                        if(usageParam.type === "required"){
                             return args.length > index;
                         } else return true;
                     });
-                    if(!hasRequiredArgs) {
+
+                    if(!hasRequiredArgs){
                         Client.instance.embed.sendSimple(
                             command.getFormattedUsage(),
                             <TextChannel> message.channel
                         );
+                        
                         return;
                     }
                 }

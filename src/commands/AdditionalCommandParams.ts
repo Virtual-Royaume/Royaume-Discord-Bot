@@ -1,8 +1,11 @@
+import { ChannelIDs } from "../constants/ChannelIDs";
+
 export default interface AdditionalCommandParams {
 
     usage?: UsageParam[];
     aliases?: string[];
     permissions?: Permissions[];
+    allowedchannels?: ChannelIDs[] | SpecialChannelPerms;
 }
 
 // Usage :
@@ -26,3 +29,7 @@ type Permissions =
     "CONNECT" | "SPEAK" | "MUTE_MEMBERS" | "DEAFEN_MEMBERS" | 
     "MOVE_MEMBERS" | "USE_VAD" | "CHANGE_NICKNAME" | "MANAGE_NICKNAMES" | 
     "MANAGE_ROLES" | "MANAGE_WEBHOOKS" | "MANAGE_EMOJIS" | "TEAM_ADMIN";
+
+// Allowed channels :
+
+type SpecialChannelPerms = "EVERY"; //Allow command to be ran in every channel

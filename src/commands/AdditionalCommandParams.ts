@@ -5,7 +5,7 @@ export default interface AdditionalCommandParams {
     usage?: UsageParam[];
     aliases?: string[];
     permissions?: Permissions[];
-    allowedchannels?: ChannelIDs[] | SpecialChannelPerms;
+    allowedChannels?: ChannelIDs[] | SpecialChannelPerms;
 }
 
 // Usage :

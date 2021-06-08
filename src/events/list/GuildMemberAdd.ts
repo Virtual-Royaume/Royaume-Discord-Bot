@@ -1,6 +1,6 @@
 import { GuildMember, TextChannel } from "discord.js";
 import Client from "../../client/Client";
-import ChannelIDs from "../../constants/ChannelIDs";
+import ChannelIDs from "../../constants/ChannelID";
 import Member from "../../database/member/Member";
 import Event from "../Event";
 

@@ -1,7 +1,7 @@
 import { TextChannel } from "discord.js";
 import { AfterUpdate, BaseEntity, BeforeUpdate, Column, Entity, PrimaryColumn } from "typeorm";
 import Client from "../../client/Client";
-import ChannelIDs from "../../constants/ChannelIDs";
+import ChannelIDs from "../../constants/ChannelID";
 import Member from "./Member";
 
 @Entity()

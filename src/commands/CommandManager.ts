@@ -94,7 +94,7 @@ export default class CommandManager {
                 }
 
                 // Checks if required arguments are provided, if any :
-                if(command.additionalParams.usage && command.additionalParams.usage.length > 0){
+                if(command.additionalParams.usage && command.additionalParams.usage.length){
                     const hasRequiredArgs = command.additionalParams.usage.every((usageParam, index) => {
                         if(usageParam.type === "required"){
                             return args.length > index;
@@ -112,7 +112,7 @@ export default class CommandManager {
                 }
 
                 //Checks if permissions are met, if any
-                if(command.additionalParams.permissions && command.additionalParams.permissions.length > 0){
+                if(command.additionalParams.permissions && command.additionalParams.permissions.length){
                     const admins = await Client.instance.getAdmins();
                     const member = message.member;
 
@@ -122,7 +122,7 @@ export default class CommandManager {
                         return;
                     }
 
-                    let hasPermission: boolean = command.additionalParams.permissions.every(permission => {
+                    const hasPermission: boolean = command.additionalParams.permissions.every(permission => {
                         if(permission === "TEAM_ADMIN"){
                             if(admins){
                                 return admins.get(member.id);
@@ -139,7 +139,10 @@ export default class CommandManager {
                     if(hasPermission){
                         command.run(args, message);
                     } else {
-                        Client.instance.embed.sendSimple("Vous n'avez pas la permission d'utiliser cette commande. Permissions requises : " + command.additionalParams.permissions.join(", ") + ".", <TextChannel>message.channel);
+                        Client.instance.embed.sendSimple(
+                            "Vous n'avez pas la permission d'utiliser cette commande. Permissions requises : " + command.additionalParams.permissions.join(", ") + ".",
+                            <TextChannel>message.channel
+                        );
                     }
                 } else {
                     command.run(args, message);

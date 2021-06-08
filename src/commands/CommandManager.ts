@@ -71,12 +71,12 @@ export default class CommandManager {
             if(command){
 
                 // Checks if command is executed from an allowed channel
-                if(command.additionalParams.allowedchannels && command.additionalParams.allowedchannels.length > 0) {
-                    if(command.additionalParams.allowedchannels !== "EVERY") {
-                        const isChannelAllowed = command.additionalParams.allowedchannels.includes(message.channel.id as ChannelIDs);
+                if(command.additionalParams.allowedChannels && command.additionalParams.allowedChannels.length > 0) {
+                    if(command.additionalParams.allowedChannels !== "EVERY") {
+                        const isChannelAllowed = command.additionalParams.allowedChannels.includes(message.channel.id as ChannelIDs);
                         if(!isChannelAllowed) {
                             let formattedAllowedChannels: string = "";
-                            command.additionalParams.allowedchannels.forEach((channel, index, array) => {
+                            command.additionalParams.allowedChannels.forEach((channel, index, array) => {
                                 formattedAllowedChannels += `<#${channel.toString()}>`;
                                 if(index < array.length - 1) formattedAllowedChannels += ", ";
                             });

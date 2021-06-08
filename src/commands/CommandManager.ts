@@ -2,7 +2,7 @@ import {Collection, Permissions, TextChannel} from "discord.js";
 
 import Client from "../client/Client";
 
-import ChannelIDs from "../constants/ChannelID";
+import { TextChannel as TC } from "../constants/ChannelID";
 import Constants from "../constants/Constants";
 
 import Command from "./Command";
@@ -73,7 +73,7 @@ export default class CommandManager {
                 if(command.additionalParams.allowedChannels && command.additionalParams.allowedChannels.length){
                     if(
                         command.additionalParams.allowedChannels !== "EVERY" &&
-                        !command.additionalParams.allowedChannels.includes(message.channel.id as ChannelIDs)
+                        !command.additionalParams.allowedChannels.includes(message.channel.id as TC)
                     ){
                         Client.instance.embed.sendSimple(
                             "Vous ne pouvez pas exécuter cette commande dans ce salon. Salon(s) autorisé(s) : " + 
@@ -84,9 +84,9 @@ export default class CommandManager {
 
                         return;
                     }
-                } else if(message.channel.id !== ChannelIDs.commandes){
+                } else if(message.channel.id !== TC.commandes){
                     Client.instance.embed.sendSimple(
-                        "Vous ne pouvez pas exécuter cette commande en dehors du salon <#" + ChannelIDs.commandes + ">.",
+                        "Vous ne pouvez pas exécuter cette commande en dehors du salon <#" + TC.commandes + ">.",
                         <TextChannel>message.channel
                     );
 

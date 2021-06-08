@@ -1,4 +1,4 @@
-import { ChannelIDs } from "../constants/ChannelIDs";
+import ChannelIDs from "../constants/ChannelIDs";
 
 export default interface AdditionalCommandParams {
 

@@ -32,4 +32,4 @@ type Permissions =
 
 // Allowed channels :
 
-type SpecialChannelPerms = "EVERY"; //Allow command to be ran in every channel
+type SpecialChannelPerms = "EVERY"; // Allow command to be run in every channel

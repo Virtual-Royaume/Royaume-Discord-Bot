@@ -2,7 +2,7 @@ import {Collection, Permissions, TextChannel} from "discord.js";
 
 import Client from "../client/Client";
 
-import ChannelIDs from "../constants/ChannelIDs";
+import ChannelIDs from "../constants/ChannelID";
 import Constants from "../constants/Constants";
 
 import Command from "./Command";

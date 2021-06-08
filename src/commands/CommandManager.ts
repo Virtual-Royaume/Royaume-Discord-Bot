@@ -69,29 +69,27 @@ export default class CommandManager {
 
             // If the command exists, check arguments, channel and permissions then run the command :
             if(command){
+                // Checks if command is executed from an allowed channel :
+                if(command.additionalParams.allowedChannels && command.additionalParams.allowedChannels.length){
+                    if(
+                        command.additionalParams.allowedChannels !== "EVERY" &&
+                        !command.additionalParams.allowedChannels.includes(message.channel.id as ChannelIDs)
+                    ){
+                        Client.instance.embed.sendSimple(
+                            "Vous ne pouvez pas exécuter cette commande dans ce salon. Salon(s) autorisé(s) : " + 
+                            command.additionalParams.allowedChannels.map(element => "<#" + element.toString() + ">").join(", ") + ".",
 
-                // Checks if command is executed from an allowed channel
-                if(command.additionalParams.allowedChannels && command.additionalParams.allowedChannels.length > 0) {
-                    if(command.additionalParams.allowedChannels !== "EVERY") {
-                        const isChannelAllowed = command.additionalParams.allowedChannels.includes(message.channel.id as ChannelIDs);
-                        if(!isChannelAllowed) {
-                            let formattedAllowedChannels: string = "";
-                            command.additionalParams.allowedChannels.forEach((channel, index, array) => {
-                                formattedAllowedChannels += `<#${channel.toString()}>`;
-                                if(index < array.length - 1) formattedAllowedChannels += ", ";
-                            });
-                            Client.instance.embed.sendSimple(
-                                "Vous ne pouvez pas exécuter cette commande dans ce salon. Salons autorisés : " + formattedAllowedChannels,
-                                <TextChannel>message.channel
-                            );
-                            return;
-                        }
+                            <TextChannel>message.channel
+                        );
+
+                        return;
                     }
-                } else if(message.channel.id !== ChannelIDs.commandes) {
+                } else if(message.channel.id !== ChannelIDs.commandes){
                     Client.instance.embed.sendSimple(
                         "Vous ne pouvez pas exécuter cette commande en dehors du salon <#" + ChannelIDs.commandes + ">.",
                         <TextChannel>message.channel
                     );
+
                     return;
                 }
 

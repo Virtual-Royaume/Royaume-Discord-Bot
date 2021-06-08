@@ -1,5 +1,4 @@
-enum ChannelIDs {
-    // Text channels :
+export enum TextChannel {
     annonces = "797103954768298005",
     general = "786216771723198514",
     commandes = "736677048214618213",
@@ -10,10 +9,9 @@ enum ChannelIDs {
     developpement = "732392873667854372",
     trading = "779129024327712783",
     graphisme = "768996501049311243",
-    sneakers = "789126328082235412",
-
-    // Voice channels :
-    afk = "832042763675631688"
+    sneakers = "789126328082235412"
 }
 
-export default ChannelIDs;
+export enum VoiceChannel {
+    afk = "832042763675631688"
+}

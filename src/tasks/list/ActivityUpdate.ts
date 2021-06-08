@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { User } from "discord.js";
 import Client from "../../client/Client";
-import ChannelIDs from "../../constants/ChannelID";
+import { VoiceChannel } from "../../constants/ChannelID";
 import Member from "../../database/member/Member";
 import MemberActivity from "../../database/member/MemberActivity";
 import ServerActivity from "../../database/ServerActivity";
@@ -31,7 +31,7 @@ export default class ServerActivityUpdate extends Task {
         let memberVoiceList: User[] = [];
 
         Client.instance.getGuild().voiceStates.cache.forEach(voiceState => {
-            if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel && voiceState.channel.id !== ChannelIDs.afk){
+            if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel && voiceState.channel.id !== VoiceChannel.afk){
                 memberVoiceList.push(voiceState.member.user);
             }
         });

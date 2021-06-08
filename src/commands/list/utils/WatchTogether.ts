@@ -1,6 +1,6 @@
 import { Message, TextChannel } from "discord.js";
 import Client from "../../../client/Client";
-import ChannelIDs from "../../../constants/ChannelID";
+import { TextChannel as TC } from "../../../constants/ChannelID";
 import Command from "../../Command";
 import AppDiscord from "./../../../constants/AppDiscord";
 
@@ -28,7 +28,7 @@ export default class WatchTogether extends Command {
         };
     
         const instance: any = Client.instance;
-        const generalChannel = Client.instance.getGuild().channels.cache.get(ChannelIDs.general);
+        const generalChannel = Client.instance.getGuild().channels.cache.get(TC.general);
 
         if(!generalChannel || !(generalChannel instanceof TextChannel)) return;
     

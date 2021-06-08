@@ -1,6 +1,6 @@
 import { GuildMember, TextChannel } from "discord.js";
 import Client from "../../client/Client";
-import ChannelIDs from "../../constants/ChannelID";
+import { TextChannel as TC } from "../../constants/ChannelID";
 import Member from "../../database/member/Member";
 import Event from "../Event";
 
@@ -13,7 +13,7 @@ export default class GuildMemberAdd extends Event {
     public async run(member: GuildMember) : Promise<void> {
         if(member.user.bot) return;
         
-        const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(ChannelIDs.verif);
+        const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(TC.verif);
             
         Client.instance.embed.sendSimple(
             "Bienvenue <@" + member.id + ">, tu es dans le salon de vérification des nouveaux membres !\n\n" +

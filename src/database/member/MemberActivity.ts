@@ -1,7 +1,7 @@
 import { TextChannel } from "discord.js";
 import { AfterUpdate, BaseEntity, BeforeUpdate, Column, Entity, PrimaryColumn } from "typeorm";
 import Client from "../../client/Client";
-import ChannelIDs from "../../constants/ChannelID";
+import { TextChannel as TC } from "../../constants/ChannelID";
 import Member from "./Member";
 
 @Entity()
@@ -74,7 +74,7 @@ export default class MemberActivity extends BaseEntity {
         if(this.totalMessageCount && this.totalMessageCount !== this.stepUpAnnoucement && this.totalMessageCount % 1000 === 0){
             Client.instance.embed.sendSimple(
                 "<@" + this.userId + "> vient de passer le cap des " + this.totalMessageCount.toLocaleString("fr-FR") + " messages envoyés ! 🎉", 
-                <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
+                <TextChannel>Client.instance.getGuild().channels.cache.get(TC.general)
             );
 
             const member = await Member.findOne({userId: this.userId});

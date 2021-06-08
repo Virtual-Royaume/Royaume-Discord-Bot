@@ -1,11 +1,11 @@
-import ChannelIDs from "../constants/ChannelID";
+import { TextChannel } from "../constants/ChannelID";
 
 export default interface AdditionalCommandParams {
 
     usage?: UsageParam[];
     aliases?: string[];
     permissions?: Permissions[];
-    allowedChannels?: ChannelIDs[] | SpecialChannelPerms;
+    allowedChannels?: TextChannel[] | SpecialChannelPerms;
 }
 
 // Usage :

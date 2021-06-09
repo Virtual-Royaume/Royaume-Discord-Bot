@@ -147,6 +147,11 @@ export default class CommandManager {
                 } else {
                     command.run(args, message);
                 }
+            } else {
+                Client.instance.embed.sendSimple(
+                    "Cette commande n'existe pas, faites ``" + Constants.commandPrefix + "help`` pour voir la liste des commandes existantes.",
+                    <TextChannel>message.channel
+                ); 
             }
         });
     }

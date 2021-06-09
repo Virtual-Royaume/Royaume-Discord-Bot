@@ -54,7 +54,7 @@ export default class CommandManager {
 
         // Call commands methods :
         Client.instance.on("message", async message => {
-            if(!message.content.startsWith(Constants.commandPrefix)) return;
+            if(!message.content.match(new RegExp("^\\" + Constants.commandPrefix + "[a-z]"))) return;
             if(message.content.length <= Constants.commandPrefix.length) return;
             if(!(message.channel instanceof TextChannel)) return;
 

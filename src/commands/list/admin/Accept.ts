@@ -59,7 +59,7 @@ export default class Accept extends Command {
 
             if(roleVerif && roleEcuyer){
                 memberInstance.roles.remove(roleVerif);
-                memberInstance.roles.add(rolesCache);
+                memberInstance.roles.add(roleEcuyer);
             } else {
                 Client.instance.embed.sendSimple(
                     "Impossible d'éditer les rôles du membre un des rôles suivant n'est pas accessible : verif, Ecuyer.",

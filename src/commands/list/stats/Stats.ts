@@ -1,9 +1,9 @@
 import { Message, MessageEmbed } from "discord.js";
 import Command from "../../Command";
-import chartjs from "chart.js";
 import ServerActivity from "../../../database/ServerActivity";
 import Constants from "../../../constants/Constants";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
+import Chart from "../../../utils/Chart";
 
 export default class Stats extends Command {
 
@@ -31,36 +31,13 @@ export default class Stats extends Command {
         ];
 
         data.forEach(type => {
-            const config: chartjs.ChartConfiguration = {
-                type: "line",
-                data: {
-                    labels: serverActivity.map(element => element.date.split("-").reverse().join("-")),
-                    datasets: [{
-                        label: type.description,
-                        backgroundColor: Constants.color,
-                        borderColor: Constants.color,
-                        tension: 0.3,
-                        // @ts-ignore
-                        data: serverActivity.map(element => element[type.columnName])
-                    }]
-                },
-                plugins: [{
-                    id: "background-color",
-                    beforeDraw: chart => {
-                        const ctx = chart.canvas.getContext("2d");
-    
-                        if(ctx){
-                            ctx.save();
-                            
-                            ctx.globalCompositeOperation = "destination-over";
-                            ctx.fillStyle = "white";
-    
-                            ctx.fillRect(0, 0, chart.width, chart.height);
-                            ctx.restore();   
-                        }
-                    }
-                }]
-            }
+            const config = Chart.getDefaultConfig(
+                "line",
+                type.description,
+                serverActivity.map(element => element.date.split("-").reverse().join("-")),
+                // @ts-ignore
+                serverActivity.map(element => element[type.columnName])
+            );
 
             const embed = new MessageEmbed();
 
@@ -68,7 +45,7 @@ export default class Stats extends Command {
             embed.setColor(Constants.color);
             embed.attachFiles([{
                 name: type.columnName + "chart.png", 
-                attachment: new ChartJSNodeCanvas({height: 500, width: 1100}).renderToBufferSync(config)
+                attachment: Chart.getBuffer(config, 500, 1100)
             }]);
             embed.setImage("attachment://" + type.columnName + "chart.png")
 

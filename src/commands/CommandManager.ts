@@ -75,7 +75,7 @@ export default class CommandManager {
                         command.additionalParams.allowedChannels !== "EVERY" &&
                         !command.additionalParams.allowedChannels.includes(message.channel.id as TC)
                     ){
-                        Client.instance.embed.sendSimple(
+                        Client.instance.embed.send(
                             "Vous ne pouvez pas exécuter cette commande dans ce salon. Salon(s) autorisé(s) : " + 
                             command.additionalParams.allowedChannels.map(element => "<#" + element.toString() + ">").join(", ") + ".",
 
@@ -85,7 +85,7 @@ export default class CommandManager {
                         return;
                     }
                 } else if(message.channel.id !== TC.commandes){
-                    Client.instance.embed.sendSimple(
+                    Client.instance.embed.send(
                         "Vous ne pouvez pas exécuter cette commande en dehors du salon <#" + TC.commandes + ">.",
                         <TextChannel>message.channel
                     );
@@ -102,7 +102,7 @@ export default class CommandManager {
                     });
 
                     if(!hasRequiredArgs){
-                        Client.instance.embed.sendSimple(
+                        Client.instance.embed.send(
                             command.getFormattedUsage(),
                             <TextChannel> message.channel
                         );
@@ -117,7 +117,7 @@ export default class CommandManager {
                     const member = message.member;
 
                     if(!member){
-                        Client.instance.embed.sendSimple("Erreur lors de l'excution de la commande...", <TextChannel>message.channel);
+                        Client.instance.embed.send("Erreur lors de l'excution de la commande...", <TextChannel>message.channel);
                         Client.instance.logger.warning("Unable to retrieve the member instance in the command permissions check of the " + this.constructor.name + " class.")
                         return;
                     }
@@ -139,7 +139,7 @@ export default class CommandManager {
                     if(hasPermission){
                         command.run(args, message);
                     } else {
-                        Client.instance.embed.sendSimple(
+                        Client.instance.embed.send(
                             "Vous n'avez pas la permission d'utiliser cette commande. Permissions requises : " + command.additionalParams.permissions.join(", ") + ".",
                             <TextChannel>message.channel
                         );
@@ -148,7 +148,7 @@ export default class CommandManager {
                     command.run(args, message);
                 }
             } else {
-                Client.instance.embed.sendSimple(
+                Client.instance.embed.send(
                     "Cette commande n'existe pas, faites ``" + Constants.commandPrefix + "help`` pour voir la liste des commandes existantes.",
                     <TextChannel>message.channel
                 ); 

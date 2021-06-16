@@ -29,15 +29,19 @@ export default class VoiceGames extends Command {
 
     public async run(args: any[], message: Message) : Promise<void> {
         if(!Object.keys(this.integrationsByCodeName).includes(args[0])){
-            Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
+            Client.instance.embed.send(this.getFormattedUsage(), <TextChannel>message.channel);
 
-            let integrationList = "__**Liste des intégrations**__\n\n";
+            let integrationList = "";
 
             for(let key in this.integrationsByCodeName){
                 integrationList += "**" + key + ":** " + this.integrationsByCodeName[key] + "\n";
             }
         
-            Client.instance.embed.sendSimple(integrationList, <TextChannel>message.channel);
+            Client.instance.embed.send(
+                integrationList, 
+                <TextChannel>message.channel,
+                {title: "Liste des intégrations"}
+            );
 
             return;
         }
@@ -48,7 +52,7 @@ export default class VoiceGames extends Command {
         };
 
         if(!message.member?.voice.channelID){
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "Vous devez être dans un salon vocal.",
                 <TextChannel>message.channel
             );
@@ -71,7 +75,7 @@ export default class VoiceGames extends Command {
                 target_application_id: selectedIntegration.id
             }
         }).then((invite: {code: string}) : void => {
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "<@" + message.author.id + "> a lancé le jeu **" + selectedIntegration.name + "** !\n\n" +
 
                 "[Rejoindre le jeu](https://discord.gg/" + invite.code + ")",
@@ -79,7 +83,7 @@ export default class VoiceGames extends Command {
                 generalChannel
             );
 
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "Votre jeu (**" + selectedIntegration.name + "**) a bien était lancé, vous pouvez le rejoindre via cette invitation : https://discord.gg/" + invite.code,
                 <TextChannel>message.channel
             );

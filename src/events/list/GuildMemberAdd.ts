@@ -15,7 +15,7 @@ export default class GuildMemberAdd extends Event {
         
         const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(TC.verif);
             
-        Client.instance.embed.sendSimple(
+        Client.instance.embed.send(
             "Bienvenue <@" + member.id + ">, tu es dans le salon de vérification des nouveaux membres !\n\n" +
     
             "**Le Royaume** est un serveur privé amical où la bonne ambiance est donc obligatoire ! " +

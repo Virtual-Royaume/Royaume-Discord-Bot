@@ -39,7 +39,7 @@ export default class TopVoice extends Command {
             take: memberPerPage
         }));
 
-        let scorebordMessage = "__**Classements des membres les plus actifs en vocal (en minute) (page : " + page + "/" + maxPage + ")**__\n\n";
+        let scorebordMessage = "";
 
         for(let i = 0; i < topVoiceOfPage.length; i++){
             const member = topVoiceOfPage[i];
@@ -57,6 +57,9 @@ export default class TopVoice extends Command {
             scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + member.voiceMinute + "\n";
         }
 
-        Client.instance.embed.sendSimple(scorebordMessage, <TextChannel>message.channel);
+        Client.instance.embed.send(
+            scorebordMessage, <TextChannel>message.channel,
+            {title: "Classements des membres les plus actifs en vocal (en minute) (page : " + page + "/" + maxPage + ")"}
+        );
     }
 }

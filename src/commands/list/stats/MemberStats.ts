@@ -29,7 +29,7 @@ export default class WatchTogether extends Command {
         }
 
         if(!(member instanceof GuildMember) || member.user.bot){
-            Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
+            Client.instance.embed.send(this.getFormattedUsage(), <TextChannel>message.channel);
 
             return;
         }
@@ -37,7 +37,7 @@ export default class WatchTogether extends Command {
         const memberActivity = await MemberActivity.findOne({userId: member.id});
 
         if(memberActivity){
-            let activityMessage = "**__Activité de <@" + member.id + ">__**\n\n";
+            let activityMessage = "";
 
             activityMessage += "**Temps de vocal (en minute) :** " + memberActivity.voiceMinute.toLocaleString("fr-FR") + "\n";
             activityMessage += "**Nombre de message : **" + memberActivity.totalMessageCount.toLocaleString("fr-FR") + "\n";
@@ -50,9 +50,9 @@ export default class WatchTogether extends Command {
                 activityMessage += memberActivity[columnName].toLocaleString("fr-FR") + " dans <#" + channelID + ">\n";
             }
 
-            Client.instance.embed.sendSimple(activityMessage, <TextChannel>message.channel);
+            Client.instance.embed.send(activityMessage, <TextChannel>message.channel, {title: "Activité de <@" + member.id + ">"});
         } else {
-            Client.instance.embed.sendSimple("Aucune statistique trouvée.", <TextChannel>message.channel);
+            Client.instance.embed.send("Aucune statistique trouvée.", <TextChannel>message.channel);
         }
     }
 }

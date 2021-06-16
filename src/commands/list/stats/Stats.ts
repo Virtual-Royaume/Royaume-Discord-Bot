@@ -1,9 +1,9 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed, TextChannel } from "discord.js";
 import Command from "../../Command";
 import ServerActivity from "../../../database/ServerActivity";
 import Constants from "../../../constants/Constants";
-import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import Chart from "../../../utils/Chart";
+import Client from "../../../client/Client";
 
 export default class Stats extends Command {
 
@@ -39,17 +39,16 @@ export default class Stats extends Command {
                 serverActivity.map(element => element[type.columnName])
             );
 
-            const embed = new MessageEmbed();
-
-            embed.setDescription("**__" + type.description + "__**");
-            embed.setColor(Constants.color);
-            embed.attachFiles([{
-                name: type.columnName + "chart.png", 
-                attachment: Chart.getBuffer(config, 500, 1100)
-            }]);
-            embed.setImage("attachment://" + type.columnName + "chart.png")
-
-            message.channel.send(embed);
+            Client.instance.embed.send(
+                "", <TextChannel>message.channel, 
+                {
+                    title: type.description,
+                    image: {
+                        name: type.columnName + "chart.png", 
+                        attachment: Chart.getBuffer(config, 500, 1100)
+                    }
+                }
+            );
         });
     }
 }

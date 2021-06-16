@@ -22,7 +22,7 @@ export default class Clean extends Command {
 
     public async run(args: any[], message: Message) : Promise<void> {
         if(isNaN(args[0]) || args[0] < 1 || args[0] > 100){
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 this.getFormattedUsage(),
                 message.channel
             );
@@ -31,7 +31,7 @@ export default class Clean extends Command {
         }
 
         (message.channel as TextChannel).bulkDelete(Number(args[0]) + 1).then(() => {
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "**" + args[0] + "** message(s) supprimé(s). Ce message sera lui aussi supprimé dans quelques secondes...",
                 message.channel
             ).then(msg => {

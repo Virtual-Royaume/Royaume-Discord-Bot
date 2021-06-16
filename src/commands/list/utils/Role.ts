@@ -25,18 +25,21 @@ export default class Role extends Command {
         roles = roles.concat(...Object.values(rolesWithCategory));
 
         if(roles.indexOf(args[0]) == -1){
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 this.getFormattedUsage(), 
                 <TextChannel>message.channel
             );
 
-            let rolesList = "**__Liste des rôles disponibles__**\n\n";
+            let rolesList = "";
 
             for(const [category, roles] of Object.entries(rolesWithCategory)){
                 rolesList += "**" + category + " :** " + roles.join(", ") + "\n\n";
             }
 
-            Client.instance.embed.sendSimple(rolesList, <TextChannel>message.channel);
+            Client.instance.embed.send(
+                rolesList, <TextChannel>message.channel,
+                {title: "Liste des rôles disponibles"}
+            );
             return;
         }
 
@@ -48,14 +51,14 @@ export default class Role extends Command {
             if(member.roles.cache.filter(r => r.name === role).size > 0){
                 member.roles.remove(roleInstance);
     
-                Client.instance.embed.sendSimple(
+                Client.instance.embed.send(
                     "Votre rôle **" + role + "** a bien été supprimé.",
                     <TextChannel>message.channel
                 );
             } else {
                 member.roles.add(roleInstance);
     
-                Client.instance.embed.sendSimple(
+                Client.instance.embed.send(
                     "Vous avez desormais le rôle **" + role + "** !",
                     <TextChannel>message.channel
                 );

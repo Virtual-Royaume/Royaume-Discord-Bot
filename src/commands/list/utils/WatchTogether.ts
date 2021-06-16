@@ -19,7 +19,7 @@ export default class WatchTogether extends Command {
 
     public async run(args: any[], message: Message) : Promise<void> {
         if(!message.member?.voice.channelID){
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "Vous devez être dans un salon vocal.",
                 <TextChannel>message.channel
             );
@@ -42,7 +42,7 @@ export default class WatchTogether extends Command {
                 target_application_id: AppDiscord.youtubeTogether,
             }
         }).then((invite: {code: string}) : void => {
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "<@" + message.author.id + "> a lancé **Youtube Together** !\n\n" +
 
                 "[Rejoindre l'activité](https://discord.gg/" + invite.code + ")",
@@ -50,7 +50,7 @@ export default class WatchTogether extends Command {
                 generalChannel
             );
 
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "Votre activité (**Youtube Together**) a bien était lancé, vous pouvez la rejoindre via cette invitation : https://discord.gg/" + invite.code,
                 <TextChannel>message.channel
             );

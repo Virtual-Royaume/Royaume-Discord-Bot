@@ -27,7 +27,7 @@ export default class Accept extends Command {
         const verifChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(TC.verif);
 
         if(!verifChannel){
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "Le salon de vérification est introuvable...",
                 <TextChannel>message.channel
             );
@@ -36,7 +36,7 @@ export default class Accept extends Command {
         
         verifChannel.messages.fetch(args[1]).then(messageInstance => {
             if(!memberInstance){
-                Client.instance.embed.sendSimple(
+                Client.instance.embed.send(
                     "Cette utilisateur n'est pas sur le Discord.",
                     <TextChannel>message.channel
                 );
@@ -44,7 +44,7 @@ export default class Accept extends Command {
             }
             
             if(!messageInstance){
-                Client.instance.embed.sendSimple(
+                Client.instance.embed.send(
                     "Ce message de présentation n'existe pas.",
                     <TextChannel>message.channel
                 );
@@ -61,14 +61,14 @@ export default class Accept extends Command {
                 memberInstance.roles.remove(roleVerif);
                 memberInstance.roles.add(roleEcuyer);
             } else {
-                Client.instance.embed.sendSimple(
+                Client.instance.embed.send(
                     "Impossible d'éditer les rôles du membre un des rôles suivant n'est pas accessible : verif, Ecuyer.",
                     <TextChannel>message.channel
                 );
             }
 
             // Send welcome message with new member presentation :
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "Bienvenue officiellement parmis nous <@" + memberInstance.id + "> !\n\n" +
                 
                 "Les rôles que vous voyez sur votre droite sont définis selon votre activité ainsi que " + 
@@ -81,7 +81,7 @@ export default class Accept extends Command {
                 <TextChannel>Client.instance.getGuild().channels.cache.get(TC.general)
             );
 
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "**Voici la présentation de <@" + memberInstance.id + "> :**\n\n" +
                 
                 messageInstance.content,

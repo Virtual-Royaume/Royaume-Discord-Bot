@@ -27,7 +27,7 @@ export default class TopVoice extends Command {
         let category: string;
 
         if((!["total", "mois"].includes(args[0]) && !(message.mentions.channels.first() instanceof TextChannel))){
-            Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
+            Client.instance.embed.send(this.getFormattedUsage(), <TextChannel>message.channel);
 
             return;
         } else {
@@ -62,7 +62,7 @@ export default class TopVoice extends Command {
             take: memberPerPage
         }));
 
-        let scorebordMessage = "__**Classements selon le nombre de message (" + category + ") (page : " + page + "/" + maxPage + ")**__\n\n";
+        let scorebordMessage = "";
 
         for(let i = 0; i < topVoiceOfPage.length; i++){
             const member = topVoiceOfPage[i];
@@ -81,6 +81,9 @@ export default class TopVoice extends Command {
             scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + member[columnName] + "\n";
         }
 
-        Client.instance.embed.sendSimple(scorebordMessage, <TextChannel>message.channel);
+        Client.instance.embed.send(
+            scorebordMessage, <TextChannel>message.channel, 
+            {title: "Classements selon le nombre de message (" + category + ") (page : " + page + "/" + maxPage + ")"}
+        );
     }
 }

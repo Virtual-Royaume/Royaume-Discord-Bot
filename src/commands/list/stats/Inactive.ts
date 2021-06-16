@@ -22,12 +22,13 @@ export default class Inactive extends Command {
         });
 
         if(inactives.length){
-            Client.instance.embed.sendSimple(
-                "**__Liste des membres inactif__**\n\n" + inactives.map(element => "<@" + element.userId + ">").join(", ") + ".", 
-                <TextChannel>message.channel
+            Client.instance.embed.send(
+                inactives.map(element => "<@" + element.userId + ">").join(", ") + ".", 
+                <TextChannel>message.channel,
+                {title: "Liste des membres inactif"}
             );
         } else {
-            Client.instance.embed.sendSimple("Aucun membre n'est inactif.", <TextChannel>message.channel);
+            Client.instance.embed.send("Aucun membre n'est inactif.", <TextChannel>message.channel);
         }
     }
 }

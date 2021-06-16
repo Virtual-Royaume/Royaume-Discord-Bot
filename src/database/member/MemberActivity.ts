@@ -72,7 +72,7 @@ export default class MemberActivity extends BaseEntity {
     @AfterUpdate()
     async stepUp(){
         if(this.totalMessageCount && this.totalMessageCount !== this.stepUpAnnoucement && this.totalMessageCount % 1000 === 0){
-            Client.instance.embed.sendSimple(
+            Client.instance.embed.send(
                 "<@" + this.userId + "> vient de passer le cap des " + this.totalMessageCount.toLocaleString("fr-FR") + " messages envoyés ! 🎉", 
                 <TextChannel>Client.instance.getGuild().channels.cache.get(TC.general)
             );

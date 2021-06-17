@@ -4,7 +4,7 @@ import Constants from "../constants/Constants";
 
 export default class Chart {
 
-    public static getBuffer(config: chartjs.ChartConfiguration, height: number, width: number) : Buffer {
+    public static getBuffer(config: chartjs.ChartConfiguration, height: number = 500, width: number = 1100) : Buffer {
         return new ChartJSNodeCanvas({height: height, width: width}).renderToBufferSync(config);
     }
 

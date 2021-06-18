@@ -1,11 +1,10 @@
-import {TextChannel, DMChannel, MessageEmbed, Message, NewsChannel, MessageAttachment, FileOptions} from "discord.js";
-
 import {TextChannel, DMChannel, MessageEmbed, Message, NewsChannel, FileOptions} from "discord.js";
 import { defaultColor } from "../../constants/Color";
 
 interface EmbedOptions {
     title?: string,
-    image?: FileOptions
+    image?: FileOptions,
+    imageUrl?: string
 }
 
 export default class Embed {
@@ -21,6 +20,7 @@ export default class Embed {
             embed.attachFiles([options.image]);
             embed.setImage("attachment://" + (embed.files[0] as FileOptions).name);
         }
+        if(options?.imageUrl) embed.setImage(options.imageUrl);
 
         return channel.send(embed);
     }

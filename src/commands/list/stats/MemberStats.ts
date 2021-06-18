@@ -50,7 +50,7 @@ export default class WatchTogether extends Command {
                 activityMessage += memberActivity[columnName].toLocaleString("fr-FR") + " dans <#" + channelID + ">\n";
             }
 
-            Client.instance.embed.send(activityMessage, <TextChannel>message.channel, {title: "Activité de <@" + member.id + ">"});
+            Client.instance.embed.send(activityMessage, <TextChannel>message.channel, {title: "Activité de " + member.displayName});
         } else {
             Client.instance.embed.send("Aucune statistique trouvée.", <TextChannel>message.channel);
         }

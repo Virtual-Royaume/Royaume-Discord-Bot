@@ -1,8 +1,8 @@
 import { Message, MessageEmbed } from "discord.js";
-
 import Command from "../../Command";
 import Client from "../../../client/Client";
 import Constants from "../../../constants/Constants";
+import { defaultColor } from "../../../constants/Color";
 
 export default class Help extends Command {
 
@@ -59,7 +59,7 @@ export default class Help extends Command {
         // Create base of embed :
         let embed = new MessageEmbed();
 
-        embed.setColor(Constants.color);
+        embed.setColor(defaultColor);
         
         // Add content of the first page :
         if(!category || !Client.instance.commandManager.categories.includes(category)){

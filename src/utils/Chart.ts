@@ -1,6 +1,6 @@
 import chartjs from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-import Constants from "../constants/Constants";
+import { defaultColor } from "../constants/Color";
 
 export default class Chart {
 
@@ -15,8 +15,8 @@ export default class Chart {
                 labels: labels,
                 datasets: [{
                     label: label,
-                    backgroundColor: Constants.color,
-                    borderColor: Constants.color,
+                    backgroundColor: defaultColor,
+                    borderColor: defaultColor,
                     tension: 0.3,
                     data: data
                 }]

@@ -1,7 +1,6 @@
 import { Message, MessageEmbed, TextChannel } from "discord.js";
 import Command from "../../Command";
 import ServerActivity from "../../../database/ServerActivity";
-import Constants from "../../../constants/Constants";
 import Chart from "../../../utils/Chart";
 import Client from "../../../client/Client";
 

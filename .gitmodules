@@ -1,0 +1,3 @@
+[submodule ".\\src\\api\\crypto"]
+	path = .\\src\\api\\crypto
+	url = https://github.com/Kyense/Crypto-API

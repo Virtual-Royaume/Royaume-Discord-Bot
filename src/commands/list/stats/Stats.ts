@@ -44,7 +44,7 @@ export default class Stats extends Command {
                     title: type.description,
                     image: {
                         name: type.columnName + "chart.png", 
-                        attachment: Chart.getBuffer(config, 500, 1100)
+                        attachment: Chart.getBuffer(config)
                     }
                 }
             );

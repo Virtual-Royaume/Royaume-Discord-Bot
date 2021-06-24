@@ -1,16 +1,18 @@
-import { Message, MessageEmbed } from "discord.js";
-import jsdom, { JSDOM } from "jsdom"
+import { Message, TextChannel } from "discord.js";
+import { JSDOM } from "jsdom";
 import Command from "../../Command";
 import Client from "../../../client/Client";
 
-
 export default class Help extends Command {
 
-    constructor() {
+    constructor(){
         super(
             "citates",
-            "Permet d'afficher une citation.",
-            "utils"
+            "Permet d'afficher une citation",
+            "utils",
+            {
+                aliases: ["citation", "cita"]
+            }
         );
     }
 
@@ -19,26 +21,35 @@ export default class Help extends Command {
         
         switch(args[0]) {
             case "about":
-                args.shift()
-                citation = this.get_citate_about(args.join("-"))
-                break;
+                args.shift();
+                
+                citation = this.getCitateAbout(args.join("-"))
+            break;
+
             case "from":
-                args.shift()
-                citation = this.get_citate_from(args.join("-"))
-                break;
+                args.shift();
+
+                citation = this.getCitateFrom(args.join("-"))
+            break;
+
             case undefined:
                 Client.instance.embed.sendSimple("Aucune citation trouvée.", message.channel);
-                return;
+            return;
+
             default:
-                citation = await this.get_citate_about(args.join("-"))
-                break;
+                citation = await this.getCitateAbout(args.join("-"))
+            break;
         }
 
         if(citation){
-            citation = this.unpack_citate(await citation);
+            citation = this.unpackCitate(await citation);
 
             if(citation){
-                Client.instance.embed.sendSimple("**\"** *" + citation[0] + '* **\"**\n\n__' + citation[1] + "__", message.channel);
+                Client.instance.embed.sendSimple(
+                    "**\"** *" + citation[0] + '* **\"**\n\n__' + citation[1] + "__", 
+                    <TextChannel>message.channel
+                );
+
                 return;
             }
         }
@@ -46,22 +57,24 @@ export default class Help extends Command {
         Client.instance.embed.sendSimple("Aucune citation trouvée.", message.channel);
     }
 
-    unpack_citate(div: Element): [string, string] | undefined {
-        let citation = div.querySelector('div.laCitation p.laCitation q a')?.textContent;
-        let author = div.querySelector('div.auteur a')?.getAttribute('title');
+    private unpackCitate(div: Element) : [string, string] | undefined {
+        let citation = div.querySelector("div.laCitation p.laCitation q a")?.textContent;
+        let author = div.querySelector("div.auteur a")?.getAttribute("title");
 
         if(author && citation) return [citation, author];
     }
 
-    async get_citate_about(key: string): Promise<Element> {
-        let result = await jsdom.JSDOM.fromURL("https://citation-celebre.leparisien.fr/citation/" + key);
-        let citations = result.window.document.getElementsByClassName("citation");
-        return citations[Math.floor(Math.random()*citations.length)];
+    private async getCitateAbout(key: string) : Promise<Element> {
+        const result = (await JSDOM.fromURL("https://citation-celebre.leparisien.fr/citation/" + key)).window.document;
+        const citations = result.getElementsByClassName("citation");
+
+        return citations[Math.floor(Math.random() * citations.length)];
     }
 
-    async get_citate_from(key: string): Promise<Element>{
-        let result = await jsdom.JSDOM.fromURL("https://citation-celebre.leparisien.fr/auteur/" + key);
-        let citations = result.window.document.getElementsByClassName("citation");
-        return citations[Math.floor(Math.random()*citations.length)];
+    private async getCitateFrom(key: string) : Promise<Element> {
+        const result = (await JSDOM.fromURL("https://citation-celebre.leparisien.fr/auteur/" + key)).window.document;
+        const citations = result.getElementsByClassName("citation");
+
+        return citations[Math.floor(Math.random() * citations.length)];
     }
 }

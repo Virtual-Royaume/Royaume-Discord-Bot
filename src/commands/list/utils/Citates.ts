@@ -11,12 +11,25 @@ export default class Citates extends Command {
             "Permet d'afficher une citation",
             "utils",
             {
-                aliases: ["citation", "cita"]
+                aliases: ["citation", "cita"],
+                usage: [
+                    {type: "required", usage: "daily | from | about"},
+                    {type: "optional", usage: "mot(s) | auteur"}
+                ],
             }
         );
     }
 
     async run(args: any[], message: Message) : Promise<void> {
+        if(args.length == 0){
+            Client.instance.embed.sendSimple(
+                this.getFormattedUsage(),
+                message.channel
+            );
+            return;
+        }
+
+
         let citation;
         
         switch(args[0]) {
@@ -26,7 +39,7 @@ export default class Citates extends Command {
                 citation = await this.getCitateFrom(args.join("-"))
             break;
 
-            case undefined:
+            case "daily":
                 citation =  await this.getDailyCitate();
             break;
 
@@ -39,7 +52,7 @@ export default class Citates extends Command {
         if(citation){
             citation = this.unpackCitate(citation);
 
-            const text = args[0]==undefined ? '**Citation du jour:**\n\n': '';
+            const text = args[0]=="daily" ? '**Citation du jour:**\n\n': '';
             
             if(citation){
                 Client.instance.embed.sendSimple(

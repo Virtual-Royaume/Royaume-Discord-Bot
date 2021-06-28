@@ -12,7 +12,7 @@ export default abstract class Command {
     public readonly additionalParams: AdditionalCommandParams;
 
     // Others :
-    private formattedUsage: string = "";
+    public readonly formattedUsage: string = "";
 
     constructor(name: string, description: string, category: string, additionalParams: AdditionalCommandParams = {}){
         this.name = name;
@@ -25,6 +25,7 @@ export default abstract class Command {
             this.additionalParams.usage.forEach(usageParam => {
                 let symbols = usageParam.type === "optional" ? ["<", ">"] : ["[", "]"];
 
+                // @ts-ignore
                 this.formattedUsage += " " + symbols[0] + usageParam.usage + symbols[1];
             });
         }
@@ -32,7 +33,7 @@ export default abstract class Command {
 
     public abstract run(args: any[], message: Message) : void;
 
-    protected getFormattedUsage() : string {
+    public getFormattedUsage() : string {
         if(this.additionalParams.usage){
             return "Utilisation : ``" + Constants.commandPrefix + this.name + this.formattedUsage + "``";
         } else {
@@ -41,5 +42,4 @@ export default abstract class Command {
             return "Erreur, aucun usage n'est disponible pour cette commande.";
         }
     }
-
 }

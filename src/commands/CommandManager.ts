@@ -2,7 +2,7 @@ import {Collection, Permissions, TextChannel} from "discord.js";
 
 import Client from "../client/Client";
 
-import ChannelIDs from "../constants/ChannelIDs";
+import { TextChannel as TC } from "../constants/ChannelID";
 import Constants from "../constants/Constants";
 
 import Command from "./Command";
@@ -14,10 +14,9 @@ export default class CommandManager {
 
     public readonly commands: Collection<string, Command> = new Collection();
     public readonly commandsAliases: Collection<string, Command> = new Collection();
+    public readonly categoriesWithCommands: Collection<string, Collection<string, Command>> = new Collection();
 
     public readonly categories: string[] = [];
-
-    public readonly categoriesWithCommands: Collection<string, Collection<string, Command>> = new Collection();
 
     constructor(){
         // Register commands automatically :
@@ -55,17 +54,9 @@ export default class CommandManager {
 
         // Call commands methods :
         Client.instance.on("message", async message => {
-            if(!message.content.startsWith(Constants.commandPrefix)) return;
+            if(!message.content.match(new RegExp("^\\" + Constants.commandPrefix + "[a-z]"))) return;
             if(message.content.length <= Constants.commandPrefix.length) return;
-
-            // Check if the order is executed in the command channel :
-            if(message.channel.id !== ChannelIDs.command){
-                Client.instance.embed.sendSimple(
-                    "Vous ne pouvez pas faire de commande en dehors du salon <#" + ChannelIDs.command + ">.",
-                    <TextChannel>message.channel
-                );
-                return;
-            }
+            if(!(message.channel instanceof TextChannel)) return;
 
             // Get args and command name in variable :
             const args: string[] = message.content.split(" ");
@@ -76,9 +67,52 @@ export default class CommandManager {
             // Get command instance if it exist :
             const command = this.commands.get(commandName) || this.commandsAliases.get(commandName);
 
-            // If the command exist, check permissions and run the command :
+            // If the command exists, check arguments, channel and permissions then run the command :
             if(command){
-                if(command.additionalParams.permissions && command.additionalParams.permissions.length > 0){
+                // Checks if command is executed from an allowed channel :
+                if(command.additionalParams.allowedChannels && command.additionalParams.allowedChannels.length){
+                    if(
+                        command.additionalParams.allowedChannels !== "EVERY" &&
+                        !command.additionalParams.allowedChannels.includes(message.channel.id as TC)
+                    ){
+                        Client.instance.embed.sendSimple(
+                            "Vous ne pouvez pas exécuter cette commande dans ce salon. Salon(s) autorisé(s) : " + 
+                            command.additionalParams.allowedChannels.map(element => "<#" + element.toString() + ">").join(", ") + ".",
+
+                            <TextChannel>message.channel
+                        );
+
+                        return;
+                    }
+                } else if(message.channel.id !== TC.commandes){
+                    Client.instance.embed.sendSimple(
+                        "Vous ne pouvez pas exécuter cette commande en dehors du salon <#" + TC.commandes + ">.",
+                        <TextChannel>message.channel
+                    );
+
+                    return;
+                }
+
+                // Checks if required arguments are provided, if any :
+                if(command.additionalParams.usage && command.additionalParams.usage.length){
+                    const hasRequiredArgs = command.additionalParams.usage.every((usageParam, index) => {
+                        if(usageParam.type === "required"){
+                            return args.length > index;
+                        } else return true;
+                    });
+
+                    if(!hasRequiredArgs){
+                        Client.instance.embed.sendSimple(
+                            command.getFormattedUsage(),
+                            <TextChannel> message.channel
+                        );
+                        
+                        return;
+                    }
+                }
+
+                //Checks if permissions are met, if any
+                if(command.additionalParams.permissions && command.additionalParams.permissions.length){
                     const admins = await Client.instance.getAdmins();
                     const member = message.member;
 
@@ -88,13 +122,13 @@ export default class CommandManager {
                         return;
                     }
 
-                    let hasPermission: boolean = command.additionalParams.permissions.every(permission => {
+                    const hasPermission: boolean = command.additionalParams.permissions.every(permission => {
                         if(permission === "TEAM_ADMIN"){
                             if(admins){
                                 return admins.get(member.id);
                             } else {
                                 Client.instance.logger.warning("Unable to get the list of bot admins, the check of the \"TEAM_ADMIN\" command permission failed in the " + this.constructor.name + " class");
-                            
+
                                 return false;
                             }
                         } else {
@@ -105,11 +139,19 @@ export default class CommandManager {
                     if(hasPermission){
                         command.run(args, message);
                     } else {
-                        Client.instance.embed.sendSimple("Vous n'avez pas la permission d'utiliser cette commande. Permissions requises : " + command.additionalParams.permissions.join(", ") + ".", <TextChannel>message.channel);
+                        Client.instance.embed.sendSimple(
+                            "Vous n'avez pas la permission d'utiliser cette commande. Permissions requises : " + command.additionalParams.permissions.join(", ") + ".",
+                            <TextChannel>message.channel
+                        );
                     }
                 } else {
                     command.run(args, message);
                 }
+            } else {
+                Client.instance.embed.sendSimple(
+                    "Cette commande n'existe pas, faites ``" + Constants.commandPrefix + "help`` pour voir la liste des commandes existantes.",
+                    <TextChannel>message.channel
+                ); 
             }
         });
     }

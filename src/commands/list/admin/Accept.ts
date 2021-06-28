@@ -1,6 +1,6 @@
-import { GuildMember, Message, TextChannel } from "discord.js";
+import {GuildMember, Message, TextChannel} from "discord.js";
 import Client from "../../../client/Client";
-import ChannelIDs from "../../../constants/ChannelIDs";
+import { TextChannel as TC } from "../../../constants/ChannelID";
 import Command from "../../Command";
 
 export default class Accept extends Command {
@@ -9,30 +9,22 @@ export default class Accept extends Command {
         super(
             "accept",
             "Permet d'accepter un membre dans le serveur",
-            "modération",
+            "admin",
             {
                 usage: [
                     {type: "required", usage: "ID de l'utilisateur"},
                     {type: "required", usage: "ID de son message de présentation"}
                 ],
-                aliases: ["a"]
+                aliases: ["a"],
+                permissions: ["ADMINISTRATOR"]
             }
         );
     }
 
-    public run(args: any[], message: Message): void {
-        // Check args count :
-        if(args.length < 2){
-            Client.instance.embed.sendSimple(
-                this.getFormattedUsage(),
-                <TextChannel>message.channel
-            );
-            return;
-        }
-        
+    public async run(args: any[], message: Message) : Promise<void> {
         // Get member, channel and messages instance and verify if it exist :
         const memberInstance: GuildMember|undefined = Client.instance.getGuild().members.cache.get(args[0]);
-        const verifChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.verif);
+        const verifChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(TC.verif);
 
         if(!verifChannel){
             Client.instance.embed.sendSimple(
@@ -67,7 +59,7 @@ export default class Accept extends Command {
 
             if(roleVerif && roleEcuyer){
                 memberInstance.roles.remove(roleVerif);
-                memberInstance.roles.add(rolesCache);
+                memberInstance.roles.add(roleEcuyer);
             } else {
                 Client.instance.embed.sendSimple(
                     "Impossible d'éditer les rôles du membre un des rôles suivant n'est pas accessible : verif, Ecuyer.",
@@ -83,10 +75,10 @@ export default class Accept extends Command {
                 "l'importance que vous portez au Royaume !\n\n" +
 
                 "Pour pouvoir accéder aux différents salons de la catégorie travail vous pouvez faire la " + 
-                "commande ``-role`` dans <#" + ChannelIDs.command + "> et choisir les rôles qui vous " + 
+                "commande ``-role`` dans <#" + TC.commandes + "> et choisir les rôles qui vous " +
                 "correspondent.\n\n",
 
-                <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
+                <TextChannel>Client.instance.getGuild().channels.cache.get(TC.general)
             );
 
             Client.instance.embed.sendSimple(
@@ -94,11 +86,11 @@ export default class Accept extends Command {
                 
                 messageInstance.content,
 
-                <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general)
+                <TextChannel>Client.instance.getGuild().channels.cache.get(TC.general)
             );
 
             // Mention the new member :
-            const generalChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(ChannelIDs.general);
+            const generalChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(TC.general);
 
             if(generalChannel) generalChannel.send("<@" + memberInstance.id + ">").then(mentionMsg => mentionMsg.delete());
         });

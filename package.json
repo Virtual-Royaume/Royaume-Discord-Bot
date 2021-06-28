@@ -21,7 +21,11 @@
   "homepage": "https://github.com/Virtual-Royaume/Royaume-Bot#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "canvas": "^2.8.0",
+    "chart.js": "^3.3.2",
+    "chartjs-node-canvas": "^3.2.0",
     "colors": "^1.4.0",
+    "dayjs": "^1.10.5",
     "discord.js": "^12.5.3",
     "fs": "^0.0.1-security",
     "jsdom": "^16.6.0",
@@ -33,7 +37,7 @@
     "@types/jsdom": "^16.2.11",
     "@types/node": "^15.3.0",
     "nodemon": "^2.0.7",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
   }
 }

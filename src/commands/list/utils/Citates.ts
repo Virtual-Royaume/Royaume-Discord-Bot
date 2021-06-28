@@ -13,8 +13,8 @@ export default class Citates extends Command {
             {
                 aliases: ["citation", "cita"],
                 usage: [
-                    {type: "required", usage: "daily | from | about"},
-                    {type: "optional", usage: "mot(s) | auteur"}
+                    {type: "required", usage: "\"daily\", \"from\" ou \"about\""},
+                    {type: "optional", usage: "nom de l'auteur ou des mots clés"}
                 ],
             }
         );
@@ -26,17 +26,17 @@ export default class Citates extends Command {
                 this.getFormattedUsage(),
                 message.channel
             );
+
             return;
         }
 
-
         let citation;
         
-        switch(args[0]) {
+        switch(args[0]){
             case "from":
                 args.shift();
 
-                citation = await this.getCitateFrom(args.join("-"))
+                citation = await this.getCitateFrom(args.join("-"));
             break;
 
             case "daily":
@@ -46,17 +46,18 @@ export default class Citates extends Command {
             case "about":
                 args.shift();
             default:
-                citation = await this.getCitateAbout(args.join("-"))
+                citation = await this.getCitateAbout(args.join("-"));
         }
 
         if(citation){
             citation = this.unpackCitate(citation);
 
-            const text = args[0]=="daily" ? '**Citation du jour:**\n\n': '';
+            const text = args[0] == "daily" ? "Citation du jour": "";
             
             if(citation){
                 Client.instance.embed.sendSimple(
-                    text + "**\"** *" + citation.citation + '* **\"**\n\n__' + citation.author + "__", 
+                    text + "**\"** *" + citation.citation + '* **\"**\n\n__' + citation.author + "__",
+
                     <TextChannel>message.channel
                 );
 
@@ -67,7 +68,7 @@ export default class Citates extends Command {
         Client.instance.embed.sendSimple("Aucune citation trouvée.", message.channel);
     }
 
-    private unpackCitate(div: Element) : {citation:string, author: string} | undefined {
+    private unpackCitate(div: Element) : {citation: string, author: string} | undefined {
         let citation = div.querySelector("div.laCitation p.laCitation q a")?.textContent;
         let author = div.querySelector("div.auteur a")?.getAttribute("title");
 
@@ -88,8 +89,9 @@ export default class Citates extends Command {
         return citations[Math.floor(Math.random() * citations.length)];
     }
 
-    private async getDailyCitate(): Promise<Element> {
-        const result = (await JSDOM.fromURL('https://citation-celebre.leparisien.fr/')).window.document;
+    private async getDailyCitate() : Promise<Element> {
+        const result = (await JSDOM.fromURL("https://citation-celebre.leparisien.fr/")).window.document;
+
         return result.getElementsByClassName("citation")[0];
     }
 }

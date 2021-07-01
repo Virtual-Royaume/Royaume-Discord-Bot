@@ -1,7 +1,6 @@
 import { Message as Msg } from "discord.js";
-import Member from "../../database/member/Member";
-import MemberActivity from "../../database/member/MemberActivity";
-import ServerActivity from "../../database/ServerActivity";
+import Member from "../../database/src/models/Member";
+import ServerActivity from "../../database/src/models/ServerActivity";
 import Event from "../Event";
 
 export default class Message extends Event {
@@ -20,16 +19,18 @@ export default class Message extends Event {
         serverActivity.save();
 
         // Update count of messages sent by members per channel and month message count :
-        const member = await Member.getMember(message.author);
-        const columnOfChannel = MemberActivity.channelIdsToColumnName[message.channel.id];
+        const member = await Member.getMember(message.author.id);
+        const columnOfChannel = Member.channelIDToPropertyName[message.channel.id];
 
-        member.activity.monthMessageCount++;
+        if(member){
+            member.activity.monthMessageCount++;
 
-        if(columnOfChannel){
-            // @ts-ignore
-            member.activity[columnOfChannel]++;
+            if(columnOfChannel){
+                // @ts-ignore
+                member.activity.channelsMessageCount[columnOfChannel]++;
+            }
+
+            member.save();
         }
-
-        member.save();
     }
 }

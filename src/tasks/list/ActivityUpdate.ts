@@ -16,7 +16,7 @@ export default class ServerActivityUpdate extends Task {
     public async run(timeout: NodeJS.Timeout) : Promise<void> {
         // Reset message of the month :
         if(dayjs().format("DD-HH-mm") === "01-00-00"){
-            Client.instance.database.createQueryBuilder().update(MemberActivity).set({voiceMinute: 0}).execute();
+            Client.instance.database.createQueryBuilder().update(MemberActivity).set({monthMessageCount: 0}).execute();
         }
 
         // Get server activity :

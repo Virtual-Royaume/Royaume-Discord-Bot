@@ -1,7 +1,7 @@
 import { GuildMember, TextChannel } from "discord.js";
 import Client from "../../client/Client";
 import { TextChannel as TC } from "../../constants/ChannelID";
-import Member from "../../database/member/Member";
+import Member from "../../database/src/models/Member";
 import Event from "../Event";
 
 export default class GuildMemberAdd extends Event {
@@ -38,9 +38,9 @@ export default class GuildMemberAdd extends Event {
 
         if(role) member.roles.add(role);
 
-        let memberDB = await Member.getMember(member.user);
+        let memberDB = await Member.getMember(member.user.id);
 
-        if(memberDB.alwaysInTheServer === false){
+        if(memberDB && memberDB.alwaysInTheServer === false){
             memberDB.alwaysInTheServer = true;
             memberDB.save();
         }

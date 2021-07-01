@@ -1,5 +1,5 @@
-import { GuildMember, TextChannel } from "discord.js";
-import Member from "../../database/member/Member";
+import { GuildMember } from "discord.js";
+import Member from "../../database/src/models/Member";
 import Event from "../Event";
 
 export default class GuildMemberRemove extends Event {
@@ -11,9 +11,11 @@ export default class GuildMemberRemove extends Event {
     public async run(member: GuildMember) : Promise<void> {
         if(member.user.bot) return;
         
-        const memberDB = await Member.getMember(member.user);
+        const memberDB = await Member.getMember(member.user.id);
 
-        memberDB.alwaysInTheServer = false;
-        memberDB.save();
+        if(memberDB){
+            memberDB.alwaysInTheServer = false;
+            memberDB.save();
+        }
     }
 }

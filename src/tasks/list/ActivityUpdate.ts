@@ -2,12 +2,11 @@ import dayjs from "dayjs";
 import { User } from "discord.js";
 import Client from "../../client/Client";
 import { VoiceChannel } from "../../constants/ChannelID";
-import Member from "../../database/member/Member";
-import MemberActivity from "../../database/member/MemberActivity";
-import ServerActivity from "../../database/ServerActivity";
+import Member from "../../database/src/models/Member";
+import ServerActivity from "../../database/src/models/ServerActivity";
 import Task from "../Task"
 
-export default class ServerActivityUpdate extends Task {
+export default class ServerActivityUpdate extends Task { //MemberActivity ServerActivity
 
     constructor(){
         super(60000 /* 1 minute */);
@@ -16,7 +15,7 @@ export default class ServerActivityUpdate extends Task {
     public async run(timeout: NodeJS.Timeout) : Promise<void> {
         // Reset message of the month :
         if(dayjs().format("DD-HH-mm") === "01-00-00"){
-            Client.instance.database.createQueryBuilder().update(MemberActivity).set({voiceMinute: 0}).execute();
+            Member.MemberModel.updateMany({}, {"activity.voiceMinute": 0});
         }
 
         // Get server activity :
@@ -39,10 +38,12 @@ export default class ServerActivityUpdate extends Task {
         memberVoiceList.forEach(async user => {
             serverActivity.voiceMinute++;
 
-            let member = await Member.getMember(user);
+            let member = await Member.getMember(user.id);
 
-            member.activity.voiceMinute++;
-            member.save();
+            if(member){
+                member.activity.voiceMinute++;
+                member.save();
+            }
         });
 
         // Save data :

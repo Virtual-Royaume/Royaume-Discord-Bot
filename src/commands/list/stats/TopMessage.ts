@@ -1,7 +1,6 @@
 import { Message, TextChannel } from "discord.js";
 import Client from "../../../client/Client";
-import Member from "../../../database/member/Member";
-import MemberActivity from "../../../database/member/MemberActivity";
+import Member from "../../../database/src/models/Member";
 import Command from "../../Command";
 
 export default class TopVoice extends Command {
@@ -34,17 +33,17 @@ export default class TopVoice extends Command {
             const channel = message.mentions.channels.first();
 
             if(channel instanceof TextChannel){
-                columnName = MemberActivity.channelIdsToColumnName[channel.id];
+                columnName = "activity.channelsMessageCount." + Member.channelIDToPropertyName[channel.id];
                 category = "<#" + channel.id + ">";
             } else {
-                columnName = args[0] === "mois" ? "monthMessageCount" : "totalMessageCount";
+                columnName = "activity." + (args[0] === "mois" ? "monthMessageCount" : "messageCount");
                 category = args[0] === "mois" ? "mois" : "total";
             }
         }
 
         // Get page :
         const memberPerPage = 20;
-        const totalRows = await MemberActivity.count();
+        const totalRows = await Member.MemberModel.count();
         const maxPage = Math.ceil(totalRows / memberPerPage);
 
         let page = 1;
@@ -54,27 +53,26 @@ export default class TopVoice extends Command {
         }
         
         // Send scoreboard :
-        const topVoiceOfPage = (await MemberActivity.find({
-            order: {
-                [columnName]: "DESC"
+        const topVoiceOfPage = (await Member.MemberModel.find({
+            sort: {
+                [columnName]: -1
             },
             skip: (page - 1) * memberPerPage,
-            take: memberPerPage
+            limit: memberPerPage
         }));
 
         let scorebordMessage = "__**Classements selon le nombre de message (" + category + ") (page : " + page + "/" + maxPage + ")**__\n\n";
 
         for(let i = 0; i < topVoiceOfPage.length; i++){
             const member = topVoiceOfPage[i];
-            const guildMember = Client.instance.getGuild().members.cache.get(member.userId);
+            const guildMember = Client.instance.getGuild().members.cache.get(member._id);
             
             let memberName: string;
 
             if(guildMember){
                 memberName = guildMember.displayName;
             } else {
-                // @ts-ignore
-                memberName = (await Member.findOne({userId: member.userId})).username;
+                memberName = member.username;
             }
 
             // @ts-ignore

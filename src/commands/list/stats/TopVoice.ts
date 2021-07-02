@@ -30,13 +30,10 @@ export default class TopVoice extends Command {
             page = args[0] > maxPage ? maxPage : Math.abs(args[0]);
         }
         
-        const topVoiceOfPage = await Member.MemberModel.find({
-            sort: {
-                "activity.voiceMinute": -1
-            },
-            skip: (page - 1) * memberPerPage,
-            limit: memberPerPage
-        });
+        const topVoiceOfPage = await Member.MemberModel.find({})
+            .sort({"activity.voiceMinute": -1})
+            .skip((page - 1) * memberPerPage).limit(memberPerPage)
+            .exec();
 
         let scorebordMessage = "__**Classements des membres les plus actifs en vocal (en minute) (page : " + page + "/" + maxPage + ")**__\n\n";
 

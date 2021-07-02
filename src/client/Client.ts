@@ -1,6 +1,5 @@
 import { Client as DiscordClient, Collection, Guild, Team, TeamMember } from "discord.js";
 
-import { createConnection, Connection } from "typeorm";
 import { readFileSync } from "fs";
 
 import EventManager from "../events/EventManager";
@@ -10,14 +9,9 @@ import TaskManager from "../tasks/TaskManager";
 import Logger from "./components/Logger";
 import Embed from "./components/Embed";
 
-import "reflect-metadata";
-
 export default class Client extends DiscordClient {
 
     public static instance: Client;
-
-    // Database connection :
-    public readonly database: Connection;
 
     // Events and commands managers :
     public readonly eventManager: EventManager;
@@ -47,15 +41,6 @@ export default class Client extends DiscordClient {
         // Load client components :
         this.logger = new Logger();
         this.embed = new Embed();
-
-        // Connect to database :
-        const ormConfig: string = require(this.resources + "configs/ormconfig.json");
-
-        createConnection(ormConfig).then(connection => {
-            (this as any).database = connection;
-
-            this.logger.success("Successful connection to the database");
-        }).catch(error => { throw new Error(error) });
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();

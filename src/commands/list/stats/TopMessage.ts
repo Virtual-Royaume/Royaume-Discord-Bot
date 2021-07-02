@@ -53,18 +53,15 @@ export default class TopVoice extends Command {
         }
         
         // Send scoreboard :
-        const topVoiceOfPage = (await Member.MemberModel.find({
-            sort: {
-                [columnName]: -1
-            },
-            skip: (page - 1) * memberPerPage,
-            limit: memberPerPage
-        }));
+        const topMessageOfPage = await Member.MemberModel.find({})
+            .sort({[columnName]: -1})
+            .skip((page - 1) * memberPerPage).limit(memberPerPage)
+            .exec();
 
         let scorebordMessage = "__**Classements selon le nombre de message (" + category + ") (page : " + page + "/" + maxPage + ")**__\n\n";
 
-        for(let i = 0; i < topVoiceOfPage.length; i++){
-            const member = topVoiceOfPage[i];
+        for(let i = 0; i < topMessageOfPage.length; i++){
+            const member = topMessageOfPage[i];
             const guildMember = Client.instance.getGuild().members.cache.get(member._id);
             
             let memberName: string;

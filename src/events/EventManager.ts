@@ -1,4 +1,4 @@
-import Client from "../client/Client";;
+import Client from "../client/Client";
 import { readdirSync } from "fs";
 import path from 'path';
 import Event from "./Event";
@@ -12,14 +12,14 @@ export default class EventManager {
     constructor(){
         const eventFiles = readdirSync(path.join(__dirname, "list"));
 
+        this.eventListenerCount = eventFiles.length
+
         eventFiles.forEach(file => {
             const event: Event = new (require(path.join(__dirname, "list", file)).default);
-
-            // @ts-ignore : it can't be undefined because I check if it is defined on the same line
-            this.events.set(event.name, this.events.get(event.name) ? this.events.get(event.name).concat(event) : [event]);
+            
+            const getEvents = this.events.get(event.name)
+            this.events.set(event.name, getEvents ? getEvents.concat(event) : [event]);
             Client.instance.on(event.name, async (...args) => event.run(...args));
-            // @ts-ignore : we are in the constructor
-            this.eventListenerCount++;
         });
     }
 }

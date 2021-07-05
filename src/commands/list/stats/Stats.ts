@@ -3,8 +3,13 @@ import Command from "../../Command";
 import chartjs from "chart.js";
 import Constants from "../../../constants/Constants";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-import ServerActivity from "../../../database/src/models/ServerActivity";
+import ServerActivity, { ServerActivityInterface } from "../../../database/src/models/ServerActivity";
 import dayjs from "dayjs";
+
+type ColumnDataType = {
+    columnName: keyof ServerActivityInterface,
+    description: string
+}
 
 export default class Stats extends Command {
 
@@ -16,11 +21,11 @@ export default class Stats extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public async run(args: unknown, message: Message) : Promise<void> {
         // Get server activity of the last 30 day (order by date) :
-        const serverActivity = (await ServerActivity.ServerActivityModel.find({}).sort({date: -1}).limit(30).exec()).reverse();
+        const serverActivity: ServerActivityInterface[] = (await ServerActivity.ServerActivityModel.find({}).sort({date: -1}).limit(30).exec()).reverse();
 
-        const data = [
+        const data: ColumnDataType[] = [
             {columnName: "voiceMinute", description: "Temps de vocal des utilisateurs en minutes"},
             {columnName: "messageCount", description: "Nombre de messages envoyés"},
             {columnName: "memberCount", description: "Nombre de membres présents sur le serveur"},
@@ -36,7 +41,6 @@ export default class Stats extends Command {
                         backgroundColor: Constants.color,
                         borderColor: Constants.color,
                         tension: 0.3,
-                        // @ts-ignore
                         data: serverActivity.map(element => element[type.columnName])
                     }]
                 },

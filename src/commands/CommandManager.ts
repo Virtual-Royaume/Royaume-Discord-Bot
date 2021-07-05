@@ -21,7 +21,7 @@ export default class CommandManager {
     constructor(){
         // Register commands automatically :
         readdirSync(path.join(__dirname, "list")).forEach(category => {
-            let commandsOfCategory = readdirSync(path.join(__dirname, "list", category));
+            const commandsOfCategory = readdirSync(path.join(__dirname, "list", category));
 
             commandsOfCategory.filter(file => file.endsWith(".ts")).forEach(commandFile => {
                 const commandPath = path.join(__dirname, "list", category, commandFile);

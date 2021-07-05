@@ -19,7 +19,7 @@ export default class WatchTogether extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public async run(args: string[], message: Message) : Promise<void> {
         let member: GuildMember|undefined|null;
 
         if(args[0] && message.mentions.members){
@@ -46,8 +46,11 @@ export default class WatchTogether extends Command {
             activityMessage += "**Nombre de message par salon :**\n";
             
             for(const [channelID, columnName] of Object.entries(Member.channelIDToPropertyName)){
+                // dangerous case, need to change interface???
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                activityMessage += memberActivity.activity[columnName].toLocaleString("fr-FR") + " dans <#" + channelID + ">\n";
+                const columnActivity = memberActivity.activity[columnName];
+                activityMessage += columnActivity.toLocaleString("fr-FR") + " dans <#" + channelID + ">\n";
             }
 
             Client.instance.embed.sendSimple(activityMessage, <TextChannel>message.channel);

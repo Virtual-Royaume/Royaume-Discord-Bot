@@ -19,15 +19,17 @@ export default class TopVoice extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public async run(args: string[], message: Message) : Promise<void> {
         const memberPerPage = 20;
         const totalRows = await Member.MemberModel.count();
         const maxPage = Math.ceil(totalRows / memberPerPage);
 
+        const argPage = Number(args[0])
+
         let page = 1;
 
-        if(args[0] && !isNaN(args[0]) && page > 0){
-            page = args[0] > maxPage ? maxPage : Math.abs(args[0]);
+        if(args[0] && !isNaN(argPage) && page > 0){
+            page = argPage > maxPage ? maxPage : Math.abs(argPage);
         }
         
         const topVoiceOfPage = await Member.MemberModel.find({})

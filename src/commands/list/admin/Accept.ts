@@ -21,7 +21,7 @@ export default class Accept extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public async run(args: string[], message: Message) : Promise<void> {
         // Get member, channel and messages instance and verify if it exist :
         const memberInstance: GuildMember|undefined = Client.instance.getGuild().members.cache.get(args[0]);
         const verifChannel: TextChannel|undefined = <TextChannel>Client.instance.getGuild().channels.cache.get(TC.verif);

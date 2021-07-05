@@ -6,7 +6,7 @@ type Type = "success" | "info" | "notice" | "warning" | "debug" | "error" | "wow
 
 export default class Logger {
 
-    private log(color: Colors, type: Type, message: string) : any {
+    private log(color: Colors, type: Type, message: string) {
         console.log(ColorManager[color](Constants.prefix + "[" + type.toUpperCase() + "] " + message));
     }
 

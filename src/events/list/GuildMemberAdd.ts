@@ -38,7 +38,7 @@ export default class GuildMemberAdd extends Event {
 
         if(role) member.roles.add(role);
 
-        let memberDB = await Member.getMember(member.user.id);
+        const memberDB = await Member.getMember(member.user.id);
 
         if(memberDB && memberDB.alwaysInTheServer === false){
             memberDB.alwaysInTheServer = true;

@@ -12,7 +12,7 @@ export default class ServerActivityUpdate extends Task { //MemberActivity Server
         super(60000 /* 1 minute */);
     }
 
-    public async run(timeout: NodeJS.Timeout) : Promise<void> {
+    public async run() : Promise<void> {
         // Reset message of the month :
         if(dayjs().format("DD-HH-mm") === "01-00-00"){
             Member.MemberModel.updateMany({}, {"activity.voiceMinute": 0});
@@ -27,7 +27,7 @@ export default class ServerActivityUpdate extends Task { //MemberActivity Server
         }
 
         // Update voice time (member, server global) :
-        let memberVoiceList: User[] = [];
+        const memberVoiceList: User[] = [];
 
         Client.instance.getGuild().voiceStates.cache.forEach(voiceState => {
             if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel && voiceState.channel.id !== VoiceChannel.afk){
@@ -38,7 +38,7 @@ export default class ServerActivityUpdate extends Task { //MemberActivity Server
         memberVoiceList.forEach(async user => {
             serverActivity.voiceMinute++;
 
-            let member = await Member.getMember(user.id);
+            const member = await Member.getMember(user.id);
 
             if(member){
                 member.activity.voiceMinute++;

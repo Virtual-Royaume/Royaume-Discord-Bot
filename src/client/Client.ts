@@ -73,7 +73,7 @@ export default class Client extends DiscordClient {
 
     public async getAdmins() : Promise<Collection<string, TeamMember> | void> {
         if(!this.team){
-            let owner = (await this.fetchApplication()).owner;
+            const owner = (await this.fetchApplication()).owner;
 
             if(owner instanceof Team) this.team = owner.members;
         }

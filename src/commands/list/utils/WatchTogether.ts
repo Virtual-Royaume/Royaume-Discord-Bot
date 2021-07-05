@@ -27,13 +27,14 @@ export default class WatchTogether extends Command {
             return;
         }
     
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const instance: any = Client.instance;
+        const instance = Client.instance;
         const generalChannel = Client.instance.getGuild().channels.cache.get(TC.general);
 
         if(!generalChannel || !(generalChannel instanceof TextChannel)) return;
     
-        // aucun object API sur cette object
+        // we asume access to a private methods
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         instance.api.channels(message.member.voice.channelID).invites.post({
             data: {
                 temporary: true,

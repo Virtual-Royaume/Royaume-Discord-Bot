@@ -46,10 +46,7 @@ export default class WatchTogether extends Command {
             activityMessage += "**Nombre de message par salon :**\n";
             
             for(const [channelID, columnName] of Object.entries(Member.channelIDToPropertyName)){
-                // dangerous case, need to change interface???
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                const columnActivity = memberActivity.activity[columnName];
+                const columnActivity = memberActivity.activity.channelsMessageCount[columnName];
                 activityMessage += columnActivity.toLocaleString("fr-FR") + " dans <#" + channelID + ">\n";
             }
 

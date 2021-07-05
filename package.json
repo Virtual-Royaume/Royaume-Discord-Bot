@@ -20,8 +20,6 @@
   },
   "homepage": "https://github.com/Virtual-Royaume/Royaume-Bot#readme",
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
-    "@typescript-eslint/parser": "^4.28.1",
     "axios": "^0.21.1",
     "canvas": "^2.8.0",
     "chart.js": "^3.3.2",

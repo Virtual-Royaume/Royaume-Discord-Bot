@@ -20,7 +20,7 @@ export default class Citates extends Command {
         );
     }
 
-    async run(args: any[], message: Message) : Promise<void> {
+    async run(args: string[], message: Message) : Promise<void> {
         if(args.length == 0){
             Client.instance.embed.sendSimple(
                 this.getFormattedUsage(),
@@ -45,6 +45,7 @@ export default class Citates extends Command {
 
             case "about":
                 args.shift();
+            break;
             default:
                 citation = await this.getCitateAbout(args.join("-"));
         }
@@ -56,7 +57,7 @@ export default class Citates extends Command {
             
             if(citation){
                 Client.instance.embed.sendSimple(
-                    text + "**\"** *" + citation.citation + '* **\"**\n\n__' + citation.author + "__",
+                    text + "**\"** *" + citation.citation + '* **"**\n\n__' + citation.author + "__",
 
                     <TextChannel>message.channel
                 );
@@ -69,8 +70,8 @@ export default class Citates extends Command {
     }
 
     private unpackCitate(div: Element) : {citation: string, author: string} | undefined {
-        let citation = div.querySelector("div.laCitation p.laCitation q a")?.textContent;
-        let author = div.querySelector("div.auteur a")?.getAttribute("title");
+        const citation = div.querySelector("div.laCitation p.laCitation q a")?.textContent;
+        const author = div.querySelector("div.auteur a")?.getAttribute("title");
 
         if(author && citation) return  {citation: citation, author: author};
     }

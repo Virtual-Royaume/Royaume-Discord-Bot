@@ -27,13 +27,13 @@ export default class VoiceGames extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public async run(args: string[], message: Message) : Promise<void> {
         if(!Object.keys(this.integrationsByCodeName).includes(args[0])){
             Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
 
             let integrationList = "__**Liste des intégrations**__\n\n";
 
-            for(let key in this.integrationsByCodeName){
+            for(const key in this.integrationsByCodeName){
                 integrationList += "**" + key + ":** " + this.integrationsByCodeName[key] + "\n";
             }
         
@@ -42,9 +42,11 @@ export default class VoiceGames extends Command {
             return;
         }
 
+        const firstArg = Number(args[0])
+
         const selectedIntegration = {
-            name: this.integrationsByCodeName[args[0]],
-            id: this.integrations[this.integrationsByCodeName[args[0]]]
+            name: this.integrationsByCodeName[firstArg],
+            id: this.integrations[this.integrationsByCodeName[firstArg]]
         };
 
         if(!message.member?.voice.channelID){
@@ -54,8 +56,9 @@ export default class VoiceGames extends Command {
             );
 
             return;
-        };
+        }
     
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const instance: any = Client.instance;
         const generalChannel = Client.instance.getGuild().channels.cache.get(TC.general);
 

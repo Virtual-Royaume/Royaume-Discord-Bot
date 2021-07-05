@@ -13,7 +13,7 @@ export default class Inactive extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public async run(args: string[], message: Message) : Promise<void> {
         const inactives = await Member.MemberModel.find({"activity.monthMessageCount": 0, alwaysInTheServer: true}).limit(30).exec();
 
         if(inactives.length){

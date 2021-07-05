@@ -12,7 +12,7 @@ export default abstract class Command {
     public readonly additionalParams: AdditionalCommandParams;
 
     // Others :
-    public readonly formattedUsage: string = "";
+    public formattedUsage = "";
 
     constructor(name: string, description: string, category: string, additionalParams: AdditionalCommandParams = {}){
         this.name = name;
@@ -23,15 +23,14 @@ export default abstract class Command {
         // Formatting of the usage if there is one :
         if(this.additionalParams.usage && this.additionalParams.usage.length > 0){
             this.additionalParams.usage.forEach(usageParam => {
-                let symbols = usageParam.type === "optional" ? ["<", ">"] : ["[", "]"];
+                const symbols = usageParam.type === "optional" ? ["<", ">"] : ["[", "]"];
 
-                // @ts-ignore
                 this.formattedUsage += " " + symbols[0] + usageParam.usage + symbols[1];
             });
         }
     }
 
-    public abstract run(args: any[], message: Message) : void;
+    public abstract run(args: string[], message: Message) : void;
 
     public getFormattedUsage() : string {
         if(this.additionalParams.usage){

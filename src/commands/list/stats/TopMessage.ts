@@ -20,7 +20,7 @@ export default class TopVoice extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public async run(args: string[], message: Message) : Promise<void> {
         // Get message category (specific channel, total, month) :
         let columnName: string;
         let category: string;
@@ -46,10 +46,12 @@ export default class TopVoice extends Command {
         const totalRows = await Member.MemberModel.count();
         const maxPage = Math.ceil(totalRows / memberPerPage);
 
+        const argPage = Number(args[0])
+
         let page = 1;
 
-        if(args[1] && !isNaN(args[1]) && page > 0){
-            page = args[1] > maxPage ? maxPage : Math.abs(args[1]);
+        if(args[0] && !isNaN(argPage) && page > 0){
+            page = argPage > maxPage ? maxPage : Math.abs(argPage);
         }
         
         // Send scoreboard :
@@ -72,8 +74,12 @@ export default class TopVoice extends Command {
                 memberName = member.username;
             }
 
-            // @ts-ignore
-            scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + member[columnName] + "\n";
+            // this line can cause compilation error, need to find a way to avoid this kind of syntaxe
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore 
+            const memberColumn = member[columnName]
+
+            scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + memberColumn + "\n";
         }
 
         Client.instance.embed.sendSimple(scorebordMessage, <TextChannel>message.channel);

@@ -6,5 +6,5 @@ export default abstract class Event {
         this.name = name;
     }
 
-    public abstract run(...args: any[]) : void;
+    public abstract run(...args: unknown[]) : void;
 }

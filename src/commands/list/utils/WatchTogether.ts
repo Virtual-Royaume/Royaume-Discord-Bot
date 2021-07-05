@@ -17,7 +17,7 @@ export default class WatchTogether extends Command {
         );
     }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public async run(args: string[], message: Message) : Promise<void> {
         if(!message.member?.voice.channelID){
             Client.instance.embed.sendSimple(
                 "Vous devez être dans un salon vocal.",
@@ -25,13 +25,15 @@ export default class WatchTogether extends Command {
             );
 
             return;
-        };
+        }
     
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const instance: any = Client.instance;
         const generalChannel = Client.instance.getGuild().channels.cache.get(TC.general);
 
         if(!generalChannel || !(generalChannel instanceof TextChannel)) return;
     
+        // aucun object API sur cette object
         instance.api.channels(message.member.voice.channelID).invites.post({
             data: {
                 temporary: true,

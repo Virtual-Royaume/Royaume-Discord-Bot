@@ -19,6 +19,8 @@ export default class Role extends Command {
     }
 
     public async run(args: string[], message: Message) : Promise<void> {
+        // We use require for this for import with variable (dynamic path name)
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const rolesWithCategory: Record<string, string[]> = require(Client.instance.resources + "/configs/role-category.json");
 
         let roles: string[] = [];

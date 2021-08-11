@@ -15,6 +15,8 @@ export default class EventManager {
         this.eventListenerCount = eventFiles.length
 
         eventFiles.forEach(file => {
+            // We use require here for a dynamic import.
+                // eslint-disable-next-line @typescript-eslint/no-var-requires 
             const event: Event = new (require(path.join(__dirname, "list", file)).default);
             
             const getEvents = this.events.get(event.name)

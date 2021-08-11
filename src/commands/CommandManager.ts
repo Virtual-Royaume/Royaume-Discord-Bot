@@ -25,6 +25,9 @@ export default class CommandManager {
 
             commandsOfCategory.filter(file => file.endsWith(".ts")).forEach(commandFile => {
                 const commandPath = path.join(__dirname, "list", category, commandFile);
+                
+                // We use require here for a dynamic import.
+                // eslint-disable-next-line @typescript-eslint/no-var-requires 
                 const command: Command = new (require(commandPath).default);
 
                 // Save command instance by name :

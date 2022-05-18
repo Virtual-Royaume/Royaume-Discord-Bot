@@ -77,11 +77,9 @@ export default class TopMessage extends Command {
         //     if(guildMember){
         //         memberName = guildMember.displayName;
         //     } else {
-        //         // @ts-ignore
         //         memberName = (await Member.findOne({userId: member.userId})).username;
         //     }
 
-        //     // @ts-ignore
         //     scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + member[columnName] + "\n";
         // }
 

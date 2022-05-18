@@ -41,7 +41,6 @@ export default class Stats extends Command {
         //                 backgroundColor: Constants.color,
         //                 borderColor: Constants.color,
         //                 tension: 0.3,
-        //                 // @ts-ignore
         //                 data: serverActivity.map(element => element[type.columnName])
         //             }]
         //         },

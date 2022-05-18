@@ -23,7 +23,6 @@ export default class Message extends Event {
         // member.activity.monthMessageCount++;
 
         // if(columnOfChannel){
-        //     // @ts-ignore
         //     member.activity[columnOfChannel]++;
         // }
 

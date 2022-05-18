@@ -1,18 +1,15 @@
-import { Message, TextChannel } from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction, TextChannel } from "discord.js";
 import Client from "../../client/Client";
 import Command from "../Command";
 
 export default class Inactive extends Command {
 
-    constructor(){
-        super(
-            "inactive",
-            "Voir les membres inactifs ce mois-ci",
-            "statistiques"
-        );
-    }
+    public readonly slashCommand = new SlashCommandBuilder()
+        .setName("inactive")
+        .setDescription("Voir les membres inactifs ce mois-ci");
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public execute(command: CommandInteraction) : void {
         // const inactives = await MemberActivity.find({
         //     where: {
         //         monthMessageCount: 0
@@ -37,6 +34,6 @@ export default class Inactive extends Command {
         //     );
         // } else {
         //     Client.instance.embed.sendSimple("Aucun membre n'est inactif.", <TextChannel>message.channel);
-        // }
+        // }   
     }
 }

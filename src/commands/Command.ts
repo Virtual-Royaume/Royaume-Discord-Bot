@@ -3,8 +3,8 @@ import { ApplicationCommandPermissionData, CommandInteraction, Message } from "d
 
 export default abstract class Command {
 
-    public abstract readonly slashCommand: SlashCommandBuilder;
-    public abstract readonly permissions: ApplicationCommandPermissionData[];
+    public abstract readonly slashCommand: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
+    public readonly permissions: ApplicationCommandPermissionData[] = [];
 
     get name() : string {
         return this.slashCommand.name;

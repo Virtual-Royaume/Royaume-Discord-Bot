@@ -8,11 +8,9 @@ import { simpleEmbed } from "../../utils/Embed";
 
 export default class WatchTogether extends Command {
 
-    public slashCommand: SlashCommandBuilder = new SlashCommandBuilder()
-        .setName("wt")
-        .setDescription("Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"")
-
-    public permissions: ApplicationCommandPermissionData[] = [];
+    public readonly slashCommand = new SlashCommandBuilder()
+        .setName("watch-together")
+        .setDescription("Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"");
 
     public async execute(command: CommandInteraction) : Promise<void> {
         if(!(command.member instanceof GuildMember)){

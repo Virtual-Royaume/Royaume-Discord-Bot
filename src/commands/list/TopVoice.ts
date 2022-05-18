@@ -1,24 +1,18 @@
-import { Message, TextChannel } from "discord.js";
-import Client from "../../client/Client";
+import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
 import Command from "../Command";
 
 export default class TopVoice extends Command {
 
-    constructor(){
-        super(
-            "topvoice",
-            "Voir le classement des membres les plus actifs en vocal",
-            "statistiques",
-            {
-                aliases: ["tvoice"],
-                usage: [
-                    {type: "optional", usage: "page"}
-                ]
-            }
+    public readonly slashCommand = new SlashCommandBuilder()
+        .setName("top-voice")
+        .setDescription("Voir le classement des membres les plus actifs en vocal")
+        .addNumberOption(new SlashCommandNumberOption()
+            .setName("page")
+            .setDescription("Page du classement")
         );
-    }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public execute(command: CommandInteraction) : void {
         // const memberPerPage = 20;
         // const totalRows = await MemberActivity.count();
         // const maxPage = Math.ceil(totalRows / memberPerPage);

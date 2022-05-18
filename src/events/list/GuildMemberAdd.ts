@@ -12,7 +12,7 @@ export default class GuildMemberAdd extends Event {
     public async run(member: GuildMember) : Promise<void> {
         if(member.user.bot) return;
         
-        const verifChannel: TextChannel = <TextChannel>Client.instance.channels.cache.get(TC.verif);
+        const verifChannel = Client.instance.channels.cache.get(TC.verif);
             
         Client.instance.embed.sendSimple(
             "Bienvenue <@" + member.id + ">, tu es dans le salon de vérification des nouveaux membres !\n\n" +

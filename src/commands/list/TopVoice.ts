@@ -50,6 +50,6 @@ export default class TopVoice extends Command {
         //     scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + member.voiceMinute + "\n";
         // }
 
-        // Client.instance.embed.sendSimple(scorebordMessage, <TextChannel>message.channel);
+        // Client.instance.embed.sendSimple(scorebordMessage, message.channel);
     }
 }

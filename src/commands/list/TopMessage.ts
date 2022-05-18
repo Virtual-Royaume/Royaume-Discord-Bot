@@ -31,7 +31,7 @@ export default class TopMessage extends Command {
         // let category: string;
 
         // if((!["total", "mois"].includes(args[0]) && !(message.mentions.channels.first() instanceof TextChannel))){
-        //     Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
+        //     Client.instance.embed.sendSimple(this.getFormattedUsage(), message.channel);
 
         //     return;
         // } else {
@@ -85,6 +85,6 @@ export default class TopMessage extends Command {
         //     scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + member[columnName] + "\n";
         // }
 
-        // Client.instance.embed.sendSimple(scorebordMessage, <TextChannel>message.channel);   
+        // Client.instance.embed.sendSimple(scorebordMessage, message.channel);   
     }
 }

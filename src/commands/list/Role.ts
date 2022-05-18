@@ -18,7 +18,7 @@ export default class Role extends Command {
         // if(roles.indexOf(args[0]) == -1){
         //     Client.instance.embed.sendSimple(
         //         this.getFormattedUsage(), 
-        //         <TextChannel>message.channel
+        //         message.channel
         //     );
 
         //     let rolesList = "**__Liste des rôles disponibles__**\n\n";
@@ -27,7 +27,7 @@ export default class Role extends Command {
         //         rolesList += "**" + category + " :** " + roles.join(", ") + "\n\n";
         //     }
 
-        //     Client.instance.embed.sendSimple(rolesList, <TextChannel>message.channel);
+        //     Client.instance.embed.sendSimple(rolesList, message.channel);
         //     return;
         // }
 
@@ -41,14 +41,14 @@ export default class Role extends Command {
     
         //         Client.instance.embed.sendSimple(
         //             "Votre rôle **" + role + "** a bien été supprimé.",
-        //             <TextChannel>message.channel
+        //             message.channel
         //         );
         //     } else {
         //         member.roles.add(roleInstance);
     
         //         Client.instance.embed.sendSimple(
         //             "Vous avez desormais le rôle **" + role + "** !",
-        //             <TextChannel>message.channel
+        //             message.channel
         //         );
         //     }
         // }

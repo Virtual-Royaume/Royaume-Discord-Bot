@@ -1,11 +1,8 @@
-import { Client as DiscordClient, Collection, Guild, Intents, Team, TeamMember, User } from "discord.js";
-
+import { Client as DiscordClient, Guild, Intents, Team, User } from "discord.js";
 import { readFileSync } from "fs";
-
 import EventManager from "../events/EventManager";
 import CommandManager from "../commands/CommandManager";
 import TaskManager from "../tasks/TaskManager";
-
 import Logger from "./components/Logger";
 import Embed from "./components/Embed";
 

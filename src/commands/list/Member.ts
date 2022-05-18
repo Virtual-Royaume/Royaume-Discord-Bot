@@ -22,7 +22,7 @@ export default class Member extends Command {
         // }
 
         // if(!(member instanceof GuildMember) || member.user.bot){
-        //     Client.instance.embed.sendSimple(this.getFormattedUsage(), <TextChannel>message.channel);
+        //     Client.instance.embed.sendSimple(this.getFormattedUsage(), message.channel);
 
         //     return;
         // }
@@ -43,9 +43,9 @@ export default class Member extends Command {
         //         activityMessage += memberActivity[columnName].toLocaleString("fr-FR") + " dans <#" + channelID + ">\n";
         //     }
 
-        //     Client.instance.embed.sendSimple(activityMessage, <TextChannel>message.channel);
+        //     Client.instance.embed.sendSimple(activityMessage, message.channel);
         // } else {
-        //     Client.instance.embed.sendSimple("Aucune statistique trouvée.", <TextChannel>message.channel);
+        //     Client.instance.embed.sendSimple("Aucune statistique trouvée.", message.channel);
         // }
     }
 }

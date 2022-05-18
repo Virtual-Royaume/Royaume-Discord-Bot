@@ -30,10 +30,10 @@ export default class Inactive extends Command {
         // if(inactivesOnTheServer.length){
         //     Client.instance.embed.sendSimple(
         //         "**__Liste des membres inactif__**\n\n" + inactivesOnTheServer.map(element => "<@" + element.userId + ">").join(", ") + ".", 
-        //         <TextChannel>message.channel
+        //         message.channel
         //     );
         // } else {
-        //     Client.instance.embed.sendSimple("Aucun membre n'est inactif.", <TextChannel>message.channel);
+        //     Client.instance.embed.sendSimple("Aucun membre n'est inactif.", message.channel);
         // }   
     }
 }

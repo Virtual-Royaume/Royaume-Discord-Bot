@@ -1,8 +1,8 @@
 import { Message, MessageEmbed } from "discord.js";
 import Command from "../../Command";
-import chartjs from "chart.js";
-import Constants from "../../../constants/Constants";
-import { ChartJSNodeCanvas } from "chartjs-node-canvas";
+// import chartjs from "chart.js";
+// import Constants from "../../../constants/Constants";
+// import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 
 export default class Stats extends Command {
 

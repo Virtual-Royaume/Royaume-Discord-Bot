@@ -1,24 +1,18 @@
-import { GuildMember, Message, TextChannel } from "discord.js";
+import { SlashCommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
+import { CommandInteraction, GuildMember, Message, TextChannel } from "discord.js";
 import Client from "../../client/Client";
 import Command from "../Command";
 
-export default class WatchTogether extends Command {
+export default class Member extends Command {
 
-    constructor(){
-        super(
-            "member-stats",
-            "Voir les statistiques d'activité d'un utilisateur",
-            "statistiques",
-            {
-                aliases: ["m-stats", "ms"],
-                usage: [
-                    {type: "optional", usage: "mentionner un membre"}
-                ]
-            }
+    public readonly slashCommand = new SlashCommandBuilder()
+        .setName("member")
+        .setDescription("Voir les statistiques et information d'un utilisateur")
+        .addUserOption(new SlashCommandUserOption()
+            .setName("member")
         );
-    }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public execute(command: CommandInteraction) : void {
         // let member: GuildMember|undefined|null;
 
         // if(args[0] && message.mentions.members){

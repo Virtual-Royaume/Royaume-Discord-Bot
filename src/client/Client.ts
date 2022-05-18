@@ -27,7 +27,7 @@ export default class Client extends DiscordClient {
 
     constructor(){
         super({
-            intents: [Intents.FLAGS.GUILDS]
+            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
         });
 
         // Save resources folder path :

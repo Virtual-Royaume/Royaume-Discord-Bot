@@ -1,25 +1,31 @@
-import { Message, TextChannel } from "discord.js";
-import Client from "../../client/Client";
+import { SlashCommandBuilder, SlashCommandChannelOption, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
 import Command from "../Command";
 
-export default class TopVoice extends Command {
+export default class TopMessage extends Command {
 
-    constructor(){
-        super(
-            "topmessage",
-            "Voir le classement des membres les plus actifs en terme de nombre de message",
-            "statistiques",
-            {
-                aliases: ["tmsg"],
-                usage: [
-                    {type: "required", usage: "total, mois ou mention d'un channel"},
-                    {type: "optional", usage: "page"}
-                ]
-            }
+    public readonly slashCommand = new SlashCommandBuilder()
+        .setName("top-message")
+        .setDescription("Voir le classement des membres les plus actifs en terme de nombre de message")
+        .addStringOption(new SlashCommandStringOption()
+            .setName("source")
+            .setDescription("Source du classement")
+            .addChoices(
+                { name: "total", value: "total" },
+                { name: "mois", value: "mois" },
+                { name: "salon", value: "salon" }
+            )
+            .setRequired(true)
+        ).addNumberOption(new SlashCommandNumberOption()
+            .setName("page")
+            .setDescription("Page du classement")
+            .setMinValue(1)
+        ).addChannelOption(new SlashCommandChannelOption()
+            .setName("salon")
+            .setDescription("Choix du salon si vous avez choisi \"salon\" comme source")
         );
-    }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public execute(command: CommandInteraction) : void {
         // Get message category (specific channel, total, month) :
         // let columnName: string;
         // let category: string;
@@ -79,6 +85,6 @@ export default class TopVoice extends Command {
         //     scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + member[columnName] + "\n";
         // }
 
-        // Client.instance.embed.sendSimple(scorebordMessage, <TextChannel>message.channel);
+        // Client.instance.embed.sendSimple(scorebordMessage, <TextChannel>message.channel);   
     }
 }

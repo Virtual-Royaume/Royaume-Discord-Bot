@@ -39,7 +39,6 @@ export default class Member extends Command {
         //     activityMessage += "**Nombre de message par salon :**\n";
             
         //     for(const [channelID, columnName] of Object.entries(MemberActivity.channelIdsToColumnName)){
-        //         // @ts-ignore
         //         activityMessage += memberActivity[columnName].toLocaleString("fr-FR") + " dans <#" + channelID + ">\n";
         //     }
 

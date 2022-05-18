@@ -43,7 +43,6 @@ export default class TopVoice extends Command {
         //     if(guildMember){
         //         memberName = guildMember.displayName;
         //     } else {
-        //         // @ts-ignore
         //         memberName = (await Member.findOne({userId: member.userId})).username;
         //     }
 

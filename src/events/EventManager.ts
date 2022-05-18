@@ -15,10 +15,9 @@ export default class EventManager {
         eventFiles.forEach(file => {
             const event: Event = new (require(path.join(__dirname, "list", file)).default);
 
-            // @ts-ignore : it can't be undefined because I check if it is defined on the same line
             this.events.set(event.name, this.events.get(event.name) ? this.events.get(event.name).concat(event) : [event]);
             Client.instance.on(event.name, async (...args) => event.run(...args));
-            // @ts-ignore : we are in the constructor
+            
             this.eventListenerCount++;
         });
     }

@@ -1,7 +1,5 @@
 {
-  "name": "royaume-bot",
-  "version": "1.0.0",
-  "description": "The Discord bot of Royaume",
+  "version": "2.0.0",
   "main": "build/client/Client.js",
   "scripts": {
     "start": "ts-node ./src/client/Client.ts",
@@ -9,16 +7,6 @@
     "fstart": "tsc && node .",
     "build": "tsc"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Virtual-Royaume/Royaume-Bot.git"
-  },
-  "author": "Bluzzi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Virtual-Royaume/Royaume-Bot/issues"
-  },
-  "homepage": "https://github.com/Virtual-Royaume/Royaume-Bot#readme",
   "dependencies": {
     "chart.js": "^3.7.1",
     "chartjs-node-canvas": "^4.1.6",

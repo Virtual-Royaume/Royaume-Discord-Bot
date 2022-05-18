@@ -1,48 +1,32 @@
-import { Message, TextChannel } from "discord.js";
-import Client from "../../client/Client";
+import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
+import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 
 export default class Clean extends Command {
 
-    constructor(){
-        super(
-            "clean",
-            "Permet de supprimer plusieurs messages en même temps",
-            "admin",
-            {
-                usage: [
-                    {type: "required", usage: "nombre entre 1 et 100"}
-                ],
-                aliases: ["clear", "cl"],
-                permissions: ["ADMINISTRATOR"],
-                allowedChannels: "EVERY"
-            }
+    public readonly slashCommand = new SlashCommandBuilder()
+        .setName("clean")
+        .setDescription("Permet de supprimer plusieurs messages en même temps")
+        .addNumberOption(new SlashCommandNumberOption()
+            .setName("nombre")
+            .setDescription("Nombre de message a supprimer")
+            .setMinValue(1)
+            .setMaxValue(100) // TODO : test if this always have limit
         );
-    }
 
-    public async run(args: any[], message: Message) : Promise<void> {
-        const channel = message.channel;
+    // TODO : add permissions
 
-        if(channel.type !== "GUILD_TEXT") return; // TODO : found a better solution for this fix 
+    public async execute(command: CommandInteraction) : Promise<void> {
+        const number = command.options.getNumber("nombre") ?? 10;
 
-        if(isNaN(args[0]) || args[0] < 1 || args[0] > 100){
-            Client.instance.embed.sendSimple(
-                this.getFormattedUsage(),
-                channel
-            );
-
+        if(command.channel?.type !== "GUILD_TEXT"){
+            command.reply({ embeds: [simpleEmbed("Vous devez utilisé cette commande dans un salon textuel.", "error")], ephemeral: true });
             return;
         }
 
-        channel.bulkDelete(Number(args[0]) + 1).then(() => {
-            Client.instance.embed.sendSimple(
-                "**" + args[0] + "** message(s) supprimé(s). Ce message sera lui aussi supprimé dans quelques secondes...",
-                channel
-            ).then(msg => {
-                setTimeout(() => {
-                    if(!msg.deleted) msg.delete();
-                }, 10000 /* 10 secondes */);
-            });
-        });
+        await command.channel.bulkDelete(number);
+
+        command.reply({ embeds: [simpleEmbed(`Vous avez supprimé ${number} messages !`)], ephemeral: true });
     }
 }

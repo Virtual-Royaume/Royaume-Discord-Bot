@@ -1,6 +1,6 @@
 import { GuildMember, Message, TextChannel } from "discord.js";
-import Client from "../../../client/Client";
-import Command from "../../Command";
+import Client from "../../client/Client";
+import Command from "../Command";
 
 export default class WatchTogether extends Command {
 

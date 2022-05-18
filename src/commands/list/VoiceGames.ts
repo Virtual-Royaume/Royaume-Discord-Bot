@@ -1,7 +1,7 @@
 import { Message, TextChannel } from "discord.js";
-import Client from "../../../client/Client";
-import { TextChannel as TC } from "../../../constants/ChannelID";
-import Command from "../../Command";
+import Client from "../../client/Client";
+import { TextChannel as TC } from "../../constants/ChannelID";
+import Command from "../Command";
 
 export default class VoiceGames extends Command {
 
@@ -80,7 +80,7 @@ export default class VoiceGames extends Command {
             );
 
             Client.instance.embed.sendSimple(
-                "Votre jeu (**" + selectedIntegration.name + "**) a bien était lancé, vous pouvez le rejoindre via cette invitation : https://discord.gg/" + invite.code,
+                "Votre jeu (**" + selectedIntegration.name + "**) a bien été lancée, vous pouvez le rejoindre via cette invitation : https://discord.gg/" + invite.code,
                 <TextChannel>message.channel
             );
         });

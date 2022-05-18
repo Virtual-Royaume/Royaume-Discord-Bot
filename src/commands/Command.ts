@@ -1,45 +1,18 @@
-import { Message } from "discord.js";
-import Client from "../client/Client";
-import Constants from "../constants/Constants";
-import AdditionalCommandParams from "./AdditionalCommandParams";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import { ApplicationCommandPermissionData, CommandInteraction, Message } from "discord.js";
 
 export default abstract class Command {
 
-    // Base properties :
-    public readonly name: string;
-    public readonly description: string;
-    public readonly category: string;
-    public readonly additionalParams: AdditionalCommandParams;
+    public abstract readonly slashCommand: SlashCommandBuilder;
+    public abstract readonly permissions: ApplicationCommandPermissionData[];
 
-    // Others :
-    public readonly formattedUsage: string = "";
-
-    constructor(name: string, description: string, category: string, additionalParams: AdditionalCommandParams = {}){
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.additionalParams = additionalParams;
-        
-        // Formatting of the usage if there is one :
-        if(this.additionalParams.usage && this.additionalParams.usage.length > 0){
-            this.additionalParams.usage.forEach(usageParam => {
-                let symbols = usageParam.type === "optional" ? ["<", ">"] : ["[", "]"];
-
-                // @ts-ignore
-                this.formattedUsage += " " + symbols[0] + usageParam.usage + symbols[1];
-            });
-        }
+    get name() : string {
+        return this.slashCommand.name;
     }
 
-    public abstract run(args: any[], message: Message) : void;
-
-    public getFormattedUsage() : string {
-        if(this.additionalParams.usage){
-            return "Utilisation : ``" + Constants.commandPrefix + this.name + this.formattedUsage + "``";
-        } else {
-            Client.instance.logger.warning("The [command: " + this.name + ", class: " + this.constructor.name + "] command uses the getFormattedUsage() method but no usage is specified in the AdditionalCommandParams interface of this command's constructor.");
-
-            return "Erreur, aucun usage n'est disponible pour cette commande.";
-        }
+    get description() : string {
+        return this.slashCommand.description;
     }
+
+    public abstract execute(command: CommandInteraction) : void;
 }

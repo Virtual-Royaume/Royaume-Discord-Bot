@@ -1,5 +1,6 @@
-import { Message, MessageEmbed } from "discord.js";
-import Command from "../../Command";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import { ApplicationCommandPermissionData, CacheType, CommandInteraction, Message, MessageEmbed } from "discord.js";
+import Command from "../Command";
 // import chartjs from "chart.js";
 // import Constants from "../../../constants/Constants";
 // import { ChartJSNodeCanvas } from "chartjs-node-canvas";

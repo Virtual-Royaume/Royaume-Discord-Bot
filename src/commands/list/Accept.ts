@@ -1,7 +1,7 @@
 import {GuildMember, Message, TextChannel} from "discord.js";
-import Client from "../../../client/Client";
-import { TextChannel as TC } from "../../../constants/ChannelID";
-import Command from "../../Command";
+import Client from "../../client/Client";
+import { TextChannel as TC } from "../../constants/ChannelID";
+import Command from "../Command";
 
 export default class Accept extends Command {
 

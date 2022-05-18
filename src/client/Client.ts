@@ -4,7 +4,6 @@ import EventManager from "../events/EventManager";
 import CommandManager from "../commands/CommandManager";
 import TaskManager from "../tasks/TaskManager";
 import Logger from "./components/Logger";
-import Embed from "./components/Embed";
 
 export default class Client extends DiscordClient {
 
@@ -17,7 +16,6 @@ export default class Client extends DiscordClient {
 
     // Client components :
     public readonly logger: Logger;
-    public readonly embed: Embed;
 
     // Resources folder :
     public readonly resources: string;
@@ -36,7 +34,6 @@ export default class Client extends DiscordClient {
 
         // Load client components :
         this.logger = new Logger();
-        this.embed = new Embed();
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();

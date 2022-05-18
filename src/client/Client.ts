@@ -9,8 +9,6 @@ import TaskManager from "../tasks/TaskManager";
 import Logger from "./components/Logger";
 import Embed from "./components/Embed";
 
-import "reflect-metadata";
-
 export default class Client extends DiscordClient {
 
     public static instance: Client;
@@ -43,9 +41,6 @@ export default class Client extends DiscordClient {
         // Load client components :
         this.logger = new Logger();
         this.embed = new Embed();
-
-        // Connect to database :
-        const ormConfig: string = require(this.resources + "configs/ormconfig.json");
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();
@@ -87,5 +82,5 @@ export default class Client extends DiscordClient {
     }
 }
 
-(new Logger()).info("Sarting in progress (events, commands, tasks, database connection and client)...");
+(new Logger()).info("Sarting in progress (events, commands, tasks connection and client)...");
 new Client();

@@ -47,7 +47,7 @@ export default class VoiceGames extends Command {
             id: this.integrations[this.integrationsByCodeName[args[0]]]
         };
 
-        if(!message.member?.voice.channelID){
+        if(!message.member?.voice.channelId){
             Client.instance.embed.sendSimple(
                 "Vous devez être dans un salon vocal.",
                 <TextChannel>message.channel
@@ -61,7 +61,7 @@ export default class VoiceGames extends Command {
 
         if(!generalChannel || !(generalChannel instanceof TextChannel)) return;
     
-        instance.api.channels(message.member.voice.channelID).invites.post({
+        instance.api.channels(message.member.voice.channelId).invites.post({
             data: {
                 temporary: true,
                 max_age: 86400, // one day

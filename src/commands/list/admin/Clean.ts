@@ -21,19 +21,23 @@ export default class Clean extends Command {
     }
 
     public async run(args: any[], message: Message) : Promise<void> {
+        const channel = message.channel;
+
+        if(channel.type !== "GUILD_TEXT") return; // TODO : found a better solution for this fix 
+
         if(isNaN(args[0]) || args[0] < 1 || args[0] > 100){
             Client.instance.embed.sendSimple(
                 this.getFormattedUsage(),
-                message.channel
+                channel
             );
 
             return;
         }
 
-        (message.channel as TextChannel).bulkDelete(Number(args[0]) + 1).then(() => {
+        channel.bulkDelete(Number(args[0]) + 1).then(() => {
             Client.instance.embed.sendSimple(
                 "**" + args[0] + "** message(s) supprimé(s). Ce message sera lui aussi supprimé dans quelques secondes...",
-                message.channel
+                channel
             ).then(msg => {
                 setTimeout(() => {
                     if(!msg.deleted) msg.delete();

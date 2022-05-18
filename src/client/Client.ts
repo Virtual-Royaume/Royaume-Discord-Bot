@@ -1,4 +1,4 @@
-import { Client as DiscordClient, Collection, Guild, Team, TeamMember } from "discord.js";
+import { Client as DiscordClient, Collection, Guild, Intents, Team, TeamMember } from "discord.js";
 
 import { readFileSync } from "fs";
 
@@ -29,7 +29,9 @@ export default class Client extends DiscordClient {
     private team: Collection<string, TeamMember>;
 
     constructor(){
-        super();
+        super({
+            intents: [Intents.FLAGS.GUILDS]
+        });
 
         // Save resources folder path :
         this.resources = __dirname + "/../../resources/";

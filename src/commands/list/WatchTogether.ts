@@ -1,8 +1,8 @@
 import { Message, TextChannel } from "discord.js";
-import Client from "../../../client/Client";
-import { TextChannel as TC } from "../../../constants/ChannelID";
-import Command from "../../Command";
-import AppDiscord from "./../../../constants/AppDiscord";
+import Client from "../../client/Client";
+import { TextChannel as TC } from "../../constants/ChannelID";
+import Command from "../Command";
+import AppDiscord from "../../constants/AppDiscord";
 
 export default class WatchTogether extends Command {
 
@@ -31,7 +31,7 @@ export default class WatchTogether extends Command {
         const generalChannel = Client.instance.getGuild().channels.cache.get(TC.general);
 
         if(!generalChannel || !(generalChannel instanceof TextChannel)) return;
-    
+
         instance.api.channels(message.member.voice.channelId).invites.post({
             data: {
                 temporary: true,
@@ -51,7 +51,7 @@ export default class WatchTogether extends Command {
             );
 
             Client.instance.embed.sendSimple(
-                "Votre activité (**Youtube Together**) a bien était lancé, vous pouvez la rejoindre via cette invitation : https://discord.gg/" + invite.code,
+                "Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/" + invite.code,
                 <TextChannel>message.channel
             );
         });

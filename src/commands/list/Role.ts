@@ -1,6 +1,6 @@
 import { GuildMember, Message, TextChannel, Role as DRole } from "discord.js";
-import Client from "../../../client/Client";
-import Command from "../../Command";
+import Client from "../../client/Client";
+import Command from "../Command";
 
 export default class Role extends Command {
 

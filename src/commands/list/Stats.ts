@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { ApplicationCommandPermissionData, CacheType, CommandInteraction, Message, MessageEmbed } from "discord.js";
+import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
+import { CommandInteraction, MessageEmbed } from "discord.js";
 import Command from "../Command";
 // import chartjs from "chart.js";
 // import Constants from "../../../constants/Constants";
@@ -7,15 +7,16 @@ import Command from "../Command";
 
 export default class Stats extends Command {
 
-    constructor(){
-        super(
-            "stats",
-            "Voir les statistiques du serveurs sur les 30 derniers jours",
-            "statistiques"
+    public readonly slashCommand = new SlashCommandBuilder()
+        .setName("stats")
+        .setDescription("Voir les statistiques du serveurs")
+        .addNumberOption(new SlashCommandNumberOption()
+            .setName("historique")
+            .setDescription("Nombre de jour d'historique")
+            .setMinValue(5)
         );
-    }
 
-    public async run(args: any[], message: Message) : Promise<void> {
+    public execute(command: CommandInteraction) : void {    
         // Get server activity of the last 30 day (order by date) :
         // const serverActivity = (await ServerActivity.find({
         //     order: {

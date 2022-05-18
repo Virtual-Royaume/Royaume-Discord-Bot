@@ -113,7 +113,7 @@ export default class CommandManager {
 
                 //Checks if permissions are met, if any
                 if(command.additionalParams.permissions && command.additionalParams.permissions.length){
-                    const admins = await Client.instance.getAdmins();
+                    const admins = await Client.instance.getDevTeam();
                     const member = message.member;
 
                     if(!member){

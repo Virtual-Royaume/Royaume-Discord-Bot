@@ -10,6 +10,8 @@ export default class TopVoice extends Command {
         .addNumberOption(new SlashCommandNumberOption()
             .setName("page")
             .setDescription("Page du classement")
+            .setRequired(false)
+            .setMinValue(1)
         );
 
     public execute(command: CommandInteraction) : void {

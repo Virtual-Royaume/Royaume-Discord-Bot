@@ -1,4 +1,4 @@
-import { Client as DiscordClient, Collection, Guild, Intents, Team, TeamMember } from "discord.js";
+import { Client as DiscordClient, Collection, Guild, Intents, Team, TeamMember, User } from "discord.js";
 
 import { readFileSync } from "fs";
 
@@ -24,9 +24,6 @@ export default class Client extends DiscordClient {
 
     // Resources folder :
     public readonly resources: string;
-
-    // Dev team :
-    private team: Collection<string, TeamMember>;
 
     constructor(){
         super({
@@ -73,14 +70,16 @@ export default class Client extends DiscordClient {
         }
     }
 
-    public async getAdmins() : Promise<Collection<string, TeamMember> | void> {
-        if(!this.team){
-            let owner = (await this.fetchApplication()).owner;
+    public getDevTeam() : User[] | null {
+        const owner = this.application?.owner;
 
-            if(owner instanceof Team) this.team = owner.members;
+        if(owner instanceof User){
+            return [owner];
+        } else if(owner instanceof Team){
+            return owner.members.map(teamMember => teamMember.user);
+        } else {
+            return null;
         }
-
-        return this.team;
     }
 }
 

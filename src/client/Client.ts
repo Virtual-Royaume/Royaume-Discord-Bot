@@ -61,7 +61,7 @@ export default class Client extends DiscordClient {
     }
 
     public getGuild() : Guild {
-        const guild: Guild|undefined = Client.instance.guilds.cache.first();
+        const guild = Client.instance.guilds.cache.first();
 
         if(guild instanceof Guild){
             return guild;

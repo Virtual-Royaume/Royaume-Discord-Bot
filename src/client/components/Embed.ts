@@ -1,10 +1,10 @@
-import {TextChannel, DMChannel, MessageEmbed, Message, NewsChannel} from "discord.js";
+import { MessageEmbed, Message, TextBasedChannel } from "discord.js";
 
 import Constants from "../../constants/Constants";
 
 export default class Embed {
 
-    public sendSimple(message: string, channel: TextChannel|DMChannel|NewsChannel) : Promise<Message> {
+    public sendSimple(message: string, channel: TextBasedChannel) : Promise<Message> {
         const embed = new MessageEmbed();
 
         // @ts-ignore : compatible with the type HexColorString in ColorResolvable, 

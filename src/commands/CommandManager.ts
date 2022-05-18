@@ -113,7 +113,7 @@ export default class CommandManager {
 
                 //Checks if permissions are met, if any
                 if(command.additionalParams.permissions && command.additionalParams.permissions.length){
-                    const admins = await Client.instance.getDevTeam();
+                    const devTeam = await Client.instance.getDevTeam();
                     const member = message.member;
 
                     if(!member){
@@ -124,8 +124,8 @@ export default class CommandManager {
 
                     const hasPermission: boolean = command.additionalParams.permissions.every(permission => {
                         if(permission === "TEAM_ADMIN"){
-                            if(admins){
-                                return admins.get(member.id);
+                            if(devTeam){
+                                return devTeam.find(user => user.id === member.id);
                             } else {
                                 Client.instance.logger.warning("Unable to get the list of bot admins, the check of the \"TEAM_ADMIN\" command permission failed in the " + this.constructor.name + " class");
 

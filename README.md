@@ -1,5 +1,6 @@
 # Royaume Discord Bot
 
+Invite link : https://discord.com/api/oauth2/authorize?client_id=831542935014867014&permissions=0&scope=applications.commands%20bot
 Package requis dans le futur : chart.js, chartjs-node-canvas
 
 ## Installation Guide

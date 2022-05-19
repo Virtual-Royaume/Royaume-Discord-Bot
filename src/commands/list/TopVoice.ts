@@ -13,6 +13,8 @@ export default class TopVoice extends Command {
             .setMinValue(1)
         );
 
+    public readonly defaultPermission: boolean = true;
+
     public execute(command: CommandInteraction) : void {
         // const memberPerPage = 20;
         // const totalRows = await MemberActivity.count();

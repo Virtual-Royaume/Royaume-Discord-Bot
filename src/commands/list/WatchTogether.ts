@@ -12,6 +12,8 @@ export default class WatchTogether extends Command {
         .setName("watch-together")
         .setDescription("Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"");
 
+    public readonly defaultPermission: boolean = true;
+
     public async execute(command: CommandInteraction) : Promise<void> {
         if(!(command.member instanceof GuildMember)){
             command.reply({ embeds: [simpleEmbed("Erreur lors de l'exécution de la commande.", "error")], ephemeral: true });

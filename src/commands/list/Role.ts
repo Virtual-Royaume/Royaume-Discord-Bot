@@ -9,6 +9,8 @@ export default class Role extends Command {
         .setName("role")
         .setDescription("Permet de choisir ses rôles");
 
+    public readonly defaultPermission: boolean = true;
+
     public execute(command: CommandInteraction) : void {
         // const rolesWithCategory: {[category: string]: string[]} = require(Client.instance.resources + "/configs/role-category.json");
 

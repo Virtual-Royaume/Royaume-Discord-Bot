@@ -1,8 +1,8 @@
 import { CommandInteraction, GuildMember } from "discord.js";
 import Client from "../../Client";
 import Command from "../Command";
-import { youtubeTogether } from "../../../resources/configs/app-integration.json";
-import { generalChannel } from "../../../resources/configs/information.json";
+import { youtubeTogether } from "../../../resources/config/app-integration.json";
+import { generalChannel } from "../../../resources/config/information.json";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { simpleEmbed } from "../../utils/Embed";
 

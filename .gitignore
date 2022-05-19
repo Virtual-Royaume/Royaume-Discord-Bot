@@ -107,8 +107,7 @@ dist
 package-lock.json
 
 # Sensible access
-token.txt
-ormconfig.json
+secret.json
 
 # Ignore TS compiled
 build/

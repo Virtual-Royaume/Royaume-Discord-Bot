@@ -3,7 +3,7 @@
   "main": "build/Client.js",
   "scripts": {
     "start": "ts-node ./src/Client.ts",
-    "dev": "nodemon --exec ts-node ./src/client/Client.ts",
+    "dev": "nodemon --exec ts-node ./src/Client.ts",
     "fstart": "tsc && node .",
     "build": "tsc"
   },

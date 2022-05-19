@@ -19,11 +19,11 @@ export default class Client extends DiscordClient {
 
     constructor(){
         super({
-            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
+            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_INTEGRATIONS]
         });
 
         // Save resources folder path :
-        this.resources = __dirname + "/../../resources/";
+        this.resources = __dirname + "/../resources/";
 
         // Create bot instance and login it :
         Client.instance = this;
@@ -35,6 +35,8 @@ export default class Client extends DiscordClient {
         this.taskManager = new TaskManager();
 
         this.on("ready", () => {
+            this.commandManager.register();
+
             // Set activity :
             this.user?.setActivity("royaume.world", {type: "STREAMING", url: "https://www.twitch.tv/royaumeuh"});
 

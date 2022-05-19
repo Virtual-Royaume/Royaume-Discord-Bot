@@ -25,6 +25,8 @@ export default class TopMessage extends Command {
             .setDescription("Choix du salon si vous avez choisi \"salon\" comme source")
         );
 
+    public readonly defaultPermission: boolean = true;
+
     public execute(command: CommandInteraction) : void {
         // Get message category (specific channel, total, month) :
         // let columnName: string;

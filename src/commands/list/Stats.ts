@@ -16,6 +16,8 @@ export default class Stats extends Command {
             .setMinValue(5)
         );
 
+    public readonly defaultPermission: boolean = true;
+
     public execute(command: CommandInteraction) : void {    
         // Get server activity of the last 30 day (order by date) :
         // const serverActivity = (await ServerActivity.find({

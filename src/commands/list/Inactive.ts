@@ -8,6 +8,8 @@ export default class Inactive extends Command {
     public readonly slashCommand = new SlashCommandBuilder()
         .setName("inactive")
         .setDescription("Voir les membres inactifs ce mois-ci");
+    
+    public readonly defaultPermission: boolean = true;
 
     public execute(command: CommandInteraction) : void {
         // const inactives = await MemberActivity.find({

@@ -9,7 +9,7 @@ export default class CommandManager {
     public readonly commands: Collection<string, Command> = new Collection();
 
     constructor(){
-        this.load().then(() => this.commandListener());
+        this.load().then(() => this.listener());
     }
 
     private async load() : Promise<void> {
@@ -22,10 +22,10 @@ export default class CommandManager {
             this.commands.set(command.name, command);
         }
 
-        Logger.info(`${files.length} events loaded`);
+        Logger.info(`${files.length} commands loaded`);
     }
 
-    private async commandListener() : Promise<void> {
+    private async listener() : Promise<void> {
         Client.instance.on("interactionCreate", async interaction => {
             if(!interaction.isCommand()) return;
 
@@ -39,6 +39,15 @@ export default class CommandManager {
      * Register the slash commands (use it when the client is ready)
      */
     public async register() : Promise<void> {
-        // TODO : register the slashs commands
+        // Get command data :
+        const commands = this.commands.map(command => {
+            return command.slashCommand.setDefaultPermission(command.defaultPermission).toJSON()
+        });
+
+        // Set commands :
+        // @ts-ignore : DJS - DJS/builders typing version problem
+        await Client.instance.getGuild().commands.set(commands);
+
+        Logger.info("Successfully registered application (/) commands");
     }
 }

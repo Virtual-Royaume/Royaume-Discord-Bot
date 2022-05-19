@@ -10,7 +10,10 @@ export default class Member extends Command {
         .setDescription("Voir les statistiques et information d'un utilisateur")
         .addUserOption(new SlashCommandUserOption()
             .setName("member")
+            .setDescription("Membre ciblé")
         );
+
+    public readonly defaultPermission: boolean = true;
 
     public execute(command: CommandInteraction) : void {
         // let member: GuildMember|undefined|null;

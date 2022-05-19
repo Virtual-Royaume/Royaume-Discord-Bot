@@ -9,9 +9,21 @@ export const createMember = gql`
 `;
 
 export const setAlwaysOnServer = gql`
-    mutation setAlwaysOnServer($id: ID!, $value: Boolean!){
+    mutation SetAlwaysOnServer($id: ID!, $value: Boolean!){
         updateMember(id: $id, input: {
             isOnServer: $value
         })
+    }
+`;
+
+export const incChannelMessage = gql`
+    mutation IncChannelMessage($id: ID!, $channelId: ID!){
+        incMemberDiscordActivityChannel(id: $id, channelId: $channelId)
+    }
+`;
+
+export const incVoiceMinute = gql`
+    mutation IncVoiceMinute($id: ID!){
+        incMemberDiscordVoiceMinute(id: $id)
     }
 `;

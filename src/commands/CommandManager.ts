@@ -2,6 +2,7 @@ import { Collection } from "discord.js";
 import Client from "../Client";
 import Command from "./Command";
 import { readdirSync } from "fs";
+import Logger from "../utils/Logger";
 
 export default class CommandManager {
 
@@ -12,12 +13,16 @@ export default class CommandManager {
     }
 
     private async load() : Promise<void> {
-        for(const file of readdirSync(`${__dirname}/list`).filter(file => file.endsWith(".ts"))){
+        const files = readdirSync(`${__dirname}/list`).filter(file => file.endsWith(".ts"));
+
+        for(const file of files){
             const dynamicImport = await import (`./list/${file}`);
             const command: Command = new dynamicImport.default;
 
             this.commands.set(command.name, command);
         }
+
+        Logger.info(`${files.length} events loaded`);
     }
 
     private async commandListener() : Promise<void> {

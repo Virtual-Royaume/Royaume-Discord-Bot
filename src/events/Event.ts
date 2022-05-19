@@ -1,10 +1,7 @@
 export default abstract class Event {
 
-    public readonly name: string;
+    public abstract readonly name: string;
+    public readonly once: boolean = false;
 
-    constructor(name: string){
-        this.name = name;
-    }
-
-    public abstract run(...args: any[]) : void;
+    public abstract execute(...args: any[]) : void;
 }

@@ -1,13 +1,13 @@
 export default abstract class Task {
 
-    public readonly interval: number;
+    protected readonly time: number;
 
-    /**
-     * @param interval interval in milliseconds
-     */
-    constructor(interval: number){
-        this.interval = interval;
+    protected readonly timer: NodeJS.Timer;
+
+    constructor(time: number){
+        this.time = time;
+        this.timer = setInterval(() => this.run(), time);
     }
 
-    public abstract run(timeout: NodeJS.Timeout) : void;
+    public abstract run() : void;
 }

@@ -12,7 +12,7 @@ export default class Clean extends Command {
             .setName("nombre")
             .setDescription("Nombre de message a supprimer")
             .setMinValue(1)
-            .setMaxValue(150) // TODO : test if this always have limit
+            .setMaxValue(100)
         );
 
     public readonly defaultPermission: boolean = false;

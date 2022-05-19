@@ -17,8 +17,6 @@ export default class Clean extends Command {
 
     public readonly defaultPermission: boolean = false;
 
-    // TODO : add permissions
-
     public async execute(command: CommandInteraction) : Promise<void> {
         const number = command.options.getNumber("nombre") ?? 10;
 

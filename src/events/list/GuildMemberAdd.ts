@@ -3,7 +3,8 @@ import Client from "../../Client";
 import Event from "../Event";
 import { verifRole } from "../../../resources/config/information.json";
 import { request } from "../../api/Request";
-import { createMember } from "../../api/requests/Member";
+import { createMember, setAlwaysOnServer } from "../../api/requests/Member";
+import { MakeMaybe, MakeOptional, Member } from "../../api/Schema";
 
 export default class GuildMemberAdd extends Event {
 
@@ -18,10 +19,12 @@ export default class GuildMemberAdd extends Event {
         if(role) member.roles.add(role);
 
         // Create the member if he dosen't exist :
-        request(createMember, {
+        const result = await request<MakeOptional<Member, keyof Member>>(createMember, {
             id: member.id,
             username: member.user.username,
-            profilPicture: member.user.avatarURL
+            profilPicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
         });
+
+        if(!result._id) request(setAlwaysOnServer, { id: member.id, value: true });
     }
 }

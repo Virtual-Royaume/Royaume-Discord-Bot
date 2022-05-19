@@ -7,3 +7,11 @@ export const createMember = gql`
         }
     }
 `;
+
+export const setAlwaysOnServer = gql`
+    mutation setAlwaysOnServer($id: ID!, $value: Boolean!){
+        updateMember(id: $id, input: {
+            isOnServer: $value
+        })
+    }
+`;

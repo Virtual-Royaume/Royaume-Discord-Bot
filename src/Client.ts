@@ -16,7 +16,10 @@ export default class Client extends DiscordClient {
 
     constructor(){
         super({
-            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_INTEGRATIONS]
+            intents: [
+                Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, 
+                Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_MEMBERS
+            ]
         });
 
         // Create bot instance and login it :

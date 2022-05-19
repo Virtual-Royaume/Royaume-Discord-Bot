@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction, TextChannel } from "discord.js";
-import Client from "../../client/Client";
+import Client from "../../Client";
 import Command from "../Command";
 
 export default class Inactive extends Command {

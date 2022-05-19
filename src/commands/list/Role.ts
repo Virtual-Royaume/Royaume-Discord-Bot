@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { GuildMember, Message, TextChannel, Role as DRole, CacheType, CommandInteraction } from "discord.js";
-import Client from "../../client/Client";
+import Client from "../../Client";
 import Command from "../Command";
 
 export default class Role extends Command {

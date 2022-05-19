@@ -1,5 +1,5 @@
 import { ApplicationCommandPermissionData, CommandInteraction, GuildMember } from "discord.js";
-import Client from "../../client/Client";
+import Client from "../../Client";
 import Command from "../Command";
 import { youtubeTogether } from "../../../resources/configs/app-integration.json";
 import { generalChannel } from "../../../resources/configs/information.json";

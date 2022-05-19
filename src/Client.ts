@@ -1,9 +1,9 @@
 import { Client as DiscordClient, Guild, Intents, Team, User } from "discord.js";
 import { readFileSync } from "fs";
-import EventManager from "../events/EventManager";
-import CommandManager from "../commands/CommandManager";
-import TaskManager from "../tasks/TaskManager";
-import Logger from "./components/Logger";
+import EventManager from "./events/EventManager";
+import CommandManager from "./commands/CommandManager";
+import TaskManager from "./tasks/TaskManager";
+import Logger from "./utils/Logger";
 
 export default class Client extends DiscordClient {
 
@@ -13,9 +13,6 @@ export default class Client extends DiscordClient {
     public readonly eventManager: EventManager;
     public readonly commandManager: CommandManager;
     public readonly taskManager: TaskManager;
-
-    // Client components :
-    public readonly logger: Logger;
 
     // Resources folder :
     public readonly resources: string;
@@ -32,25 +29,22 @@ export default class Client extends DiscordClient {
         Client.instance = this;
         this.login(readFileSync(this.resources + "token.txt", {encoding: "utf-8"}));
 
-        // Load client components :
-        this.logger = new Logger();
-
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();
-        this.logger.success(this.eventManager.eventListenerCount + " events loaded");
+        //Logger.success(this.eventManager.eventListenerCount + " events loaded");
 
         this.commandManager = new CommandManager();
-        this.logger.success(this.commandManager.commands.size + " commands loaded");
+        Logger.info(this.commandManager.commands.size + " commands loaded");
 
         this.taskManager = new TaskManager();
-        this.logger.success(this.taskManager.taskListenerCount + " tasks loaded");
+        Logger.info(this.taskManager.taskListenerCount + " tasks loaded");
 
         this.on("ready", () => {
             // Set activity :
             this.user?.setActivity("royaume.world", {type: "STREAMING", url: "https://www.twitch.tv/royaumeuh"});
 
             // Finish :
-            this.logger.success("Client has been started");
+            Logger.success("Client has been started");
         });
     }
 
@@ -77,5 +71,5 @@ export default class Client extends DiscordClient {
     }
 }
 
-(new Logger()).info("Sarting in progress (events, commands, tasks connection and client)...");
+Logger.info("Sarting in progress...");
 new Client();

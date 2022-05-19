@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { CommandInteraction, MessageEmbed } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import Command from "../Command";
 // import chartjs from "chart.js";
 // import Constants from "../../../constants/Constants";

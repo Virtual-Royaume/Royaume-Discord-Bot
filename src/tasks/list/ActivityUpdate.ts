@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { User } from "discord.js";
 import Client from "../../Client";
-import { VoiceChannel } from "../../constants/ChannelID";
 import Task from "../Task"
 
 export default class ServerActivityUpdate extends Task {

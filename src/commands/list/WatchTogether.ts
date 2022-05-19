@@ -30,7 +30,7 @@ export default class WatchTogether extends Command {
 
         if(generalTextChannel?.type !== "GUILD_TEXT") return;
 
-        const invite: { code: string } = instance.api.channels(command.member.voice.channelId).invites.post({
+        const invite: { code: string } = await instance.api.channels(command.member.voice.channelId).invites.post({
             data: {
                 temporary: true,
                 max_age: 86_400,

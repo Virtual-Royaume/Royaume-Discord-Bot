@@ -1,24 +1,24 @@
-import Client from "../client/Client";;
+import Client from "../Client";;
 import { readdirSync } from "fs";
-import path from 'path';
 import Event from "./Event";
-import { Collection } from "discord.js";
+import Logger from "../utils/Logger";
 
 export default class EventManager {
 
-    public readonly events: Collection<string, Event[]> = new Collection();
-    public readonly eventListenerCount: number = 0;
-
     constructor(){
-        const eventFiles = readdirSync(path.join(__dirname, "list"));
+        this.load();
+    }
 
-        eventFiles.forEach(file => {
-            const event: Event = new (require(path.join(__dirname, "list", file)).default);
+    private async load() : Promise<void> {
+        const files = readdirSync(`${__dirname}/list`).filter(file => file.endsWith(".ts"));
 
-            this.events.set(event.name, this.events.get(event.name) ? this.events.get(event.name).concat(event) : [event]);
-            Client.instance.on(event.name, async (...args) => event.run(...args));
-            
-            this.eventListenerCount++;
-        });
+        for(const file of files){
+            const dynamicImport = await import (`./list/${file}`);
+            const event: Event = new dynamicImport.default;
+
+            Client.instance[event.once ? "once" : "on"](event.name, (...args) => event.execute(...args));
+        }
+
+        Logger.info(`${files.length} events loaded`);
     }
 }

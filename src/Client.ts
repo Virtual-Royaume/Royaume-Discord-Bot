@@ -31,13 +31,8 @@ export default class Client extends DiscordClient {
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();
-        //Logger.success(this.eventManager.eventListenerCount + " events loaded");
-
         this.commandManager = new CommandManager();
-        Logger.info(this.commandManager.commands.size + " commands loaded");
-
         this.taskManager = new TaskManager();
-        Logger.info(this.taskManager.taskListenerCount + " tasks loaded");
 
         this.on("ready", () => {
             // Set activity :

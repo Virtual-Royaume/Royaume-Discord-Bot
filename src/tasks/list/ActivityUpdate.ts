@@ -7,10 +7,10 @@ import Task from "../Task"
 export default class ServerActivityUpdate extends Task {
 
     constructor(){
-        super(60000 /* 1 minute */);
+        super(60_000);
     }
 
-    public async run(timeout: NodeJS.Timeout) : Promise<void> {
+    public async run() : Promise<void> {
         // // Reset message of the month :
         // if(dayjs().format("DD-HH-mm") === "01-00-00"){
         //     Client.instance.database.createQueryBuilder().update(MemberActivity).set({monthMessageCount: 0}).execute();

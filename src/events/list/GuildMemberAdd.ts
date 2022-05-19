@@ -5,11 +5,9 @@ import { verifRole } from "../../../resources/configs/information.json";
 
 export default class GuildMemberAdd extends Event {
 
-    constructor(){
-        super("guildMemberAdd");
-    }
+    public name: string = "guildMemberAdd";
 
-    public async run(member: GuildMember) : Promise<void> {
+    public async execute(member: GuildMember) : Promise<void> {
         if(member.user.bot) return;
 
         const role = await Client.instance.getGuild().roles.fetch(verifRole);

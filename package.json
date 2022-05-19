@@ -12,6 +12,7 @@
     "colors": "^1.4.0",
     "dayjs": "^1.10.5",
     "discord.js": "^13.7.0",
+    "graphql": "^16.5.0",
     "graphql-request": "^4.2.0"
   },
   "devDependencies": {

@@ -1,5 +1,9 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
+import { request } from "../../api/Request";
+import { getVoiceTime } from "../../api/requests/Member";
+import { Member } from "../../api/Schema";
+import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 
 export default class TopVoice extends Command {
@@ -15,42 +19,34 @@ export default class TopVoice extends Command {
 
     public readonly defaultPermission: boolean = true;
 
-    public execute(command: CommandInteraction) : void {
-        // const memberPerPage = 20;
-        // const totalRows = await MemberActivity.count();
-        // const maxPage = Math.ceil(totalRows / memberPerPage);
+    private memberPerPage = 20;
 
-        // let page = 1;
+    public async execute(command: CommandInteraction) : Promise<void> {
+        // Get data and sort it :
+        let members = (await request<{ members: Member[] }>(getVoiceTime)).members.sort((a, b) => {
+            return (b?.activity.voiceMinute ?? 0) - (a?.activity.voiceMinute ?? 0);
+        });
 
-        // if(args[0] && !isNaN(args[0]) && page > 0){
-        //     page = args[0] > maxPage ? maxPage : Math.abs(args[0]);
-        // }
-        
-        // const topVoiceOfPage = (await MemberActivity.find({
-        //     order: {
-        //         voiceMinute: "DESC"
-        //     },
-        //     skip: (page - 1) * memberPerPage,
-        //     take: memberPerPage
-        // }));
+        // Get page and max page :
+        const maxPage = Math.ceil(members.length / this.memberPerPage);
+        let page = command.options.getNumber("page") ?? 1;
+        page = page > maxPage ? maxPage : page;
 
-        // let scorebordMessage = "__**Classements des membres les plus actifs en vocal (en minute) (page : " + page + "/" + maxPage + ")**__\n\n";
+        // Slice the members with page and max page :
+        members = members.slice(page * this.memberPerPage - this.memberPerPage, page * this.memberPerPage);
 
-        // for(let i = 0; i < topVoiceOfPage.length; i++){
-        //     const member = topVoiceOfPage[i];
-        //     const guildMember = Client.instance.getGuild().members.cache.get(member.userId);
-            
-        //     let memberName: string;
+        // Format leaderboard :
+        let message = "";
 
-        //     if(guildMember){
-        //         memberName = guildMember.displayName;
-        //     } else {
-        //         memberName = (await Member.findOne({userId: member.userId})).username;
-        //     }
+        for(let i = 0; i < members.length; i++){
+            const member = members[i];
 
-        //     scorebordMessage += "**" + (i + 1 + (page - 1) * memberPerPage) + ". " + memberName + " :** " + member.voiceMinute + "\n";
-        // }
+            message += `**${(i + 1 + (page - 1) * this.memberPerPage)}. ${member.username} :** ${member.activity.voiceMinute}\n`;
+        }
 
-        // Client.instance.embed.sendSimple(scorebordMessage, message.channel);
+        // Send leaderboard :
+        command.channel?.send({
+            embeds: [simpleEmbed(message, "normal", `Classements des membres les plus actifs en vocal (en minute) (page : ${page}/${maxPage})`)]
+        })
     }
 }

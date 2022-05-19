@@ -20,8 +20,7 @@ export default class Inactive extends Command {
                 const monthMessage = member.activity?.messages.monthCount;
 
                 return monthMessage && monthMessage === 0;
-            }
-        );
+            });
 
         if(members.length){
             const message = members.map(member => "<@" + member._id + ">").join(", ");

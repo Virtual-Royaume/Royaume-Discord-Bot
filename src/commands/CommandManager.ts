@@ -1,5 +1,5 @@
 import { Collection } from "discord.js";
-import Client from "../client/Client";
+import Client from "../Client";
 import Command from "./Command";
 import { readdirSync } from "fs";
 

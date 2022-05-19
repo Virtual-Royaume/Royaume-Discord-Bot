@@ -1,8 +1,8 @@
 {
   "version": "2.0.0",
-  "main": "build/client/Client.js",
+  "main": "build/Client.js",
   "scripts": {
-    "start": "ts-node ./src/client/Client.ts",
+    "start": "ts-node ./src/Client.ts",
     "dev": "nodemon --exec ts-node ./src/client/Client.ts",
     "fstart": "tsc && node .",
     "build": "tsc"

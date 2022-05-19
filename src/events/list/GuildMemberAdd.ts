@@ -1,5 +1,5 @@
 import { GuildMember } from "discord.js";
-import Client from "../../client/Client";
+import Client from "../../Client";
 import Event from "../Event";
 import { verifRole } from "../../../resources/configs/information.json";
 

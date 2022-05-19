@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
 import { CommandInteraction, GuildMember, Message, TextChannel } from "discord.js";
-import Client from "../../client/Client";
+import Client from "../../Client";
 import Command from "../Command";
 
 export default class Member extends Command {

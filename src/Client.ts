@@ -27,7 +27,7 @@ export default class Client extends DiscordClient {
 
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(readFileSync(this.resources + "token.txt", {encoding: "utf-8"}));
+        this.login(readFileSync(this.resources + "token.txt", { encoding: "utf-8" }));
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();

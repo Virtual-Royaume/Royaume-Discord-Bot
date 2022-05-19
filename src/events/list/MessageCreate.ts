@@ -1,13 +1,11 @@
 import { Message as Msg } from "discord.js";
 import Event from "../Event";
 
-export default class Message extends Event {
+export default class MessageCreate extends Event {
+    
+    public name: string = "messageCreate";
 
-    constructor(){
-        super("message");
-    }
-
-    public async run(message: Msg) : Promise<void> {
+    public async execute(message: Msg) : Promise<void> {
         // if(message.author.bot) return;
 
         // // Update number of messages in server activity :

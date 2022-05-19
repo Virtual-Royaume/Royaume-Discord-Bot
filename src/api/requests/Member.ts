@@ -27,3 +27,17 @@ export const incVoiceMinute = gql`
         incMemberDiscordVoiceMinute(id: $id)
     }
 `;
+
+export const getMonthMessageCount = gql`
+    query GetMonthMessageCount {
+        members {
+            _id
+            username
+            activity {
+                messages {
+                    monthCount
+                }
+            }
+        }
+    }
+`;

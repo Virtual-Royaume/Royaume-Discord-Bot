@@ -1,6 +1,9 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, TextChannel } from "discord.js";
-import Client from "../../Client";
+import { CommandInteraction } from "discord.js";
+import { request } from "../../api/Request";
+import { getMonthMessageCount } from "../../api/requests/Member";
+import { MakeOptional, Member } from "../../api/Schema";
+import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 
 export default class Inactive extends Command {
@@ -11,31 +14,21 @@ export default class Inactive extends Command {
     
     public readonly defaultPermission: boolean = true;
 
-    public execute(command: CommandInteraction) : void {
-        // const inactives = await MemberActivity.find({
-        //     where: {
-        //         monthMessageCount: 0
-        //     },
-        //     take: 30
-        // });
+    public async execute(command: CommandInteraction) : Promise<void> {
+        const members = (await request<{ members: MakeOptional<Member, keyof Member>[] }>(getMonthMessageCount))
+            .members.filter(member => {
+                const monthMessage = member.activity?.messages.monthCount;
 
-        // const membersOnTheServer = await Member.find({
-        //     where: {
-        //         alwaysInTheServer: true
-        //     }
-        // });
+                return monthMessage && monthMessage === 0;
+            }
+        );
 
-        // const inactivesOnTheServer = inactives.filter(
-        //     member => membersOnTheServer.find(memberOnTheServer => memberOnTheServer.userId === member.userId)
-        // );
+        if(members.length){
+            const message = members.map(member => "<@" + member._id + ">").join(", ");
 
-        // if(inactivesOnTheServer.length){
-        //     Client.instance.embed.sendSimple(
-        //         "**__Liste des membres inactif__**\n\n" + inactivesOnTheServer.map(element => "<@" + element.userId + ">").join(", ") + ".", 
-        //         message.channel
-        //     );
-        // } else {
-        //     Client.instance.embed.sendSimple("Aucun membre n'est inactif.", message.channel);
-        // }   
+            command.reply({ embeds: [simpleEmbed(message, "normal", "Liste des membres inactif")], ephemeral: true });
+        } else {
+            command.reply({ embeds: [simpleEmbed("Aucun membre n'est inactif.", "error")], ephemeral: true });
+        }
     }
 }

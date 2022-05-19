@@ -33,16 +33,6 @@ export default class Client extends DiscordClient {
         this.eventManager = new EventManager();
         this.commandManager = new CommandManager();
         this.taskManager = new TaskManager();
-
-        this.on("ready", () => {
-            this.commandManager.register();
-
-            // Set activity :
-            this.user?.setActivity("royaume.world", {type: "STREAMING", url: "https://www.twitch.tv/royaumeuh"});
-
-            // Finish :
-            Logger.success("Client has been started");
-        });
     }
 
     public getGuild() : Guild {

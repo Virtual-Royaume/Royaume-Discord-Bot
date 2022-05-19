@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import information from "../../resources/configs/information.json";
+import information from "../../resources/config/information.json";
 
 type EmbedType = "normal" | "error";
 

@@ -1,9 +1,9 @@
 import { Client as DiscordClient, Guild, Intents, Team, User } from "discord.js";
-import { readFileSync } from "fs";
 import EventManager from "./events/EventManager";
 import CommandManager from "./commands/CommandManager";
 import TaskManager from "./tasks/TaskManager";
 import Logger from "./utils/Logger";
+import { botToken } from "../resources/config/secret.json";
 
 export default class Client extends DiscordClient {
 
@@ -14,20 +14,14 @@ export default class Client extends DiscordClient {
     public readonly commandManager: CommandManager;
     public readonly taskManager: TaskManager;
 
-    // Resources folder :
-    public readonly resources: string;
-
     constructor(){
         super({
             intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_INTEGRATIONS]
         });
 
-        // Save resources folder path :
-        this.resources = __dirname + "/../resources/";
-
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(readFileSync(this.resources + "token.txt", { encoding: "utf-8" }));
+        this.login(botToken);
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();

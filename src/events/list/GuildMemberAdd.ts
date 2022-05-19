@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
 import Client from "../../Client";
 import Event from "../Event";
-import { verifRole } from "../../../resources/configs/information.json";
+import { verifRole } from "../../../resources/config/information.json";
 
 export default class GuildMemberAdd extends Event {
 

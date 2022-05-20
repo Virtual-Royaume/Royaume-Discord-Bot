@@ -1,8 +1,6 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { GuildMember, Message, TextChannel, Role as DRole, CacheType, CommandInteraction, MessageActionRow, MessageSelectMenu, MessageActionRowComponent, MessageSelectOptionData, Guild, Constants, GuildMemberRoleManager, MessageEmbed } from "discord.js";
-import Client from "../../Client";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction, MessageActionRow, MessageSelectMenu, Constants, GuildMemberRoleManager } from "discord.js";
 import Command from "../Command";
-import { colors } from "../../../resources/config/information.json";
 import { getRoles } from "../../api/requests/MainRole";
 import { MainRole } from "../../api/Schema";
 import { request } from "../../api/Request";
@@ -22,6 +20,10 @@ export default class Role extends Command {
 
         const roles = (await request<{ roles: MainRole[] }>(getRoles)).roles;
 
+        /**
+         * Key      : Category
+         * Value    : Roles IDs
+         */
         let categories: { [category: string]: string[] } = {};
         roles.forEach(role => {
 
@@ -38,7 +40,7 @@ export default class Role extends Command {
 
         let messageActionRows: MessageActionRow[] = [];
 
-        /** If a role didn't exist */
+        /** If a role doesn't exist */
         let roleError = false;
         for( const category in categories ){
 
@@ -65,9 +67,7 @@ export default class Role extends Command {
                 const roleName = role.name;
 
                 const memberRoles = command.member?.roles;
-                if(!(memberRoles instanceof GuildMemberRoleManager)) return;
-                
-                const haveRole = memberRoles.cache.has(roleID);
+                const haveRole = memberRoles instanceof GuildMemberRoleManager ? memberRoles.cache.has(roleID) : false;
 
                 selectMenu.addOptions({
                     label: roleName,
@@ -84,7 +84,7 @@ export default class Role extends Command {
 
         if(roleError){
             command.reply({
-                embeds: [simpleEmbed("Une erreur s'est produite lors du chargement d'un des roles", "error")],
+                embeds: [simpleEmbed("Une erreur s'est produite lors du chargement d'un ou plusieurs roles", "error")],
                 allowedMentions: {
                     repliedUser: false
                 }

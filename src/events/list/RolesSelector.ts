@@ -37,8 +37,9 @@ export default class RolesSelector extends Event {
 
         let rolesToAdd: RoleDjs[] = [];
         let rolesToRemove: RoleDjs[] = [];
-        allRoles.forEach( async roleID => {
 
+        for(const roleID of allRoles){
+            console.log(roleID);
             const role = await guild.roles.fetch(roleID).catch(err => {
                 if(err.code === Constants.APIErrors.UNKNOWN_ROLE) return;
                 console.error(err);
@@ -51,10 +52,12 @@ export default class RolesSelector extends Event {
 
             if( selectedRoles.includes(roleID) ){
                 rolesToAdd.push(role);
+                console.log("Add :" + role);
             }else{
+                console.log("Remove :" + role);
                 rolesToRemove.push(role);
             }
-        });
+        }
 
         if(roleError){
             interaction.reply({
@@ -65,8 +68,7 @@ export default class RolesSelector extends Event {
             });
         }
 
-        console.log(rolesToAdd.length, rolesToRemove.length);
-
+        console.log(rolesToAdd, rolesToRemove);
         await memberRoles.add(rolesToAdd);
         await memberRoles.remove(rolesToRemove);
 

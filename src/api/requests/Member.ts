@@ -16,10 +16,11 @@ export const setAlwaysOnServer = gql`
     }
 `;
 
-export const setUsername = gql`
-    mutation SetUsername($id: ID!, $username: String!){
+export const setUsernameAndProfilPicture = gql`
+    mutation SetUsernameAndProfilPicture($id: ID!, $username: String!, $profilPicture: String!){
         updateMember(id: $id, input: {
             username: $username
+            profilPicture: $profilPicture
         })
     }
 `;

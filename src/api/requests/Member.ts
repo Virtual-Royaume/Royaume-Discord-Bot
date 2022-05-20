@@ -75,3 +75,34 @@ export const getMonthMessageCount = gql`
         }
     }
 `;
+
+export const getTotalMessageCount = gql`
+    query GetTotalMessageCount {
+        members {
+            _id
+            username
+            activity {
+                messages {
+                    totalCount
+                }
+            }
+        }
+    }
+`;
+
+export const getChannelMessageCount = gql`
+    query GetChannelMessageCount {
+        members {
+            _id
+            username
+            activity {
+                messages {
+                    perChannel {
+                        channelId
+                        messageCount
+                    }
+                }
+            }
+        }
+    }
+`;

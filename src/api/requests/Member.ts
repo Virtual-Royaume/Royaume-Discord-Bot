@@ -28,6 +28,40 @@ export const incVoiceMinute = gql`
     }
 `;
 
+export const getMember = gql`
+    query GetMember($id: ID!){
+        member(id: $id){
+            _id
+            username
+            profilPicture
+            isOnServer
+            activity {
+            voiceMinute
+                messages {
+                    totalCount
+                    monthCount
+                    perChannel {
+                        channelId
+                        messageCount
+                    }
+                }
+            }
+        }
+    }
+`;
+
+export const getVoiceTime = gql`
+    query GetVoiceTimes {
+        members {
+            _id
+            username
+            activity {
+                voiceMinute
+            }
+        }
+    }
+`;
+
 export const getMonthMessageCount = gql`
     query GetMonthMessageCount {
         members {

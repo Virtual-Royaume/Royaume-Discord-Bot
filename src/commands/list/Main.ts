@@ -109,7 +109,7 @@ export default class Inactive extends Command {
 		}
 
 		if(action === "add" || action === "remove"){
-			if(!category){
+			if(!category && action === "add"){
 				command.reply({ embeds: [simpleEmbed("Vous devez choisir une catégorie.", "error")], ephemeral: true });
 				return;
 			}

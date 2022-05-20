@@ -1,4 +1,8 @@
 import { Message as Msg } from "discord.js";
+import { request } from "../../api/Request";
+import { getChannels } from "../../api/requests/MainChannel";
+import { incChannelMessage } from "../../api/requests/Member";
+import { MainChannel } from "../../api/Schema";
 import Event from "../Event";
 
 export default class MessageCreate extends Event {
@@ -6,24 +10,13 @@ export default class MessageCreate extends Event {
     public name: string = "messageCreate";
 
     public async execute(message: Msg) : Promise<void> {
-        // if(message.author.bot) return;
+        if(message.author.bot) return;
 
-        // // Update number of messages in server activity :
-        // const serverActivity = await ServerActivity.getServerActivity();
-        
-        // serverActivity.messageCount++;
-        // serverActivity.save();
+        // Increment member message count :
+        const channels = (await request<{ channels: MainChannel[] }>(getChannels)).channels;
 
-        // // Update count of messages sent by members per channel and month message count :
-        // const member = await Member.getMember(message.author);
-        // const columnOfChannel = MemberActivity.channelIdsToColumnName[message.channel.id];
-
-        // member.activity.monthMessageCount++;
-
-        // if(columnOfChannel){
-        //     member.activity[columnOfChannel]++;
-        // }
-
-        // member.save();
+        if(channels.find(channel => channel.channelId === message.channelId)){
+            request(incChannelMessage, { id: message.author.id, channelId: message.channelId });
+        }
     }
 }

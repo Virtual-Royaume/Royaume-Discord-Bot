@@ -5,6 +5,7 @@ import { getRoles } from "../../api/requests/MainRole";
 import { MainRole } from "../../api/Schema";
 import { request } from "../../api/Request";
 import { simpleEmbed } from "../../utils/Embed";
+import { getRolesByCategory } from "../../api/func/MainRole";
 
 export default class Role extends Command {
 
@@ -17,20 +18,7 @@ export default class Role extends Command {
     public static readonly SELECT_MENU_PREFIX = "roles_selector_"; 
 
     public async execute(command: CommandInteraction) : Promise<void> {
-
-        const roles = (await request<{ roles: MainRole[] }>(getRoles)).roles;
-
-        /**
-         * Key      : Category
-         * Value    : Roles IDs
-         */
-        let categories: { [category: string]: string[] } = {};
-        roles.forEach(role => {
-
-            if (!categories[role.category]) categories[role.category] = [];
-
-            categories[role.category].push(role.roleId);
-        });
+        const categories = await getRolesByCategory();
 
         const guild = command.guild;
         if(!guild){

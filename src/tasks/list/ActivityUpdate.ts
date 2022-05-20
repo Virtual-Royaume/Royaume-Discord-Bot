@@ -1,7 +1,8 @@
-import dayjs from "dayjs";
-import { User } from "discord.js";
+import { request } from "../../api/Request";
+import { incVoiceMinute } from "../../api/requests/Member";
+import { setMemberCount } from "../../api/requests/ServerActivity";
 import Client from "../../Client";
-import Task from "../Task"
+import Task from "../Task";
 
 export default class ServerActivityUpdate extends Task {
 
@@ -10,38 +11,18 @@ export default class ServerActivityUpdate extends Task {
     }
 
     public async run() : Promise<void> {
-        // // Reset message of the month :
-        // if(dayjs().format("DD-HH-mm") === "01-00-00"){
-        //     Client.instance.database.createQueryBuilder().update(MemberActivity).set({monthMessageCount: 0}).execute();
-        // }
+        // Update daily member count :
+        request(setMemberCount, { count: Client.instance.getGuild().memberCount });
 
-        // // Get server activity :
-        // const serverActivity = await ServerActivity.getServerActivity();
-
-        // // Update daily member count :
-        // if(Client.instance.getGuild().memberCount > serverActivity.memberCount){
-        //     serverActivity.memberCount = Client.instance.getGuild().memberCount;
-        // }
-
-        // // Update voice time (member, server global) :
-        // let memberVoiceList: User[] = [];
-
-        // Client.instance.getGuild().voiceStates.cache.forEach(voiceState => {
-        //     if(voiceState.member && !voiceState.member.user.bot && !voiceState.selfMute && voiceState.channel && voiceState.channel.id !== VoiceChannel.afk){
-        //         memberVoiceList.push(voiceState.member.user);
-        //     }
-        // });
-
-        // memberVoiceList.forEach(async user => {
-        //     serverActivity.voiceMinute++;
-
-        //     let member = await Member.getMember(user);
-
-        //     member.activity.voiceMinute++;
-        //     member.save();
-        // });
-
-        // // Save data :
-        // serverActivity.save();
+        // Update voice time of members :
+        Client.instance.getGuild().voiceStates.cache.forEach(voiceState => {
+            if(
+                voiceState.member && !voiceState.member.user.bot && 
+                !voiceState.selfMute && !voiceState.mute && 
+                voiceState.channel
+            ){
+                request(incVoiceMinute, { id: voiceState.member.user.id });
+            }
+        });
     }
 }

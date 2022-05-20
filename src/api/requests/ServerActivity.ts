@@ -21,3 +21,9 @@ const getHistory = gql`
 		}
 	}
 `;
+
+export const setMemberCount = gql`
+	mutation Mutation($count: Int!) {
+        setServerActivityMemberCount(count: $count)
+    }
+`;

@@ -1,7 +1,11 @@
 import { SlashCommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
-import { CommandInteraction, GuildMember, Message, TextChannel } from "discord.js";
-import Client from "../../Client";
+import { CommandInteraction, GuildMember } from "discord.js";
+import { request } from "../../api/Request";
+import { getMember } from "../../api/requests/Member";
+import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
+import { MainChannel, Member as MemberSchema } from "../../api/Schema";
+import { getChannels } from "../../api/requests/MainChannel";
 
 export default class Member extends Command {
 
@@ -15,39 +19,57 @@ export default class Member extends Command {
 
     public readonly defaultPermission: boolean = true;
 
-    public execute(command: CommandInteraction) : void {
-        // let member: GuildMember|undefined|null;
+    public async execute(command: CommandInteraction) : Promise<void> {
+        const member = command.options.getMember("member") ?? command.member;
 
-        // if(args[0] && message.mentions.members){
-        //     member = message.mentions.members.first();
-        // } else {
-        //     member = message.member;
-        // }
+        // Check :
+        if(!(member instanceof GuildMember)){
+            command.reply({ 
+                embeds: [simpleEmbed("Erreur lors de l'utilisation de la commande.")], 
+                ephemeral: true 
+            });
+            return;
+        }
 
-        // if(!(member instanceof GuildMember) || member.user.bot){
-        //     Client.instance.embed.sendSimple(this.getFormattedUsage(), message.channel);
+        // Get member info :
+        const memberInfo = (await request<{ member: MemberSchema }>(getMember, { id: member.id })).member;
+        
+        if(!memberInfo){
+            command.reply({ embeds: [simpleEmbed("Aucune donnée trouvée.", "error")], ephemeral: true });
+            return;
+        }
 
-        //     return;
-        // }
+        // Get main channels en sort it :
+        const channels = (await request<{ channels: MainChannel[] }>(getChannels)).channels;
+        const channelsIdsByCategory: { [category: string]: string[] } = {}
 
-        // const memberActivity = await MemberActivity.findOne({userId: member.id});
+        channels.forEach(channel => {
+            if(!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];
 
-        // if(memberActivity){
-        //     let activityMessage = "**__Activité de <@" + member.id + ">__**\n\n";
+            channelsIdsByCategory[channel.category].push(channel.channelId);
+        });
 
-        //     activityMessage += "**Temps de vocal (en minute) :** " + memberActivity.voiceMinute.toLocaleString("fr-FR") + "\n";
-        //     activityMessage += "**Nombre de message : **" + memberActivity.totalMessageCount.toLocaleString("fr-FR") + "\n";
-        //     activityMessage += "**Nombre de message ce mois : **" + memberActivity.monthMessageCount.toLocaleString("fr-FR") + "\n\n";
+        // Format message :
+        let message = "";
 
-        //     activityMessage += "**Nombre de message par salon :**\n";
-            
-        //     for(const [channelID, columnName] of Object.entries(MemberActivity.channelIdsToColumnName)){
-        //         activityMessage += memberActivity[columnName].toLocaleString("fr-FR") + " dans <#" + channelID + ">\n";
-        //     }
+        message += `**Temps de vocal (en minute) :** ${memberInfo.activity.voiceMinute.toLocaleString("fr-FR")}\n`;
+        message += `**Nombre de message :** ${memberInfo.activity.messages.totalCount.toLocaleString("fr-FR")}\n`;
+        message += `**Nombre de message ce mois :** ${memberInfo.activity.messages.monthCount.toLocaleString("fr-FR")}\n\n`;
 
-        //     Client.instance.embed.sendSimple(activityMessage, message.channel);
-        // } else {
-        //     Client.instance.embed.sendSimple("Aucune statistique trouvée.", message.channel);
-        // }
+        message += "**Nombre de message par salon :**\n";
+
+        for(const [category, channelIds] of Object.entries(channelsIdsByCategory)){
+            channelIds.forEach(channelId => {
+                const channelInfo = memberInfo.activity.messages.perChannel.find(channel => channel?.channelId === channelId);
+
+                if(channelInfo){
+                    message += `${channelInfo.messageCount.toLocaleString("fr-FR")} dans <#${channelInfo?.channelId}> (${category})\n`;
+                }
+            });
+        }
+
+        command.reply({
+            embeds: [simpleEmbed(message, "normal", `Activité de ${member.displayName}`)]
+        });
     }
 }

@@ -45,8 +45,8 @@ export default class TopVoice extends Command {
         }
 
         // Send leaderboard :
-        command.channel?.send({
+        command.reply({
             embeds: [simpleEmbed(message, "normal", `Classements des membres les plus actifs en vocal (en minute) (page : ${page}/${maxPage})`)]
-        })
+        });
     }
 }

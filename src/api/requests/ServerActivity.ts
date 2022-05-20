@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-const getCurrent = gql`
+export const getCurrentServerActivity = gql`
 	query TodayServerActivity {
   		todayServerActivity {
 			date
@@ -11,7 +11,7 @@ const getCurrent = gql`
 	}
 `;
 
-const getHistory = gql`
+export const getServerActivityHistory = gql`
   	query ServerActivity($historyCount: Int!){
 		serverActivity(historyCount: $historyCount){
 			date

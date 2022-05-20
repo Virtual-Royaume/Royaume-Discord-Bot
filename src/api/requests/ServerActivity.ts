@@ -12,7 +12,7 @@ export const getCurrentServerActivity = gql`
 `;
 
 export const getServerActivityHistory = gql`
-  	query ServerActivity($historyCount: Int!){
+  	query GetServerActivityHistory($historyCount: Int!){
 		serverActivity(historyCount: $historyCount){
 			date
 			voiceMinute
@@ -23,7 +23,7 @@ export const getServerActivityHistory = gql`
 `;
 
 export const setMemberCount = gql`
-	mutation Mutation($count: Int!) {
+	mutation SetMemberCount($count: Int!) {
         setServerActivityMemberCount(count: $count)
     }
 `;

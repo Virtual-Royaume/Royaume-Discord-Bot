@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import information from "../../resources/config/information.json";
+import { colors } from "../../resources/config/information.json";
 
 type EmbedType = "normal" | "error";
 
@@ -8,6 +8,6 @@ export function simpleEmbed(message: string, type: EmbedType = "normal", title?:
         .setDescription(message)
         // @ts-ignore : compatible with the type HexColorString in ColorResolvable, 
         // but not detected because of the use of a variable
-        .setColor(type === "normal" ? information.colors.primary : information.colors.error)
+        .setColor(type === "normal" ? colors.primary : colors.error)
         .setTitle(title ?? "");
 }

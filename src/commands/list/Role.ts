@@ -1,7 +1,12 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { GuildMember, Message, TextChannel, Role as DRole, CacheType, CommandInteraction } from "discord.js";
+import { GuildMember, Message, TextChannel, Role as DRole, CacheType, CommandInteraction, MessageActionRow, MessageSelectMenu, MessageActionRowComponent, MessageSelectOptionData, Guild, Constants, GuildMemberRoleManager, MessageEmbed } from "discord.js";
 import Client from "../../Client";
 import Command from "../Command";
+import { colors } from "../../../resources/config/information.json";
+import { getRoles } from "../../api/requests/MainRole";
+import { MainRole } from "../../api/Schema";
+import { request } from "../../api/Request";
+import { simpleEmbed } from "../../utils/Embed";
 
 export default class Role extends Command {
 
@@ -11,48 +16,85 @@ export default class Role extends Command {
 
     public readonly defaultPermission: boolean = true;
 
-    public execute(command: CommandInteraction) : void {
-        // const rolesWithCategory: {[category: string]: string[]} = require(Client.instance.resources + "/configs/role-category.json");
+    public static readonly SELECT_MENU_PREFIX = "roles_selector_"; 
 
-        // let roles: string[] = [];
-        // roles = roles.concat(...Object.values(rolesWithCategory));
+    public async execute(command: CommandInteraction) : Promise<void> {
 
-        // if(roles.indexOf(args[0]) == -1){
-        //     Client.instance.embed.sendSimple(
-        //         this.getFormattedUsage(), 
-        //         message.channel
-        //     );
+        const roles = (await request<{ roles: MainRole[] }>(getRoles)).roles;
 
-        //     let rolesList = "**__Liste des rôles disponibles__**\n\n";
+        let categories: { [category: string]: string[] } = {};
+        roles.forEach(role => {
 
-        //     for(const [category, roles] of Object.entries(rolesWithCategory)){
-        //         rolesList += "**" + category + " :** " + roles.join(", ") + "\n\n";
-        //     }
+            if (!categories[role.category]) categories[role.category] = [];
 
-        //     Client.instance.embed.sendSimple(rolesList, message.channel);
-        //     return;
-        // }
+            categories[role.category].push(role.roleId);
+        });
 
-        // const member: GuildMember|null = message.member;
-        // const role: string = args[0];
-        // const roleInstance: DRole|undefined = message.guild?.roles.cache.filter(r => r.name === role).first();
+        const guild = command.guild;
+        if(!guild){
+            command.reply({embeds:[ simpleEmbed("Vous devez être sur un serveur pour pouvoir faire cela !", "error") ]});
+            return;
+        }
 
-        // if(member && roleInstance){
-        //     if(member.roles.cache.filter(r => r.name === role).size > 0){
-        //         member.roles.remove(roleInstance);
-    
-        //         Client.instance.embed.sendSimple(
-        //             "Votre rôle **" + role + "** a bien été supprimé.",
-        //             message.channel
-        //         );
-        //     } else {
-        //         member.roles.add(roleInstance);
-    
-        //         Client.instance.embed.sendSimple(
-        //             "Vous avez desormais le rôle **" + role + "** !",
-        //             message.channel
-        //         );
-        //     }
-        // }
+        let messageActionRows: MessageActionRow[] = [];
+
+        /** If a role didn't exist */
+        let roleError = false;
+        for( const category in categories ){
+
+            const rolesIDs = categories[category];
+            
+            let selectMenu = new MessageSelectMenu()
+            .setCustomId(`${Role.SELECT_MENU_PREFIX}${category}`)
+            .setMinValues(0)
+            .setMaxValues(rolesIDs.length)
+            .setPlaceholder(category)
+
+            rolesIDs.forEach(async roleID => {
+
+                const role = await guild.roles.fetch(roleID).catch(err => {
+                    if(err.code === Constants.APIErrors.UNKNOWN_ROLE) return;
+                    console.error(err);
+                });
+
+                if(!role){
+                    roleError = true;
+                    return;
+                }
+
+                const roleName = role.name;
+
+                const memberRoles = command.member?.roles;
+                if(!(memberRoles instanceof GuildMemberRoleManager)) return;
+                
+                const haveRole = memberRoles.cache.has(roleID);
+
+                selectMenu.addOptions({
+                    label: roleName,
+                    value: roleID,
+                    default: haveRole
+                });
+            });
+
+            messageActionRows.push(
+                new MessageActionRow()
+                .addComponents(selectMenu)
+            );
+        }
+
+        if(roleError){
+            command.reply({
+                embeds: [simpleEmbed("Une erreur s'est produite lors du chargement d'un des roles", "error")],
+                allowedMentions: {
+                    repliedUser: false
+                }
+            });
+        }
+
+        command.reply({
+            embeds: [simpleEmbed("Veuillez choisir vos roles")],
+            components: messageActionRows,
+            ephemeral: true
+        });
     }
 }

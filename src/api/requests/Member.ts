@@ -16,6 +16,14 @@ export const setAlwaysOnServer = gql`
     }
 `;
 
+export const setUsername = gql`
+    mutation SetUsername($id: ID!, $username: String!){
+        updateMember(id: $id, input: {
+            username: $username
+        })
+    }
+`;
+
 export const incChannelMessage = gql`
     mutation IncChannelMessage($id: ID!, $channelId: ID!){
         incMemberDiscordActivityChannel(id: $id, channelId: $channelId)

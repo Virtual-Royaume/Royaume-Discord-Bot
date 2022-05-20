@@ -1,9 +1,13 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
 import Command from "../Command";
-// import chartjs from "chart.js";
-// import Constants from "../../../constants/Constants";
-// import { ChartJSNodeCanvas } from "chartjs-node-canvas";
+import chartjs from "chart.js";
+import { ChartJSNodeCanvas } from "chartjs-node-canvas";
+import { request } from "../../api/Request";
+import { getServerActivityHistory } from "../../api/requests/ServerActivity";
+import { ServerActivity } from "../../api/Schema";
+import { colors } from "../../../resources/config/information.json";
+import dayjs from "dayjs";
 
 export default class Stats extends Command {
 
@@ -18,63 +22,76 @@ export default class Stats extends Command {
 
     public readonly defaultPermission: boolean = true;
 
-    public execute(command: CommandInteraction) : void {    
-        // Get server activity of the last 30 day (order by date) :
-        // const serverActivity = (await ServerActivity.find({
-        //     order: {
-        //         date: "DESC"
-        //     },
-        //     take: 30
-        // })).reverse();
-
-        // const data = [
-        //     {columnName: "voiceMinute", description: "Temps de vocal des utilisateurs en minutes"},
-        //     {columnName: "messageCount", description: "Nombre de messages envoyés"},
-        //     {columnName: "memberCount", description: "Nombre de membres présents sur le serveur"},
-        // ];
-
-        // data.forEach(type => {
-        //     const config: chartjs.ChartConfiguration = {
-        //         type: "line",
-        //         data: {
-        //             labels: serverActivity.map(element => element.date.split("-").reverse().join("-")),
-        //             datasets: [{
-        //                 label: type.description,
-        //                 backgroundColor: Constants.color,
-        //                 borderColor: Constants.color,
-        //                 tension: 0.3,
-        //                 data: serverActivity.map(element => element[type.columnName])
-        //             }]
-        //         },
-        //         plugins: [{
-        //             id: "background-color",
-        //             beforeDraw: chart => {
-        //                 const ctx = chart.canvas.getContext("2d");
+    public async execute(command: CommandInteraction) : Promise<void> {
+        // Get server activity :
+        const serverActivity = (await request<{ serverActivity: ServerActivity[] }>(getServerActivityHistory, { 
+            historyCount: command.options.getNumber("historique") ?? 30
+        })).serverActivity.reverse();
     
-        //                 if(ctx){
-        //                     ctx.save();
+        // Data types :
+        interface Type {
+            columnName: keyof ServerActivity;
+            description: string;
+        }
+
+        const types: Type[] = [
+            { columnName: "voiceMinute", description: "Temps de vocal des utilisateurs en minutes" },
+            { columnName: "messageCount", description: "Nombre de messages envoyés" },
+            { columnName: "memberCount", description: "Nombre de membres présents sur le serveur" },
+        ];
+
+        // Generate and send charts :
+        const embeds: MessageEmbed[] = [];
+        const files: MessageAttachment[] = [];
+
+        types.forEach(type => {
+            const config: chartjs.ChartConfiguration = {
+                type: "line",
+                data: {
+                    labels: serverActivity.map(element => dayjs(element.date).format("DD-MM-YYYY")),
+                    datasets: [{
+                        label: type.description,
+                        backgroundColor: colors.primary,
+                        borderColor: colors.primary,
+                        tension: 0.3,
+                        data: serverActivity.map(element => element[type.columnName]),
+                        pointRadius: serverActivity.length > 100 ? 0 : 3
+                    }],
+                },
+                plugins: [{
+                    id: "background-color",
+                    beforeDraw: chart => {
+                        const ctx = chart.canvas.getContext("2d");
+    
+                        if(ctx){
+                            ctx.save();
                             
-        //                     ctx.globalCompositeOperation = "destination-over";
-        //                     ctx.fillStyle = "white";
+                            ctx.globalCompositeOperation = "destination-over";
+                            ctx.fillStyle = "white";
     
-        //                     ctx.fillRect(0, 0, chart.width, chart.height);
-        //                     ctx.restore();   
-        //                 }
-        //             }
-        //         }]
-        //     }
+                            ctx.fillRect(0, 0, chart.width, chart.height);
+                            ctx.restore();   
+                        }
+                    }
+                }]
+            }
 
-        //     const embed = new MessageEmbed();
+            // Embed :
+            embeds.push(new MessageEmbed()
+                .setTitle(type.description)
+                // @ts-ignore : compatible with the type HexColorString in ColorResolvable, 
+                // but not detected because of the use of a variable
+                .setColor(colors.primary)
+                .setImage(`attachment://${type.columnName}-chart.png`)
+            );
 
-        //     embed.setDescription("**__" + type.description + "__**");
-        //     embed.setColor(Constants.color);
-        //     embed.attachFiles([{
-        //         name: type.columnName + "chart.png", 
-        //         attachment: new ChartJSNodeCanvas({height: 500, width: 1100}).renderToBufferSync(config)
-        //     }]);
-        //     embed.setImage("attachment://" + type.columnName + "chart.png")
+            // Attachment :
+            files.push(new MessageAttachment(
+                new ChartJSNodeCanvas({ height: 500, width: 1100 }).renderToBufferSync(config), 
+                `${type.columnName}-chart.png`)
+            );
+        });
 
-        //     message.channel.send(embed);
-        // });
+        command.reply({ content: `**Statistiques sur ${serverActivity.length} jours :**`, embeds, files });
     }
 }

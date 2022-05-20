@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@discordjs/builders": "^0.13.0",
+    "chart.js": "^3.7.1",
+    "chartjs-node-canvas": "^4.1.6",
     "colors": "^1.4.0",
     "dayjs": "^1.10.5",
     "discord.js": "^13.7.0",

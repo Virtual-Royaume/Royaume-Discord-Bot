@@ -1,4 +1,4 @@
-import { Message as Msg } from "discord.js";
+import { Message as Msg, TextBasedChannel } from "discord.js";
 import { request } from "../../api/Request";
 import { getChannels } from "../../api/requests/MainChannel";
 import { incChannelMessage } from "../../api/requests/Member";
@@ -12,11 +12,23 @@ export default class MessageCreate extends Event {
     public async execute(message: Msg) : Promise<void> {
         if(message.author.bot) return;
 
-        // Increment member message count :
-        const channels = (await request<{ channels: MainChannel[] }>(getChannels)).channels;
+        // Get channel or parent channel (if is a thread channel) :
+        let channel: TextBasedChannel | null = message.channel;
 
-        if(channels.find(channel => channel.channelId === message.channelId)){
-            request(incChannelMessage, { id: message.author.id, channelId: message.channelId });
+        if(
+            channel.type === "GUILD_PUBLIC_THREAD" || channel.type === "GUILD_PRIVATE_THREAD" ||
+            channel.type === "GUILD_NEWS_THREAD"    
+        ){
+            channel = channel.parent;
+        }
+
+        // Increment member message count :
+        if(channel){
+            const channels = (await request<{ channels: MainChannel[] }>(getChannels)).channels;
+
+            if(channels.find(c => c.channelId === channel?.id)){
+                request(incChannelMessage, { id: message.author.id, channelId: channel.id });
+            }
         }
     }
 }

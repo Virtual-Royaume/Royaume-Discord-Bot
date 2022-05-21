@@ -1,10 +1,10 @@
 import { GuildMember } from "discord.js";
 import Client from "../../Client";
 import Event from "../Event";
-import { verifRole } from "../../../resources/config/information.json";
+import { verify } from "../../../resources/config/information.json";
 import { request } from "../../api/Request";
 import { createMember, setAlwaysOnServer } from "../../api/requests/Member";
-import { MakeMaybe, MakeOptional, Member } from "../../api/Schema";
+import { MakeOptional, Member } from "../../api/Schema";
 
 export default class GuildMemberAdd extends Event {
 
@@ -14,7 +14,7 @@ export default class GuildMemberAdd extends Event {
         if(member.user.bot) return;
 
         // Add verification role :
-        const role = await Client.instance.getGuild().roles.fetch(verifRole);
+        const role = await (await Client.instance.getGuild()).roles.fetch(verify.roles.waiting);
 
         if(role) member.roles.add(role);
 

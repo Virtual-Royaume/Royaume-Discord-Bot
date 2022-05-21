@@ -26,7 +26,7 @@ export default class WatchTogether extends Command {
         };
     
         const instance: any = Client.instance;
-        const generalTextChannel = await Client.instance.getGuild().channels.fetch(generalChannel);
+        const generalTextChannel = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
         if(generalTextChannel?.type !== "GUILD_TEXT") return;
 

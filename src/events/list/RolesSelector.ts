@@ -8,10 +8,10 @@ export default class RolesSelector extends Event {
     public name: string = "interactionCreate";
 
     public async execute(interaction: Interaction) : Promise<void> {
-        if(!interaction.isSelectMenu() || !interaction.customId.startsWith(selectMenu.roleSelector)) return;
+        if(!interaction.isSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
 
         // Get category :
-        const category = interaction.customId.replace(`${selectMenu.roleSelector}-`, "");
+        const category = interaction.customId.replace(`${selectMenu.rolesSelector}-`, "");
 
         // Get selected and un-selected roles :
         const selectedRoles = interaction.values;

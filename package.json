@@ -1,10 +1,9 @@
 {
   "version": "2.0.0",
-  "main": "build/Client.js",
+  "main": "build/src/Client.js",
   "scripts": {
-    "start": "ts-node ./src/Client.ts",
+    "start": "node .",
     "dev": "nodemon --exec ts-node ./src/Client.ts",
-    "fstart": "tsc && node .",
     "build": "tsc"
   },
   "dependencies": {

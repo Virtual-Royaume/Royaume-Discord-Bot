@@ -21,7 +21,7 @@ export default class Role extends Command {
         for(const [category, rolesId] of Object.entries(await getRolesByCategory())){
             // Create category interaction :
             const interaction = new MessageSelectMenu()
-                .setCustomId(`${selectMenu.roleSelector}-${category}`)
+                .setCustomId(`${selectMenu.rolesSelector}-${category}`)
                 .setMinValues(0)
                 .setMaxValues(rolesId.length)
                 .setPlaceholder(category);

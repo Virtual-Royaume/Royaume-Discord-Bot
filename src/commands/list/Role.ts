@@ -1,11 +1,10 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, MessageActionRow, MessageSelectMenu, Constants, GuildMemberRoleManager } from "discord.js";
+import { CommandInteraction, MessageActionRow, MessageSelectMenu, GuildMemberRoleManager } from "discord.js";
 import Command from "../Command";
-import { getRoles } from "../../api/requests/MainRole";
-import { MainRole } from "../../api/Schema";
-import { request } from "../../api/Request";
 import { simpleEmbed } from "../../utils/Embed";
 import { getRolesByCategory } from "../../api/func/MainRole";
+import { selectMenu } from "../../../resources/config/interaction-ids.json";
+import Client from "../../Client";
 
 export default class Role extends Command {
 
@@ -15,72 +14,41 @@ export default class Role extends Command {
 
     public readonly defaultPermission: boolean = true;
 
-    public static readonly SELECT_MENU_PREFIX = "roles_selector_"; 
-
     public async execute(command: CommandInteraction) : Promise<void> {
-        const categories = await getRolesByCategory();
+        // Generate select menu :
+        const messageActionRows: MessageActionRow[] = [];
 
-        const guild = command.guild;
-        if(!guild){
-            command.reply({embeds:[ simpleEmbed("Vous devez être sur un serveur pour pouvoir faire cela !", "error") ]});
-            return;
-        }
+        for(const [category, rolesId] of Object.entries(await getRolesByCategory())){
+            // Create category interaction :
+            const interaction = new MessageSelectMenu()
+                .setCustomId(`${selectMenu.roleSelector}-${category}`)
+                .setMinValues(0)
+                .setMaxValues(rolesId.length)
+                .setPlaceholder(category);
 
-        let messageActionRows: MessageActionRow[] = [];
+            for(const roleId of rolesId){
+                // Get role instance :
+                const role = await Client.instance.getGuild().roles.fetch(roleId);
 
-        /** If a role doesn't exist */
-        let roleError = false;
-        for( const category in categories ){
+                if(!role) continue;
 
-            const rolesIDs = categories[category];
-            
-            let selectMenu = new MessageSelectMenu()
-            .setCustomId(`${Role.SELECT_MENU_PREFIX}${category}`)
-            .setMinValues(0)
-            .setMaxValues(rolesIDs.length)
-            .setPlaceholder(category)
-
-            rolesIDs.forEach(async roleID => {
-
-                const role = await guild.roles.fetch(roleID).catch(err => {
-                    if(err.code === Constants.APIErrors.UNKNOWN_ROLE) return;
-                    console.error(err);
-                });
-
-                if(!role){
-                    roleError = true;
-                    return;
-                }
-
-                const roleName = role.name;
-
+                // Add interaction options :
                 const memberRoles = command.member?.roles;
-                const haveRole = memberRoles instanceof GuildMemberRoleManager ? memberRoles.cache.has(roleID) : false;
 
-                selectMenu.addOptions({
-                    label: roleName,
-                    value: roleID,
-                    default: haveRole
+                interaction.addOptions({
+                    label: role.name,
+                    value: roleId,
+                    default: memberRoles instanceof GuildMemberRoleManager ? memberRoles.cache.has(roleId) : false
                 });
-            });
+            }
 
-            messageActionRows.push(
-                new MessageActionRow()
-                .addComponents(selectMenu)
-            );
+            // Add interaction in message action row :
+            messageActionRows.push(new MessageActionRow().addComponents(interaction));
         }
 
-        if(roleError){
-            command.reply({
-                embeds: [simpleEmbed("Une erreur s'est produite lors du chargement d'un ou plusieurs roles", "error")],
-                allowedMentions: {
-                    repliedUser: false
-                }
-            });
-        }
-
+        // Send the interaction :
         command.reply({
-            embeds: [simpleEmbed("Veuillez choisir vos roles")],
+            embeds: [simpleEmbed("", "normal", "Veuillez choisir vos roles")],
             components: messageActionRows,
             ephemeral: true
         });

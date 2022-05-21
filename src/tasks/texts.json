@@ -1,0 +1,17 @@
+{   
+    "messages":[
+        {
+            "text":"Stefan le plus beau",
+            "type":"WATCHING"
+        },
+        {
+            "text":"Bluzzi rager sur CSGO",
+            "type":"LISTENING"
+        },
+        {
+            "text":"a LOL avec Onirez",
+            "type":"PLAYING"
+        }
+    ]
+
+}

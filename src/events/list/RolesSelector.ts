@@ -1,40 +1,39 @@
 import { GuildMemberRoleManager, Interaction } from "discord.js";
-import Role from "../../commands/list/Role";
 import { simpleEmbed } from "../../utils/Embed";
 import Event from "../Event";
+import { selectMenu } from "../../../resources/config/interaction-ids.json";
 
 export default class RolesSelector extends Event {
     
     public name: string = "interactionCreate";
 
     public async execute(interaction: Interaction) : Promise<void> {
+        if(!interaction.isSelectMenu() || !interaction.customId.startsWith(selectMenu.roleSelector)) return;
 
-        const guild = interaction.guild;
-        if( !guild ) return;
+        // Get category :
+        const category = interaction.customId.replace(`${selectMenu.roleSelector}-`, "");
 
-        if(!interaction.isSelectMenu()) return;
-        
-        const interactionId = interaction.customId;
-        if(!interactionId.startsWith( Role.SELECT_MENU_PREFIX )) return;
-
-        const category = interactionId.replace(Role.SELECT_MENU_PREFIX, "");
-
-        const allRoles = interaction.component.options.map( option => option.value );
+        // Get selected and un-selected roles :
         const selectedRoles = interaction.values;
-        const unselectedRoles = allRoles.filter(role => !selectedRoles.includes(role));
+        const unselectedRoles = interaction.component.options.map(option => option.value).filter(role => {
+            return !selectedRoles.includes(role);
+        });
 
-        let memberRoles = interaction.member?.roles;
+        // Get member role manager :
+        const memberRoles = interaction.member?.roles;
 
-        if( !(memberRoles instanceof GuildMemberRoleManager) ){
-            interaction.reply({embeds:[ simpleEmbed("Une erreur s'est produite lors de l'acquisition des roles.", "error") ]});
+        if(!(memberRoles instanceof GuildMemberRoleManager)){
+            interaction.reply({embeds: [simpleEmbed("Une erreur s'est produite lors de l'acquisition des roles.", "error")] });
             return;
         }
 
+        // Add and remove selected/unselected roles :
         await memberRoles.add(selectedRoles);
         await memberRoles.remove(unselectedRoles);
 
+        // Send confirmation :
         interaction.reply({
-            embeds: [simpleEmbed(`Modifications éffectuées dans la categorie **${category}** !`)],
+            embeds: [simpleEmbed(`Modifications de vos rôles effectuées dans la categorie **${category}**.`)],
             ephemeral: true
         });
     }

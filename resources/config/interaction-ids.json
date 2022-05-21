@@ -1,5 +1,11 @@
 {
     "selectMenu": {
-        "rolesSelector": "0"
+        "rolesSelector": "sm0"
+    },
+    "button": {
+        "verify": "b0"
+    },
+    "modal": {
+        "verify": "m0"
     }
 }

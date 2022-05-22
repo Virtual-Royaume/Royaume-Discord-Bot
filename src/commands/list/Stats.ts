@@ -73,7 +73,18 @@ export default class Stats extends Command {
                             ctx.restore();   
                         }
                     }
-                }]
+                }],
+                options: {
+                    plugins: {
+                        legend: { labels: { font: { family: "Poppins" } } },
+                        title: { font: { family: "Poppins" } },
+                        tooltip: { bodyFont: { family: "Poppins" } },
+                    },
+                    scales: {
+                        x: { ticks: { font: { family: "Poppins" } } },
+                        y: { ticks: { font: { family: "Poppins" } } },
+                    }
+                }
             }
 
             // Embed :
@@ -86,8 +97,12 @@ export default class Stats extends Command {
             );
 
             // Attachment :
+            const chart = new ChartJSNodeCanvas({ height: 500, width: 1100 });
+
+            chart.registerFont(`${__dirname}/../../../resources/font/poppins-regular.ttf`, { family: "Poppins" });
+
             files.push(new MessageAttachment(
-                new ChartJSNodeCanvas({ height: 500, width: 1100 }).renderToBufferSync(config), 
+                chart.renderToBufferSync(config), 
                 `${type.columnName}-chart.png`)
             );
         });

@@ -20,7 +20,7 @@ export default class Client extends DiscordClient {
             intents: [
                 Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, 
                 Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_MEMBERS,
-                Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+                Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES
             ],
             partials: ["MESSAGE", "CHANNEL", "REACTION"]
         });
@@ -36,7 +36,7 @@ export default class Client extends DiscordClient {
     }
 
     public async getGuild() : Promise<Guild> {
-        return await Client.instance.guilds.fetch(guildId);
+        return await this.guilds.fetch(guildId);
     }
 
     public getDevTeam() : User[] | null {

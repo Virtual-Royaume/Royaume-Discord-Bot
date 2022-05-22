@@ -12,7 +12,9 @@ export default class ServerActivityUpdate extends Task {
 
     public async run() : Promise<void> {
         // Update daily member count :
-        request(setMemberCount, { count: (await Client.instance.getGuild()).memberCount });
+        const memberCount = (await Client.instance.getGuild()).memberCount;
+
+        if(memberCount) request(setMemberCount, { count: memberCount });
 
         // Update voice time of members :
         (await Client.instance.getGuild()).voiceStates.cache.forEach(voiceState => {

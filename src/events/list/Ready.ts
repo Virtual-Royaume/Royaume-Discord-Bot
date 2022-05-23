@@ -11,9 +11,6 @@ export default class Ready extends Event {
       // Register slash commands :
       Client.instance.commandManager.register();
 
-      // Set activity :
-      Client.instance.user?.setActivity("son Roi", { type: "LISTENING" });
-
       // Finish :
       Logger.success("Client has been started");
     }

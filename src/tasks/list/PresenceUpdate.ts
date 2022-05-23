@@ -1,12 +1,12 @@
 import Client from "../../Client";
-import presenceUpdate from "../../../resources/config/presence-update-messages.json";
+import presenceMessages from "../../../resources/config/presence-messages.json";
 import Task from "../Task";
 import { ActivityTypes } from "discord.js/typings/enums";
 import { ExcludeEnum } from "discord.js";
 
-interface PresenceUpdateType{
+interface PresenceMessage {
     text: string;
-    type: ExcludeEnum<typeof ActivityTypes, 'CUSTOM'>;
+    type: ExcludeEnum<typeof ActivityTypes, "CUSTOM">;
 }
 
 export default class PresenceUpdate extends Task {
@@ -16,9 +16,10 @@ export default class PresenceUpdate extends Task {
     }
 
     public async run() : Promise<void> {
-        const presence:PresenceUpdateType[] = <PresenceUpdateType[]>presenceUpdate
-        const rdm = Math.floor(Math.random() * presence.length);
+        const message = <PresenceMessage>presenceMessages[
+            Math.floor(Math.random() * presenceMessages.length)
+        ];
 
-        Client.instance.user?.setActivity(presence[rdm].text, { type: presence[rdm].type });
+        Client.instance.user?.setActivity(message.text, { type: message.type });
     }
 }

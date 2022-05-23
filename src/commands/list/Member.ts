@@ -6,6 +6,7 @@ import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { MainChannel, Member as MemberSchema } from "../../api/Schema";
 import { getChannels } from "../../api/requests/MainChannel";
+import { numberParser } from "../../utils/Func";
 
 export default class Member extends Command {
 
@@ -48,13 +49,15 @@ export default class Member extends Command {
 
             channelsIdsByCategory[channel.category].push(channel.channelId);
         });
-
+        
         // Format message :
         let message = "";
 
-        message += `**Temps de vocal (en minute) :** ${memberInfo.activity.voiceMinute.toLocaleString("fr-FR")}\n`;
-        message += `**Nombre de message :** ${memberInfo.activity.messages.totalCount.toLocaleString("fr-FR")}\n`;
-        message += `**Nombre de message ce mois :** ${memberInfo.activity.messages.monthCount.toLocaleString("fr-FR")}\n\n`;
+        const memberActivity = memberInfo.activity;
+        
+        message += `**Temps de vocal (en minute) :** ${ numberParser(memberActivity.voiceMinute) }\n`;
+        message += `**Nombre de message :** ${numberParser(memberActivity.messages.totalCount)}\n`;
+        message += `**Nombre de message ce mois :** ${numberParser(memberActivity.messages.monthCount)}\n\n`;
 
         message += "**Nombre de message par salon :**\n";
 
@@ -63,7 +66,7 @@ export default class Member extends Command {
                 const channelInfo = memberInfo.activity.messages.perChannel.find(channel => channel?.channelId === channelId);
 
                 if(channelInfo){
-                    message += `${channelInfo.messageCount.toLocaleString("fr-FR")} dans <#${channelInfo?.channelId}> (${category})\n`;
+                    message += `${numberParser(channelInfo.messageCount)} dans <#${channelInfo?.channelId}> (${category})\n`;
                 }
             });
         }

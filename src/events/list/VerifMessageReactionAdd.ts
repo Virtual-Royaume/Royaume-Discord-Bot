@@ -31,9 +31,11 @@ export default class VerifMessageReactionAdd extends Event {
         if(!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
         // Check if the member is accepted :
+        const removeReactions = () => messageReaction.message.reactions.removeAll();
+
         if(
             messageReaction.emoji.name === verify.emoji.upvote && 
-            messageReaction.count >= verify.reactionNeededCount.upvote
+            messageReaction.count - 1 >= verify.reactionNeededCount.upvote
         ){
             await member.roles.add(verify.roles.verified);
             await member.roles.remove(verify.roles.waiting);
@@ -47,12 +49,14 @@ export default class VerifMessageReactionAdd extends Event {
             );
 
             generalChannelInstance.send({ content: `Bienvenue parmis nous <@${member.id}> !`, embeds: [embed] });
+
+            removeReactions();
         }
 
         // Check if the member is rejected :
         if(
             messageReaction.emoji.name === verify.emoji.downvote && 
-            messageReaction.count >= verify.reactionNeededCount.downvote
+            messageReaction.count - 1 >= verify.reactionNeededCount.downvote
         ){
             // Reject the member :
             await generalChannelInstance.send({ embeds: [simpleEmbed(`La présentation de ${member.displayName} a été refusé.`, "error")] });
@@ -60,6 +64,8 @@ export default class VerifMessageReactionAdd extends Event {
             await member.send({ embeds: [simpleEmbed("Votre présentation n'a pas convaincu les membres du Royaume.", "error")] });
 
             member.kick();
+
+            removeReactions();
         }
     }
 }

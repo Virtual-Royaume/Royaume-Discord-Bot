@@ -4,7 +4,7 @@ import { getChannelsByCategory } from "../api/func/MainChannel";
 import { request } from "../api/Request";
 import { getMember } from "../api/requests/Member";
 import { Member } from "../api/Schema";
-import { getMessageLeaderboard, getVoiceLeaderboard, LeaderboardEntryType, numberParser } from "./Func";
+import { getMessageLeaderboard, getVoiceLeaderboard, LeaderboardEntryType, numberFormat } from "./Func";
 import Leaderboard from "./Leaderboard";
 
 const PAGE_LENGTH = 20;
@@ -36,9 +36,9 @@ export async function memberEmbed( memberId: string ) : Promise<null|MessageEmbe
     const memberActivity = memberInfo.activity;
 
     let globalStats = "";
-    globalStats += `**Temps de vocal (en minute) :** ${numberParser(memberActivity.voiceMinute)}\n`;
-    globalStats += `**Nombre de message :** ${numberParser(memberActivity.messages.totalCount)}\n`;
-    globalStats += `**Nombre de message ce mois :** ${numberParser(memberActivity.messages.monthCount)}`;
+    globalStats += `**Temps de vocal (en minute) :** ${numberFormat(memberActivity.voiceMinute)}\n`;
+    globalStats += `**Nombre de message :** ${numberFormat(memberActivity.messages.totalCount)}\n`;
+    globalStats += `**Nombre de message ce mois :** ${numberFormat(memberActivity.messages.monthCount)}`;
     
     let messagesPerChannel = "**Nombre de message par salon :**\n";
 
@@ -52,7 +52,7 @@ export async function memberEmbed( memberId: string ) : Promise<null|MessageEmbe
 
             if(!channelInfo) return;
 
-            messagesPerChannel += `${numberParser(channelInfo.messageCount)} dans <#${channelInfo.channelId}> (${category})\n`;
+            messagesPerChannel += `${numberFormat(channelInfo.messageCount)} dans <#${channelInfo.channelId}> (${category})\n`;
         });
     }
 

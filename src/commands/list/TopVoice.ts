@@ -4,7 +4,7 @@ import { request } from "../../api/Request";
 import { getVoiceTime } from "../../api/requests/Member";
 import { Member } from "../../api/Schema";
 import { leaderboardEmbed, simpleEmbed } from "../../utils/Embed";
-import { numberParser } from "../../utils/Func";
+import { numberFormat } from "../../utils/Func";
 import Command from "../Command";
 
 export default class TopVoice extends Command {

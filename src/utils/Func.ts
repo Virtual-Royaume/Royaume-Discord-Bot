@@ -4,7 +4,7 @@ import { Member } from "../api/Schema";
 import { LeaderboardOptionsType } from "./Embed";
 import Leaderboard from "./Leaderboard";
 
-export function numberParser(number: number) : string {
+export function numberFormat(number: number) : string {
     return number.toLocaleString("fr-FR");
 }
 

@@ -1,5 +1,4 @@
-{   
-    "messages":[
+[   
         {
             "text":"Stefan le plus beau",
             "type":"WATCHING"
@@ -12,6 +11,4 @@
             "text":"a LOL avec Onirez",
             "type":"PLAYING"
         }
-    ]
-
-}
+]

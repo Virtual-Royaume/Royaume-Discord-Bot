@@ -23,6 +23,7 @@ export default class VerifModal extends Event {
                 .setCustomId("presentation")
                 .setLabel("Présentation :")
                 .setStyle("PARAGRAPH")
+                .setMinLength(50)
             ));
 
         await interaction.showModal(modal);

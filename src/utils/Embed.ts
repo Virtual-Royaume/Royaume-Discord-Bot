@@ -79,6 +79,7 @@ export async function leaderboardEmbed(type: LeaderboardType, page: number = 1, 
             title += "Classements des membres les plus actifs en vocal (en minute)";
         break;
     }
+    title += ` - ${leaderboard.getCorrectPageNum(page)}/${leaderboard.getMaxPage()}`;
 
     let descriptionOptions = [];
 

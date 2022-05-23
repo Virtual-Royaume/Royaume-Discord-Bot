@@ -20,10 +20,15 @@ export default class Leaderboard{
 
     public getPage( page: number ) : LeaderboardEntryType[]{
 
-        if(page < 1) page = 1;
-        if(page > this.maxPage) page = this.maxPage;
+        page = this.getCorrectPageNum(page);
 
         return this.entries.slice( (page-1) * this.pageLength, page * this.pageLength);
+    }
+
+    public getCorrectPageNum( page: number ){
+        if(page < 1) page = 1;
+        if(page > this.maxPage) page = this.maxPage;
+        return page;
     }
 
     public setPageLength(length: number){
@@ -40,6 +45,10 @@ export default class Leaderboard{
 
     private updateMaxPage(){
         this.maxPage = Math.ceil(this.entries.length / this.pageLength);
+    }
+
+    public getMaxPage(){
+        return this.maxPage;
     }
 
     public getEntries(): LeaderboardEntryType[]{

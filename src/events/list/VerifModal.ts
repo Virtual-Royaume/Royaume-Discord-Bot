@@ -1,5 +1,9 @@
 import Event from "../Event";
-import { BaseGuildTextChannel, ButtonInteraction, GuildMember, Interaction, MessageActionRow, Modal, ModalSubmitInteraction, TextInputComponent } from "discord.js";
+import { 
+    BaseGuildTextChannel, ButtonInteraction, 
+    GuildMember, Interaction, MessageActionRow, 
+    Modal, ModalSubmitInteraction, TextInputComponent 
+} from "discord.js";
 import { button, modal as modalIds } from "../../../resources/config/interaction-ids.json";
 import { generalChannel } from "../../../resources/config/information.json";
 import Client from "../../Client";
@@ -16,6 +20,24 @@ export default class VerifModal extends Event {
     }
 
     private async openModal(interaction: ButtonInteraction) : Promise<void> {
+        // Checks :
+        if(!(interaction.member instanceof GuildMember)){
+            interaction.reply({ 
+                embeds: [simpleEmbed("Erreur lors de l'ouverture du formulaire, contactez un membre du serveur.", "error")],
+                ephemeral: true
+            });
+
+            return;
+        }
+
+        if(!interaction.member.roles?.cache.has(verify.roles.waiting)){
+            interaction.reply({ 
+                embeds: [simpleEmbed("Les membres du serveur ne peuvent pas utiliser cette interaction.", "error")],
+                ephemeral: true
+            });
+            return;
+        }
+
         const modal = new Modal()
             .setCustomId(modalIds.verify)
             .setTitle("Formulaire de présentation")

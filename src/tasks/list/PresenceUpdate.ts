@@ -6,7 +6,7 @@ import { ExcludeEnum } from "discord.js";
 
 interface PresenceMessage {
     text: string;
-    type: ExcludeEnum<typeof ActivityTypes, "CUSTOM">;
+    type: ExcludeEnum<typeof ActivityTypes, "CUSTOM" | "STREAMING">;
 }
 
 export default class PresenceUpdate extends Task {

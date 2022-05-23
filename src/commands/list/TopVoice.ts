@@ -4,7 +4,7 @@ import { request } from "../../api/Request";
 import { getVoiceTime } from "../../api/requests/Member";
 import { Member } from "../../api/Schema";
 import { simpleEmbed } from "../../utils/Embed";
-import { numberParser } from "../../utils/Func";
+import { numberFormat } from "../../utils/Func";
 import Command from "../Command";
 
 export default class TopVoice extends Command {
@@ -42,7 +42,7 @@ export default class TopVoice extends Command {
         for(let i = 0; i < members.length; i++){
             const member = members[i];
 
-            message += `**${(i + 1 + (page - 1) * this.memberPerPage)}. ${member.username} :** ${ numberParser(member.activity.voiceMinute)}\n`;
+            message += `**${(i + 1 + (page - 1) * this.memberPerPage)}. ${member.username} :** ${numberFormat(member.activity.voiceMinute)}\n`;
         }
 
         // Send leaderboard :

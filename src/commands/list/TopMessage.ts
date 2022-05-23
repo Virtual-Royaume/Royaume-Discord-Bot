@@ -5,6 +5,7 @@ import { request } from "../../api/Request";
 import { getChannelMessageCount, getMonthMessageCount, getTotalMessageCount, getVoiceTime } from "../../api/requests/Member";
 import { Member } from "../../api/Schema";
 import { simpleEmbed } from "../../utils/Embed";
+import { numberFormat } from "../../utils/Func";
 import Command from "../Command";
 
 type Source = "total" | "mois" | "salon";
@@ -117,7 +118,7 @@ export default class TopMessage extends Command {
         for(let i = 0; i < members.length; i++){
             const member = members[i];
 
-            message += `**${(i + 1 + (page - 1) * this.memberPerPage)}. ${member.username} :** ${member.messageCount}\n`;
+            message += `**${(i + 1 + (page - 1) * this.memberPerPage)}. ${member.username} :** ${numberFormat(member.messageCount)}\n`;
         }
 
         // Send leaderboard :

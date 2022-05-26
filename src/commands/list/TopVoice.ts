@@ -24,6 +24,6 @@ export default class TopVoice extends Command {
         const leaderboard = await getVoiceLeaderboard();
         const embed = leaderboardEmbed("Classements des membres les plus actifs en vocal *(en minute)*", leaderboard, page);
 
-        command.reply( {embeds: [embed]} );
+        command.reply({embeds: [embed]});
     }
 }

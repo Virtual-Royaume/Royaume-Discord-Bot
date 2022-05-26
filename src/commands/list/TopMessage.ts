@@ -54,6 +54,6 @@ export default class TopMessage extends Command {
         const leaderboard = await getMessageLeaderboard(options);
         const embed = leaderboardEmbed("Classements des membres les plus actifs", leaderboard, page);
 
-        command.reply( {embeds: [embed]} );
+        command.reply({embeds: [embed]});
     }
 }

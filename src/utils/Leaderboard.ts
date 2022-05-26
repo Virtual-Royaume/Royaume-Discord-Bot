@@ -26,13 +26,13 @@ export class Leaderboard{
      * Default format => `**{pos} • {user} :** {score}`
      * @param format - `{pos} => leaderboard position` | `{user} => username` | `{score} => user score`
      */
-    public getFormatedPage(page: number, format?: string) : string[]{
+    public getFormatedPage(page: number, format?: string){
 
         const pageEntries = this.getPage(page);
 
         const entryFormat = format ?? "**{pos} • {user} :** {score}";
 
-        return pageEntries.map( (member, i) => {
+        return pageEntries.map((member, i) => {
 
             const position = (page-1)*this.pageLength + i + 1;
     
@@ -43,11 +43,11 @@ export class Leaderboard{
         });
     }
 
-    public getPage(page: number) : LeaderboardEntryType[]{
+    public getPage(page: number){
 
         page = this.getCorrectPageNum(page);
 
-        return this.entries.slice( (page-1) * this.pageLength, page * this.pageLength);
+        return this.entries.slice((page-1) * this.pageLength, page * this.pageLength);
     }
 
     public getCorrectPageNum(page: number){
@@ -66,7 +66,7 @@ export class Leaderboard{
         this.updateMaxPage();
     }
 
-    public getPageLength() : number{
+    public getPageLength(){
         return this.pageLength;
     }
 
@@ -78,7 +78,7 @@ export class Leaderboard{
         return this.maxPage;
     }
 
-    public getEntries(): LeaderboardEntryType[]{
+    public getEntries(){
         return this.entries;
     }
 

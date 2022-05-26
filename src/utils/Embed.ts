@@ -19,7 +19,7 @@ export function simpleEmbed(message: string, type: EmbedType = "normal", title?:
         .setTitle(title ?? "");
 }
 
-export async function memberEmbed( memberId: string ) : Promise<null|MessageEmbed> {
+export async function memberEmbed(memberId: string) : Promise<null|MessageEmbed> {
 
     const memberInfo = (await request<{ member: Member }>(getMember, { id: memberId })).member;
     if(!memberInfo) return null;
@@ -47,12 +47,12 @@ export async function memberEmbed( memberId: string ) : Promise<null|MessageEmbe
         });
     }
 
-    return simpleEmbed( `${globalStats}\n\n${messagesPerChannel}`, "normal", `Activité de ${memberInfo.username}` );
+    return simpleEmbed(`${globalStats}\n\n${messagesPerChannel}`, "normal", `Activité de ${memberInfo.username}`);
 }
 
 
 
-export function leaderboardEmbed( title: string, leaderboard: Leaderboard, page: number = 1) : MessageEmbed {
+export function leaderboardEmbed(title: string, leaderboard: Leaderboard, page: number = 1) : MessageEmbed {
 
     title += ` - ${leaderboard.getCorrectPageNum(page)}/${leaderboard.getMaxPage()}`;
 

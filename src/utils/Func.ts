@@ -7,13 +7,13 @@ export function numberFormat(number: number) : string {
     return number.toLocaleString("fr-FR");
 }
 
-export async function getMessageLeaderboard( options: LeaderboardOptionsType = {} ) : Promise<Leaderboard>{
+export async function getMessageLeaderboard(options: LeaderboardOptionsType = {} ) : Promise<Leaderboard>{
 
     switch (options.period) {
         case "month":
 
-            const monthMessageCount = ( await request<{ members: Member[] }>(getMonthMessageCount) ).members
-            .map( member => {
+            const monthMessageCount = (await request<{ members: Member[] }>(getMonthMessageCount)).members
+            .map(member => {
                 return {
                     username: member.username,
                     count: member.activity.messages.monthCount
@@ -27,7 +27,7 @@ export async function getMessageLeaderboard( options: LeaderboardOptionsType = {
 
     if(options.channel){
 
-        const channelMessageCount = ( await request<{ members: Member[] }>(getChannelMessageCount) ).members
+        const channelMessageCount = (await request<{ members: Member[] }>(getChannelMessageCount)).members
         .map(member => {
             const selectChannel = member.activity.messages.perChannel.find(c => options.channel === c?.channelId);
 
@@ -41,7 +41,7 @@ export async function getMessageLeaderboard( options: LeaderboardOptionsType = {
     }
 
 
-    const totalMessageCount = ( await request<{ members: Member[] }>(getTotalMessageCount) ).members
+    const totalMessageCount = (await request<{ members: Member[] }>(getTotalMessageCount)).members
     .map(member => {
         return {
             username: member.username,
@@ -52,7 +52,7 @@ export async function getMessageLeaderboard( options: LeaderboardOptionsType = {
     return new Leaderboard(totalMessageCount);
 }
 
-export async function getVoiceLeaderboard( options: LeaderboardOptionsType = {} ) : Promise<Leaderboard>{
+export async function getVoiceLeaderboard(options: LeaderboardOptionsType = {} ) : Promise<Leaderboard>{
 
     switch (options.period) {
         case "month":
@@ -70,7 +70,7 @@ export async function getVoiceLeaderboard( options: LeaderboardOptionsType = {} 
     }
 
 
-    const totalVoiceCount = ( await request<{ members: Member[] }>(getVoiceTime) ).members
+    const totalVoiceCount = (await request<{ members: Member[] }>(getVoiceTime)).members
     .map(member => {
         return {
             username: member.username,

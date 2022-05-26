@@ -73,7 +73,13 @@ export default class VerifModal extends Event {
 
         // Send the presentation in general channel with votes :
         const message = await generalChannelInstance.send({
-            embeds: [simpleEmbed(presentation, "normal", `Présentation de ${member.displayName}`).setFooter(`ID : ${member.id}`)] 
+            embeds: [
+                simpleEmbed(
+                    presentation,
+                    "normal",
+                    `Présentation de ${member.displayName}`
+                ).setFooter({text: `ID : ${member.id}`})
+            ] 
         });
 
         await message.react(verify.emoji.upvote);

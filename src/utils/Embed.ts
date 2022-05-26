@@ -4,19 +4,10 @@ import { getChannelsByCategory } from "../api/func/MainChannel";
 import { request } from "../api/Request";
 import { getMember } from "../api/requests/Member";
 import { Member } from "../api/Schema";
-import { getMessageLeaderboard, getVoiceLeaderboard, LeaderboardEntryType, numberFormat } from "./Func";
-import Leaderboard from "./Leaderboard";
-
-const PAGE_LENGTH = 20;
+import { numberFormat } from "./Func";
+import { Leaderboard } from "./Leaderboard";
 
 type EmbedType = "normal" | "error";
-
-type LeaderboardType = "message" | "voice";
-
-export type LeaderboardOptionsType = {
-    period?: "month",
-    channel?: string
-}
 
 
 export function simpleEmbed(message: string, type: EmbedType = "normal", title?: string) : MessageEmbed {
@@ -61,27 +52,13 @@ export async function memberEmbed( memberId: string ) : Promise<null|MessageEmbe
 
 
 
+export function leaderboardEmbed( title: string, leaderboard: Leaderboard, page: number = 1) : MessageEmbed {
 
-
-export async function leaderboardEmbed(type: LeaderboardType, page: number = 1, options: LeaderboardOptionsType = {}) : Promise<MessageEmbed> {
-
-    let leaderboard: Leaderboard;
-    let title = "";
-
-    // SwitchCase for futur leaderboards
-    switch (type) {
-        case "message":
-            leaderboard = await getMessageLeaderboard(options);
-            title += "Classements des membres les plus actifs";
-        break;
-        case "voice":
-            leaderboard = await getVoiceLeaderboard(options);
-            title += "Classements des membres les plus actifs en vocal (en minute)";
-        break;
-    }
     title += ` - ${leaderboard.getCorrectPageNum(page)}/${leaderboard.getMaxPage()}`;
 
     let descriptionOptions = [];
+
+    const options = leaderboard.getOptions();
 
     // For futur leaderboard intervals
     switch(options.period){
@@ -97,12 +74,7 @@ export async function leaderboardEmbed(type: LeaderboardType, page: number = 1, 
         title
     );
 
-    const pageEntries = leaderboard.getPage(page).map( (member, i) => {
-
-        const position = (page-1)*leaderboard.getPageLength() + i + 1;
-
-        return `**${position} • ${member.username} :** ${member.count}`;
-    });
+    const pageEntries = leaderboard.getFormatedPage(page);
 
     embed.addField("\u200b", pageEntries.join("\n"));
 

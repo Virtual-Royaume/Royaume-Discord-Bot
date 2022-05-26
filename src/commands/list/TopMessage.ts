@@ -1,7 +1,9 @@
 import { SlashCommandBuilder, SlashCommandChannelOption, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
 import { ChannelTypes } from "discord.js/typings/enums";
-import { leaderboardEmbed, LeaderboardOptionsType, simpleEmbed } from "../../utils/Embed";
+import { leaderboardEmbed } from "../../utils/Embed";
+import { getMessageLeaderboard } from "../../utils/Func";
+import { LeaderboardOptionsType } from "../../utils/Leaderboard";
 import Command from "../Command";
 
 type Source = "total" | "month";
@@ -49,7 +51,8 @@ export default class TopMessage extends Command {
             channel: command.options.getChannel("salon")?.id
         }
         
-        const embed = await leaderboardEmbed("message", page, options);
+        const leaderboard = await getMessageLeaderboard(options);
+        const embed = leaderboardEmbed("Classements des membres les plus actifs", leaderboard, page);
 
         command.reply( {embeds: [embed]} );
     }

@@ -1,17 +1,10 @@
 import { request } from "../api/Request";
 import { getChannelMessageCount, getMonthMessageCount, getTotalMessageCount, getVoiceTime } from "../api/requests/Member";
 import { Member } from "../api/Schema";
-import { LeaderboardOptionsType } from "./Embed";
-import Leaderboard from "./Leaderboard";
+import { Leaderboard, LeaderboardOptionsType } from "./Leaderboard";
 
 export function numberFormat(number: number) : string {
     return number.toLocaleString("fr-FR");
-}
-
-
-export type LeaderboardEntryType = {
-    username: string,
-    count: number
 }
 
 export async function getMessageLeaderboard( options: LeaderboardOptionsType = {} ) : Promise<Leaderboard>{
@@ -27,7 +20,7 @@ export async function getMessageLeaderboard( options: LeaderboardOptionsType = {
                 }
             });
 
-            return new Leaderboard(monthMessageCount);
+            return new Leaderboard(monthMessageCount, undefined, options);
         break;
     }
 
@@ -44,7 +37,7 @@ export async function getMessageLeaderboard( options: LeaderboardOptionsType = {
             }
         });
 
-        return new Leaderboard(channelMessageCount);
+        return new Leaderboard(channelMessageCount, undefined, options);
     }
 
 

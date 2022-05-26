@@ -1,10 +1,7 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { request } from "../../api/Request";
-import { getVoiceTime } from "../../api/requests/Member";
-import { Member } from "../../api/Schema";
-import { leaderboardEmbed, simpleEmbed } from "../../utils/Embed";
-import { numberFormat } from "../../utils/Func";
+import { leaderboardEmbed } from "../../utils/Embed";
+import { getVoiceLeaderboard } from "../../utils/Func";
 import Command from "../Command";
 
 export default class TopVoice extends Command {
@@ -24,7 +21,8 @@ export default class TopVoice extends Command {
         
         const page = command.options.getNumber("page") ?? 1;
         
-        const embed = await leaderboardEmbed("voice", page);
+        const leaderboard = await getVoiceLeaderboard();
+        const embed = leaderboardEmbed("Classements des membres les plus actifs en vocal *(en minute)*", leaderboard, page);
 
         command.reply( {embeds: [embed]} );
     }

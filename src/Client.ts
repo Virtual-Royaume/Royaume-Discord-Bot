@@ -4,6 +4,7 @@ import CommandManager from "./commands/CommandManager";
 import TaskManager from "./tasks/TaskManager";
 import Logger from "./utils/Logger";
 import { botToken } from "../resources/config/secret.json";
+import { guildId } from "../resources/config/information.json";
 
 export default class Client extends DiscordClient {
 
@@ -18,8 +19,10 @@ export default class Client extends DiscordClient {
         super({
             intents: [
                 Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, 
-                Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_MEMBERS
-            ]
+                Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_MEMBERS,
+                Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES
+            ],
+            partials: ["MESSAGE", "CHANNEL", "REACTION"]
         });
 
         // Create bot instance and login it :
@@ -32,14 +35,8 @@ export default class Client extends DiscordClient {
         this.taskManager = new TaskManager();
     }
 
-    public getGuild() : Guild {
-        const guild = Client.instance.guilds.cache.first();
-
-        if(guild instanceof Guild){
-            return guild;
-        } else {
-            throw new Error("Unable to get the Guild instance");
-        }
+    public async getGuild() : Promise<Guild> {
+        return await this.guilds.fetch(guildId);
     }
 
     public getDevTeam() : User[] | null {

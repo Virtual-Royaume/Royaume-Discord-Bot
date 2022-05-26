@@ -1,8 +1,22 @@
 {
+    "guildId": "732251741999071303",
     "generalChannel": "786216771723198514",
-    "verifRole": "837679269098422314",
     "colors": {
         "primary": "#5339DD",
         "error": "#FF5555"
+    },
+    "verify": {
+        "roles": {
+            "waiting": "837679269098422314",
+            "verified": "732395194133250050"
+        },
+        "emoji": {
+            "upvote": "👍",
+            "downvote": "👎"
+        },
+        "reactionNeededCount": {
+            "upvote": 5,
+            "downvote": 5
+        }
     }
 }

@@ -28,7 +28,7 @@ export default class Role extends Command {
 
             for(const roleId of rolesId){
                 // Get role instance :
-                const role = await Client.instance.getGuild().roles.fetch(roleId);
+                const role = await (await Client.instance.getGuild()).roles.fetch(roleId);
 
                 if(!role) continue;
 

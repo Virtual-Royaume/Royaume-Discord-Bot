@@ -1,10 +1,9 @@
 import { request } from "../../api/Request";
-import { getMember, setAlwaysOnServer } from "../../api/requests/Member";
-import { Member } from "../../api/Schema";
+import { getMembers, setAlwaysOnServer } from "../../api/requests/Member";
 import Client from "../../Client";
 import Task from "../Task";
 
-export default class ServerActivityUpdate extends Task {
+export default class VerifyMembers extends Task {
 
     constructor(){
         super(10 * 60 * 1000);
@@ -12,15 +11,20 @@ export default class ServerActivityUpdate extends Task {
 
     public async run(): Promise<void> {
         
-        const guild = await Client.instance.getGuild();
-        const members = await guild.members.fetch();
+        const members = await (await Client.instance.getGuild()).members.fetch();
+        const apiMembers = (await request<{members: {id: string, isOnServer: boolean}[]}>(getMembers)).members;
 
-        members.each(async member => {
+        apiMembers.forEach((member, index) => {
 
-            const apiMember = (await request<{ member: Member }>(getMember, { id: member.id })).member;
+            if(members.has(member.id)){
+                members.delete(member.id);
+                return;
+            }
 
-            if(apiMember.isOnServer) return;
+            request(setAlwaysOnServer, { id: member.id, value: false });
+        });
 
+        members.each(member => {
             request(setAlwaysOnServer, { id: member.id, value: true });
         });
     }

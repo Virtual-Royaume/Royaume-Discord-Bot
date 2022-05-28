@@ -1,6 +1,8 @@
 import { request } from "../../api/Request";
 import { getMembers, setAlwaysOnServer } from "../../api/requests/Member";
+import { Member } from "../../api/Schema";
 import Client from "../../Client";
+import Logger from "../../utils/Logger";
 import Task from "../Task";
 
 export default class VerifyMembers extends Task {
@@ -10,22 +12,21 @@ export default class VerifyMembers extends Task {
     }
 
     public async run(): Promise<void> {
-        
-        const members = await (await Client.instance.getGuild()).members.fetch();
-        const apiMembers = (await request<{members: {id: string, isOnServer: boolean}[]}>(getMembers)).members;
+        const realMembers = await (await Client.instance.getGuild()).members.fetch();
+        const apiMembers = (await request<{members: Member[]}>(getMembers)).members;
 
-        apiMembers.forEach(member => {
-
-            if(members.has(member.id)){
-                members.delete(member.id);
-                return;
+        for(let apiMember of apiMembers){
+            if(realMembers.has(apiMember._id)){
+                realMembers.delete(apiMember._id);
+            } else {
+                Logger.info(`Fix ${apiMember.username} (${apiMember._id}) member (isOnServer) value, now on false`);
+                request(setAlwaysOnServer, { id: apiMember._id, value: false });
             }
+        }
 
-            request(setAlwaysOnServer, { id: member.id, value: false });
-        });
-
-        members.each(member => {
-            request(setAlwaysOnServer, { id: member.id, value: true });
-        });
+        for(let realMember of realMembers.values()){
+            Logger.info(`Fix ${realMember.displayName} (${realMember.id}) member (isOnServer) value, now on true`);
+            request(setAlwaysOnServer, { id: realMember.id, value: true });
+        }
     }
 }

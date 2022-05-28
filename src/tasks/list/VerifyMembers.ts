@@ -14,7 +14,7 @@ export default class VerifyMembers extends Task {
         const members = await (await Client.instance.getGuild()).members.fetch();
         const apiMembers = (await request<{members: {id: string, isOnServer: boolean}[]}>(getMembers)).members;
 
-        apiMembers.forEach((member, index) => {
+        apiMembers.forEach(member => {
 
             if(members.has(member.id)){
                 members.delete(member.id);

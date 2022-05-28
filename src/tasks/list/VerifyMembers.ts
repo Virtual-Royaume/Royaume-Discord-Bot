@@ -18,10 +18,11 @@ export default class VerifyMembers extends Task {
         for(let apiMember of apiMembers){
             if(realMembers.has(apiMember._id)){
                 realMembers.delete(apiMember._id);
-            } else {
-                Logger.info(`Fix ${apiMember.username} (${apiMember._id}) member (isOnServer) value, now on false`);
-                request(setAlwaysOnServer, { id: apiMember._id, value: false });
+                continue;
             }
+            
+            Logger.info(`Fix ${apiMember.username} (${apiMember._id}) member (isOnServer) value, now on false`);
+            request(setAlwaysOnServer, { id: apiMember._id, value: false });
         }
 
         for(let realMember of realMembers.values()){

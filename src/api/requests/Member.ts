@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
 export const createMember = gql`
-    mutation CreateMember($id: ID!, $username: String!, $profilPicture: String!){
-        createMember(id: $id, username: $username, profilPicture: $profilPicture){
+    mutation CreateMember($id: ID!, $username: String!, $profilePicture: String!){
+        createMember(id: $id, username: $username, profilePicture: $profilePicture){
             _id
         }
     }
@@ -16,11 +16,11 @@ export const setAlwaysOnServer = gql`
     }
 `;
 
-export const setUsernameAndProfilPicture = gql`
-    mutation SetUsernameAndProfilPicture($id: ID!, $username: String!, $profilPicture: String!){
+export const setUsernameAndprofilePicture = gql`
+    mutation SetUsernameAndprofilePicture($id: ID!, $username: String!, $profilePicture: String!){
         updateMember(id: $id, input: {
             username: $username
-            profilPicture: $profilPicture
+            profilePicture: $profilePicture
         })
     }
 `;
@@ -42,7 +42,7 @@ export const getMember = gql`
         member(id: $id){
             _id
             username
-            profilPicture
+            profilePicture
             isOnServer
             activity {
             voiceMinute

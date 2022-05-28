@@ -22,7 +22,7 @@ export default class GuildMemberAdd extends Event {
         const result = await request<MakeOptional<Member, keyof Member>>(createMember, {
             id: member.id,
             username: member.user.username,
-            profilPicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
+            profilePicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
         });
 
         if(!result._id) request(setAlwaysOnServer, { id: member.id, value: true });

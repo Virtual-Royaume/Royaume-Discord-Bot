@@ -59,6 +59,15 @@ export const getMember = gql`
     }
 `;
 
+export const getMembers = gql`
+    query Member {
+        members{
+            _id
+            isOnServer
+        }
+    }
+`;
+
 export const getVoiceTime = gql`
     query GetVoiceTimes {
         members {

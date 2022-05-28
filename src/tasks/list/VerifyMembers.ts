@@ -8,7 +8,7 @@ import Task from "../Task";
 export default class VerifyMembers extends Task {
 
     constructor(){
-        super(10 * 60 * 1000);
+        super(30 * 1000);
     }
 
     public async run(): Promise<void> {
@@ -16,7 +16,10 @@ export default class VerifyMembers extends Task {
         const apiMembers = (await request<{members: Member[]}>(getMembers)).members;
 
         for(let apiMember of apiMembers){
-            if(realMembers.has(apiMember._id)){
+
+            const realMember = realMembers.get(apiMember._id);
+
+            if(realMember && !realMember.user.bot){
                 realMembers.delete(apiMember._id);
                 continue;
             }
@@ -26,6 +29,9 @@ export default class VerifyMembers extends Task {
         }
 
         for(let realMember of realMembers.values()){
+
+            if(realMember.user.bot) continue;
+
             Logger.info(`Fix ${realMember.displayName} (${realMember.id}) member (isOnServer) value, now on true`);
             request(setAlwaysOnServer, { id: realMember.id, value: true });
         }

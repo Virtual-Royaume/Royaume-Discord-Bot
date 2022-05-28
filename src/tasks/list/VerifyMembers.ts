@@ -16,7 +16,6 @@ export default class VerifyMembers extends Task {
         const apiMembers = (await request<{members: Member[]}>(getMembers)).members;
 
         for(let apiMember of apiMembers){
-
             const realMember = realMembers.get(apiMember._id);
 
             if(realMember && !realMember.user.bot){
@@ -24,15 +23,16 @@ export default class VerifyMembers extends Task {
                 continue;
             }
             
-            Logger.info(`Fix ${apiMember.username} (${apiMember._id}) member (isOnServer) value, now on false`);
+            // Remove members :
+            Logger.info(`Fix ${apiMember._id} isOnServer value to false (${apiMember.username})`);
             request(setAlwaysOnServer, { id: apiMember._id, value: false });
         }
 
         for(let realMember of realMembers.values()){
-
             if(realMember.user.bot) continue;
 
-            Logger.info(`Fix ${realMember.displayName} (${realMember.id}) member (isOnServer) value, now on true`);
+            // Add member :
+            Logger.info(`Fix ${realMember.id} isOnServer value to true (${realMember.displayName})`);
             request(setAlwaysOnServer, { id: realMember.id, value: true });
         }
     }

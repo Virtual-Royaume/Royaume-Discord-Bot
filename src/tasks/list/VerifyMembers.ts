@@ -1,5 +1,5 @@
 import { request } from "../../api/Request";
-import { getMembers, setAlwaysOnServer } from "../../api/requests/Member";
+import { createMember, getMembers, setAlwaysOnServer } from "../../api/requests/Member";
 import { Member } from "../../api/Schema";
 import Client from "../../Client";
 import Logger from "../../utils/Logger";
@@ -33,7 +33,17 @@ export default class VerifyMembers extends Task {
 
             // Add member :
             Logger.info(`Fix ${realMember.id} isOnServer value to true (${realMember.displayName})`);
-            request(setAlwaysOnServer, { id: realMember.id, value: true });
+
+            const response = await request<{ updateMember: boolean }>(
+                setAlwaysOnServer, { id: realMember.id, value: true }
+            );
+
+            // Create member if he does not exist :
+            if(!response.updateMember) await request(createMember, {
+                id: realMember.id,
+                username: realMember.displayName,
+                profilePicture: realMember.avatarURL({ dynamic: true }) ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
+            });
         }
     }
 }

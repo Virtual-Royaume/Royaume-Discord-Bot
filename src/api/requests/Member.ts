@@ -46,6 +46,7 @@ export const getMember = gql`
             isOnServer
             activity {
             voiceMinute
+            monthVoiceMinute
                 messages {
                     totalCount
                     monthCount
@@ -86,6 +87,33 @@ export const getMonthMessageCount = gql`
             _id
             username
             activity {
+                messages {
+                    monthCount
+                }
+            }
+        }
+    }
+`;
+
+export const getMonthVoiceMinute = gql`
+    query GetMonthVoiceMinute {
+        members {
+            _id
+            username
+            activity {
+                monthVoiceMinute
+            }
+        }
+    }
+`;
+
+export const getMonthActivity = gql`
+    query getMonthActivity {
+        members {
+            _id
+            username
+            activity {
+                monthVoiceMinute
                 messages {
                     monthCount
                 }

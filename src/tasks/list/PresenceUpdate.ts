@@ -1,13 +1,8 @@
 import Client from "../../Client";
-import presenceMessages from "../../../resources/config/presence-messages.json";
 import Task from "../Task";
-import { ActivityTypes } from "discord.js/typings/enums";
-import { ExcludeEnum } from "discord.js";
-
-interface PresenceMessage {
-    text: string;
-    type: ExcludeEnum<typeof ActivityTypes, "CUSTOM" | "STREAMING">;
-}
+import { request } from "../../api/Request";
+import { getPresenceMessages } from "../../api/requests/PresenceMessage";
+import { PresenceMessage } from "../../api/Schema";
 
 export default class PresenceUpdate extends Task {
 
@@ -16,7 +11,10 @@ export default class PresenceUpdate extends Task {
     }
 
     public async run() : Promise<void> {
-        const message = <PresenceMessage>presenceMessages[
+        const presenceMessages = (await request<{ presenceMessages: PresenceMessage[] }>(getPresenceMessages))
+            .presenceMessages;
+
+        const message = presenceMessages[
             Math.floor(Math.random() * presenceMessages.length)
         ];
 

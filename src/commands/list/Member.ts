@@ -56,6 +56,8 @@ export default class Member extends Command {
         const memberActivity = memberInfo.activity;
         
         message += `**Temps de vocal (en minute) :** ${numberFormat(memberActivity.voiceMinute)}\n`;
+        message += `**Temps de vocal ce mois (en minute) :** ${numberFormat(memberActivity.monthVoiceMinute)}\n\n`;
+
         message += `**Nombre de message :** ${numberFormat(memberActivity.messages.totalCount)}\n`;
         message += `**Nombre de message ce mois :** ${numberFormat(memberActivity.messages.monthCount)}\n\n`;
 

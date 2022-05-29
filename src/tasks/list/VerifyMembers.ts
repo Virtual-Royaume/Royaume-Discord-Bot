@@ -8,7 +8,7 @@ import Task from "../Task";
 export default class VerifyMembers extends Task {
 
     constructor(){
-        super(10 * 60 * 1000);
+        super(1000 * 60 * 3);
     }
 
     public async run(): Promise<void> {

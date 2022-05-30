@@ -12,7 +12,7 @@ export default class Birthday extends Command {
         .setDescription("Définir votre date d'anniversaire")
         .addStringOption(new SlashCommandStringOption()
             .setName("date")
-            .setDescription("La date de votre anniversaire avec ce format : DD/MM/YYYY (jour/mois/année de naissance)")
+            .setDescription("Votre date de naissance avec ce format : DD/MM/YYYY (jour/mois/année de naissance)")
             .setRequired(true)
         );
 

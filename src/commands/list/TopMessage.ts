@@ -5,7 +5,7 @@ import { request } from "../../api/Request";
 import { getChannelMessageCount, getMonthMessageCount, getTotalMessageCount, getVoiceTime } from "../../api/requests/Member";
 import { Member } from "../../api/Schema";
 import { simpleEmbed } from "../../utils/Embed";
-import { numberFormat } from "../../utils/Func";
+import { numberFormat } from "../../utils/Format";
 import Command from "../Command";
 
 type Source = "total" | "mois" | "salon";

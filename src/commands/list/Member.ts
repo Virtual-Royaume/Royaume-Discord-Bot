@@ -6,7 +6,7 @@ import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { MainChannel, Member as MemberSchema } from "../../api/Schema";
 import { getChannels } from "../../api/requests/MainChannel";
-import { numberFormat } from "../../utils/Func";
+import { numberFormat } from "../../utils/Format";
 
 export default class Member extends Command {
 

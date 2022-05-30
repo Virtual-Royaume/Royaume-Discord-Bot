@@ -1,8 +1,7 @@
 import Client from "../../Client";
 import Task from "../Task";
 import { request } from "../../api/Request";
-import { getPresenceMessages } from "../../api/requests/PresenceMessage";
-import { PresenceMessage } from "../../api/Schema";
+import { GetPresenceMessagesType, getPresenceMessages } from "../../api/requests/PresenceMessage";
 
 export default class PresenceUpdate extends Task {
 
@@ -11,7 +10,7 @@ export default class PresenceUpdate extends Task {
     }
 
     public async run() : Promise<void> {
-        const presenceMessages = (await request<{ presenceMessages: PresenceMessage[] }>(getPresenceMessages))
+        const presenceMessages = (await request<GetPresenceMessagesType>(getPresenceMessages))
             .presenceMessages;
 
         const message = presenceMessages[

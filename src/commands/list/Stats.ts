@@ -4,7 +4,7 @@ import Command from "../Command";
 import chartjs from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { request } from "../../api/Request";
-import { getServerActivityHistory } from "../../api/requests/ServerActivity";
+import { getServerActivityHistory, GetServerActivityHistoryType } from "../../api/requests/ServerActivity";
 import { ServerActivity } from "../../api/Schema";
 import { colors } from "../../../resources/config/information.json";
 import { dateFormat } from "../../utils/Format";
@@ -24,7 +24,7 @@ export default class Stats extends Command {
 
     public async execute(command: CommandInteraction) : Promise<void> {
         // Get server activity :
-        const serverActivity = (await request<{ serverActivity: ServerActivity[] }>(getServerActivityHistory, { 
+        const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, { 
             historyCount: command.options.getNumber("historique") ?? 30
         })).serverActivity.reverse();
     

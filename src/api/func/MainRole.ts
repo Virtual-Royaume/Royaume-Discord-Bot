@@ -1,6 +1,5 @@
 import { request } from "../Request";
-import { getRoles } from "../requests/MainRole";
-import { MainRole } from "../Schema";
+import { getRoles, GetRolesType } from "../requests/MainRole";
 
 type RolesByCategory = { 
     [category: string]: string[] 
@@ -8,7 +7,7 @@ type RolesByCategory = {
 
 export async function getRolesByCategory() : Promise<RolesByCategory> {
     // Get mains roles :
-    const roles = (await request<{ roles: MainRole[] }>(getRoles)).roles;
+    const roles = (await request<GetRolesType>(getRoles)).roles;
 
     // Sort roles by category :
     const rolesIdsByCategory: RolesByCategory = {}

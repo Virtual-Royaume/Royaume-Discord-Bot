@@ -1,8 +1,7 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
 import { request } from "../../api/Request";
-import { getVoiceTime } from "../../api/requests/Member";
-import { Member } from "../../api/Schema";
+import { getVoiceTime, GetVoiceTimeType } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
 import { numberFormat } from "../../utils/Format";
 import Command from "../Command";
@@ -24,7 +23,7 @@ export default class TopVoice extends Command {
 
     public async execute(command: CommandInteraction) : Promise<void> {
         // Get data and sort it :
-        let members = (await request<{ members: Member[] }>(getVoiceTime)).members.sort((a, b) => {
+        let members = (await request<GetVoiceTimeType>(getVoiceTime)).members.sort((a, b) => {
             return (b?.activity.voiceMinute ?? 0) - (a?.activity.voiceMinute ?? 0);
         });
 

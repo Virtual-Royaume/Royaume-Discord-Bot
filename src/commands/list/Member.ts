@@ -1,11 +1,10 @@
 import { SlashCommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
 import { CommandInteraction, GuildMember } from "discord.js";
 import { request } from "../../api/Request";
-import { getMember } from "../../api/requests/Member";
+import { getMember, GetMemberType } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
-import { MainChannel, Member as MemberSchema } from "../../api/Schema";
-import { getChannels } from "../../api/requests/MainChannel";
+import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
 import { numberFormat } from "../../utils/Format";
 
 export default class Member extends Command {
@@ -33,7 +32,7 @@ export default class Member extends Command {
         }
 
         // Get member info :
-        const memberInfo = (await request<{ member: MemberSchema }>(getMember, { id: member.id })).member;
+        const memberInfo = (await request<GetMemberType>(getMember, { id: member.id })).member;
         
         if(!memberInfo){
             command.reply({ embeds: [simpleEmbed("Aucune donnée trouvée.", "error")], ephemeral: true });
@@ -41,7 +40,7 @@ export default class Member extends Command {
         }
 
         // Get main channels en sort it :
-        const channels = (await request<{ channels: MainChannel[] }>(getChannels)).channels;
+        const channels = (await request<GetChannelsType>(getChannels)).channels;
         const channelsIdsByCategory: { [category: string]: string[] } = {}
 
         channels.forEach(channel => {

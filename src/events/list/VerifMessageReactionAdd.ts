@@ -1,12 +1,12 @@
 import { BaseGuildTextChannel, GuildMember, MessageReaction, User } from "discord.js";
 import Client from "../../Client";
-import Event from "../Event";
+import Event, { EventName } from "../Event";
 import { verify, generalChannel } from "../../../resources/config/information.json";
 import { simpleEmbed } from "../../utils/Embed";
 
 export default class VerifMessageReactionAdd extends Event {
 
-    public name: string = "messageReactionAdd";
+    public name: EventName = "messageReactionAdd";
 
     public async execute(messageReaction: MessageReaction, _: User) : Promise<void> {
         // Check if the embed are a "presentation" message :

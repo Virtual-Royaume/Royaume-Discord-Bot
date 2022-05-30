@@ -1,10 +1,10 @@
 import Client from "../../Client";
 import Logger from "../../utils/Logger";
-import Event from "../Event";
+import Event, { EventName } from "../Event";
 
 export default class Ready extends Event {
 
-    public name: string = "ready";
+    public name: EventName = "ready";
     public once: boolean = true;
 
     public async execute() : Promise<void> {

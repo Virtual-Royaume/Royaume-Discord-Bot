@@ -7,7 +7,7 @@ import { request } from "../../api/Request";
 import { getServerActivityHistory } from "../../api/requests/ServerActivity";
 import { ServerActivity } from "../../api/Schema";
 import { colors } from "../../../resources/config/information.json";
-import dayjs from "dayjs";
+import { dateFormat } from "../../utils/Format";
 
 export default class Stats extends Command {
 
@@ -48,7 +48,9 @@ export default class Stats extends Command {
             const config: chartjs.ChartConfiguration = {
                 type: "line",
                 data: {
-                    labels: serverActivity.map(element => dayjs(element.date).format("DD-MM-YYYY")),
+                    labels: serverActivity.map(element => {
+                        return dateFormat(new Date(element.date))
+                    }),
                     datasets: [{
                         label: type.description,
                         backgroundColor: colors.primary,

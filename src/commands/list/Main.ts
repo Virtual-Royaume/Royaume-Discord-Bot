@@ -32,7 +32,7 @@ export default class Inactive extends Command {
         .setDescription("Ajouter, supprimer ou voir la liste des salons/rôles principaux")
         .addStringOption(new SlashCommandStringOption()
             .setName("action")
-            .setDescription("Ajout ou suppression")
+            .setDescription("Ajout, suppression ou liste")
             .addChoices(...this.actionChoices)
             .setRequired(true)
         )

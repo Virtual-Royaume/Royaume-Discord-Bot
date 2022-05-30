@@ -29,6 +29,15 @@ export const setUsernameAndprofilePicture = gql`
     }
 `;
 
+export type SetBirthdayType = { updateMember: boolean };
+export const setBirthday = gql`
+    mutation($id: ID!, $date: Date!){
+        updateMember(id: $id, input: {
+            birthday: $date
+        })
+    }
+`;
+
 export type IncChannelMessageType = { incMemberDiscordActivityChannel: boolean };
 export const incChannelMessage = gql`
     mutation($id: ID!, $channelId: ID!){
@@ -67,13 +76,29 @@ export const getMember = gql`
     }
 `;
 
-export type GetMembersOnServerStatusType = { members: Pick<Member, "_id" | "username" | "isOnServer">[] };
+export type GetMembersOnServerStatusType = { 
+    members: Pick<Member, "_id" | "username" | "isOnServer">[] 
+};
 export const getMembersOnServerStatus = gql`
     query {
         members {
             _id
             username
             isOnServer
+        }
+    }
+`;
+
+export type GetBirthdaysType = { 
+    members: Pick<Member, "_id" | "username" | "birthday" | "profilePicture">[]
+};
+export const getBirthdays = gql`
+    query {
+        members {
+            _id
+            username
+            birthday
+            profilePicture
         }
     }
 `;

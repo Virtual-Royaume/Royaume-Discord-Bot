@@ -51,10 +51,11 @@ export default class ServerActivityUpdate extends Task {
 
             for(let member of birthdays){
                 const message = this.messages[Math.floor(Math.random() * this.messages.length)];
+                const birthday = new Date(member.birthday ?? 1);
 
-                const embed = simpleEmbed(
-                    message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title
-                ).setThumbnail(member.profilePicture);
+                const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
+                    .setThumbnail(member.profilePicture)
+                    .setFooter({ text: `${currentDate.getFullYear() - birthday.getFullYear()} années de vie sur terre` });
 
                 generalChannelInstance.send({ embeds: [embed] });
             }

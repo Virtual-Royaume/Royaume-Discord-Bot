@@ -1,13 +1,13 @@
 import { GuildMember } from "discord.js";
 import Client from "../../Client";
-import Event from "../Event";
+import Event, { EventName } from "../Event";
 import { verify } from "../../../resources/config/information.json";
 import { request } from "../../api/Request";
 import { createMember, CreateMemberType, setAlwaysOnServer } from "../../api/requests/Member";
 
 export default class GuildMemberAdd extends Event {
 
-    public name: string = "guildMemberAdd";
+    public name: EventName = "guildMemberAdd";
 
     public async execute(member: GuildMember) : Promise<void> {
         if(member.user.bot) return;

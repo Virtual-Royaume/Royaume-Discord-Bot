@@ -1,4 +1,4 @@
-import Event from "../Event";
+import Event, { EventName } from "../Event";
 import { 
     BaseGuildTextChannel, ButtonInteraction, 
     GuildMember, Interaction, MessageActionRow, 
@@ -12,7 +12,7 @@ import { verify } from "../../../resources/config/information.json";
 
 export default class VerifModal extends Event {
 
-    public name: string = "interactionCreate";
+    public name: EventName = "interactionCreate";
 
     public async execute(interaction: Interaction) : Promise<void> {
         if(interaction.isButton() && interaction.customId === button.verify) this.openModal(interaction);

@@ -1,11 +1,11 @@
 import { GuildMember } from "discord.js";
 import { request } from "../../api/Request";
 import { setUsernameAndprofilePicture } from "../../api/requests/Member";
-import Event from "../Event";
+import Event, { EventName } from "../Event";
 
 export default class GuildMemberUpdate extends Event {
 
-    public name: string = "guildMemberUpdate";
+    public name: EventName = "guildMemberUpdate";
 
     public async execute(_: GuildMember, newMember: GuildMember) : Promise<void> {
         request(setUsernameAndprofilePicture, { 

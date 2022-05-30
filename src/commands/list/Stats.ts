@@ -30,7 +30,7 @@ export default class Stats extends Command {
     
         // Data types :
         interface Type {
-            columnName: keyof ServerActivity;
+            columnName: keyof Omit<ServerActivity, "date" | "__typename">;
             description: string;
         }
 

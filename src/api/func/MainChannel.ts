@@ -1,6 +1,5 @@
 import { request } from "../Request";
-import { getChannels } from "../requests/MainChannel";
-import { MainChannel } from "../Schema";
+import { getChannels, GetChannelsType } from "../requests/MainChannel";
 
 type ChannelsByCategory = { 
     [category: string]: string[] 
@@ -8,7 +7,7 @@ type ChannelsByCategory = {
 
 export async function getChannelsByCategory() : Promise<ChannelsByCategory> {
     // Get mains channels :
-    const channels = (await request<{ channels: MainChannel[] }>(getChannels)).channels;
+    const channels = (await request<GetChannelsType>(getChannels)).channels;
 
     // Sort channels by category :
     const channelsIdsByCategory: ChannelsByCategory = {}

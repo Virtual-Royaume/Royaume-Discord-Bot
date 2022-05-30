@@ -7,8 +7,8 @@ import { ChannelTypes } from "discord.js/typings/enums";
 import { getChannelsByCategory } from "../../api/func/MainChannel";
 import { getRolesByCategory } from "../../api/func/MainRole";
 import { request } from "../../api/Request";
-import { addChannel, removeChannel } from "../../api/requests/MainChannel";
-import { addRole, removeRole } from "../../api/requests/MainRole";
+import { addChannel, AddChannelType, removeChannel, RemoveChannelType } from "../../api/requests/MainChannel";
+import { addRole, AddRoleType, removeRole, RemoveRoleType } from "../../api/requests/MainRole";
 import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 
@@ -109,13 +109,13 @@ export default class Inactive extends Command {
             if(channel){
                 result.type = "channel";
                 result.success = action === "add" ? 
-                    (await request<{ addChannel: boolean }>(addChannel, { channelId: channel.id, category: category })).addChannel :
-                    (await request<{ removeChannel: boolean }>(removeChannel, { channelId: channel.id })).removeChannel;
+                    (await request<AddChannelType>(addChannel, { channelId: channel.id, category: category })).addChannel :
+                    (await request<RemoveChannelType>(removeChannel, { channelId: channel.id })).removeChannel;
             } else if(role){
                 result.type = "role";
                 result.success = action === "add" ?
-                    (await request<{ addRole: boolean }>(addRole, { roleId: role.id, category: category })).addRole :
-                    (await request<{ removeRole: boolean }>(removeRole, { roleId: role.id })).removeRole;
+                    (await request<AddRoleType>(addRole, { roleId: role.id, category: category })).addRole :
+                    (await request<RemoveRoleType>(removeRole, { roleId: role.id })).removeRole;
             }
 
             const type = result.type === "role" ? "rôle" : "salon";

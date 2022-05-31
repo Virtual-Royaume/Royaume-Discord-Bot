@@ -11,3 +11,17 @@ export const getPresenceMessages = gql`
         }
     }
 `;
+
+export type AddPresenceMessageType = { addPresenceMessage: boolean };
+export const addPresenceMessage = gql`
+    mutation($type: PresenceType!, $text: String!) {
+        addPresenceMessage(type: $type, text: $text)
+    }
+`;
+
+export type RemovePresenceMessageType = { removePresenceMessage: boolean };
+export const removePresenceMessage = gql`
+    mutation($id: ID!){
+        removePresenceMessage(id: $id)
+    }
+`;

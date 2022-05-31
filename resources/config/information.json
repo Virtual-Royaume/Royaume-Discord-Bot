@@ -19,5 +19,15 @@
             "upvote": 5,
             "downvote": 7
         }
+    },
+    "activityProposal": {
+        "emoji": {
+            "upvote": "👍",
+            "downvote": "👎"
+        },
+        "reactionNeededCount": {
+            "upvote": 3,
+            "downvote": 4
+        }
     }
 }

@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
 import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
 import Command from "../Command";
-import chartjs from "chart.js";
+import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { request } from "../../api/Request";
 import { getServerActivityHistory, GetServerActivityHistoryType } from "../../api/requests/ServerActivity";
@@ -45,7 +45,7 @@ export default class Stats extends Command {
         const files: MessageAttachment[] = [];
 
         types.forEach(type => {
-            const config: chartjs.ChartConfiguration = {
+            const config: ChartConfiguration = {
                 type: "line",
                 data: {
                     labels: serverActivity.map(element => {

@@ -1,11 +1,11 @@
 import { Message } from "discord.js";
 import fetch from "node-fetch";
-import Event from "../Event";
-import githubToken from "../../../resources/config/secret.json"
+import Event, { EventName } from "../Event";
+import githubToken from "../../../resources/config/secret.json";
 
 export default class GithubLinkReaction extends Event {
 
-    public name: string = "messageCreate";
+    public name: EventName = "messageCreate";
 
     private regexLinkIdentification = /http(s?):\/\/(www\.)?github.com\/([^\s]+)blob([^\s]+)#L\d*/i;
     private rawGithubDomainName = "https://raw.githubusercontent.com/";

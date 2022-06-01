@@ -4,10 +4,10 @@ import Command from "../Command";
 import chartjs from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { request } from "../../api/Request";
-import { getServerActivityHistory } from "../../api/requests/ServerActivity";
+import { getServerActivityHistory, GetServerActivityHistoryType } from "../../api/requests/ServerActivity";
 import { ServerActivity } from "../../api/Schema";
 import { colors } from "../../../resources/config/information.json";
-import dayjs from "dayjs";
+import { dateFormat } from "../../utils/Format";
 
 export default class Stats extends Command {
 
@@ -24,13 +24,13 @@ export default class Stats extends Command {
 
     public async execute(command: CommandInteraction) : Promise<void> {
         // Get server activity :
-        const serverActivity = (await request<{ serverActivity: ServerActivity[] }>(getServerActivityHistory, { 
+        const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, { 
             historyCount: command.options.getNumber("historique") ?? 30
         })).serverActivity.reverse();
     
         // Data types :
         interface Type {
-            columnName: keyof ServerActivity;
+            columnName: keyof Omit<ServerActivity, "date" | "__typename">;
             description: string;
         }
 
@@ -48,7 +48,9 @@ export default class Stats extends Command {
             const config: chartjs.ChartConfiguration = {
                 type: "line",
                 data: {
-                    labels: serverActivity.map(element => dayjs(element.date).format("DD-MM-YYYY")),
+                    labels: serverActivity.map(element => {
+                        return dateFormat(new Date(element.date))
+                    }),
                     datasets: [{
                         label: type.description,
                         backgroundColor: colors.primary,

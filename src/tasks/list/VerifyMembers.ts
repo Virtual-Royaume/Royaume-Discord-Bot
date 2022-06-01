@@ -1,6 +1,9 @@
 import { request } from "../../api/Request";
-import { createMember, getMembers, setAlwaysOnServer } from "../../api/requests/Member";
-import { Member } from "../../api/Schema";
+import { 
+    createMember, getMembersOnServerStatus, 
+    GetMembersOnServerStatusType, setAlwaysOnServer, 
+    SetAlwaysOnServerType 
+} from "../../api/requests/Member";
 import Client from "../../Client";
 import Logger from "../../utils/Logger";
 import Task from "../Task";
@@ -8,12 +11,12 @@ import Task from "../Task";
 export default class VerifyMembers extends Task {
 
     constructor(){
-        super(10 * 60 * 1000);
+        super(1000 * 60 * 3);
     }
 
     public async run(): Promise<void> {
         const realMembers = await (await Client.instance.getGuild()).members.fetch();
-        const apiMembers = (await request<{members: Member[]}>(getMembers)).members;
+        const apiMembers = (await request<GetMembersOnServerStatusType>(getMembersOnServerStatus)).members;
 
         for(let apiMember of apiMembers){
             const realMember = realMembers.get(apiMember._id);
@@ -34,7 +37,7 @@ export default class VerifyMembers extends Task {
             // Add member :
             Logger.info(`Fix ${realMember.id} isOnServer value to true (${realMember.displayName})`);
 
-            const response = await request<{ updateMember: boolean }>(
+            const response = await request<SetAlwaysOnServerType>(
                 setAlwaysOnServer, { id: realMember.id, value: true }
             );
 

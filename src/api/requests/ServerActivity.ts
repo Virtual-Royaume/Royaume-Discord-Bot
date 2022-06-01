@@ -1,7 +1,9 @@
 import { gql } from "graphql-request";
+import { ServerActivity } from "../Schema";
 
+export type GetCurrentServerActivityType = { todayServerActivity: ServerActivity };
 export const getCurrentServerActivity = gql`
-	query TodayServerActivity {
+	query {
   		todayServerActivity {
 			date
 			voiceMinute
@@ -11,8 +13,9 @@ export const getCurrentServerActivity = gql`
 	}
 `;
 
+export type GetServerActivityHistoryType = { serverActivity: ServerActivity[] };
 export const getServerActivityHistory = gql`
-  	query GetServerActivityHistory($historyCount: Int!){
+  	query($historyCount: Int!){
 		serverActivity(historyCount: $historyCount){
 			date
 			voiceMinute
@@ -22,8 +25,9 @@ export const getServerActivityHistory = gql`
 	}
 `;
 
+export type SetServerCountType = { setServerActivityMemberCount: boolean };
 export const setMemberCount = gql`
-	mutation SetMemberCount($count: Int!) {
+	mutation($count: Int!) {
         setServerActivityMemberCount(count: $count)
     }
 `;

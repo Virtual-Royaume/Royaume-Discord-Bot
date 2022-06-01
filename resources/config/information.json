@@ -1,6 +1,7 @@
 {
     "guildId": "732251741999071303",
     "generalChannel": "786216771723198514",
+    "localFormat": "fr-FR",
     "colors": {
         "primary": "#5339DD",
         "error": "#FF5555"
@@ -16,7 +17,17 @@
         },
         "reactionNeededCount": {
             "upvote": 5,
-            "downvote": 5
+            "downvote": 7
+        }
+    },
+    "activityProposal": {
+        "emoji": {
+            "upvote": "👍",
+            "downvote": "👎"
+        },
+        "reactionNeededCount": {
+            "upvote": 3,
+            "downvote": 4
         }
     }
 }

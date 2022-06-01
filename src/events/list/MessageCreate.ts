@@ -1,13 +1,12 @@
 import { Message as Msg, TextBasedChannel } from "discord.js";
 import { request } from "../../api/Request";
-import { getChannels } from "../../api/requests/MainChannel";
+import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
 import { incChannelMessage } from "../../api/requests/Member";
-import { MainChannel } from "../../api/Schema";
-import Event from "../Event";
+import Event, { EventName } from "../Event";
 
 export default class MessageCreate extends Event {
     
-    public name: string = "messageCreate";
+    public name: EventName = "messageCreate";
 
     public async execute(message: Msg) : Promise<void> {
         if(message.author.bot) return;
@@ -24,7 +23,7 @@ export default class MessageCreate extends Event {
 
         // Increment member message count :
         if(channel){
-            const channels = (await request<{ channels: MainChannel[] }>(getChannels)).channels;
+            const channels = (await request<GetChannelsType>(getChannels)).channels;
 
             if(channels.find(c => c.channelId === channel?.id)){
                 request(incChannelMessage, { id: message.author.id, channelId: channel.id });

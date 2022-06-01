@@ -1,19 +1,23 @@
 import { gql } from "graphql-request";
+import { MainChannel } from "../Schema";
 
+export type AddChannelType = { addChannel: boolean };
 export const addChannel = gql`
-    mutation AddChannel($channelId: ID!, $category: String!){
+    mutation($channelId: ID!, $category: String!){
         addChannel(channelId: $channelId, category: $category)
     }
 `;
 
+export type RemoveChannelType = { removeChannel: boolean };
 export const removeChannel = gql`
-    mutation RemoveChannel($channelId: ID!){
+    mutation($channelId: ID!){
         removeChannel(channelId: $channelId)
     }
 `;
 
+export type GetChannelsType = { channels: MainChannel[] };
 export const getChannels = gql`
-    query GetChannels {
+    query {
         channels {
             channelId
             category

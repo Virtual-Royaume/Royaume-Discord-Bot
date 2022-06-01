@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import fetch from "node-fetch";
 import Event from "../Event";
+import githubToken from "../../../resources/config/secret.json"
 
 export default class GithubLinkReaction extends Event {
 
@@ -23,7 +24,14 @@ export default class GithubLinkReaction extends Event {
         filePath.splice(2, 1); // Remove `blob` from link
         const fileExtension = filePath[filePath.length-1].match(/(?<=[.])\w*/gm)?.shift() ?? "";
 
-        const fileContent = (await (await fetch(this.rawGithubDomainName + filePath.join("/"))).text()).split("\n");
+        const fileContent = (await (await fetch(
+            this.rawGithubDomainName + filePath.join("/") ,
+            {
+                headers: {
+                    Authorization: `token ${githubToken}`
+                }
+            }
+        )).text()).split("\n");
 
         if(fileContent.shift() === '404: Not Found') return;
 

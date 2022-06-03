@@ -7,18 +7,17 @@ export default class MessageLinkReaction extends Event {
 
     public name: EventName = "messageCreate";
 
-    private regexLinkIdentification = /http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}/i;
-
     public async execute(message: Message) : Promise<void> {
-
         if(message.author.bot) return;
 
-        const url = message.content.match(this.regexLinkIdentification)?.shift();
+        const url = message.content.match(/http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}/i)?.shift();
 
         if(!url) return;
 
         const ids = url.match(/((\/\d*){2})$/i)?.shift()?.split("/");
+
         if(!ids) return;
+
         ids.shift(); // remove the empty string from array
         const channelId = ids[0];
         const messageId = ids[1];

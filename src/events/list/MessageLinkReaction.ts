@@ -16,7 +16,12 @@ export default class MessageLinkReaction extends Event {
         if(!urls) return;
 
         // Get messages :
-        const messages: Message[] = [];
+        interface MessageElement {
+            url: string;
+            message: Message;
+        }
+
+        const messages: MessageElement[] = [];
 
         for(let url of urls){
             const ids = [...url.matchAll(/(\/\d+)/g)];
@@ -41,20 +46,21 @@ export default class MessageLinkReaction extends Event {
                 return;
             }            
 
-            messages.push(messageQuoted);
+            messages.push({ url, message: messageQuoted });
         }
 
         // Send link reaction messages :
         const embeds: MessageEmbed[] = [];
 
         for(let index in messages){
-            const msg = messages[index];
+            const url = messages[index].url;
+            const msg = messages[index].message;
             
             const attachment = msg.attachments.size ? `🗂️ ${msg.attachments.size} fichiers joint(s)` : "";
             const content = msg.content ? msg.content + (attachment.length ? `\n\n${attachment}` : "") : attachment;
 
             embeds.push(
-                simpleEmbed(content, "normal", `Message mentionné #${+index + 1}`)
+                simpleEmbed(`**Message mentionné [#${Number(index) + 1}](${url}) dans <#${msg.channelId}>**\n\n${content}`, "normal")
                     .setAuthor({  
                         name: msg.author.tag,
                         iconURL: msg.author.displayAvatarURL({ dynamic: true }),

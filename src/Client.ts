@@ -53,5 +53,18 @@ export default class Client extends DiscordClient {
     }
 }
 
-Logger.info("Sarting in progress...");
+/* Royaume's crown ASCII art */
+console.log
+(
+    " _           __           _ ".yellow + "\n" +
+    "| |_       _|  |_       _| |".yellow + "\n" +
+    "|".yellow + "_".red + "  |_   _|      |_   _|  ".yellow + "_".red + "|".yellow + "\n" +
+    "| |_".red + "  |_|   ".yellow + " __".red + "    |_|  ".yellow + "_| |".red + "\n" +
+    "|   |".red + "      ".yellow + "_|__|_".red + "      ".yellow + "|   |".red + "\n" +
+    "|  _|".red + "     ".yellow + "|_|__|_|".red + "     ".yellow + "|_  |".red + "\n" +
+    "|_|".red + "         ".yellow + "|__|".red + "         ".yellow + "|_|".red + "\n" +
+    "|_                        _|".yellow + "\n" +
+    "  |______________________|  ".yellow + "\n"
+);
+Logger.info(`Sarting Royaume-Discord-Bot v${process.env.npm_package_version}...`);
 new Client();

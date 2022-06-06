@@ -168,11 +168,13 @@ export default class Role extends Command {
             });
 
             reactionCollector.on("end", () => {
-                voteMessage.reply({ embeds: [
-                    simpleEmbed("Le temps de vote pour cette proposition est écoulé.", "error")
-                ] });
+                if (!voteMessage.reactions.cache.size) {
+                    voteMessage.reply({ embeds: [
+                        simpleEmbed("Le temps de vote pour cette proposition est écoulé.", "error")
+                    ] });
 
-                removeReactions();
+                    removeReactions();
+                }
             });
         }
     }

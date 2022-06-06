@@ -38,14 +38,14 @@ export const setBirthday = gql`
     }
 `;
 
-export type IncChannelMessageType = { incMemberDiscordActivityChannel: boolean };
+export type IncChannelMessageType = { incMemberDiscordActivityChannel: number };
 export const incChannelMessage = gql`
     mutation($id: ID!, $channelId: ID!){
         incMemberDiscordActivityChannel(id: $id, channelId: $channelId)
     }
 `;
 
-export type IncVoiceMinuteType = { incMemberDiscordVoiceMinute: boolean };
+export type IncVoiceMinuteType = { incMemberDiscordVoiceMinute: number };
 export const incVoiceMinute = gql`
     mutation($id: ID!){
         incMemberDiscordVoiceMinute(id: $id)

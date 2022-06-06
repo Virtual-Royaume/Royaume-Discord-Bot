@@ -1,8 +1,12 @@
-import { Message as Msg, TextBasedChannel } from "discord.js";
+import { BaseGuildTextChannel, Message as Msg, TextBasedChannel } from "discord.js";
 import { request } from "../../api/Request";
 import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
-import { incChannelMessage } from "../../api/requests/Member";
+import { incChannelMessage, IncChannelMessageType } from "../../api/requests/Member";
+import { generalChannel } from "../../../resources/config/information.json";
 import Event, { EventName } from "../Event";
+import Client from "../../Client";
+import { simpleEmbed } from "../../utils/Embed";
+import { numberFormat } from "../../utils/Format";
 
 export default class MessageCreate extends Event {
     
@@ -26,8 +30,32 @@ export default class MessageCreate extends Event {
             const channels = (await request<GetChannelsType>(getChannels)).channels;
 
             if(channels.find(c => c.channelId === channel?.id)){
-                request(incChannelMessage, { id: message.author.id, channelId: channel.id });
-            }
+                let messageCount = (await request<IncChannelMessageType>(
+                    incChannelMessage, 
+                    { id: message.author.id, channelId: channel.id }
+                )).incMemberDiscordActivityChannel;
+
+                // Send an announcement when the member reaches a level :
+                let step = false;
+
+                if(messageCount < 10_000){
+                    if(messageCount % 1_000 === 0) step = true;
+                } else {
+                    if(messageCount % 10_000 === 0) step = true;
+                }
+
+                if(step){
+                    const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
+
+                    if(!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
+
+                    generalChannelInstance.send({ 
+                        embeds: [simpleEmbed(
+                            `<@${message.author.id}> vient de passer le cap des ${numberFormat(messageCount)} messages envoyés ! 🎉`
+                        )] 
+                    });
+                }
+        }
         }
     }
 }

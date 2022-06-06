@@ -12,15 +12,14 @@ export default class Clean extends Command {
             .setName("nombre")
             .setDescription("Nombre de message a supprimer")
             .setMinValue(1)
-            .setMaxValue(100)
-        );
+            .setMaxValue(100));
 
     public readonly defaultPermission: boolean = false;
 
     public async execute(command: CommandInteraction) : Promise<void> {
         const number = command.options.getNumber("nombre") ?? 10;
 
-        if(command.channel?.type !== "GUILD_TEXT"){
+        if (command.channel?.type !== "GUILD_TEXT") {
             command.reply({ embeds: [simpleEmbed("Vous devez utilisé cette commande dans un salon textuel.", "error")], ephemeral: true });
             return;
         }

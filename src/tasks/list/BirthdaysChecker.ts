@@ -9,21 +9,21 @@ import { simpleEmbed } from "../../utils/Embed";
 export default class ServerActivityUpdate extends Task {
 
     private readonly messages = [
-        { 
+        {
             title: "SURPRISE !!",
             text: "Aujourd'hui est un jour spécial pour {MENTION} !!!!"
         },
-        { 
+        {
             title: "QUOI ???",
             text: "Feur ! C'est l'anniversaire de {MENTION}."
         },
-        { 
+        {
             title: "WOWWW",
             text: "Bon anniversaire {MENTION} !! 🎁🎉"
-        },
+        }
     ];
 
-    constructor(){
+    constructor() {
         super(60_000);
     }
 
@@ -31,25 +31,25 @@ export default class ServerActivityUpdate extends Task {
         // Check if time (00:00) :
         const currentDate = new Date();
 
-        if(currentDate.getHours() !== 0 || currentDate.getMinutes() !== 0) return;
+        if (currentDate.getHours() !== 0 || currentDate.getMinutes() !== 0) return;
 
         // Check birthdays of the day :
         const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => {
-            if(!member.birthday) return false;
+            if (!member.birthday) return false;
 
             const birthday = new Date(member.birthday);
 
-            return birthday.getDate() === currentDate.getDate() 
+            return birthday.getDate() === currentDate.getDate()
                 && birthday.getMonth() === currentDate.getMonth();
         });
-        
+
         // Send birthday message :
-        if(birthdays.length){
+        if (birthdays.length) {
             const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
-            if(!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
+            if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
-            for(let member of birthdays){
+            for (const member of birthdays) {
                 const message = this.messages[Math.floor(Math.random() * this.messages.length)];
                 const birthday = new Date(member.birthday ?? 1);
 

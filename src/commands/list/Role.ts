@@ -18,7 +18,7 @@ export default class Role extends Command {
         // Generate select menu :
         const messageActionRows: MessageActionRow[] = [];
 
-        for(const [category, rolesId] of Object.entries(await getRolesByCategory())){
+        for (const [category, rolesId] of Object.entries(await getRolesByCategory())) {
             // Create category interaction :
             const interaction = new MessageSelectMenu()
                 .setCustomId(`${selectMenu.rolesSelector}-${category}`)
@@ -26,11 +26,11 @@ export default class Role extends Command {
                 .setMaxValues(rolesId.length)
                 .setPlaceholder(category);
 
-            for(const roleId of rolesId){
+            for (const roleId of rolesId) {
                 // Get role instance :
                 const role = await (await Client.instance.getGuild()).roles.fetch(roleId);
 
-                if(!role) continue;
+                if (!role) continue;
 
                 // Add interaction options :
                 const memberRoles = command.member?.roles;

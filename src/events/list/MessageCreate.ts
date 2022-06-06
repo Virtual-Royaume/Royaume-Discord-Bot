@@ -9,53 +9,51 @@ import { simpleEmbed } from "../../utils/Embed";
 import { numberFormat } from "../../utils/Format";
 
 export default class MessageCreate extends Event {
-    
+
     public name: EventName = "messageCreate";
 
     public async execute(message: Msg) : Promise<void> {
-        if(message.author.bot) return;
+        if (message.author.bot) return;
 
         // Get channel or parent channel (if is a thread channel) :
         let channel: TextBasedChannel | null = message.channel;
 
-        if(
-            channel.type === "GUILD_PUBLIC_THREAD" || channel.type === "GUILD_PRIVATE_THREAD" ||
-            channel.type === "GUILD_NEWS_THREAD"    
-        ){
+        if (
+            channel.type === "GUILD_PUBLIC_THREAD" || channel.type === "GUILD_PRIVATE_THREAD"
+            || channel.type === "GUILD_NEWS_THREAD"
+        ) {
             channel = channel.parent;
         }
 
         // Increment member message count :
-        if(channel){
+        if (channel) {
             const channels = (await request<GetChannelsType>(getChannels)).channels;
 
-            if(channels.find(c => c.channelId === channel?.id)){
-                let messageCount = (await request<IncChannelMessageType>(
-                    incChannelMessage, 
+            if (channels.find(c => c.channelId === channel?.id)) {
+                const messageCount = (await request<IncChannelMessageType>(
+                    incChannelMessage,
                     { id: message.author.id, channelId: channel.id }
                 )).incMemberDiscordActivityChannel;
 
                 // Send an announcement when the member reaches a message count step :
                 let step = false;
 
-                if(messageCount < 10_000){
-                    if(messageCount % 1_000 === 0) step = true;
-                } else {
-                    if(messageCount % 10_000 === 0) step = true;
-                }
+                if (messageCount < 10_000) {
+                    if (messageCount % 1_000 === 0) step = true;
+                } else if (messageCount % 10_000 === 0) step = true;
 
-                if(step){
+                if (step) {
                     const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
-                    if(!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
+                    if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
-                    generalChannelInstance.send({ 
+                    generalChannelInstance.send({
                         embeds: [simpleEmbed(
                             `<@${message.author.id}> vient de passer le cap des ${numberFormat(messageCount)} messages envoyés ! 🎉`
-                        )] 
+                        )]
                     });
                 }
-        }
+            }
         }
     }
 }

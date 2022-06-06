@@ -17,7 +17,7 @@
     ],
     "rules": {
         // Layout & Formatting :
-        "indent": ["error", 4],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
 
         "quotes": ["error", "double"],
 

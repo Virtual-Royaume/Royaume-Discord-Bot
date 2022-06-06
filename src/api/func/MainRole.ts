@@ -1,8 +1,8 @@
 import { request } from "../Request";
 import { getRoles, GetRolesType } from "../requests/MainRole";
 
-type RolesByCategory = { 
-    [category: string]: string[] 
+type RolesByCategory = {
+    [category: string]: string[]
 }
 
 export async function getRolesByCategory() : Promise<RolesByCategory> {
@@ -10,10 +10,10 @@ export async function getRolesByCategory() : Promise<RolesByCategory> {
     const roles = (await request<GetRolesType>(getRoles)).roles;
 
     // Sort roles by category :
-    const rolesIdsByCategory: RolesByCategory = {}
+    const rolesIdsByCategory: RolesByCategory = {};
 
     roles.forEach(role => {
-        if(!rolesIdsByCategory[role.category]) rolesIdsByCategory[role.category] = [];
+        if (!rolesIdsByCategory[role.category]) rolesIdsByCategory[role.category] = [];
 
         rolesIdsByCategory[role.category].push(role.roleId);
     });

@@ -4,11 +4,11 @@ import Event, { EventName } from "../Event";
 import { selectMenu } from "../../../resources/config/interaction-ids.json";
 
 export default class RolesSelector extends Event {
-    
+
     public name: EventName = "interactionCreate";
 
     public async execute(interaction: Interaction) : Promise<void> {
-        if(!interaction.isSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
+        if (!interaction.isSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
 
         // Get category :
         const category = interaction.customId.replace(`${selectMenu.rolesSelector}-`, "");
@@ -22,8 +22,8 @@ export default class RolesSelector extends Event {
         // Get member role manager :
         const memberRoles = interaction.member?.roles;
 
-        if(!(memberRoles instanceof GuildMemberRoleManager)){
-            interaction.reply({embeds: [simpleEmbed("Une erreur s'est produite lors de l'acquisition des roles.", "error")] });
+        if (!(memberRoles instanceof GuildMemberRoleManager)) {
+            interaction.reply({ embeds: [simpleEmbed("Une erreur s'est produite lors de l'acquisition des roles.", "error")] });
             return;
         }
 

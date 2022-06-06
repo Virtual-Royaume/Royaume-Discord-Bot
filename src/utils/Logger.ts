@@ -8,8 +8,8 @@ export default {
     success: (message: string) => {
         console.log(colors.green("√ ") + colors.bold("Success ") + colors.gray("» ") + colors.reset(message));
     },
-    
+
     error: (message: string) => {
         console.log(colors.red("x ") + colors.bold("Error ") + colors.gray("» ") + colors.reset(message));
     }
-}
+};

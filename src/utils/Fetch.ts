@@ -6,7 +6,7 @@ export interface Response<T> {
     body: T;
 }
 
-export let githubRaw = "https://raw.githubusercontent.com/";
+export const githubRaw = "https://raw.githubusercontent.com/";
 
 export async function jsonFetch<T>(link: string, request: RequestInit = {}): Promise<Response<T>> {
     const response = await fetch(link, request);
@@ -14,7 +14,7 @@ export async function jsonFetch<T>(link: string, request: RequestInit = {}): Pro
     return {
         status: response.status,
         body: await response.json()
-    }
+    };
 }
 
 export async function textFetch(link: string, request: RequestInit = {}) : Promise<Response<string>> {
@@ -23,5 +23,5 @@ export async function textFetch(link: string, request: RequestInit = {}) : Promi
     return {
         status: response.status,
         body: await response.text()
-    }
+    };
 }

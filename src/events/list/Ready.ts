@@ -5,13 +5,14 @@ import Event, { EventName } from "../Event";
 export default class Ready extends Event {
 
     public name: EventName = "ready";
-    public once: boolean = true;
+
+    public once = true;
 
     public async execute() : Promise<void> {
-      // Register slash commands :
-      Client.instance.commandManager.register();
+        // Register slash commands :
+        Client.instance.commandManager.register();
 
-      // Finish :
-      Logger.success("Client has been started");
+        // Finish :
+        Logger.success("Client has been started");
     }
 }

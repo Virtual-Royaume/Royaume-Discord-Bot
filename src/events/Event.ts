@@ -5,7 +5,8 @@ export type EventName = keyof ClientEvents;
 export default abstract class Event {
 
     public abstract readonly name: EventName;
+
     public readonly once: boolean = false;
 
-    public abstract execute(...args: any[]) : void;
+    public abstract execute(...args: any[]) : void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

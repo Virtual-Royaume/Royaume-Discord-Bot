@@ -5,7 +5,7 @@ import { GetPresenceMessagesType, getPresenceMessages } from "../../api/requests
 
 export default class PresenceUpdate extends Task {
 
-    constructor(){
+    constructor() {
         super(10_000);
     }
 

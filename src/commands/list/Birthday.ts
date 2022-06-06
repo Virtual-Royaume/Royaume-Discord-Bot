@@ -13,8 +13,7 @@ export default class Birthday extends Command {
         .addStringOption(new SlashCommandStringOption()
             .setName("date")
             .setDescription("Votre date de naissance avec ce format : DD/MM/YYYY (jour/mois/année de naissance)")
-            .setRequired(true)
-        );
+            .setRequired(true));
 
     public readonly defaultPermission: boolean = true;
 
@@ -22,7 +21,7 @@ export default class Birthday extends Command {
         // Check parameter :
         const badFormat = (error: string) => {
             command.reply({ embeds: [simpleEmbed(error, "error")], ephemeral: true });
-        }
+        };
 
         let dateParams: number[];
 
@@ -32,8 +31,8 @@ export default class Birthday extends Command {
             badFormat("Le format de votre date n'est pas bon.");
             return;
         }
-        
-        if(dateParams.length < 3){
+
+        if (dateParams.length < 3) {
             badFormat("La date est incomplète.");
             return;
         }
@@ -41,7 +40,7 @@ export default class Birthday extends Command {
         // Try to parse the date :
         const date = new Date(`${dateParams[2]}-${dateParams[1]}-${dateParams[0]}Z`);
 
-        if(isNaN(date.getTime())){
+        if (isNaN(date.getTime())) {
             badFormat("Cette date est invalide.");
             return;
         }

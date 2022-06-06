@@ -11,7 +11,7 @@ export default class GithubLinkReaction extends Event {
         // Get urls :
         const urls = message.content.match(/http(s?):\/\/(www\.)?github.com\/([^\s]+)blob([^\s]+)#L\d+(-L\d+)?/gi);
 
-        if(!urls) return;
+        if (!urls) return;
 
         // Get codes, lines... :
         interface CodeElement {
@@ -25,18 +25,18 @@ export default class GithubLinkReaction extends Event {
         }
 
         const codeElements: CodeElement[] = [];
-    
-        for(let url of urls){
+
+        for (const url of urls) {
             // Get lines :
             const linesNumber = [...url.matchAll(/L\d+/gi)].map(number => Number(number[0].slice(1)));
 
             let mainLine: number | null = null;
 
-            if(linesNumber.length > 2){
+            if (linesNumber.length > 2) {
                 return;
-            } else if(linesNumber.length === 2 && linesNumber[1] - linesNumber[0] > 10){
+            } else if (linesNumber.length === 2 && linesNumber[1] - linesNumber[0] > 10) {
                 linesNumber[1] = linesNumber[0] + 10;
-            } else if(linesNumber.length === 1){
+            } else if (linesNumber.length === 1) {
                 mainLine = linesNumber[0];
 
                 linesNumber[0] = linesNumber[0] - 5;
@@ -45,29 +45,29 @@ export default class GithubLinkReaction extends Event {
             }
 
             // Remove `https://www.github.com/` and line identification from link :
-            let filePath = url.replace(/^(http(s?):\/\/(www\.)?github.com\/)|(#L\d*)(-L\d*)?$/ig, "").split("/");
-            
+            const filePath = url.replace(/^(http(s?):\/\/(www\.)?github.com\/)|(#L\d*)(-L\d*)?$/ig, "").split("/");
+
             // Remove "blob" from link :
             filePath.splice(2, 1);
 
             // Get file extension for code highlight :
-            const fileExtension = filePath[filePath.length-1].match(/(?<=[.])\w*/gm)?.shift() ?? "";
+            const fileExtension = filePath[filePath.length - 1].match(/(?<=[.])\w*/gm)?.shift() ?? "";
 
             // Request for get the code :
             const requestAuth = githubToken ? { headers: { Authorization: `token ${githubToken}` } } : {};
             const request = await textFetch(githubRaw + filePath.join("/"), requestAuth);
 
-            if(request.status !== 200) return;
+            if (request.status !== 200) return;
 
             const fileContent = request.body.split("\n");
 
             // Check if the line number is not too high :
-            if(linesNumber[linesNumber.length - 1] > fileContent.length) return;
+            if (linesNumber[linesNumber.length - 1] > fileContent.length) return;
 
             // Format selected code :
             let selectedCode = "";
 
-            for(let i = linesNumber[0]; i <= linesNumber[1]; i++){
+            for (let i = linesNumber[0]; i <= linesNumber[1]; i++) {
                 selectedCode += `${mainLine === i ? ">" + i : " " + i} ${fileContent[i - 1]}\n`;
             }
 
@@ -79,25 +79,25 @@ export default class GithubLinkReaction extends Event {
                 fileExtension
             };
 
-            if(mainLine) codeElement.mainLine = mainLine;
+            if (mainLine) codeElement.mainLine = mainLine;
 
             codeElements.push(codeElement);
         }
 
-        if(codeElements.length){
+        if (codeElements.length) {
             // Remove link integration :
             message.suppressEmbeds(true);
 
             // Send code messages :
-            for(let element of codeElements){
+            for (const element of codeElements) {
                 const codeBlock = `\`\`\`${element.fileExtension}\n${element.code}\n\`\`\``;
-                const lines = element.mainLine ? `Ligne ${element.mainLine}` : `Lignes ${element.lines.join("-")}`
+                const lines = element.mainLine ? `Ligne ${element.mainLine}` : `Lignes ${element.lines.join("-")}`;
 
                 message.reply({
                     content: `> ${lines} de \`${element.link}\`\n${codeBlock}`,
                     allowedMentions: {
                         repliedUser: false
-                    }        
+                    }
                 });
             }
         }

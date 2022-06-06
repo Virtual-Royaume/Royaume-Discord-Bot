@@ -6,7 +6,7 @@ import Task from "../Task";
 
 export default class ServerActivityUpdate extends Task {
 
-    constructor(){
+    constructor() {
         super(60_000);
     }
 
@@ -14,15 +14,15 @@ export default class ServerActivityUpdate extends Task {
         // Update daily member count :
         const memberCount = (await Client.instance.getGuild()).memberCount;
 
-        if(memberCount) request(setMemberCount, { count: memberCount });
+        if (memberCount) request(setMemberCount, { count: memberCount });
 
         // Update voice time of members :
         (await Client.instance.getGuild()).voiceStates.cache.forEach(voiceState => {
-            if(
-                voiceState.member && !voiceState.member.user.bot && 
-                !voiceState.selfMute && !voiceState.mute && 
-                voiceState.channel
-            ){
+            if (
+                voiceState.member && !voiceState.member.user.bot
+                && !voiceState.selfMute && !voiceState.mute
+                && voiceState.channel
+            ) {
                 request(incVoiceMinute, { id: voiceState.member.user.id });
             }
         });

@@ -1,6 +1,6 @@
-import { 
-    SlashCommandBuilder, SlashCommandChannelOption, 
-    SlashCommandRoleOption, SlashCommandStringOption 
+import {
+    SlashCommandBuilder, SlashCommandChannelOption,
+    SlashCommandRoleOption, SlashCommandStringOption
 } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
 import { ChannelTypes } from "discord.js/typings/enums";
@@ -34,23 +34,19 @@ export default class Inactive extends Command {
             .setName("action")
             .setDescription("Ajout, suppression ou liste")
             .addChoices(...this.actionChoices)
-            .setRequired(true)
-        )
+            .setRequired(true))
         .addChannelOption(new SlashCommandChannelOption()
             .setName("channel")
             .setDescription("Ajout ou supression de ce salon")
             // @ts-ignore : DJS - DJS/builders typing version problem
-            .addChannelTypes(ChannelTypes.GUILD_TEXT)
-        )
+            .addChannelTypes(ChannelTypes.GUILD_TEXT))
         .addRoleOption(new SlashCommandRoleOption()
             .setName("role")
-            .setDescription("Ajout ou supression de ce rôle")
-        )
+            .setDescription("Ajout ou supression de ce rôle"))
         .addStringOption(new SlashCommandStringOption()
             .setName("category")
-            .setDescription("Catégorie du salon ou rôle")
-        );
-        
+            .setDescription("Catégorie du salon ou rôle"));
+
     public readonly defaultPermission: boolean = false;
 
     public async execute(command: CommandInteraction) : Promise<void> {
@@ -63,25 +59,25 @@ export default class Inactive extends Command {
         const category = command.options.getString("category");
 
         // List action :
-        if(action === "list"){
+        if (action === "list") {
             // Get mains channels and roles :
             const channels = await getChannelsByCategory();
             const roles = await getRolesByCategory();
-            
+
             // Format and send the lists :
             let channelMessage = "";
             let roleMessage = "";
 
-            for(const [category, ids] of Object.entries(channels)){
+            for (const [category, ids] of Object.entries(channels)) {
                 channelMessage += `**${category} :** ${ids.map(id => "<#" + id + ">").join(", ")}\n\n`;
             }
 
-            for(const [category, ids] of Object.entries(roles)){
+            for (const [category, ids] of Object.entries(roles)) {
                 roleMessage += `**${category} :** ${ids.map(id => "<@&" + id + ">").join(", ")}\n\n`;
             }
 
             command.reply({ embeds: [
-                simpleEmbed(channelMessage, "normal", "Salons principaux"), 
+                simpleEmbed(channelMessage, "normal", "Salons principaux"),
                 simpleEmbed(roleMessage, "normal", "Rôles principaux")
             ], ephemeral: true });
         }
@@ -93,35 +89,35 @@ export default class Inactive extends Command {
             type?: "role" | "channel";
         }
 
-        if(action === "add" || action === "remove"){
-            if(!category && action === "add"){
+        if (action === "add" || action === "remove") {
+            if (!category && action === "add") {
                 command.reply({ embeds: [simpleEmbed("Vous devez choisir une catégorie.", "error")], ephemeral: true });
                 return;
             }
 
-            if(!channel && !role){
+            if (!channel && !role) {
                 command.reply({ embeds: [simpleEmbed("Vous devez mentionner un salon ou un rôle.", "error")], ephemeral: true });
-                return;				
+                return;
             }
 
-            const result: Result = { action: action }
+            const result: Result = { action: action };
 
-            if(channel){
+            if (channel) {
                 result.type = "channel";
-                result.success = action === "add" ? 
-                    (await request<AddChannelType>(addChannel, { channelId: channel.id, category: category })).addChannel :
-                    (await request<RemoveChannelType>(removeChannel, { channelId: channel.id })).removeChannel;
-            } else if(role){
+                result.success = action === "add"
+                    ? (await request<AddChannelType>(addChannel, { channelId: channel.id, category: category })).addChannel
+                    : (await request<RemoveChannelType>(removeChannel, { channelId: channel.id })).removeChannel;
+            } else if (role) {
                 result.type = "role";
-                result.success = action === "add" ?
-                    (await request<AddRoleType>(addRole, { roleId: role.id, category: category })).addRole :
-                    (await request<RemoveRoleType>(removeRole, { roleId: role.id })).removeRole;
+                result.success = action === "add"
+                    ? (await request<AddRoleType>(addRole, { roleId: role.id, category: category })).addRole
+                    : (await request<RemoveRoleType>(removeRole, { roleId: role.id })).removeRole;
             }
 
             const type = result.type === "role" ? "rôle" : "salon";
-            const message = result.success ? 
-                `Vous avez bien ${result.action === "add" ? "ajouté" : "supprimé"} le ${type}.` :
-                `Erreur lors de ${result.action === "add" ? "l'ajout" : "la suppression"} du ${type}.`
+            const message = result.success
+                ? `Vous avez bien ${result.action === "add" ? "ajouté" : "supprimé"} le ${type}.`
+                : `Erreur lors de ${result.action === "add" ? "l'ajout" : "la suppression"} du ${type}.`;
 
             command.reply({ embeds: [simpleEmbed(message, result.success ? "normal" : "error")], ephemeral: true });
         }

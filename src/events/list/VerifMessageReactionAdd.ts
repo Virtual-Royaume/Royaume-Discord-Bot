@@ -1,4 +1,4 @@
-import { BaseGuildTextChannel, GuildMember, MessageReaction, User } from "discord.js";
+import { BaseGuildTextChannel, GuildMember, MessageReaction } from "discord.js";
 import Client from "../../Client";
 import Event, { EventName } from "../Event";
 import { verify, generalChannel } from "../../../resources/config/information.json";
@@ -8,11 +8,11 @@ export default class VerifMessageReactionAdd extends Event {
 
     public name: EventName = "messageReactionAdd";
 
-    public async execute(messageReaction: MessageReaction, _: User) : Promise<void> {
+    public async execute(messageReaction: MessageReaction) : Promise<void> {
         // Check if the embed are a "presentation" message :
         const embed = (await messageReaction.fetch()).message.embeds[0];
 
-        if(embed?.title?.split(" ")[0] !== "Présentation") return;
+        if (embed?.title?.split(" ")[0] !== "Présentation") return;
 
         // Get the presentation member instance :
         let member: GuildMember;
@@ -23,29 +23,29 @@ export default class VerifMessageReactionAdd extends Event {
             return;
         }
 
-        if(!(member instanceof GuildMember)) return;
+        if (!(member instanceof GuildMember)) return;
 
         // Get general channel :
         const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
-        if(!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
+        if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
         // Check if the member is accepted :
         const removeReactions = () => messageReaction.message.reactions.removeAll();
 
-        if(
-            messageReaction.emoji.name === verify.emoji.upvote && 
-            messageReaction.count - 1 >= verify.reactionNeededCount.upvote
-        ){
+        if (
+            messageReaction.emoji.name === verify.emoji.upvote
+            && messageReaction.count - 1 >= verify.reactionNeededCount.upvote
+        ) {
             await member.roles.add(verify.roles.verified);
             await member.roles.remove(verify.roles.waiting);
 
             const embed = simpleEmbed(
-                "Les rôles que vous voyez sur votre droite sont définis selon votre activité ainsi que " + 
-                "l'importance que vous portez au Royaume !\n\n" +
+                "Les rôles que vous voyez sur votre droite sont définis selon votre activité ainsi que "
+                + "l'importance que vous portez au Royaume !\n\n"
 
-                "Pour pouvoir accéder aux différents salons de la catégorie travail vous pouvez faire la " + 
-                "commande ``/role`` et choisir les rôles qui vous correspondent"
+                + "Pour pouvoir accéder aux différents salons de la catégorie travail vous pouvez faire la "
+                + "commande ``/role`` et choisir les rôles qui vous correspondent"
             );
 
             generalChannelInstance.send({ content: `Bienvenue parmis nous <@${member.id}> !`, embeds: [embed] });
@@ -54,10 +54,10 @@ export default class VerifMessageReactionAdd extends Event {
         }
 
         // Check if the member is rejected :
-        if(
-            messageReaction.emoji.name === verify.emoji.downvote && 
-            messageReaction.count - 1 >= verify.reactionNeededCount.downvote
-        ){
+        if (
+            messageReaction.emoji.name === verify.emoji.downvote
+            && messageReaction.count - 1 >= verify.reactionNeededCount.downvote
+        ) {
             // Reject the member :
             await generalChannelInstance.send({ embeds: [simpleEmbed(`La présentation de ${member.displayName} a été refusé.`, "error")] });
 

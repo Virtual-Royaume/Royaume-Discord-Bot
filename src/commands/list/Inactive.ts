@@ -10,7 +10,7 @@ export default class Inactive extends Command {
     public readonly slashCommand = new SlashCommandBuilder()
         .setName("inactive")
         .setDescription("Voir les membres inactifs ce mois-ci");
-    
+
     public readonly defaultPermission: boolean = true;
 
     public async execute(command: CommandInteraction) : Promise<void> {
@@ -22,7 +22,7 @@ export default class Inactive extends Command {
                 return !monthMessage && !monthVoice;
             });
 
-        if(members.length){
+        if (members.length) {
             const message = members.map(member => "<@" + member._id + ">").join(", ");
 
             command.reply({ embeds: [simpleEmbed(message, "normal", "Liste des membres inactif")], ephemeral: true });

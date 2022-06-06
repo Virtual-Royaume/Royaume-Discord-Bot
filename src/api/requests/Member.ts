@@ -76,8 +76,8 @@ export const getMember = gql`
     }
 `;
 
-export type GetMembersOnServerStatusType = { 
-    members: Pick<Member, "_id" | "username" | "isOnServer">[] 
+export type GetMembersOnServerStatusType = {
+    members: Pick<Member, "_id" | "username" | "isOnServer">[]
 };
 export const getMembersOnServerStatus = gql`
     query {
@@ -89,7 +89,7 @@ export const getMembersOnServerStatus = gql`
     }
 `;
 
-export type GetBirthdaysType = { 
+export type GetBirthdaysType = {
     members: Pick<Member, "_id" | "username" | "birthday" | "profilePicture">[]
 };
 export const getBirthdays = gql`
@@ -103,8 +103,8 @@ export const getBirthdays = gql`
     }
 `;
 
-export type GetVoiceTimeType = { members: (Pick<Member, "_id" | "username"> & { 
-    activity: Pick<DiscordActivity, "voiceMinute"> 
+export type GetVoiceTimeType = { members: (Pick<Member, "_id" | "username"> & {
+    activity: Pick<DiscordActivity, "voiceMinute">
 })[] };
 export const getVoiceTime = gql`
     query {

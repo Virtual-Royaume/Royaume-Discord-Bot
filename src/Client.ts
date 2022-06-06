@@ -12,13 +12,15 @@ export default class Client extends DiscordClient {
 
     // Events and commands managers :
     public readonly eventManager: EventManager;
+
     public readonly commandManager: CommandManager;
+
     public readonly taskManager: TaskManager;
 
-    constructor(){
+    constructor() {
         super({
             intents: [
-                Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, 
+                Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,
                 Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_MEMBERS,
                 Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES,
                 Intents.FLAGS.GUILD_BANS
@@ -43,9 +45,9 @@ export default class Client extends DiscordClient {
     public getDevTeam() : User[] | null {
         const owner = this.application?.owner;
 
-        if(owner instanceof User){
+        if (owner instanceof User) {
             return [owner];
-        } else if(owner instanceof Team){
+        } else if (owner instanceof Team) {
             return owner.members.map(teamMember => teamMember.user);
         } else {
             return null;
@@ -54,17 +56,16 @@ export default class Client extends DiscordClient {
 }
 
 /* Royaume's crown ASCII art */
-console.log
-(
-    " _           __           _ ".yellow + "\n" +
-    "| |_       _|  |_       _| |".yellow + "\n" +
-    "|".yellow + "_".red + "  |_   _|      |_   _|  ".yellow + "_".red + "|".yellow + "\n" +
-    "| |_".red + "  |_|   ".yellow + " __".red + "    |_|  ".yellow + "_| |".red + "\n" +
-    "|   |".red + "      ".yellow + "_|__|_".red + "      ".yellow + "|   |".red + "\n" +
-    "|  _|".red + "     ".yellow + "|_|__|_|".red + "     ".yellow + "|_  |".red + "\n" +
-    "|_|".red + "         ".yellow + "|__|".red + "         ".yellow + "|_|".red + "\n" +
-    "|_                        _|".yellow + "\n" +
-    "  |______________________|  ".yellow + "\n"
+console.log(
+    " _           __           _ ".yellow + "\n"
+    + "| |_       _|  |_       _| |".yellow + "\n"
+    + "|".yellow + "_".red + "  |_   _|      |_   _|  ".yellow + "_".red + "|".yellow + "\n"
+    + "| |_".red + "  |_|   ".yellow + " __".red + "    |_|  ".yellow + "_| |".red + "\n"
+    + "|   |".red + "      ".yellow + "_|__|_".red + "      ".yellow + "|   |".red + "\n"
+    + "|  _|".red + "     ".yellow + "|_|__|_|".red + "     ".yellow + "|_  |".red + "\n"
+    + "|_|".red + "         ".yellow + "|__|".red + "         ".yellow + "|_|".red + "\n"
+    + "|_                        _|".yellow + "\n"
+    + "  |______________________|  ".yellow + "\n"
 );
 Logger.info(`Sarting Royaume-Discord-Bot v${process.env.npm_package_version}...`);
 new Client();

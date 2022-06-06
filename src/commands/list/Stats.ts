@@ -17,17 +17,16 @@ export default class Stats extends Command {
         .addNumberOption(new SlashCommandNumberOption()
             .setName("historique")
             .setDescription("Nombre de jour d'historique")
-            .setMinValue(5)
-        );
+            .setMinValue(5));
 
     public readonly defaultPermission: boolean = true;
 
     public async execute(command: CommandInteraction) : Promise<void> {
         // Get server activity :
-        const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, { 
+        const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, {
             historyCount: command.options.getNumber("historique") ?? 30
         })).serverActivity.reverse();
-    
+
         // Data types :
         interface Type {
             columnName: keyof Omit<ServerActivity, "date" | "__typename">;
@@ -37,7 +36,7 @@ export default class Stats extends Command {
         const types: Type[] = [
             { columnName: "voiceMinute", description: "Temps de vocal des utilisateurs en minutes" },
             { columnName: "messageCount", description: "Nombre de messages envoyés" },
-            { columnName: "memberCount", description: "Nombre de membres présents sur le serveur" },
+            { columnName: "memberCount", description: "Nombre de membres présents sur le serveur" }
         ];
 
         // Generate and send charts :
@@ -49,7 +48,7 @@ export default class Stats extends Command {
                 type: "line",
                 data: {
                     labels: serverActivity.map(element => {
-                        return dateFormat(new Date(element.date))
+                        return dateFormat(new Date(element.date));
                     }),
                     datasets: [{
                         label: type.description,
@@ -58,21 +57,21 @@ export default class Stats extends Command {
                         tension: 0.3,
                         data: serverActivity.map(element => element[type.columnName]),
                         pointRadius: serverActivity.length > 100 ? 0 : 3
-                    }],
+                    }]
                 },
                 plugins: [{
                     id: "background-color",
                     beforeDraw: chart => {
                         const ctx = chart.canvas.getContext("2d");
-    
-                        if(ctx){
+
+                        if (ctx) {
                             ctx.save();
-                            
+
                             ctx.globalCompositeOperation = "destination-over";
                             ctx.fillStyle = "white";
-    
+
                             ctx.fillRect(0, 0, chart.width, chart.height);
-                            ctx.restore();   
+                            ctx.restore();
                         }
                     }
                 }],
@@ -80,23 +79,22 @@ export default class Stats extends Command {
                     plugins: {
                         legend: { labels: { font: { family: "Poppins" } } },
                         title: { font: { family: "Poppins" } },
-                        tooltip: { bodyFont: { family: "Poppins" } },
+                        tooltip: { bodyFont: { family: "Poppins" } }
                     },
                     scales: {
                         x: { ticks: { font: { family: "Poppins" } } },
-                        y: { ticks: { font: { family: "Poppins" } } },
+                        y: { ticks: { font: { family: "Poppins" } } }
                     }
                 }
-            }
+            };
 
             // Embed :
             embeds.push(new MessageEmbed()
                 .setTitle(type.description)
-                // @ts-ignore : compatible with the type HexColorString in ColorResolvable, 
+                // @ts-ignore : compatible with the type HexColorString in ColorResolvable,
                 // but not detected because of the use of a variable
                 .setColor(colors.primary)
-                .setImage(`attachment://${type.columnName}-chart.png`)
-            );
+                .setImage(`attachment://${type.columnName}-chart.png`));
 
             // Attachment :
             const chart = new ChartJSNodeCanvas({ height: 500, width: 1100 });
@@ -104,9 +102,9 @@ export default class Stats extends Command {
             chart.registerFont(`${__dirname}/../../../resources/font/poppins-regular.ttf`, { family: "Poppins" });
 
             files.push(new MessageAttachment(
-                chart.renderToBufferSync(config), 
-                `${type.columnName}-chart.png`)
-            );
+                chart.renderToBufferSync(config),
+                `${type.columnName}-chart.png`
+            ));
         });
 
         command.reply({ content: `**Statistiques sur ${serverActivity.length} jours :**`, embeds, files });

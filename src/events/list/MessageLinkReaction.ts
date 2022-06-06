@@ -1,4 +1,4 @@
-import { BaseGuildTextChannel, GuildChannel, Message, MessageEmbed, NonThreadGuildBasedChannel } from "discord.js";
+import { BaseGuildTextChannel, Message, MessageEmbed, NonThreadGuildBasedChannel } from "discord.js";
 import Client from "../../Client";
 import { simpleEmbed } from "../../utils/Embed";
 import Event, { EventName } from "../Event";
@@ -9,11 +9,11 @@ export default class MessageLinkReaction extends Event {
 
     public async execute(message: Message) : Promise<void> {
         // Checks :
-        if(message.author.bot && !(message.channel instanceof BaseGuildTextChannel)) return;
+        if (message.author.bot && !(message.channel instanceof BaseGuildTextChannel)) return;
 
         const urls = message.content.match(/http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}/gi);
 
-        if(!urls) return;
+        if (!urls) return;
 
         // Get messages :
         interface MessageElement {
@@ -23,20 +23,20 @@ export default class MessageLinkReaction extends Event {
 
         const messages: MessageElement[] = [];
 
-        for(let url of urls){
+        for (const url of urls) {
             const ids = [...url.matchAll(/(\/\d+)/g)];
 
-            if(!ids.length) return;
+            if (!ids.length) return;
 
             // Get channel and message instances :
             let channelQuoted: NonThreadGuildBasedChannel;
             let messageQuoted: Message;
-            
+
             try {
                 // Channel :
                 const tempChannel = await (await Client.instance.getGuild()).channels.fetch(ids[1][0]);
 
-                if(!tempChannel || !tempChannel.isText()) throw new Error("Channel not found");
+                if (!tempChannel || !tempChannel.isText()) throw new Error("Channel not found");
 
                 channelQuoted = tempChannel;
 
@@ -44,7 +44,7 @@ export default class MessageLinkReaction extends Event {
                 messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
             } catch {
                 return;
-            }            
+            }
 
             messages.push({ url, message: messageQuoted });
         }
@@ -52,18 +52,18 @@ export default class MessageLinkReaction extends Event {
         // Send link reaction messages :
         const embeds: MessageEmbed[] = [];
 
-        for(let index in messages){
+        for (const index in messages) {
             const url = messages[index].url;
             const msg = messages[index].message;
-            
+
             const attachment = msg.attachments.size ? `🗂️ ${msg.attachments.size} fichiers joint(s)` : "";
             const content = msg.content ? msg.content + (attachment.length ? `\n\n${attachment}` : "") : attachment;
 
             embeds.push(
                 simpleEmbed(`**Message mentionné [#${Number(index) + 1}](${url}) dans <#${msg.channelId}>**\n\n${content}`, "normal")
-                    .setAuthor({  
+                    .setAuthor({
                         name: msg.author.tag,
-                        iconURL: msg.author.displayAvatarURL({ dynamic: true }),
+                        iconURL: msg.author.displayAvatarURL({ dynamic: true })
                     })
             );
         }

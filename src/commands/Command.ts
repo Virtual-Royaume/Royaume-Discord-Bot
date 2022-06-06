@@ -4,6 +4,7 @@ import { CommandInteraction } from "discord.js";
 export default abstract class Command {
 
     public abstract readonly slashCommand: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
+
     public abstract readonly defaultPermission: boolean;
 
     get name() : string {

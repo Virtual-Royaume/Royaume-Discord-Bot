@@ -14,8 +14,7 @@ export default class Member extends Command {
         .setDescription("Voir les statistiques et information d'un utilisateur")
         .addUserOption(new SlashCommandUserOption()
             .setName("member")
-            .setDescription("Membre ciblé")
-        );
+            .setDescription("Membre ciblé"));
 
     public readonly defaultPermission: boolean = true;
 
@@ -23,37 +22,37 @@ export default class Member extends Command {
         const member = command.options.getMember("member") ?? command.member;
 
         // Check :
-        if(!(member instanceof GuildMember)){
-            command.reply({ 
-                embeds: [simpleEmbed("Erreur lors de l'utilisation de la commande.")], 
-                ephemeral: true 
+        if (!(member instanceof GuildMember)) {
+            command.reply({
+                embeds: [simpleEmbed("Erreur lors de l'utilisation de la commande.")],
+                ephemeral: true
             });
             return;
         }
 
         // Get member info :
         const memberInfo = (await request<GetMemberType>(getMember, { id: member.id })).member;
-        
-        if(!memberInfo){
+
+        if (!memberInfo) {
             command.reply({ embeds: [simpleEmbed("Aucune donnée trouvée.", "error")], ephemeral: true });
             return;
         }
 
         // Get main channels en sort it :
         const channels = (await request<GetChannelsType>(getChannels)).channels;
-        const channelsIdsByCategory: { [category: string]: string[] } = {}
+        const channelsIdsByCategory: { [category: string]: string[] } = {};
 
         channels.forEach(channel => {
-            if(!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];
+            if (!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];
 
             channelsIdsByCategory[channel.category].push(channel.channelId);
         });
-        
+
         // Format message :
         let message = "";
 
         const memberActivity = memberInfo.activity;
-        
+
         message += `**Temps de vocal (en minute) :** ${numberFormat(memberActivity.voiceMinute)}\n`;
         message += `**Temps de vocal ce mois (en minute) :** ${numberFormat(memberActivity.monthVoiceMinute)}\n\n`;
 
@@ -62,11 +61,11 @@ export default class Member extends Command {
 
         message += "**Nombre de message par salon :**\n";
 
-        for(const [category, channelIds] of Object.entries(channelsIdsByCategory)){
+        for (const [category, channelIds] of Object.entries(channelsIdsByCategory)) {
             channelIds.forEach(channelId => {
                 const channelInfo = memberInfo.activity.messages.perChannel.find(channel => channel?.channelId === channelId);
 
-                if(channelInfo){
+                if (channelInfo) {
                     message += `${numberFormat(channelInfo.messageCount)} dans <#${channelInfo?.channelId}> (${category})\n`;
                 }
             });

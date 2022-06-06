@@ -1,14 +1,14 @@
-import { 
-    SlashCommandBuilder, SlashCommandChannelOption, 
-    SlashCommandNumberOption, SlashCommandStringOption 
+import {
+    SlashCommandBuilder, SlashCommandChannelOption,
+    SlashCommandNumberOption, SlashCommandStringOption
 } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
 import { ChannelTypes } from "discord.js/typings/enums";
 import { request } from "../../api/Request";
-import { 
-    getChannelMessageCount, GetChannelMessageCountType, 
-    getMonthMessageCount, GetMonthMessageCountType, 
-    getTotalMessageCount, GetTotalMessageType 
+import {
+    getChannelMessageCount, GetChannelMessageCountType,
+    getMonthMessageCount, GetMonthMessageCountType,
+    getTotalMessageCount, GetTotalMessageType
 } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
 import { numberFormat } from "../../utils/Format";
@@ -17,17 +17,17 @@ import Command from "../Command";
 type Source = "total" | "mois" | "salon";
 
 interface SourceChoice {
-	name: string;
-	value: Source;
+    name: string;
+    value: Source;
 }
 
 export default class TopMessage extends Command {
 
     private sourceChoices: SourceChoice[] = [
-		{ name: "Total", value: "total" },
-		{ name: "Mois", value: "mois" },
-		{ name: "Salon", value: "salon" }
-	];
+        { name: "Total", value: "total" },
+        { name: "Mois", value: "mois" },
+        { name: "Salon", value: "salon" }
+    ];
 
     public readonly slashCommand = new SlashCommandBuilder()
         .setName("top-message")
@@ -36,17 +36,14 @@ export default class TopMessage extends Command {
             .setName("source")
             .setDescription("Source du classement")
             .addChoices(...this.sourceChoices)
-            .setRequired(true)
-        ).addNumberOption(new SlashCommandNumberOption()
+            .setRequired(true)).addNumberOption(new SlashCommandNumberOption()
             .setName("page")
             .setDescription("Page du classement")
-            .setMinValue(1)
-        ).addChannelOption(new SlashCommandChannelOption()
+            .setMinValue(1)).addChannelOption(new SlashCommandChannelOption()
             .setName("salon")
             .setDescription("Choix du salon si vous avez choisi \"salon\" comme source")
             // @ts-ignore : DJS - DJS/builders typing version problem
-			.addChannelTypes(ChannelTypes.GUILD_TEXT)
-        );
+            .addChannelTypes(ChannelTypes.GUILD_TEXT));
 
     public readonly defaultPermission: boolean = true;
 
@@ -64,35 +61,37 @@ export default class TopMessage extends Command {
 
         let members: Data[] = [];
 
-        switch(source){
-            case "mois":
+        switch (source) {
+            case "mois": {
                 members = (await request<GetMonthMessageCountType>(getMonthMessageCount)).members.sort((a, b) => {
                     return (b?.activity.messages.monthCount ?? 0) - (a?.activity.messages.monthCount ?? 0);
                 }).map(member => {
                     return {
                         username: member.username,
                         messageCount: member.activity.messages.monthCount
-                    }
+                    };
                 });
-            break;
+                break;
+            }
 
-            case "total":
+            case "total": {
                 members = (await request<GetTotalMessageType>(getTotalMessageCount)).members.sort((a, b) => {
                     return (b?.activity.messages.totalCount ?? 0) - (a?.activity.messages.totalCount ?? 0);
                 }).map(member => {
                     return {
                         username: member.username,
                         messageCount: member.activity.messages.totalCount
-                    }
+                    };
                 });
-            break;
+                break;
+            }
 
-            case "salon":
+            case "salon": {
                 const channel = command.options.getChannel("salon");
 
-                if(!channel){
+                if (!channel) {
                     command.reply({ embeds: [simpleEmbed("Vous devez mentionner un salon.", "error")], ephemeral: true });
-				    return;		
+                    return;
                 }
 
                 members = (await request<GetChannelMessageCountType>(getChannelMessageCount)).members.sort((a, b) => {
@@ -106,9 +105,10 @@ export default class TopMessage extends Command {
                     return {
                         username: member.username,
                         messageCount: selectChannel?.messageCount ?? 0
-                    }
+                    };
                 });
-            break;
+                break;
+            }
         }
 
         // Get page and max page :
@@ -121,10 +121,10 @@ export default class TopMessage extends Command {
         // Format leaderboard :
         let message = "";
 
-        for(let i = 0; i < members.length; i++){
+        for (let i = 0; i < members.length; i++) {
             const member = members[i];
 
-            message += `**${(i + 1 + (page - 1) * this.memberPerPage)}. ${member.username} :** ${numberFormat(member.messageCount)}\n`;
+            message += `**${i + 1 + (page - 1) * this.memberPerPage}. ${member.username} :** ${numberFormat(member.messageCount)}\n`;
         }
 
         // Send leaderboard :

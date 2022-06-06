@@ -35,7 +35,7 @@ export default class MessageCreate extends Event {
                     { id: message.author.id, channelId: channel.id }
                 )).incMemberDiscordActivityChannel;
 
-                // Send an announcement when the member reaches a level :
+                // Send an announcement when the member reaches a message count step :
                 let step = false;
 
                 if(messageCount < 10_000){

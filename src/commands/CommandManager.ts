@@ -45,7 +45,6 @@ export default class CommandManager {
         });
 
         // Set commands :
-        // @ts-ignore : DJS - DJS/builders typing version problem
         await (await Client.instance.getGuild()).commands.set(commands);
 
         Logger.info("Successfully registered application (/) commands");

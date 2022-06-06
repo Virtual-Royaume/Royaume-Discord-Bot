@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
+import { SlashCommandBooleanOption, SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
 import { BaseGuildTextChannel, CommandInteraction, GuildMember } from "discord.js";
 import { request } from "../../api/Request";
 import {
@@ -55,7 +55,11 @@ export default class Role extends Command {
 
         .addStringOption(new SlashCommandStringOption()
             .setName("id")
-            .setDescription("Id de l'activité à supprimer"));
+            .setDescription("Id de l'activité à supprimer"))
+
+        .addBooleanOption(new SlashCommandBooleanOption()
+            .setName("vote")
+            .setDescription("Activer le vote de la plèbe (haut placé)"));
 
     public readonly defaultPermission: boolean = true;
 
@@ -71,6 +75,7 @@ export default class Role extends Command {
     private async add(command: CommandInteraction) : Promise<void> {
         const presence = command.options.getString("presence");
         const message = command.options.getString("message");
+        const vote = command.options.getBoolean("vote");
 
         // Checks :
         if (!presence || !message) {
@@ -92,8 +97,8 @@ export default class Role extends Command {
         // Create function for the request for add presence message :
         const addPresenceRequest = async() => await request(addPresenceMessage, { type: presence, text: message });
 
-        // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
-        if (command.member.permissions.has("ADMINISTRATOR")) {
+        // Add the new presence message if command author is admin and vote option is not enable, otherwise send a proposal in #général
+        if (command.member.permissions.has("ADMINISTRATOR") && vote === false) {
             await addPresenceRequest();
 
             command.reply({

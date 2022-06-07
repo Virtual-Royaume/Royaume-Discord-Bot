@@ -9,5 +9,8 @@
     
     "resolveJsonModule": true,
     "esModuleInterop": true
+  },
+  "ts-node": {
+    "swc": true
   }
 }

@@ -3,7 +3,6 @@ import {
     SlashCommandNumberOption, SlashCommandStringOption
 } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { ChannelTypes } from "discord.js/typings/enums";
 import { request } from "../../api/Request";
 import {
     getChannelMessageCount, GetChannelMessageCountType,
@@ -42,8 +41,7 @@ export default class TopMessage extends Command {
             .setMinValue(1)).addChannelOption(new SlashCommandChannelOption()
             .setName("salon")
             .setDescription("Choix du salon si vous avez choisi \"salon\" comme source")
-            // @ts-ignore : DJS - DJS/builders typing version problem
-            .addChannelTypes(ChannelTypes.GUILD_TEXT));
+            .addChannelTypes(0));
 
     public readonly defaultPermission: boolean = true;
 

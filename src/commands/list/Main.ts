@@ -3,7 +3,6 @@ import {
     SlashCommandRoleOption, SlashCommandStringOption
 } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { ChannelTypes } from "discord.js/typings/enums";
 import { getChannelsByCategory } from "../../api/func/MainChannel";
 import { getRolesByCategory } from "../../api/func/MainRole";
 import { request } from "../../api/Request";
@@ -38,8 +37,7 @@ export default class Inactive extends Command {
         .addChannelOption(new SlashCommandChannelOption()
             .setName("channel")
             .setDescription("Ajout ou supression de ce salon")
-            // @ts-ignore : DJS - DJS/builders typing version problem
-            .addChannelTypes(ChannelTypes.GUILD_TEXT))
+            .addChannelTypes(0))
         .addRoleOption(new SlashCommandRoleOption()
             .setName("role")
             .setDescription("Ajout ou supression de ce rôle"))

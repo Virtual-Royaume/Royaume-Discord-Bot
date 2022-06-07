@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { CommandInteraction, MessageAttachment, MessageEmbed } from "discord.js";
+import { CommandInteraction, HexColorString, MessageAttachment, MessageEmbed } from "discord.js";
 import Command from "../Command";
 import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
@@ -91,9 +91,7 @@ export default class Stats extends Command {
             // Embed :
             embeds.push(new MessageEmbed()
                 .setTitle(type.description)
-                // @ts-ignore : compatible with the type HexColorString in ColorResolvable,
-                // but not detected because of the use of a variable
-                .setColor(colors.primary)
+                .setColor(colors.primary as HexColorString)
                 .setImage(`attachment://${type.columnName}-chart.png`));
 
             // Attachment :

@@ -1,5 +1,4 @@
-import { RequestInit } from "node-fetch";
-import fetch from "node-fetch";
+import fetch, { RequestInit } from "node-fetch";
 
 export interface Response<T> {
     status: number;

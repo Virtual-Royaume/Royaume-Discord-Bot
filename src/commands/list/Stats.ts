@@ -7,7 +7,7 @@ import { request } from "../../api/Request";
 import { getServerActivityHistory, GetServerActivityHistoryType } from "../../api/requests/ServerActivity";
 import { ServerActivity } from "../../api/Schema";
 import { colors } from "../../../resources/config/information.json";
-import { dateFormat } from "../../utils/Format";
+import { dateFormat } from "../../utils/Functions";
 
 export default class Stats extends Command {
 

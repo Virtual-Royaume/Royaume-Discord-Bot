@@ -5,7 +5,7 @@ import { getMember, GetMemberType } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
-import { getAge, numberFormat } from "../../utils/Functions";
+import { dateFormat, getAge, numberFormat } from "../../utils/Functions";
 
 export default class Member extends Command {
 
@@ -53,8 +53,7 @@ export default class Member extends Command {
 
         if (memberInfo.birthday) {
             const birthday = new Date(memberInfo.birthday);
-            const age = getAge(birthday);
-            message += `**Né le ${birthday.getDate()}/${birthday.getMonth() + 1}/${birthday.getFullYear()} *(${age} ans)***\n\n`;
+            message += `**Né le ${dateFormat(birthday, "/")} *(${getAge(birthday)} ans)***\n\n`;
         }
 
         const memberActivity = memberInfo.activity;

@@ -60,6 +60,7 @@ export const getMember = gql`
             username
             profilePicture
             isOnServer
+            birthday
             activity {
             voiceMinute
             monthVoiceMinute

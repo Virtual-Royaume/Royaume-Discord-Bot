@@ -50,7 +50,7 @@ export type Member = {
     __typename?: "Member";
     _id: Scalars["String"];
     activity: DiscordActivity;
-    birthday?: Maybe<Scalars["Date"]>;
+    birthday?: Maybe<Scalars["Int"]>;
     isOnServer: Scalars["Boolean"];
     profilePicture: Scalars["String"];
     username: Scalars["String"];

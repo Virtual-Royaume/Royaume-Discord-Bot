@@ -3,7 +3,7 @@ import { CommandInteraction } from "discord.js";
 import { request } from "../../api/Request";
 import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
-import { numberFormat } from "../../utils/Format";
+import { numberFormat } from "../../utils/Functions";
 import Command from "../Command";
 
 type Source = "total" | "mois";

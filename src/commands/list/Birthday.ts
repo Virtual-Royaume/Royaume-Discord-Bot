@@ -5,6 +5,7 @@ import { setBirthday } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { minimumAge } from "../../../resources/config/information.json";
+import { getAge } from "../../utils/Functions";
 
 export default class Birthday extends Command {
 
@@ -46,7 +47,7 @@ export default class Birthday extends Command {
             return;
         }
 
-        if (new Date().getFullYear() - date.getFullYear() < minimumAge) {
+        if (getAge(date) < minimumAge) {
             badFormat(`Vous devez être né il y a minimum ${minimumAge} ans`);
             return;
         }

@@ -6,7 +6,7 @@ import { generalChannel } from "../../../resources/config/information.json";
 import Event, { EventName } from "../Event";
 import Client from "../../Client";
 import { simpleEmbed } from "../../utils/Embed";
-import { numberFormat } from "../../utils/Format";
+import { numberFormat } from "../../utils/Functions";
 
 export default class MessageCreate extends Event {
 

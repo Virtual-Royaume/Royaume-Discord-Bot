@@ -46,7 +46,7 @@ export default class Birthday extends Command {
             return;
         }
 
-        if((new Date()).getFullYear() - date.getFullYear() < minimumAge ){
+        if (new Date().getFullYear() - date.getFullYear() < minimumAge) {
             badFormat(`Vous devez être né il y a minimum ${minimumAge} ans`);
             return;
         }

@@ -76,6 +76,20 @@ export const getMember = gql`
     }
 `;
 
+export type GetMembersTierType = { members: (Pick<Member, "_id"> & {
+    activity: Pick<DiscordActivity, "tier">
+})[] };
+export const getMembersTier = gql`
+    query {
+        members {
+            _id
+            activity {
+                tier
+            }
+        }
+    }
+`;
+
 export type GetMembersOnServerStatusType = {
     members: Pick<Member, "_id" | "username" | "isOnServer">[]
 };

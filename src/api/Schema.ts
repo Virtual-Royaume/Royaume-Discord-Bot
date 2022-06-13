@@ -23,6 +23,7 @@ export type DiscordActivity = {
     __typename?: "DiscordActivity";
     messages: DiscordMessageActivity;
     monthVoiceMinute: Scalars["Int"];
+    tier: Scalars["Int"];
     voiceMinute: Scalars["Int"];
 };
 

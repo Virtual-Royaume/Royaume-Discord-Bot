@@ -19,13 +19,16 @@ export default class PresenceUpdate extends Task {
     }
 
     public async run() : Promise<void> {
+        const guild = await Client.instance.getGuild();
+
         const tiers: { [key: string]: string } = configTiers;
 
-        const discordMembers = await (await Client.instance.getGuild()).members.fetch();
+        const discordMembers = await guild.members.fetch();
         const apiMembers = (await request<GetMembersTierType>(getMembersTier)).members;
 
         const updates: RoleUpdate[] = [];
 
+        // Check if the member have the right role :
         for (const [id, member] of discordMembers) {
             if (member.user.bot || member.roles.cache.has(verify.roles.waiting)) continue;
 
@@ -46,11 +49,21 @@ export default class PresenceUpdate extends Task {
         // Broadcast updates :
         if (!updates.length) return;
 
-        const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
+        const generalChannelInstance = await guild.channels.fetch(generalChannel);
 
         if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
-        const message = updates.map(element => `<@${element.memberId}> ▶️ <@&${element.newRole}>`).join("\n");
+        let message = "";
+
+        for (const tierRole of Object.values(tiers)) {
+            const tierMembers = updates.filter(element => element.newRole === tierRole);
+
+            if (tierMembers.length) {
+                message += tierMembers.map(element => `<@${element.memberId}> ▶️ <@&${element.newRole}>`).join("\n");
+
+                message += "\n\n";
+            }
+        }
 
         generalChannelInstance.send({
             embeds: [simpleEmbed(message, "normal", "Changement des rôles d'activités")]

@@ -5,6 +5,7 @@ import { generalChannel } from "../../../resources/config/information.json";
 import { BaseGuildTextChannel } from "discord.js";
 import Client from "../../Client";
 import { simpleEmbed } from "../../utils/Embed";
+import DayJS from "../../utils/DayJS";
 
 export default class ServerActivityUpdate extends Task {
 
@@ -29,18 +30,18 @@ export default class ServerActivityUpdate extends Task {
 
     public async run() : Promise<void> {
         // Check if time (00:00) :
-        const currentDate = new Date();
+        const currentDate = DayJS().tz();
 
-        if (currentDate.getHours() !== 0 || currentDate.getMinutes() !== 0) return;
+        if (currentDate.hour() !== 0 || currentDate.minute() !== 0) return;
 
         // Check birthdays of the day :
         const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => {
             if (!member.birthday) return false;
 
-            const birthday = new Date(member.birthday);
+            const birthday = DayJS(member.birthday).tz();
 
-            return birthday.getDate() === currentDate.getDate()
-                && birthday.getMonth() === currentDate.getMonth();
+            return birthday.date() === currentDate.date()
+                && birthday.month() === currentDate.month();
         });
 
         // Send birthday message :
@@ -50,12 +51,14 @@ export default class ServerActivityUpdate extends Task {
             if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
             for (const member of birthdays) {
+                if (!member.birthday) continue;
+
                 const message = this.messages[Math.floor(Math.random() * this.messages.length)];
-                const birthday = new Date(member.birthday ?? 1);
+                const birthday = DayJS(member.birthday).tz();
 
                 const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
                     .setThumbnail(member.profilePicture)
-                    .setFooter({ text: `${currentDate.getFullYear() - birthday.getFullYear()} années de vie sur terre` });
+                    .setFooter({ text: `${currentDate.year() - birthday.year()} années de vie sur terre` });
 
                 generalChannelInstance.send({ embeds: [embed] });
             }

@@ -5,6 +5,7 @@ import TaskManager from "./tasks/TaskManager";
 import Logger from "./utils/Logger";
 import { botToken } from "../resources/config/secret.json";
 import { guildId } from "../resources/config/information.json";
+import { version } from "../package.json";
 
 export default class Client extends DiscordClient {
 
@@ -67,5 +68,5 @@ console.log(
     + "|_                        _|".yellow + "\n"
     + "  |______________________|  ".yellow + "\n"
 );
-Logger.info(`Sarting Royaume-Discord-Bot v${process.env.npm_package_version}...`);
+Logger.info(`Sarting Royaume-Discord-Bot V${version}...`);
 new Client();

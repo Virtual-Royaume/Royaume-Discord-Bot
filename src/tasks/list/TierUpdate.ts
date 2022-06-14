@@ -59,7 +59,7 @@ export default class PresenceUpdate extends Task {
             const tierMembers = updates.filter(element => element.newRole === tierRole);
 
             if (tierMembers.length) {
-                message += tierMembers.map(element => `<@${element.memberId}> ▶️ <@&${element.newRole}>`).join("\n");
+                message += tierMembers.map(element => `<@${element.memberId}> ➜ <@&${element.newRole}>`).join("\n");
 
                 message += "\n\n";
             }

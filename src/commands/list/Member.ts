@@ -5,7 +5,7 @@ import { getMember, GetMemberType } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
-import { dateFormat, getAge, numberFormat } from "../../utils/Functions";
+import { dateFormat, firstLetterToUppercase, getAge, numberFormat } from "../../utils/Function";
 
 export default class Member extends Command {
 
@@ -53,6 +53,7 @@ export default class Member extends Command {
 
         if (memberInfo.birthday) {
             const birthday = new Date(memberInfo.birthday);
+
             message += `**👶 Né le ${dateFormat(birthday, "/")} *(${getAge(birthday)} ans)***\n\n`;
         }
 
@@ -64,16 +65,18 @@ export default class Member extends Command {
         message += `**📜 Nombre de message :** ${numberFormat(memberActivity.messages.totalCount)}\n`;
         message += `**📝 Nombre de message ce mois :** ${numberFormat(memberActivity.messages.monthCount)}\n\n`;
 
-        message += "__**📺 Nombre de message par salon :**__\n";
+        message += "**📺 Nombre de message par salon :**\n";
 
         const embed = simpleEmbed(message, "normal", `Activité de ${member.displayName}`);
+
         for (const [category, channelIds] of Object.entries(channelsIdsByCategory)) {
             embed.addField(
-                category + " :",
+                firstLetterToUppercase(category),
                 channelIds.map(channelId => {
                     const messageCount = memberInfo.activity.messages.perChannel
                         .find(channel => channel?.channelId === channelId)?.messageCount ?? 0;
-                    `${messageCount} dans <#${channelId}>`;
+
+                    return `${messageCount} dans <#${channelId}>`;
                 }).join("\n")
             );
         }

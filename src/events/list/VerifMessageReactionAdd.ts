@@ -34,8 +34,8 @@ export default class VerifMessageReactionAdd extends Event {
         const removeReactions = () => messageReaction.message.reactions.removeAll();
 
         if (
-            messageReaction.emoji.name === verify.emoji.upvote
-            && messageReaction.count - 1 >= verify.reactionNeededCount.upvote
+            messageReaction.emoji.name === verify.emoji.upVote
+            && messageReaction.count - 1 >= verify.reactionNeededCount.upVote
         ) {
             await member.roles.add(verify.roles.verified);
             await member.roles.remove(verify.roles.waiting);
@@ -55,8 +55,8 @@ export default class VerifMessageReactionAdd extends Event {
 
         // Check if the member is rejected :
         if (
-            messageReaction.emoji.name === verify.emoji.downvote
-            && messageReaction.count - 1 >= verify.reactionNeededCount.downvote
+            messageReaction.emoji.name === verify.emoji.downVote
+            && messageReaction.count - 1 >= verify.reactionNeededCount.downVote
         ) {
             // Reject the member :
             await generalChannelInstance.send({ embeds: [simpleEmbed(`La présentation de ${member.displayName} a été refusé.`, "error")] });

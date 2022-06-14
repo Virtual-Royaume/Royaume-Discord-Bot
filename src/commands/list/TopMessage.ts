@@ -10,7 +10,7 @@ import {
     getTotalMessageCount, GetTotalMessageType
 } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
-import { numberFormat } from "../../utils/Functions";
+import { numberFormat } from "../../utils/Function";
 import Command from "../Command";
 
 type Source = "total" | "mois" | "salon";

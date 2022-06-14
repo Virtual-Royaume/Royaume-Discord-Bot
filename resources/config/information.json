@@ -20,22 +20,22 @@
             "verified": "985980071410024488"
         },
         "emoji": {
-            "upvote": "👍",
-            "downvote": "👎"
+            "upVote": "👍",
+            "downVote": "👎"
         },
         "reactionNeededCount": {
-            "upvote": 5,
-            "downvote": 7
+            "upVote": 5,
+            "downVote": 7
         }
     },
     "activityProposal": {
         "emoji": {
-            "upvote": "👍",
-            "downvote": "👎"
+            "upVote": "👍",
+            "downVote": "👎"
         },
         "reactionNeededCount": {
-            "upvote": 3,
-            "downvote": 4
+            "upVote": 3,
+            "downVote": 4
         }
     }
 }

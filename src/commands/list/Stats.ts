@@ -8,6 +8,7 @@ import { getServerActivityHistory, GetServerActivityHistoryType } from "../../ap
 import { ServerActivity } from "../../api/Schema";
 import { colors } from "../../../resources/config/information.json";
 import { dateFormat } from "../../utils/Function";
+import DayJS from "../../utils/DayJS";
 
 export default class Stats extends Command {
 
@@ -48,7 +49,7 @@ export default class Stats extends Command {
                 type: "line",
                 data: {
                     labels: serverActivity.map(element => {
-                        return dateFormat(new Date(element.date));
+                        return dateFormat(DayJS(element.date).tz());
                     }),
                     datasets: [{
                         label: type.description,

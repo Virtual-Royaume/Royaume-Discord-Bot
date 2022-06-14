@@ -6,6 +6,7 @@ import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
 import { dateFormat, firstLetterToUppercase, getAge, numberFormat } from "../../utils/Function";
+import DayJS from "../../utils/DayJS";
 
 export default class Member extends Command {
 
@@ -52,7 +53,7 @@ export default class Member extends Command {
         let message = "";
 
         if (memberInfo.birthday) {
-            const birthday = new Date(memberInfo.birthday);
+            const birthday = DayJS(memberInfo.birthday).tz();
 
             message += `**👶 Né le ${dateFormat(birthday, "/")} *(${getAge(birthday)} ans)***\n\n`;
         }

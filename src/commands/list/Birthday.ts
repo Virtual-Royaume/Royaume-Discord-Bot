@@ -6,6 +6,7 @@ import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { minimumAge } from "../../../resources/config/information.json";
 import { dateFormat, getAge } from "../../utils/Function";
+import DayJS from "../../utils/DayJS";
 
 export default class Birthday extends Command {
 
@@ -55,9 +56,9 @@ export default class Birthday extends Command {
                 }
 
                 // Try to parse the date :
-                const date = new Date(`${dateParams[2]}-${dateParams[1]}-${dateParams[0]}Z`);
+                const date = DayJS(`${dateParams[2]}-${dateParams[1]}-${dateParams[0]}Z`);
 
-                if (isNaN(date.getTime())) {
+                if (!date.isValid()) {
                     badFormat("Cette date est invalide.");
                     return;
                 }
@@ -68,7 +69,7 @@ export default class Birthday extends Command {
                 }
 
                 // Save birthday :
-                await request(setBirthday, { id: command.user.id, date: date.getTime() });
+                await request(setBirthday, { id: command.user.id, date: date.valueOf() });
 
                 command.reply({ embeds: [simpleEmbed("Votre date d'anniversaire a bien été enregistrée.")], ephemeral: true });
                 break;
@@ -89,10 +90,10 @@ export default class Birthday extends Command {
 
                 for (let i = 0; i < birthdays.length; i++) {
                     const member = birthdays[i];
-                    const birthday = new Date(member.birthday ?? 0);
+                    const birthday = DayJS(member.birthday ?? 0);
                     const position = i + 1 + (page - 1) * this.memberPerPage;
 
-                    message += `**${position}. ${member.username} :** ${getAge(birthday)} ans (${dateFormat(new Date(birthday), "/")})\n`;
+                    message += `**${position}. ${member.username} :** ${getAge(birthday)} ans (${dateFormat(birthday, "/")})\n`;
                 }
 
                 // Send leaderboard :

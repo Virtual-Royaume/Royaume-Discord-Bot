@@ -1,21 +1,17 @@
+import { Dayjs } from "dayjs";
 import { localFormat } from "../../resources/config/information.json";
+import DayJS from "./DayJS";
 
 export function numberFormat(number: number) : string {
     return number.toLocaleString(localFormat);
 }
 
-export function dateFormat(date: Date, separator = "-") : string {
-    return date.toLocaleDateString(localFormat).replaceAll("/", separator);
+export function dateFormat(date: Dayjs, separator = "-") : string {
+    return date.format(`DD[${separator}]MM[${separator}]YYYY`);
 }
 
-export function getAge(birth: Date): number {
-    const now = new Date();
-    const months = now.getMonth() - birth.getMonth();
-    let age = now.getFullYear() - birth.getFullYear();
-
-    if (months < 0 || months === 0 && now.getDate() < birth.getDate()) age--;
-
-    return age;
+export function getAge(birth: Dayjs): number {
+    return DayJS().tz().diff(birth, "year");
 }
 
 export function firstLetterToUppercase(string: string): string {

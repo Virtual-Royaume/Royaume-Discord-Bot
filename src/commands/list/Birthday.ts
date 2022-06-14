@@ -5,7 +5,7 @@ import { getBirthdays, GetBirthdaysType, setBirthday } from "../../api/requests/
 import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { minimumAge } from "../../../resources/config/information.json";
-import { dateFormat, getAge } from "../../utils/Functions";
+import { dateFormat, getAge } from "../../utils/Function";
 
 export default class Birthday extends Command {
 
@@ -63,7 +63,7 @@ export default class Birthday extends Command {
                 }
 
                 if (getAge(date) < minimumAge) {
-                    badFormat(`Vous devez être né il y a minimum ${minimumAge} ans`);
+                    badFormat(`L'age minimum requis est de ${minimumAge} ans.`);
                     return;
                 }
 
@@ -73,6 +73,7 @@ export default class Birthday extends Command {
                 command.reply({ embeds: [simpleEmbed("Votre date d'anniversaire a bien été enregistrée.")], ephemeral: true });
                 break;
             }
+
             case "list": {
                 let page = command.options.getNumber("page") ?? 1;
                 let birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
@@ -85,21 +86,18 @@ export default class Birthday extends Command {
                 birthdays = birthdays.slice(page * this.memberPerPage - this.memberPerPage, page * this.memberPerPage);
 
                 let message = "";
+
                 for (let i = 0; i < birthdays.length; i++) {
                     const member = birthdays[i];
                     const birthday = new Date(member.birthday ?? 0);
                     const position = i + 1 + (page - 1) * this.memberPerPage;
+
                     message += `**${position}. ${member.username} :** ${getAge(birthday)} ans (${dateFormat(new Date(birthday), "/")})\n`;
                 }
 
                 // Send leaderboard :
                 command.reply({
-                    embeds: [
-                        simpleEmbed(message, "normal", "Anniversaires des membres")
-                        // .setFooter({
-                        //     text: `• Page ${page}/${maxPage}`,
-                        // })
-                    ]
+                    embeds: [simpleEmbed(message, "normal", `Anniversaires des membres (page ${page}/${maxPage})`)]
                 });
 
                 break;

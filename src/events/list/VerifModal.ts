@@ -75,8 +75,8 @@ export default class VerifModal extends Event {
             embeds: [simpleEmbed(presentation, "normal", `Présentation de ${member.displayName}`).setFooter(`ID : ${member.id}`)]
         });
 
-        await message.react(verify.emoji.upvote);
-        await message.react(verify.emoji.downvote);
+        await message.react(verify.emoji.upVote);
+        await message.react(verify.emoji.downVote);
 
         // Send confirmation reply :
         interaction.reply({

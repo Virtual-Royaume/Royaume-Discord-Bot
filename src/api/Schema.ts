@@ -10,7 +10,7 @@ export type Scalars = {
     Boolean: boolean;
     Int: number;
     Float: number;
-    Date: string;
+    Date: number;
 };
 
 export type ChannelMessageCount = {
@@ -49,7 +49,7 @@ export type Member = {
     __typename?: "Member";
     _id: Scalars["String"];
     activity: DiscordActivity;
-    birthday?: Maybe<Scalars["Int"]>;
+    birthday?: Maybe<Scalars["Date"]>;
     isOnServer: Scalars["Boolean"];
     profilePicture: Scalars["String"];
     username: Scalars["String"];

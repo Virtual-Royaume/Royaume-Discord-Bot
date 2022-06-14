@@ -123,8 +123,8 @@ export default class Role extends Command {
             ] });
 
             // Add reactions to the proposal message :
-            await voteMessage.react(activityProposal.emoji.upvote);
-            await voteMessage.react(activityProposal.emoji.downvote);
+            await voteMessage.react(activityProposal.emoji.upVote);
+            await voteMessage.react(activityProposal.emoji.downVote);
 
             // Confirm the creation of the proposal message :
             command.reply({
@@ -135,8 +135,8 @@ export default class Role extends Command {
             // Reaction collector for check if the proposal is accepted or rejected :
             const reactionCollector = voteMessage.createReactionCollector({
                 filter: (reaction, user) => {
-                    return (reaction.emoji.name === activityProposal.emoji.upvote
-                        || reaction.emoji.name === activityProposal.emoji.downvote)
+                    return (reaction.emoji.name === activityProposal.emoji.upVote
+                        || reaction.emoji.name === activityProposal.emoji.downVote)
                         && user.id !== command.user.id;
                 },
                 time: 60_000 * 20
@@ -146,8 +146,8 @@ export default class Role extends Command {
 
             reactionCollector.on("collect", (reaction) => {
                 if (
-                    reaction.emoji.name === activityProposal.emoji.upvote
-                    && reaction.count >= activityProposal.reactionNeededCount.upvote
+                    reaction.emoji.name === activityProposal.emoji.upVote
+                    && reaction.count >= activityProposal.reactionNeededCount.upVote
                 ) {
                     voteMessage.reply({ embeds: [simpleEmbed("Proposition accepté.")] });
 
@@ -156,8 +156,8 @@ export default class Role extends Command {
                 }
 
                 if (
-                    reaction.emoji.name === activityProposal.emoji.downvote
-                    && reaction.count >= activityProposal.reactionNeededCount.downvote
+                    reaction.emoji.name === activityProposal.emoji.downVote
+                    && reaction.count >= activityProposal.reactionNeededCount.downVote
                 ) {
                     voteMessage.reply({ embeds: [
                         simpleEmbed("Proposition refusé.", "error")

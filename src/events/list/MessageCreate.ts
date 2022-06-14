@@ -39,7 +39,7 @@ export default class MessageCreate extends Event {
                 let step = false;
 
                 if (messageCount < 10_000) {
-                    if (messageCount % 1_000 === 0) step = true;
+                    if (messageCount !== 0 && messageCount % 1_000 === 0) step = true;
                 } else if (messageCount % 10_000 === 0) step = true;
 
                 if (step) {

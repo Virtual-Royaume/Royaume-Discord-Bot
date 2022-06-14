@@ -18,7 +18,7 @@ export default class Member extends Command {
 
     public readonly defaultPermission: boolean = true;
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: CommandInteraction): Promise<void> {
         const member = command.options.getMember("member") ?? command.member;
 
         // Check :
@@ -53,31 +53,33 @@ export default class Member extends Command {
 
         if (memberInfo.birthday) {
             const birthday = new Date(memberInfo.birthday);
-            message += `**Né le ${dateFormat(birthday, "/")} *(${getAge(birthday)} ans)***\n\n`;
+            message += `**👶 Né le ${dateFormat(birthday, "/")} *(${getAge(birthday)} ans)***\n\n`;
         }
 
         const memberActivity = memberInfo.activity;
 
-        message += `**Temps de vocal (en minute) :** ${numberFormat(memberActivity.voiceMinute)}\n`;
-        message += `**Temps de vocal ce mois (en minute) :** ${numberFormat(memberActivity.monthVoiceMinute)}\n\n`;
+        message += `**🔊 Temps de vocal (en minute) :** ${numberFormat(memberActivity.voiceMinute)}\n`;
+        message += `**🔉 Temps de vocal ce mois (en minute) :** ${numberFormat(memberActivity.monthVoiceMinute)}\n\n`;
 
-        message += `**Nombre de message :** ${numberFormat(memberActivity.messages.totalCount)}\n`;
-        message += `**Nombre de message ce mois :** ${numberFormat(memberActivity.messages.monthCount)}\n\n`;
+        message += `**📜 Nombre de message :** ${numberFormat(memberActivity.messages.totalCount)}\n`;
+        message += `**📝 Nombre de message ce mois :** ${numberFormat(memberActivity.messages.monthCount)}\n\n`;
 
-        message += "**Nombre de message par salon :**\n";
+        message += "__**📺 Nombre de message par salon :**__\n";
 
+        const embed = simpleEmbed(message, "normal", `Activité de ${member.displayName}`);
         for (const [category, channelIds] of Object.entries(channelsIdsByCategory)) {
-            channelIds.forEach(channelId => {
-                const channelInfo = memberInfo.activity.messages.perChannel.find(channel => channel?.channelId === channelId);
-
-                if (channelInfo) {
-                    message += `${numberFormat(channelInfo.messageCount)} dans <#${channelInfo?.channelId}> (${category})\n`;
-                }
-            });
+            embed.addField(
+                category + " :",
+                channelIds.map(channelId => {
+                    const messageCount = memberInfo.activity.messages.perChannel
+                        .find(channel => channel?.channelId === channelId)?.messageCount ?? 0;
+                    `${messageCount} dans <#${channelId}>`;
+                }).join("\n")
+            );
         }
 
         command.reply({
-            embeds: [simpleEmbed(message, "normal", `Activité de ${member.displayName}`)]
+            embeds: [embed]
         });
     }
 }

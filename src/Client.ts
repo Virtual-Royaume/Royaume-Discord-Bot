@@ -6,6 +6,7 @@ import Logger from "./utils/Logger";
 import { botToken } from "../resources/config/secret.json";
 import { guildId } from "../resources/config/information.json";
 import { version } from "../package.json";
+import MusicManager from "./music/MusicManager";
 
 export default class Client extends DiscordClient {
 
@@ -17,6 +18,8 @@ export default class Client extends DiscordClient {
     public readonly commandManager: CommandManager;
 
     public readonly taskManager: TaskManager;
+
+    public readonly musicManager: MusicManager;
 
     constructor() {
         super({
@@ -37,6 +40,7 @@ export default class Client extends DiscordClient {
         this.eventManager = new EventManager();
         this.commandManager = new CommandManager();
         this.taskManager = new TaskManager();
+        this.musicManager = new MusicManager();
     }
 
     public async getGuild() : Promise<Guild> {

@@ -40,6 +40,7 @@ export default class GithubLinkReaction extends Event {
                 mainLine = linesNumber[0];
 
                 linesNumber[0] = linesNumber[0] - 5;
+                if (linesNumber[0] < 0) linesNumber[0] = 1;
 
                 linesNumber.push(linesNumber[0] + 10);
             }
@@ -62,7 +63,10 @@ export default class GithubLinkReaction extends Event {
             const fileContent = request.body.split("\n");
 
             // Check if the line number is not too high :
-            if (linesNumber[linesNumber.length - 1] > fileContent.length) return;
+            if (linesNumber[1] > fileContent.length) {
+                linesNumber[0] = fileContent.length - 10;
+                linesNumber[1] = fileContent.length;
+            }
 
             // Format selected code :
             let selectedCode = "";

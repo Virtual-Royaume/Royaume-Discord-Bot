@@ -1,6 +1,8 @@
+import TrackInfo from "../track/TrackInfo";
+import Player from "./Player";
+
 export default class Queue {
     public readonly trackList: TrackInfo[];
-
     public readonly player: Player;
 
     constructor(trackList: TrackInfo[], player: Player) {

@@ -5,7 +5,7 @@ import { getMember, GetMemberType } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";
 import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
-import { dateFormat, firstLetterToUppercase, getAge, numberFormat, minuteToHour} from "../../utils/Function";
+import { dateFormat, firstLetterToUppercase, getAge, numberFormat, formatMinutes } from "../../utils/Function";
 import DayJS from "../../utils/DayJS";
 
 export default class Member extends Command {
@@ -60,8 +60,8 @@ export default class Member extends Command {
 
         const memberActivity = memberInfo.activity;
 
-        message += `**🔊 Temps de vocal (en minute) :** ${minuteToHour(memberActivity.voiceMinute)}\n`;
-        message += `**🔉 Temps de vocal ce mois (en minute) :** ${minuteToHour(memberActivity.monthVoiceMinute)}\n\n`;
+        message += `**🔊 Temps de vocal (en minute) :** ${formatMinutes(memberActivity.voiceMinute)}\n`;
+        message += `**🔉 Temps de vocal ce mois (en minute) :** ${formatMinutes(memberActivity.monthVoiceMinute)}\n\n`;
 
         message += `**📜 Nombre de message :** ${numberFormat(memberActivity.messages.totalCount)}\n`;
         message += `**📝 Nombre de message ce mois :** ${numberFormat(memberActivity.messages.monthCount)}\n\n`;

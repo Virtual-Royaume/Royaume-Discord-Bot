@@ -3,7 +3,7 @@ import { CommandInteraction } from "discord.js";
 import { request } from "../../api/Request";
 import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
-import { minuteToHour } from "../../utils/Function";
+import { formatMinutes } from "../../utils/Function";
 import Command from "../Command";
 
 type Source = "total" | "mois";
@@ -36,7 +36,7 @@ export default class TopVoice extends Command {
 
     private memberPerPage = 20;
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: CommandInteraction): Promise<void> {
         const source: Source = <Source>command.options.getString("source", true);
         let page = command.options.getNumber("page") ?? 1;
 
@@ -87,7 +87,7 @@ export default class TopVoice extends Command {
         for (let i = 0; i < members.length; i++) {
             const member = members[i];
 
-            message += `**${i + 1 + (page - 1) * this.memberPerPage}. ${member.username} :** ${minuteToHour(member.voiceMinute)}\n`;
+            message += `**${i + 1 + (page - 1) * this.memberPerPage}. ${member.username} :** ${formatMinutes(member.voiceMinute)}\n`;
         }
 
         // Send leaderboard :

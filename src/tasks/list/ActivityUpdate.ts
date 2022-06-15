@@ -19,9 +19,8 @@ export default class ServerActivityUpdate extends Task {
         // Update voice time of members :
         (await Client.instance.getGuild()).voiceStates.cache.forEach(voiceState => {
             if (
-                voiceState.member && !voiceState.member.user.bot
-                && !voiceState.selfMute && !voiceState.mute
-                && voiceState.channel
+                (voiceState.member && !voiceState.member.user.bot && voiceState.channel)
+                && (!voiceState.selfMute || !voiceState.mute)
             ) {
                 request(incVoiceMinute, { id: voiceState.member.user.id });
             }

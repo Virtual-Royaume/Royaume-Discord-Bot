@@ -17,3 +17,13 @@ export function getAge(birth: Dayjs): number {
 export function firstLetterToUppercase(string: string): string {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function minuteToHour(minutes: number): string {
+
+    const days = Math.floor(minutes / (60 * 24));
+    const hours = Math.floor((minutes % (60*24)) / 60);
+
+    minutes = Math.floor(minutes % 60);
+
+    return (`${days}d ${hours}h ${minutes}m`);
+}

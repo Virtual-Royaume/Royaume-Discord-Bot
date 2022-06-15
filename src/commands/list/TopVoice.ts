@@ -3,7 +3,7 @@ import { CommandInteraction } from "discord.js";
 import { request } from "../../api/Request";
 import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "../../api/requests/Member";
 import { simpleEmbed } from "../../utils/Embed";
-import { numberFormat } from "../../utils/Function";
+import { minuteToHour } from "../../utils/Function";
 import Command from "../Command";
 
 type Source = "total" | "mois";
@@ -87,7 +87,7 @@ export default class TopVoice extends Command {
         for (let i = 0; i < members.length; i++) {
             const member = members[i];
 
-            message += `**${i + 1 + (page - 1) * this.memberPerPage}. ${member.username} :** ${numberFormat(member.voiceMinute)}\n`;
+            message += `**${i + 1 + (page - 1) * this.memberPerPage}. ${member.username} :** ${minuteToHour(member.voiceMinute)}\n`;
         }
 
         // Send leaderboard :

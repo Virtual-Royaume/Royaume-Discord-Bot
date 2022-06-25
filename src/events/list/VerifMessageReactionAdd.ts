@@ -41,11 +41,8 @@ export default class VerifMessageReactionAdd extends Event {
             await member.roles.remove(verify.roles.waiting);
 
             const embed = simpleEmbed(
-                "Les rôles que vous voyez sur votre droite sont définis selon votre activité ainsi que "
-                + "l'importance que vous portez au Royaume !\n\n"
-
-                + "Pour pouvoir accéder aux différents salons de la catégorie travail vous pouvez faire la "
-                + "commande ``/role`` et choisir les rôles qui vous correspondent"
+                "Les rôles que vous voyez sur votre droite sont définis selon votre activité au sein du Royaume !\n\n"
+                + "Pour peut choisir les rôles qui convient à vos centres d'intérêt avec la commande ``/role``"
             );
 
             generalChannelInstance.send({ content: `Bienvenue parmis nous <@${member.id}> !`, embeds: [embed] });

@@ -12,8 +12,6 @@ export default class Role extends Command {
         .setName("role")
         .setDescription("Permet de choisir ses rôles");
 
-    public readonly defaultPermission: boolean = true;
-
     public async execute(command: CommandInteraction) : Promise<void> {
         // Generate select menu :
         const messageActionRows: MessageActionRow[] = [];

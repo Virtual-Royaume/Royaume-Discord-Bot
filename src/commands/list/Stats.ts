@@ -20,8 +20,6 @@ export default class Stats extends Command {
             .setDescription("Nombre de jour d'historique")
             .setMinValue(5));
 
-    public readonly defaultPermission: boolean = true;
-
     public async execute(command: CommandInteraction) : Promise<void> {
         // Get server activity :
         const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, {

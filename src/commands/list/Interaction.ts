@@ -26,8 +26,6 @@ export default class Interaction extends Command {
             .addChoices(...this.actionChoices)
             .setRequired(true));
 
-    public readonly defaultPermission: boolean = false;
-
     public async execute(command: CommandInteraction): Promise<void> {
         const interaction: InteractionType = <InteractionType>command.options.getString("name", true);
 

@@ -43,8 +43,6 @@ export default class TopMessage extends Command {
             .setDescription("Choix du salon si vous avez choisi \"salon\" comme source")
             .addChannelTypes(0));
 
-    public readonly defaultPermission: boolean = true;
-
     private memberPerPage = 20;
 
     public async execute(command: CommandInteraction) : Promise<void> {

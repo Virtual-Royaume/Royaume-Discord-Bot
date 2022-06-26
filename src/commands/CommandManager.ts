@@ -39,13 +39,9 @@ export default class CommandManager {
      * Register the slash commands (use it when the client is ready)
      */
     public async register() : Promise<void> {
-        // Get command data :
-        const commands = this.commands.map(command => {
-            return command.slashCommand.setDefaultPermission(command.defaultPermission).toJSON();
-        });
-
-        // Set commands :
-        await (await Client.instance.getGuild()).commands.set(commands);
+        await (await Client.instance.getGuild()).commands.set(
+            this.commands.map(command => command.slashCommand.toJSON())
+        );
 
         Logger.info("Successfully registered application (/) commands");
     }

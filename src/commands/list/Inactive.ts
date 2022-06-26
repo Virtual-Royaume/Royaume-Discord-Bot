@@ -11,8 +11,6 @@ export default class Inactive extends Command {
         .setName("inactive")
         .setDescription("Voir les membres inactifs ce mois-ci");
 
-    public readonly defaultPermission: boolean = true;
-
     public async execute(command: CommandInteraction) : Promise<void> {
         const members = (await request<GetMonthActivityType>(getMonthActivity))
             .members.filter(member => {

@@ -28,8 +28,6 @@ export default class Birthday extends Command {
                 .setDescription("Page de la liste")
                 .setMinValue(1)));
 
-    public readonly defaultPermission: boolean = true;
-
     private memberPerPage = 10;
 
     public async execute(command: CommandInteraction): Promise<void> {

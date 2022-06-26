@@ -32,8 +32,6 @@ export default class TopVoice extends Command {
             .setDescription("Page du classement")
             .setMinValue(1));
 
-    public readonly defaultPermission: boolean = true;
-
     private memberPerPage = 20;
 
     public async execute(command: CommandInteraction): Promise<void> {

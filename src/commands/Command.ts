@@ -5,8 +5,6 @@ export default abstract class Command {
 
     public abstract readonly slashCommand: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
 
-    public abstract readonly defaultPermission: boolean;
-
     get name(): string {
         return this.slashCommand.name;
     }

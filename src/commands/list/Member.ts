@@ -17,8 +17,6 @@ export default class Member extends Command {
             .setName("member")
             .setDescription("Membre ciblé"));
 
-    public readonly defaultPermission: boolean = true;
-
     public async execute(command: CommandInteraction): Promise<void> {
         const member = command.options.getMember("member") ?? command.member;
 

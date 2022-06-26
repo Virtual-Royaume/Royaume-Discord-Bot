@@ -29,6 +29,7 @@ export default class Inactive extends Command {
     public readonly slashCommand = new SlashCommandBuilder()
         .setName("main")
         .setDescription("Ajouter, supprimer ou voir la liste des salons/rôles principaux")
+        .setDefaultMemberPermissions(0)
         .addStringOption(new SlashCommandStringOption()
             .setName("action")
             .setDescription("Ajout, suppression ou liste")
@@ -44,8 +45,6 @@ export default class Inactive extends Command {
         .addStringOption(new SlashCommandStringOption()
             .setName("category")
             .setDescription("Catégorie du salon ou rôle"));
-
-    public readonly defaultPermission: boolean = false;
 
     public async execute(command: CommandInteraction) : Promise<void> {
         // Get action, channel/role and category :

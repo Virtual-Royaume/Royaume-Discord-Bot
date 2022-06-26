@@ -57,8 +57,6 @@ export default class Role extends Command {
             .setName("id")
             .setDescription("Id de l'activité à supprimer"));
 
-    public readonly defaultPermission: boolean = true;
-
     public async execute(command: CommandInteraction) : Promise<void> {
         // Get action and execute function of this action :
         const action: Action = <Action>command.options.getString("action", true);

@@ -9,6 +9,7 @@ import { simpleEmbed } from "../../utils/Embed";
 
 interface RoleUpdate {
     memberId: string;
+    oldRole?: string;
     newRole: string;
 }
 
@@ -29,6 +30,7 @@ export default class PresenceUpdate extends Task {
         const updates: RoleUpdate[] = [];
 
         // Check if the member have the right role :
+
         for (const [id, member] of discordMembers) {
             if (member.user.bot || member.roles.cache.has(verify.roles.waiting)) continue;
 
@@ -39,10 +41,12 @@ export default class PresenceUpdate extends Task {
             const otherRoles = Object.values(tiers).filter(role => role !== tierRole);
 
             if (!member.roles.cache.has(tierRole) || member.roles.cache.hasAny(...otherRoles)) {
+                const oldRole = member.roles.cache.filter(role => otherRoles.includes(role.id)).first()?.id;
+
                 await member.roles.remove(Object.values(tiers));
                 member.roles.add(tierRole);
 
-                updates.push({ memberId: id, newRole: tierRole });
+                updates.push({ memberId: id, newRole: tierRole, oldRole: oldRole });
             }
         }
 
@@ -59,7 +63,10 @@ export default class PresenceUpdate extends Task {
             const tierMembers = updates.filter(element => element.newRole === tierRole);
 
             if (tierMembers.length) {
-                message += tierMembers.map(element => `<@${element.memberId}> ➜ <@&${element.newRole}>`).join("\n");
+                message += tierMembers.map(element => {
+                    if (!element.oldRole) return `<@${element.memberId}> ➜ <@&${element.newRole}>`;
+                    else return `<@${element.memberId}> <@&${element.oldRole}> ➜ <@&${element.newRole}>`;
+                }).join("\n");
 
                 message += "\n\n";
             }

@@ -1,13 +1,16 @@
 import Client from "../../Client";
 import Task from "../Task";
+import { generalChannel } from "../../../resources/config/information.json";
+import { BaseGuildTextChannel } from "discord.js";
+import { simpleEmbed } from "../../utils/Embed";
 
-const actually = [
+const defaults = [
     "salon bleu",
     "salon rouge",
     "salon jaune"
 ];
 
-const colors = [
+const supplementaries = [
     "salon vert",
     "salon violet",
     "salon orange",
@@ -20,6 +23,8 @@ const colors = [
     "salon brun"
 ];
 
+const full = 1;
+
 export default class ChannelManager extends Task {
 
     constructor() {
@@ -28,46 +33,54 @@ export default class ChannelManager extends Task {
 
     public async run() : Promise<void> {
         const guild = await Client.instance.getGuild();
-        let colorsCount = 0;
+
+        let countTotal = 0;
 
         // Ici, on récupère les salons du serveur
-        const channels = guild.channels.cache.filter(channel => channel.type === "GUILD_VOICE");
+        for (const [id, channel] of guild.channels.cache.filter(channel => channel.type === "GUILD_VOICE")) {
+            // On vérifie si c'est un salon vocal
+            if (channel.type !== "GUILD_VOICE") return;
 
-        for (const [id, channel] of channels) {
-            // On filtre les salons qui sont des salons audios
-            if (channel.type === "GUILD_VOICE") {
-                // On récupère le nom du salon, et ont continu le code seulement si le nom est un nom de couleur
-                const name = channel.name;
-                // On vérifie si les salons par défaults ont 1 membres ou plus en vocal
-                if (actually.includes(name)) {
-                    if (channel.members.size >= 1) {
-                        colorsCount++;
-                        if (colorsCount === actually.length) {
-                            // Ont supprime le salon de la liste "colors" et on l'ajoute dans le tableau "actually"
-                            const removed = colors.shift();
-                            if (!removed) {
-                                console.log("Tout les salons ont déjà étés utilisées");
-                                return;
-                            }
+            if (defaults.includes(channel.name)) {
+                // On vérifie si les salons ont des membres dedans
+                if (channel.members.size >= full) {
+                    countTotal++;
+                }
 
-                            actually.push(removed);
+                // On vérifie si le nombre de salons pleins est égal à la taille du tableau des salons actuels
+                if (countTotal == defaults.length) {
+                    if (supplementaries.length == 0) {
+                        // Envoyer un message dans le salon général
+                        const generalChannelInstance = await guild.channels.fetch(generalChannel);
+                        if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
-                            // On créer un nouveau salon avec un nom qui se trouve dans la liste des couleurs
-                            // Ont récupère la valeur la première valeur de la liste "colors" et on l'ajoute dans le tableau "actually"
-                            guild.channels.create(colors[0], {
-                                type: "GUILD_VOICE",
-                                parent: "853314658789490709",
-                                position: 3
-                            }).then(channel => {
-                                console.log(channel.position);
-                                console.log(channel.rawPosition);
-                            });
-                        }
+                        const message = "Il n'y à plus de salons vocaux disponibles, patientez que des membres en libère un.";
+                        generalChannelInstance.send({
+                            embeds: [simpleEmbed(message, "normal", "Salons vocaux pleins")]
+                        });
+                        return;
                     }
+
+                    // On récupère le prochain salon supplémentaire
+                    const newChannel: string = supplementaries[0];
+
+                    // On récupère le salon (de couleur) le plus bas dans le serveur
+                    const lastChannel = guild.channels.cache.find(channel => channel.name == defaults[2]);
+
+                    // On envoi le nouveau serveur dans le tableau des salons actuels
+                    defaults.push(newChannel);
+
+                    // On retire le salon supplémentaire du tableau des salons supplémentaires
+                    supplementaries.shift();
+
+                    // On crée le salon supplémentaire
+                    guild.channels.create(newChannel, {
+                        type: "GUILD_VOICE",
+                        parent: lastChannel?.parentId,
+                        position: lastChannel?.position
+                    });
                 }
             }
         }
-
-        console.log("--------------");
     }
 }

@@ -21,7 +21,7 @@ const channelsName = [
 export default class ChannelManager extends Task {
 
     constructor() {
-        super(5_000);
+        super(60_000);
     }
 
     public async run() : Promise<void> {

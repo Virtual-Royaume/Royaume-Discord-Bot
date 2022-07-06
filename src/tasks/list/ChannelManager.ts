@@ -21,7 +21,7 @@ export default class ChannelManager extends Task {
         const channels = guild.channels.cache.filter(channel => {
             return voiceChannels.channelsNames.includes(channel.name)
                 && channel.type === "GUILD_VOICE"
-                && channel.members.size === 0;
+                && !channel.members.size;
         });
 
         if (channels.size === 0) {
@@ -42,7 +42,7 @@ export default class ChannelManager extends Task {
         const privateChannels = guild.channels.cache.filter(channel => {
             return channel.name == "salon privé"
                 && channel.type === "GUILD_VOICE"
-                && channel.members.size === 0;
+                && !channel.members.size;
         });
 
         if (privateChannels.size === 0) {
@@ -61,7 +61,7 @@ export default class ChannelManager extends Task {
             return !voiceChannels.channelsNames.slice(0, voiceChannels.defaultPublics).includes(channel.name)
                 && voiceChannels.channelsNames.includes(channel.name)
                 && channel.type === "GUILD_VOICE"
-                && channel.members.size === 0;
+                && !channel.members.size;
         }).values();
 
         for (const channel of channels) channel.delete();
@@ -70,7 +70,7 @@ export default class ChannelManager extends Task {
         const privateChannels = (await Client.instance.getGuild()).channels.cache.filter(channel => {
             return channel.name == voiceChannels.privateChannel.name
                 && channel.type === "GUILD_VOICE"
-                && channel.members.size === 0;
+                && !channel.members.size;
         }).values();
 
         for (const privateChannel of privateChannels) privateChannel.delete();

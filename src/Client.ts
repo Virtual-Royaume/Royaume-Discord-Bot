@@ -56,7 +56,7 @@ export default class Client extends DiscordClient {
     }
 
     public isProdEnvironment() : boolean {
-        return process.argv.includes("dev");
+        return process.argv.includes("prod");
     }
 }
 

@@ -25,6 +25,7 @@ export default class MessageCreate extends Event {
             channel = channel.parent;
         }
 
+        if (Client.instance.getEnviroment() === "dev") return;
         // Increment member message count :
         if (channel) {
             const channels = (await request<GetChannelsType>(getChannels)).channels;

@@ -54,6 +54,10 @@ export default class Client extends DiscordClient {
             return null;
         }
     }
+
+    public getEnviroment() : string {
+        return process.env.NODE_ENV ?? "dev";
+    }
 }
 
 /* Royaume's crown ASCII art */

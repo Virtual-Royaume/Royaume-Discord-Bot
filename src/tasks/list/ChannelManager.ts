@@ -58,7 +58,7 @@ export default class ChannelManager extends Task {
     private async delete() : Promise<void> {
         // PUBLIC
         const channels = (await Client.instance.getGuild()).channels.cache.filter(channel => {
-            return !voiceChannels.channelsNames.slice(0, 3).includes(channel.name)
+            return !voiceChannels.channelsNames.slice(0, voiceChannels.defaultPublics).includes(channel.name)
                 && voiceChannels.channelsNames.includes(channel.name)
                 && channel.type === "GUILD_VOICE"
                 && channel.members.size === 0;

@@ -45,7 +45,7 @@ export default class VerifMessageReactionAdd extends Event {
                 + "Pour peut choisir les rôles qui convient à vos centres d'intérêt avec la commande ``/role``"
             );
 
-            generalChannelInstance.send({ content: `Bienvenue parmis nous <@${member.id}> !`, embeds: [embed] });
+            messageReaction.message.reply({ content: `Bienvenue parmis nous <@${member.id}> !`, embeds: [embed] });
 
             removeReactions();
         }
@@ -56,7 +56,7 @@ export default class VerifMessageReactionAdd extends Event {
             && messageReaction.count - 1 >= verify.reactionNeededCount.downVote
         ) {
             // Reject the member :
-            await generalChannelInstance.send({ embeds: [simpleEmbed(`La présentation de ${member.displayName} a été refusé.`, "error")] });
+            await messageReaction.message.reply({ embeds: [simpleEmbed(`La présentation de ${member.displayName} a été refusé.`, "error")] });
 
             await member.send({ embeds: [simpleEmbed("Votre présentation n'a pas convaincu les membres du Royaume.", "error")] });
 

@@ -17,6 +17,7 @@ export default class ServerActivityUpdate extends Task {
         if (memberCount) request(setMemberCount, { count: memberCount });
 
         // Update voice time of members :
+        if (Client.instance.getEnviroment() === "dev") return;
         (await Client.instance.getGuild()).voiceStates.cache.forEach(voiceState => {
             if (
                 voiceState.member && !voiceState.member.user.bot && voiceState.channel

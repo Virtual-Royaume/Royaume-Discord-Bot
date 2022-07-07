@@ -85,7 +85,7 @@ export default class ChannelManager extends Task {
         return (await Client.instance.getGuild()).channels.cache.filter(channel => {
             return channel.type === "GUILD_VOICE"
                 && channel.parentId === voiceChannels.category
-                && channelsNames.includes(channel.name)
+                && channelsNames.includes(channel.name);
         }).size;
     }
 }

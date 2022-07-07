@@ -25,11 +25,6 @@ export default class VerifMessageReactionAdd extends Event {
 
         if (!(member instanceof GuildMember)) return;
 
-        // Get general channel :
-        const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
-
-        if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
-
         // Check if the member is accepted :
         const removeReactions = () => messageReaction.message.reactions.removeAll();
 

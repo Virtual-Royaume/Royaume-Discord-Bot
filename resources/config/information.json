@@ -40,28 +40,28 @@
     },
     "voiceChannels": {
         "category": "853314658789490709",
-        "defaultPublics": 3,
-        "defaultPosition": 3,
-        "privateChannel": {
-            "name": "salon privé",
-            "userLimit": 2,
-            "position": 4
+        "public": {
+            "defaultCount": 3,
+            "nameList": [
+                "salon bleu",
+                "salon rouge",
+                "salon jaune",
+                "salon vert",
+                "salon violet",
+                "salon orange",
+                "salon rose",
+                "salon turquoise",
+                "salon rose",
+                "salon noir",
+                "salon gris",
+                "salon blanc",
+                "salon brun",
+                "salon marron"
+            ]
         },
-        "channelsNames": [
-            "salon bleu",
-            "salon rouge",
-            "salon jaune",
-            "salon vert",
-            "salon violet",
-            "salon orange",
-            "salon rose",
-            "salon turquoise",
-            "salon rose",
-            "salon noir",
-            "salon gris",
-            "salon blanc",
-            "salon brun",
-            "salon marron"
-        ]
+        "private": {
+            "userLimit": 2,
+            "name": "salon privé"
+        }
     }
 }

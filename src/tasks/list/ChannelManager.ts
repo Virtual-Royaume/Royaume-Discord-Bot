@@ -8,9 +8,17 @@ type ChannelType = "public" | "private";
 export default class ChannelManager extends Task {
 
     constructor() {
-        super(60_000);
+        super(20_000);
 
-        // TODO : createDefaultChannels()
+        this.createDefaultChannels();
+    }
+
+    private async createDefaultChannels() : Promise<void> {
+        const channels = (await Client.instance.getGuild()).channels.cache;
+
+        for (const channelName of voiceChannels.public.nameList.slice(0, voiceChannels.public.defaultCount).reverse()) {
+            if (!channels.find(channel => channel.name === channelName)) this.createChannel(channelName, "public", 0);
+        }
     }
 
     public async run() : Promise<void> {
@@ -38,13 +46,13 @@ export default class ChannelManager extends Task {
      * Create a voice channel in the category defined in the configuration.
      * Define its number of places and its position according to its type (public or private).
      */
-    private async createChannel(name: string, type: ChannelType) : Promise<void> {
+    private async createChannel(name: string, type: ChannelType, position?: number) : Promise<void> {
         const channelPosition = await this.getChannelCount("public") + 1;
 
         (await Client.instance.getGuild()).channels.create(name, {
             type: "GUILD_VOICE",
             parent: voiceChannels.category,
-            position: type === "public" ? channelPosition : channelPosition + await this.getChannelCount("private"),
+            position: position ?? type === "public" ? channelPosition : channelPosition + await this.getChannelCount("private"),
             userLimit: type === "private" ? 2 : undefined
         });
     }

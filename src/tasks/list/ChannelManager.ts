@@ -8,16 +8,16 @@ type ChannelType = "public" | "private";
 export default class ChannelManager extends Task {
 
     constructor() {
-        super(20_000);
+        super(5_000);
 
         this.createDefaultChannels();
     }
 
     private async createDefaultChannels() : Promise<void> {
-        const channels = (await Client.instance.getGuild()).channels.cache;
+        const channels = await (await Client.instance.getGuild()).channels.fetch();
 
         for (const channelName of voiceChannels.public.nameList.slice(0, voiceChannels.public.defaultCount).reverse()) {
-            if (!channels.find(channel => channel.name === channelName)) this.createChannel(channelName, "public", 0);
+            if (!channels.find(channel => channel.name === channelName)) this.createChannel(channelName, "public");
         }
     }
 
@@ -26,33 +26,44 @@ export default class ChannelManager extends Task {
         if (!(await this.getEmptyChannels(voiceChannels.public.nameList)).size) {
             const channelToCreate = await this.getAvailablePublicChannel();
 
-            if (channelToCreate) this.createChannel(channelToCreate, "public");
+            if (channelToCreate) await this.createChannel(channelToCreate, "public");
         }
 
         if (!(await this.getEmptyChannels(voiceChannels.private.name)).size) {
-            this.createChannel(voiceChannels.private.name, "private");
+            await this.createChannel(voiceChannels.private.name, "private");
         }
 
         // Deletion of unoccupied extra rooms :
-        const channels = Array.from(
-            (await this.getEmptyChannels(voiceChannels.public.nameList.slice(voiceChannels.public.defaultCount))).values()
-        ).splice(-1);
-        const privateChannels = Array.from((await this.getEmptyChannels(voiceChannels.private.name)).values()).splice(-1);
+        const channels = Array.from((await this.getEmptyChannels(voiceChannels.public.nameList)).values());
 
-        for (const channel of [...channels, ...privateChannels]) channel.delete();
+        if (channels.length > 1) {
+            const defaultChannels = channels.filter(c => {
+                return voiceChannels.public.nameList.slice(0, voiceChannels.public.defaultCount).includes(c.name)
+            });
+
+            if (defaultChannels.length) {
+                for (const channel of channels.filter(c => !defaultChannels.find(dc => dc.name === c.name))) await channel.delete();
+            } else {
+                for (const channel of channels.slice(0, -1)) await channel.delete();
+            }
+        }
+
+        const privateChannels = Array.from((await this.getEmptyChannels(voiceChannels.private.name)).values()).slice(0, -1);
+
+        for (const channel of privateChannels) await channel.delete();
     }
 
     /**
      * Create a voice channel in the category defined in the configuration.
      * Define its number of places and its position according to its type (public or private).
      */
-    private async createChannel(name: string, type: ChannelType, position?: number) : Promise<void> {
-        const channelPosition = await this.getChannelCount("public") + 1;
+    private async createChannel(name: string, type: ChannelType) : Promise<void> {
+        const channelPosition = await this.getChannelCount("public") - 1;
 
-        (await Client.instance.getGuild()).channels.create(name, {
+        await (await Client.instance.getGuild()).channels.create(name, {
             type: "GUILD_VOICE",
             parent: voiceChannels.category,
-            position: position ?? type === "public" ? channelPosition : channelPosition + await this.getChannelCount("private"),
+            position: type === "public" ? channelPosition : channelPosition + await this.getChannelCount("private"),
             userLimit: type === "private" ? 2 : undefined
         });
     }
@@ -74,8 +85,13 @@ export default class ChannelManager extends Task {
      * Returns a public voice channel name if there is still one available (not used) in the list defined in the configuration.
      */
     private async getAvailablePublicChannel() : Promise<string | undefined> {
-        return voiceChannels.public.nameList.filter(async name => {
-            return !(await Client.instance.getGuild()).channels.cache.find(channel => channel.name === name);
+        const channels = (await (await Client.instance.getGuild()).channels.fetch()).filter(channel => {
+            return channel.type === "GUILD_VOICE"
+                && voiceChannels.public.nameList.includes(channel.name);
+        }).map(channel => channel.name);
+
+        return voiceChannels.public.nameList.filter(name => {
+            return !channels.includes(name);
         }).shift();
     }
 

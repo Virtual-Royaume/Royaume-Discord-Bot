@@ -38,7 +38,7 @@ export default class ChannelManager extends Task {
 
         if (channels.length > 1) {
             const defaultChannels = channels.filter(c => {
-                return voiceChannels.public.nameList.slice(0, voiceChannels.public.defaultCount).includes(c.name)
+                return voiceChannels.public.nameList.slice(0, voiceChannels.public.defaultCount).includes(c.name);
             });
 
             if (defaultChannels.length) {

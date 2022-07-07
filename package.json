@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "@discordjs/builders": "^0.15.0",
+    "chalk": "^4.1.2",
     "chart.js": "^3.8.0",
     "chartjs-node-canvas": "^4.1.6",
-    "colors": "^1.4.0",
     "dayjs": "^1.11.3",
     "discord.js": "^13.8.1",
     "graphql": "^16.5.0",

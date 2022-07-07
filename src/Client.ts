@@ -2,7 +2,7 @@ import { Client as DiscordClient, Guild, Intents, Team, User } from "discord.js"
 import EventManager from "./events/EventManager";
 import CommandManager from "./commands/CommandManager";
 import TaskManager from "./tasks/TaskManager";
-import Logger from "./utils/Logger";
+import Logger, { logCrown } from "./utils/Logger";
 import { botToken } from "../resources/config/secret.json";
 import { guildId } from "../resources/config/information.json";
 import { version } from "../package.json";
@@ -56,17 +56,6 @@ export default class Client extends DiscordClient {
     }
 }
 
-/* Royaume's crown ASCII art */
-console.log(
-    " _           __           _ ".yellow + "\n"
-    + "| |_       _|  |_       _| |".yellow + "\n"
-    + "|".yellow + "_".red + "  |_   _|      |_   _|  ".yellow + "_".red + "|".yellow + "\n"
-    + "| |_".red + "  |_|   ".yellow + " __".red + "    |_|  ".yellow + "_| |".red + "\n"
-    + "|   |".red + "      ".yellow + "_|__|_".red + "      ".yellow + "|   |".red + "\n"
-    + "|  _|".red + "     ".yellow + "|_|__|_|".red + "     ".yellow + "|_  |".red + "\n"
-    + "|_|".red + "         ".yellow + "|__|".red + "         ".yellow + "|_|".red + "\n"
-    + "|_                        _|".yellow + "\n"
-    + "  |______________________|  ".yellow + "\n"
-);
+logCrown();
 Logger.info(`Sarting Royaume-Discord-Bot V${version}...`);
 new Client();

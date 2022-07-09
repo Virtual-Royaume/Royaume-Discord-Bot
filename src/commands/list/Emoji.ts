@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction, MessageAttachment, BaseGuildTextChannel } from "discord.js";
 import Command from "../Command";
-import { testChannel, emojiProposal } from "../../../resources/config/information.json";
+import { generalChannel, emojiProposal } from "../../../resources/config/information.json";
 import { simpleEmbed } from "../../utils/Embed";
 import Client from "../../Client";
 
@@ -16,7 +16,7 @@ export default class Emoji extends Command {
     public async execute(command: CommandInteraction) : Promise<void> {
         const guild = await Client.instance.getGuild();
 
-        const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(testChannel);
+        const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
         if (!(generalChannelInstance instanceof BaseGuildTextChannel)) {
             command.reply({
@@ -69,7 +69,7 @@ export default class Emoji extends Command {
         await voteMessage.react(emojiProposal.emoji.downVote);
 
         command.reply({
-            embeds: [simpleEmbed(`Votre proposition pour un nouvel émoji a bien été envoyé dans le salon <#${testChannel}>.`)],
+            embeds: [simpleEmbed(`Votre proposition pour un nouvel émoji a bien été envoyé dans le salon <#${generalChannel}>.`)],
             ephemeral: true
         });
 

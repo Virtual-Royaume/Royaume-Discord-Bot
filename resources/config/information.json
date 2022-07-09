@@ -1,6 +1,7 @@
 {
     "guildId": "732251741999071303",
     "generalChannel": "786216771723198514",
+    "testChannel": "995125904827240508",
     "localFormat": "fr-FR",
     "minimumAge": 14,
     "colors": {
@@ -36,6 +37,16 @@
         "reactionNeededCount": {
             "upVote": 3,
             "downVote": 4
+        }
+    },
+    "emojiProposal": {
+        "emoji": {
+            "upVote": "👍",
+            "downVote": "👎"
+        },
+        "reactionNeededCount": {
+            "upVote": 5,
+            "downVote": 6
         }
     },
     "voiceChannels": {

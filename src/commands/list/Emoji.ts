@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
+import { SlashCommandAttachmentOption, SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { CommandInteraction, MessageAttachment, BaseGuildTextChannel, PremiumTier } from "discord.js";
 import Command from "../Command";
 import { generalChannel, emojiProposal } from "../../../resources/config/information.json";
@@ -16,9 +16,15 @@ export default class Emoji extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
         .setName("emoji")
-        .setDescription("Proposer un émoji")
-        .addAttachmentOption(option => option.setName("image").setDescription("Emoji").setRequired(true))
-        .addStringOption(option => option.setName("name").setDescription("Nom de l'émoji").setRequired(true));
+        .setDescription("Permet d'ajouter un nouvel émoji sur le serveur")
+        .addAttachmentOption(new SlashCommandAttachmentOption()
+            .setName("file")
+            .setDescription("Envoyer le fichier du quel tu souhaites créer un emoji")
+            .setRequired(true))
+        .addStringOption(new SlashCommandStringOption()
+            .setName("name")
+            .setDescription("Choisir le nom de l'émoji")
+            .setRequired(true));
 
     public async execute(command: CommandInteraction) : Promise<void> {
         const guild = await Client.instance.getGuild();

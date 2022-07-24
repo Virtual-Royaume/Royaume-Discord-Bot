@@ -28,26 +28,6 @@
             "downVote": 7
         }
     },
-    "activityProposal": {
-        "emoji": {
-            "upVote": "👍",
-            "downVote": "👎"
-        },
-        "reactionNeededCount": {
-            "upVote": 3,
-            "downVote": 4
-        }
-    },
-    "emojiProposal": {
-        "emoji": {
-            "upVote": "👍",
-            "downVote": "👎"
-        },
-        "reactionNeededCount": {
-            "upVote": 5,
-            "downVote": 6
-        }
-    },
     "voiceChannels": {
         "category": "853314658789490709",
         "public": {

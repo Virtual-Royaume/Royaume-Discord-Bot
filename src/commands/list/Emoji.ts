@@ -1,7 +1,8 @@
 import { SlashCommandAttachmentOption, SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { CommandInteraction, MessageAttachment, BaseGuildTextChannel, PremiumTier } from "discord.js";
 import Command from "../Command";
-import { generalChannel, emojiProposal } from "../../../resources/config/information.json";
+import { generalChannel } from "../../../resources/config/information.json";
+import { emojiProposal } from "../../../resources/config/proposal.json";
 import { simpleEmbed } from "../../utils/Embed";
 import Client from "../../Client";
 

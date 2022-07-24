@@ -26,6 +26,7 @@ export default class MessageCreate extends Event {
         }
 
         if (!Client.instance.isProdEnvironment()) return;
+
         if (channel) {
             const channels = (await request<GetChannelsType>(getChannels)).channels;
 

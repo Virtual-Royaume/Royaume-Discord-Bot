@@ -3,7 +3,7 @@
   "main": "build/src/Client.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon --exec ts-node ./src/Client.ts",
+    "dev": "nodemon --exec ts-node ./src/Client.ts dev",
     "build": "tsc && copyfiles ./resources/**/**/*.* ./build/",
     "eslint": "eslint src/**/*.ts --fix"
   },

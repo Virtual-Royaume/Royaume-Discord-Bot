@@ -43,8 +43,8 @@ export default class Emoji extends Command {
             return;
         }
 
-        const attachment = command.options.getAttachment("attachment");
-        const emojiIdentifier = command.options.getString("name");
+        const attachment = command.options.getAttachment("attachment", true);
+        const emojiIdentifier = command.options.getString("name", true);
 
         if (guild.emojis.cache.find(emoji => emoji.name == emojiIdentifier)) {
             command.reply({

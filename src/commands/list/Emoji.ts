@@ -1,9 +1,16 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, MessageAttachment, BaseGuildTextChannel } from "discord.js";
+import { CommandInteraction, MessageAttachment, BaseGuildTextChannel, PremiumTier } from "discord.js";
 import Command from "../Command";
 import { generalChannel, emojiProposal } from "../../../resources/config/information.json";
 import { simpleEmbed } from "../../utils/Embed";
 import Client from "../../Client";
+
+const emojiForTier: Record<PremiumTier, number> = {
+    "NONE": 50,
+    "TIER_1": 100,
+    "TIER_2": 150,
+    "TIER_3": 250
+};
 
 export default class Emoji extends Command {
 
@@ -15,6 +22,7 @@ export default class Emoji extends Command {
 
     public async execute(command: CommandInteraction) : Promise<void> {
         const guild = await Client.instance.getGuild();
+        const maxEmoji = emojiForTier[guild.premiumTier];
 
         const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
@@ -26,15 +34,8 @@ export default class Emoji extends Command {
             return;
         }
 
-        const serverTier = guild.premiumTier;
 
-        let maxSize = 50;
-        if (serverTier == "TIER_1") maxSize = 100;
-        else if (serverTier == "TIER_2") maxSize = 150;
-        else if (serverTier == "TIER_3") maxSize = 250;
-
-
-        if (guild.emojis.cache.size >= maxSize) {
+        if (guild.emojis.cache.size >= maxEmoji) {
             command.reply({
                 embeds: [simpleEmbed("Le serveur a atteint ça limite d'émojis,"
                  + " supprimez-en ou améliorer votre niveau à l'aide des boosts de serveur", "error")],

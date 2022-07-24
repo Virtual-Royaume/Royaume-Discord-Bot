@@ -6,7 +6,8 @@ import {
     GetPresenceMessagesType, removePresenceMessage,
     RemovePresenceMessageType
 } from "../../api/requests/PresenceMessage";
-import { generalChannel, activityProposal } from "../../../resources/config/information.json";
+import { generalChannel } from "../../../resources/config/information.json";
+import { activityProposal } from "../../../resources/config/proposal.json";
 import { PresenceType } from "../../api/Schema";
 import { simpleEmbed } from "../../utils/Embed";
 import Command from "../Command";

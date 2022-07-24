@@ -1,0 +1,22 @@
+{
+    "activityProposal": {
+        "emoji": {
+            "upVote": "👍",
+            "downVote": "👎"
+        },
+        "reactionNeededCount": {
+            "upVote": 3,
+            "downVote": 4
+        }
+    },
+    "emojiProposal": {
+        "emoji": {
+            "upVote": "👍",
+            "downVote": "👎"
+        },
+        "reactionNeededCount": {
+            "upVote": 5,
+            "downVote": 6
+        }
+    }
+}

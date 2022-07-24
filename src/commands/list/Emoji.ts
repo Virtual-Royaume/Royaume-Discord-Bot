@@ -19,7 +19,7 @@ export default class Emoji extends Command {
         .setName("emoji")
         .setDescription("Permet d'ajouter un nouvel émoji sur le serveur")
         .addAttachmentOption(new SlashCommandAttachmentOption()
-            .setName("file")
+            .setName("attachment")
             .setDescription("Envoyer le fichier du quel tu souhaites créer un emoji")
             .setRequired(true))
         .addStringOption(new SlashCommandStringOption()

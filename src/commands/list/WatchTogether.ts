@@ -10,8 +10,8 @@ import { message } from "../../utils/Message";
 export default class WatchTogether extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName(message("command-together-name"))
-        .setDescription(message("command-together-description"));
+        .setName(message("command-together-builder-name"))
+        .setDescription(message("command-together-builder-description"));
 
     public async execute(command: CommandInteraction) : Promise<void> {
         if (!(command.member instanceof GuildMember)) {
@@ -20,7 +20,7 @@ export default class WatchTogether extends Command {
         }
 
         if (!command.member.voice.channelId) {
-            command.reply({ embeds: [simpleEmbed(message("command-together-voice-needed"), "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(message("command-together-exec-voice-needed"), "error")], ephemeral: true });
             return;
         }
 
@@ -41,12 +41,12 @@ export default class WatchTogether extends Command {
         });
 
         command.reply({
-            embeds: [simpleEmbed(message("command-together",[invite.code]))],
+            embeds: [simpleEmbed(message("command-together-exec",[invite.code]))],
             ephemeral: true
         });
 
         generalTextChannel.send({
-            embeds: [simpleEmbed(message("command-together-general",[command.user.id, invite.code]))]
+            embeds: [simpleEmbed(message("command-together-exec-general",[command.user.id, invite.code]))]
         });
     }
 }

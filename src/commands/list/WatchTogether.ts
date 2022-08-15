@@ -5,22 +5,22 @@ import { youtubeTogether } from "../../../resources/config/app-integration.json"
 import { generalChannel } from "../../../resources/config/information.json";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { simpleEmbed } from "../../utils/Embed";
-import { message } from "../../utils/Message";
+import { msg } from "../../utils/Message";
 
 export default class WatchTogether extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName(message("command-together-builder-name"))
-        .setDescription(message("command-together-builder-description"));
+        .setName(msg("cmd-together-builder-name"))
+        .setDescription(msg("cmd-together-builder-description"));
 
     public async execute(command: CommandInteraction) : Promise<void> {
         if (!(command.member instanceof GuildMember)) {
-            command.reply({ embeds: [simpleEmbed(message("message-execution-error"), "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(msg("message-execution-error"), "error")], ephemeral: true });
             return;
         }
 
         if (!command.member.voice.channelId) {
-            command.reply({ embeds: [simpleEmbed(message("command-together-exec-voice-needed"), "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(msg("cmd-together-exec-voice-needed"), "error")], ephemeral: true });
             return;
         }
 
@@ -41,12 +41,12 @@ export default class WatchTogether extends Command {
         });
 
         command.reply({
-            embeds: [simpleEmbed(message("command-together-exec",[invite.code]))],
+            embeds: [simpleEmbed(msg("cmd-together-exec",[invite.code]))],
             ephemeral: true
         });
 
         generalTextChannel.send({
-            embeds: [simpleEmbed(message("command-together-exec-general",[command.user.id, invite.code]))]
+            embeds: [simpleEmbed(msg("cmd-together-exec-general",[command.user.id, invite.code]))]
         });
     }
 }

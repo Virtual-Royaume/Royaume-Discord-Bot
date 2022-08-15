@@ -1,9 +1,20 @@
 {
     "message-execution-error": "Erreur lors de l'exécution de la commande",
 
-    "command-together-builder-name": "watch-together",
-    "command-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
-    "command-together-exec": "Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/{code}",
-    "command-together-exec-general": "<@{id}> a lancé une activité **Youtube Together** !\n\n[Rejoindre l'activité](https://discord.gg/{code})",
-    "command-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together."
+    "cmd-birthday-builder-name": "anniversaire",
+    "cmd-birthday-builder-description": "Définir votre date d'anniversaire",
+    "cmd-birthday-builder-subcmd-set-name": "set",
+    "cmd-birthday-builder-subcmd-set-description": "Définir votre date d'anniversaire",
+    "cmd-birthday-builder-subcmd-set-date-name": "date",
+    "cmd-birthday-builder-subcmd-set-date-description": "Votre date de naissance avec ce format : DD/MM/YYYY (jour/mois/année de naissance)",
+    "cmd-birthday-builder-subcmd-list-name": "list",
+    "cmd-birthday-builder-subcmd-list-description": "Afficher la liste des anniversaires",
+    "cmd-birthday-builder-subcmd-list-number-name": "page",
+    "cmd-birthday-builder-subcmd-list-number-description": "Numéro de la page à afficher",
+
+    "cmd-together-builder-name": "watch-together",
+    "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
+    "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",
+    "cmd-together-exec": "Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/{code}",
+    "cmd-together-exec-general": "<@{id}> a lancé une activité **Youtube Together** !\n\n[Rejoindre l'activité](https://discord.gg/{code})"
 }

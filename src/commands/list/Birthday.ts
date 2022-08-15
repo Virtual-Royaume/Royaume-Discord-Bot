@@ -7,25 +7,26 @@ import Command from "../Command";
 import { minimumAge } from "../../../resources/config/information.json";
 import { dateFormat, getAge } from "../../utils/Function";
 import DayJS from "../../utils/DayJS";
+import { msg } from "../../utils/Message";
 
 export default class Birthday extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("anniversaire")
-        .setDescription("Définir votre date d'anniversaire")
+        .setName(msg("cmd-birthday-builder-name"))
+        .setDescription(msg("cmd-birthday-builder-description"))
         .addSubcommand(new SlashCommandSubcommandBuilder()
-            .setName("set")
-            .setDescription("Définir votre date d'anniversaire")
+            .setName(msg("cmd-birthday-builder-subcmd-set-name"))
+            .setDescription(msg("cmd-birthday-builder-subcmd-set-description"))
             .addStringOption(new SlashCommandStringOption()
-                .setName("date")
-                .setDescription("Votre date de naissance avec ce format : DD/MM/YYYY (jour/mois/année de naissance)")
+                .setName(msg("cmd-birthday-builder-subcmd-set-date-name"))
+                .setDescription(msg("cmd-birthday-builder-subcmd-set-date-description"))
                 .setRequired(true)))
         .addSubcommand(new SlashCommandSubcommandBuilder()
-            .setName("list")
-            .setDescription("Afficher la liste des anniversaires")
+            .setName(msg("cmd-birthday-builder-subcmd-list-name"))
+            .setDescription(msg("cmd-birthday-builder-subcmd-list-description"))
             .addNumberOption(new SlashCommandNumberOption()
-                .setName("page")
-                .setDescription("Page de la liste")
+                .setName(msg("cmd-birthday-builder-subcmd-list-number-name"))
+                .setDescription(msg("cmd-birthday-builder-subcmd-list-number-description"))
                 .setMinValue(1)));
 
     private memberPerPage = 10;
@@ -84,19 +85,19 @@ export default class Birthday extends Command {
                 // Slice the members with page and max page :
                 birthdays = birthdays.slice(page * this.memberPerPage - this.memberPerPage, page * this.memberPerPage);
 
-                let message = "";
+                let msg = "";
 
                 for (let i = 0; i < birthdays.length; i++) {
                     const member = birthdays[i];
                     const birthday = DayJS(member.birthday ?? 0);
                     const position = i + 1 + (page - 1) * this.memberPerPage;
 
-                    message += `**${position}. ${member.username} :** ${getAge(birthday)} ans (${dateFormat(birthday, "/")})\n`;
+                    msg += `**${position}. ${member.username} :** ${getAge(birthday)} ans (${dateFormat(birthday, "/")})\n`;
                 }
 
                 // Send leaderboard :
                 command.reply({
-                    embeds: [simpleEmbed(message, "normal", `Anniversaires des membres (page ${page}/${maxPage})`)]
+                    embeds: [simpleEmbed(msg, "normal", `Anniversaires des membres (page ${page}/${maxPage})`)]
                 });
 
                 break;

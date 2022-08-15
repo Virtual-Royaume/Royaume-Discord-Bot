@@ -6,7 +6,7 @@ import messages from "../../resources/config/messages.json";
 
 // Exemple: "command-together-builder-name": "watch-together"
 // Exemple: "command-together-exec-voice-needed": "Vous devez êtr[...]"
-export function message(key: string, params: any[] = []): string {
+export function msg(key: string, params: any[] = []): string {
     const messageList: Record<string, string> = <Record<string, string>>messages;
     let message = messageList[key];
     if (!message) return "Aucun message trouvé (" + key + ")";

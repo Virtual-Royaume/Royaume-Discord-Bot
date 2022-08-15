@@ -5,21 +5,22 @@ import { youtubeTogether } from "../../../resources/config/app-integration.json"
 import { generalChannel } from "../../../resources/config/information.json";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { simpleEmbed } from "../../utils/Embed";
+import { message } from "../../utils/Message";
 
 export default class WatchTogether extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("watch-together")
-        .setDescription("Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"");
+        .setName(message("command-together-name"))
+        .setDescription(message("command-together-description"));
 
     public async execute(command: CommandInteraction) : Promise<void> {
         if (!(command.member instanceof GuildMember)) {
-            command.reply({ embeds: [simpleEmbed("Erreur lors de l'exécution de la commande.", "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(message("message-execution-error"), "error")], ephemeral: true });
             return;
         }
 
         if (!command.member.voice.channelId) {
-            command.reply({ embeds: [simpleEmbed("Vous devez être dans un salon vocal.", "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(message("command-together-voice-needed"), "error")], ephemeral: true });
             return;
         }
 
@@ -40,13 +41,12 @@ export default class WatchTogether extends Command {
         });
 
         command.reply({
-            embeds: [simpleEmbed(`Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/${invite.code}`)],
+            embeds: [simpleEmbed(message("command-together",[invite.code]))],
             ephemeral: true
         });
 
-        generalTextChannel.send({ embeds: [simpleEmbed(
-            "<@" + command.user.id + "> a lancé **Youtube Together** !\n\n"
-            + "[Rejoindre l'activité](https://discord.gg/" + invite.code + ")"
-        )] });
+        generalTextChannel.send({
+            embeds: [simpleEmbed(message("command-together-general",[command.user.id, invite.code]))]
+        });
     }
 }

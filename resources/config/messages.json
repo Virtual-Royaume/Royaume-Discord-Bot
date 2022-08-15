@@ -1,0 +1,9 @@
+{
+    "message-execution-error": "Erreur lors de l'exécution de la commande",
+
+    "command-together-name": "watch-together",
+    "command-together-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
+    "command-together": "Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/{code}",
+    "command-together-general": "<@{id}> a lancé une activité **Youtube Together** !\n\n[Rejoindre l'activité](https://discord.gg/{code})",
+    "command-together-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together."
+}

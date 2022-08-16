@@ -5,6 +5,7 @@ import { generalChannel } from "../../../resources/config/information.json";
 import { emojiProposal } from "../../../resources/config/proposal.json";
 import { simpleEmbed } from "../../utils/Embed";
 import Client from "../../Client";
+import { msg } from "../../utils/Message";
 
 const emojiForTier: Record<PremiumTier, number> = {
     "NONE": 50,
@@ -16,15 +17,15 @@ const emojiForTier: Record<PremiumTier, number> = {
 export default class Emoji extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("emoji")
-        .setDescription("Permet d'ajouter un nouvel émoji sur le serveur")
+        .setName(msg("cmd-emoji-builder-name"))
+        .setDescription(msg("cmd-emoji-builder-description"))
         .addAttachmentOption(new SlashCommandAttachmentOption()
-            .setName("attachment")
-            .setDescription("Envoyer le fichier du quel tu souhaites créer un emoji")
+            .setName(msg("cmd-emoji-builder-attachment-name"))
+            .setDescription(msg("cmd-emoji-builder-attachment-description"))
             .setRequired(true))
         .addStringOption(new SlashCommandStringOption()
-            .setName("name")
-            .setDescription("Choisir le nom de l'émoji")
+            .setName(msg("cmd-emoji-builder-name-name"))
+            .setDescription(msg("cmd-emoji-builder-name-description"))
             .setRequired(true));
 
     public async execute(command: CommandInteraction) : Promise<void> {
@@ -35,7 +36,7 @@ export default class Emoji extends Command {
 
         if (!(generalChannelInstance instanceof BaseGuildTextChannel)) {
             command.reply({
-                embeds: [simpleEmbed("Erreur lors de l'exécution de la commande.", "error")],
+                embeds: [simpleEmbed(msg("cmd-emoji-exec-error"), "error")],
                 ephemeral: true
             });
             return;
@@ -44,19 +45,18 @@ export default class Emoji extends Command {
 
         if (guild.emojis.cache.size >= maxEmoji) {
             command.reply({
-                embeds: [simpleEmbed("Le serveur a atteint ça limite d'émojis,"
-                 + " supprimez-en ou améliorer votre niveau à l'aide des boosts de serveur", "error")],
+                embeds: [simpleEmbed(msg("cmd-emoji-exec-emojies-full"), "error")],
                 ephemeral: true
             });
             return;
         }
 
-        const attachment = command.options.getAttachment("attachment", true);
-        const emojiIdentifier = command.options.getString("name", true);
+        const attachment = command.options.getAttachment(msg("cmd-emoji-builder-attachment-name"), true);
+        const emojiIdentifier = command.options.getString(msg("cmd-emoji-builder-name-name"), true);
 
         if (guild.emojis.cache.find(emoji => emoji.name == emojiIdentifier)) {
             command.reply({
-                embeds: [simpleEmbed("Cet identifiant d'émoji `" + emojiIdentifier + "` existe déjà, choisissez en un autre", "error")],
+                embeds: [simpleEmbed(msg("cmd-emoji-exec-emoji-already-exists"), "error")],
                 ephemeral: true
             });
             return;
@@ -66,10 +66,9 @@ export default class Emoji extends Command {
         const voteMessage = await generalChannelInstance.send({
             files: [new MessageAttachment(attachment.url, "image.png")],
             embeds: [simpleEmbed(
-                "**Proposition d'un nouveau émoji sur le serveur :**"
-                + `\n "\`\`${emojiIdentifier}\`\`"\n\nProposé par <@${command.user.id}>`,
+                msg("cmd-emoji-exec-embed-poll-text", [emojiIdentifier, command.user.id]),
                 "normal",
-                "Proposition d'émoji"
+                msg("cmd-emoji-exec-embed-poll-title")
             )]
         });
 
@@ -77,7 +76,7 @@ export default class Emoji extends Command {
         await voteMessage.react(emojiProposal.emoji.downVote);
 
         command.reply({
-            embeds: [simpleEmbed(`Votre proposition pour un nouvel émoji a bien été envoyé dans le salon <#${generalChannel}>.`)],
+            embeds: [simpleEmbed(msg("cmd-emoji-exec-embed-poll-sent", [generalChannel]), "normal")],
             ephemeral: true
         });
 
@@ -98,7 +97,7 @@ export default class Emoji extends Command {
                 reaction.emoji.name === emojiProposal.emoji.upVote
                 && reaction.count >= emojiProposal.reactionNeededCount.upVote
             ) {
-                voteMessage.reply({ embeds: [simpleEmbed("Proposition accepté.")] });
+                voteMessage.reply({ embeds: [simpleEmbed(msg("cmd-emoji-exec-embed-accepted-poll-text"))] });
 
                 addEmojiRequest();
                 removeReactions();
@@ -109,7 +108,7 @@ export default class Emoji extends Command {
                 && reaction.count >= emojiProposal.reactionNeededCount.downVote
             ) {
                 voteMessage.reply({ embeds: [
-                    simpleEmbed("Proposition refusé.", "error")
+                    simpleEmbed(msg("cmd-emoji-exec-embed-refused-poll-text"), "error")
                 ] });
 
                 removeReactions();
@@ -119,7 +118,7 @@ export default class Emoji extends Command {
         reactionCollector.on("end", () => {
             if (!voteMessage.reactions.cache.size) {
                 voteMessage.reply({ embeds: [
-                    simpleEmbed("Le temps de vote pour cette proposition est écoulé.", "error")
+                    simpleEmbed(msg("cmd-emoji-exec-poll-timeout"), "error")
                 ] });
 
                 removeReactions();

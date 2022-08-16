@@ -11,6 +11,14 @@
     "cmd-birthday-builder-subcmd-list-description": "Afficher la liste des anniversaires",
     "cmd-birthday-builder-subcmd-list-number-name": "page",
     "cmd-birthday-builder-subcmd-list-number-description": "Numéro de la page à afficher",
+    "cmd-birthday-exec-embed-title": "Anniversaires des membres (page {page}/{maxPage})",
+    "cmd-birthday-exec-embed-line": "**{position}. {username} :** {age} ans ({date})\n",
+    "cmd-birthday-exec-badformat": "Le format de votre date n'est pas bon.",
+    "cmd-birthday-exec-date-invalid": "Cette date est invalide.",
+    "cmd-birthday-exec-date-incomplete": "La date est incomplète.",
+    "cmd-birthday-exec-date-too-young": "L'age minimum requis est de {minimumAge} ans.",
+    "cmd-birthday-exec-date-saved": "Votre date d'anniversaire a bien été enregistrée.",
+
 
     "cmd-together-builder-name": "watch-together",
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",

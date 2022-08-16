@@ -45,12 +45,12 @@ export default class Birthday extends Command {
                 try {
                     dateParams = command.options.getString("date", true).split("/").map(element => parseInt(element));
                 } catch {
-                    badFormat("Le format de votre date n'est pas bon.");
+                    badFormat(msg("cmd-birthday-exec-badformat"));
                     return;
                 }
 
                 if (dateParams.length < 3) {
-                    badFormat("La date est incomplète.");
+                    badFormat(msg("cmd-birthday-exec-date-incomplete"));
                     return;
                 }
 
@@ -58,19 +58,19 @@ export default class Birthday extends Command {
                 const date = DayJS(`${dateParams[2]}-${dateParams[1]}-${dateParams[0]}Z`);
 
                 if (!date.isValid()) {
-                    badFormat("Cette date est invalide.");
+                    badFormat(msg("cmd-birthday-exec-date-invalid"));
                     return;
                 }
 
                 if (getAge(date) < minimumAge) {
-                    badFormat(`L'age minimum requis est de ${minimumAge} ans.`);
+                    badFormat(msg("cmd-birthday-exec-date-too-young", [minimumAge]));
                     return;
                 }
 
                 // Save birthday :
                 await request(setBirthday, { id: command.user.id, date: date.valueOf() });
 
-                command.reply({ embeds: [simpleEmbed("Votre date d'anniversaire a bien été enregistrée.")], ephemeral: true });
+                command.reply({ embeds: [simpleEmbed(msg("cmd-birthday-exec-date-saved"))], ephemeral: true });
                 break;
             }
 
@@ -85,19 +85,19 @@ export default class Birthday extends Command {
                 // Slice the members with page and max page :
                 birthdays = birthdays.slice(page * this.memberPerPage - this.memberPerPage, page * this.memberPerPage);
 
-                let msg = "";
+                let lines = "";
 
                 for (let i = 0; i < birthdays.length; i++) {
                     const member = birthdays[i];
                     const birthday = DayJS(member.birthday ?? 0);
                     const position = i + 1 + (page - 1) * this.memberPerPage;
 
-                    msg += `**${position}. ${member.username} :** ${getAge(birthday)} ans (${dateFormat(birthday, "/")})\n`;
+                    lines += msg("cmd-birthday-exec-embed-line", [position, member.username, getAge(birthday), dateFormat(birthday)]);
                 }
 
                 // Send leaderboard :
                 command.reply({
-                    embeds: [simpleEmbed(msg, "normal", `Anniversaires des membres (page ${page}/${maxPage})`)]
+                    embeds: [simpleEmbed(lines, "normal", msg("cmd-birthday-exec-embed-title", [page, maxPage]))]
                 });
 
                 break;

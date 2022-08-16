@@ -19,6 +19,12 @@
     "cmd-birthday-exec-date-too-young": "L'age minimum requis est de {minimumAge} ans.",
     "cmd-birthday-exec-date-saved": "Votre date d'anniversaire a bien été enregistrée.",
 
+    "cmd-clean-builder-name": "clean",
+    "cmd-clean-builder-description": "Permet de supprimer plusieurs messages en même temps",
+    "cmd-clean-builder-number-name": "nombre",
+    "cmd-clean-builder-number-description": "Nombre de message a supprimer",
+    "cmd-clean-exec-need-textchannel": "Vous devez utilisé cette commande dans un salon textuel",
+    "cmd-clean-exec-cleaned": "Vous avez supprimé {number} messages !",
 
     "cmd-together-builder-name": "watch-together",
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",

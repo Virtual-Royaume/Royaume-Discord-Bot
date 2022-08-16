@@ -1,17 +1,18 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
 import { simpleEmbed } from "../../utils/Embed";
+import { msg } from "../../utils/Message";
 import Command from "../Command";
 
 export default class Clean extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("clean")
-        .setDescription("Permet de supprimer plusieurs messages en même temps")
+        .setName(msg("cmd-clean-builder-name"))
+        .setDescription(msg("cmd-clean-builder-description"))
         .setDefaultMemberPermissions(0)
         .addNumberOption(new SlashCommandNumberOption()
-            .setName("nombre")
-            .setDescription("Nombre de message a supprimer")
+            .setName(msg("cmd-clean-builder-number-name"))
+            .setDescription(msg("cmd-clean-builder-number-description"))
             .setMinValue(1)
             .setMaxValue(100));
 
@@ -19,12 +20,12 @@ export default class Clean extends Command {
         const number = command.options.getNumber("nombre") ?? 10;
 
         if (command.channel?.type !== "GUILD_TEXT") {
-            command.reply({ embeds: [simpleEmbed("Vous devez utilisé cette commande dans un salon textuel.", "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(msg("cmd-clean-exec-need-textchannel"), "error")], ephemeral: true });
             return;
         }
 
         await command.channel.bulkDelete(number);
 
-        command.reply({ embeds: [simpleEmbed(`Vous avez supprimé ${number} messages !`)], ephemeral: true });
+        command.reply({ embeds: [simpleEmbed(msg("cmd-clean-exec-cleaned", [number]))], ephemeral: true });
     }
 }

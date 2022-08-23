@@ -88,6 +88,18 @@
     "cmd-topvoice-exec-embed-title": "Classements des membres les plus actifs en vocal (en minute) ({source}) (page : {page}/{maxPage})",
     "cmd-topvoice-exec-embed-line": "**{position}. {username} :** {minutes}\n",
 
+    "cmd-topmessages-builder-name": "top-message",
+    "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",
+    "cmd-topmessages-builder-source-name": "source",
+    "cmd-topmessages-builder-source-description": "Source du classement",
+    "cmd-topmessages-builder-page-name": "page",
+    "cmd-topmessages-builder-page-description": "Page du classement",
+    "cmd-topmessages-builder-channel-name": "salon",
+    "cmd-topmessages-builder-channel-description": "Choix du salon si vous avez choisi \"salon\" comme source",
+    "cmd-topmessages-exec-error-need-mention": "Vous devez mentionner un salon",
+    "cmd-topmessages-exec-embed-title": "Classements des membres les plus actifs ({source}) (page : {page}/{maxPage})",
+    "cmd-topmessages-exec-embed-line": "**{position}. {username} :** {nbrMessages}\n",
+
     "cmd-together-builder-name": "watch-together",
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
     "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",

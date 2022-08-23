@@ -5,12 +5,13 @@ import { simpleEmbed } from "../../utils/Embed";
 import { getRolesByCategory } from "../../api/func/MainRole";
 import { selectMenu } from "../../../resources/config/interaction-ids.json";
 import Client from "../../Client";
+import { msg } from "../../utils/Message";
 
 export default class Role extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("role")
-        .setDescription("Permet de choisir ses rôles");
+        .setName(msg("cmd-role-builder-name"))
+        .setDescription(msg("cmd-role-builder-description"));
 
     public async execute(command: CommandInteraction) : Promise<void> {
         // Generate select menu :
@@ -46,7 +47,7 @@ export default class Role extends Command {
 
         // Send the interaction :
         command.reply({
-            embeds: [simpleEmbed("", "normal", "Veuillez choisir vos roles")],
+            embeds: [simpleEmbed("", "normal", msg("cmd-role-exec-choose-role"))],
             components: messageActionRows,
             ephemeral: true
         });

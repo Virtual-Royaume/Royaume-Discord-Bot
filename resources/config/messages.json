@@ -66,6 +66,10 @@
     "cmd-main-exec-success-add": "Vous avez bien {action} le {type}",
     "cmd-main-exec-success-error": "Erreur lors de {action} du {type}",
 
+    "cmd-role-builder-name": "role",
+    "cmd-role-builder-description": "Permet de choisir ses rôles",
+    "cmd-role-exec-choose-role": "Veuillez choisir vos roles",
+
     "cmd-together-builder-name": "watch-together",
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
     "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",

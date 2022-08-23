@@ -70,6 +70,15 @@
     "cmd-role-builder-description": "Permet de choisir ses rôles",
     "cmd-role-exec-choose-role": "Veuillez choisir vos roles",
 
+    "cmd-stats-builder-name": "stats",
+    "cmd-stats-builder-description": "Voir les statistiques du serveurs",
+    "cmd-stats-builder-history-name": "historique",
+    "cmd-stats-builder-history-description": "Nombre de jour d'historique",
+    "cmd-stats-exec-embed-title": "**Statistiques sur {days} jours**",
+    "cmd-stats-exec-embed-voices": "Temps de vocal des utilisateurs en minutes",
+    "cmd-stats-exec-embed-messages": "Nombre de messages envoyés",
+    "cmd-stats-exec-embed-members": "Nombre de membres présents sur le serveur",
+
     "cmd-together-builder-name": "watch-together",
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
     "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",

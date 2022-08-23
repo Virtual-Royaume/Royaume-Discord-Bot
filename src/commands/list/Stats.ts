@@ -9,21 +9,22 @@ import { ServerActivity } from "../../api/Schema";
 import { colors } from "../../../resources/config/information.json";
 import { dateFormat } from "../../utils/Function";
 import DayJS from "../../utils/DayJS";
+import { msg } from "../../utils/Message";
 
 export default class Stats extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("stats")
-        .setDescription("Voir les statistiques du serveurs")
+        .setName(msg("cmd-stats-builder-name"))
+        .setDescription(msg("cmd-stats-builder-description"))
         .addNumberOption(new SlashCommandNumberOption()
-            .setName("historique")
-            .setDescription("Nombre de jour d'historique")
+            .setName(msg("cmd-stats-builder-history-name"))
+            .setDescription(msg("cmd-stats-builder-history-description"))
             .setMinValue(5));
 
     public async execute(command: CommandInteraction) : Promise<void> {
         // Get server activity :
         const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, {
-            historyCount: command.options.getNumber("historique") ?? 30
+            historyCount: command.options.getNumber(msg("cmd-stats-builder-history-name")) ?? 30
         })).serverActivity.reverse();
 
         // Data types :
@@ -33,9 +34,9 @@ export default class Stats extends Command {
         }
 
         const types: Type[] = [
-            { columnName: "voiceMinute", description: "Temps de vocal des utilisateurs en minutes" },
-            { columnName: "messageCount", description: "Nombre de messages envoyés" },
-            { columnName: "memberCount", description: "Nombre de membres présents sur le serveur" }
+            { columnName: "voiceMinute", description: msg("cmd-stats-exec-embed-voices") },
+            { columnName: "messageCount", description: msg("cmd-stats-exec-embed-messages") },
+            { columnName: "memberCount", description: msg("cmd-stats-exec-embed-members") }
         ];
 
         // Generate and send charts :
@@ -104,6 +105,6 @@ export default class Stats extends Command {
             ));
         });
 
-        command.reply({ content: `**Statistiques sur ${serverActivity.length} jours :**`, embeds, files });
+        command.reply({ content: msg("cmd-stats-exec-embed-title", [serverActivity.length]), embeds, files });
     }
 }

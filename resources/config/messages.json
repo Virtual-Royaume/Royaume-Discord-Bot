@@ -79,6 +79,15 @@
     "cmd-stats-exec-embed-messages": "Nombre de messages envoyés",
     "cmd-stats-exec-embed-members": "Nombre de membres présents sur le serveur",
 
+    "cmd-topvoice-builder-name": "top-voice",
+    "cmd-topvoice-builder-description": "Voir le classement des membres les plus actifs en vocal",
+    "cmd-topvoice-builder-source-name": "source",
+    "cmd-topvoice-builder-source-description": "Source du classement",
+    "cmd-topvoice-builder-page-name": "page",
+    "cmd-topvoice-builder-page-description": "Page du classement",
+    "cmd-topvoice-exec-embed-title": "Classements des membres les plus actifs en vocal (en minute) ({source}) (page : {page}/{maxPage})",
+    "cmd-topvoice-exec-embed-line": "**{position}. {username} :** {minutes}\n",
+
     "cmd-together-builder-name": "watch-together",
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
     "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",

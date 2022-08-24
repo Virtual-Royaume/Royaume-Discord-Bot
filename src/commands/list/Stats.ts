@@ -42,7 +42,7 @@ export default class Stats extends Command {
         const embeds: MessageEmbed[] = [];
         const files: MessageAttachment[] = [];
 
-        types.forEach(type => {
+        for (const type of types) {
             const config: ChartConfiguration = {
                 type: "line",
                 data: {
@@ -102,7 +102,7 @@ export default class Stats extends Command {
                 chart.renderToBufferSync(config),
                 `${type.columnName}-chart.png`
             ));
-        });
+        }
 
         command.reply({ content: `**Statistiques sur ${serverActivity.length} jours :**`, embeds, files });
     }

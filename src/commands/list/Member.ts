@@ -41,11 +41,11 @@ export default class Member extends Command {
         const channels = (await request<GetChannelsType>(getChannels)).channels;
         const channelsIdsByCategory: { [category: string]: string[] } = {};
 
-        channels.forEach(channel => {
+        for (const channel of channels) {
             if (!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];
 
             channelsIdsByCategory[channel.category].push(channel.channelId);
-        });
+        }
 
         // Format message :
         let message = "";

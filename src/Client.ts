@@ -1,12 +1,12 @@
 import "dotenv/config";
 import { Client as DiscordClient, Guild, Intents, Team, User } from "discord.js";
-import EventManager from "./events/EventManager";
-import CommandManager from "./commands/CommandManager";
-import TaskManager from "./tasks/TaskManager";
-import Logger, { logCrown } from "./utils/Logger";
-import { botToken } from "../resources/config/secret.json";
-import { guildId } from "../resources/config/information.json";
+import EventManager from "$core/events/EventManager";
+import CommandManager from "$core/commands/CommandManager";
+import TaskManager from "$core/tasks/TaskManager";
+import Logger, { logCrown } from "$core/utils/Logger";
+import { guildId } from "$resources/config/information.json";
 import { version } from "../package.json";
+import { getEnv } from "$core/utils/EnvVariable";
 
 export default class Client extends DiscordClient {
 

@@ -1,0 +1,7 @@
+services:
+  royaume-bot:
+    container_name: royaume-bot
+    build: .
+    volumes: 
+      - ./:/app
+    restart: always

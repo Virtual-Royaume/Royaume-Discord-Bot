@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Client as DiscordClient, Guild, Intents, Team, User } from "discord.js";
 import EventManager from "./events/EventManager";
 import CommandManager from "./commands/CommandManager";
@@ -31,7 +32,7 @@ export default class Client extends DiscordClient {
 
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(botToken);
+        this.login(getEnv<string>("BOT_TOKEN"));
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();

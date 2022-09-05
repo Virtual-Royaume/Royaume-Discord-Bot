@@ -1,11 +1,11 @@
-import { request } from "../../api/Request";
-import { getBirthdays, GetBirthdaysType } from "../../api/requests/Member";
-import Task from "../Task";
-import { generalChannel } from "../../../resources/config/information.json";
+import { request } from "$core/api/Request";
+import { getBirthdays, GetBirthdaysType } from "$core/api/requests/Member";
+import Task from "$core/tasks/Task";
+import { generalChannel } from "$resources/config/information.json";
 import { BaseGuildTextChannel } from "discord.js";
-import Client from "../../Client";
-import { simpleEmbed } from "../../utils/Embed";
-import DayJS from "../../utils/DayJS";
+import Client from "$core/Client";
+import { simpleEmbed } from "$core/utils/Embed";
+import DayJS from "$core/utils/DayJS";
 
 export default class ServerActivityUpdate extends Task {
 

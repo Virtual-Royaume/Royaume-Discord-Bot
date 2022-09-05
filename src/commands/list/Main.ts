@@ -3,13 +3,13 @@ import {
     SlashCommandRoleOption, SlashCommandStringOption
 } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { getChannelsByCategory } from "../../api/func/MainChannel";
-import { getRolesByCategory } from "../../api/func/MainRole";
-import { request } from "../../api/Request";
-import { addChannel, AddChannelType, removeChannel, RemoveChannelType } from "../../api/requests/MainChannel";
-import { addRole, AddRoleType, removeRole, RemoveRoleType } from "../../api/requests/MainRole";
-import { simpleEmbed } from "../../utils/Embed";
-import Command from "../Command";
+import { getChannelsByCategory } from "$core/api/func/MainChannel";
+import { getRolesByCategory } from "$core/api/func/MainRole";
+import { request } from "$core/api/Request";
+import { addChannel, AddChannelType, removeChannel, RemoveChannelType } from "$core/api/requests/MainChannel";
+import { addRole, AddRoleType, removeRole, RemoveRoleType } from "$core/api/requests/MainRole";
+import { simpleEmbed } from "$core/utils/Embed";
+import Command from "$core/commands/Command";
 
 type Action = "add" | "remove" | "list";
 

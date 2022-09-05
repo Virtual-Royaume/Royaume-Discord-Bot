@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { simpleEmbed } from "../../utils/Embed";
-import Command from "../Command";
+import { simpleEmbed } from "$core/utils/Embed";
+import Command from "$core/commands/Command";
 
 export default class Clean extends Command {
 

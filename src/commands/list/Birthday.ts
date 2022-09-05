@@ -1,12 +1,12 @@
 import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { request } from "../../api/Request";
-import { getBirthdays, GetBirthdaysType, setBirthday } from "../../api/requests/Member";
-import { simpleEmbed } from "../../utils/Embed";
-import Command from "../Command";
-import { minimumAge } from "../../../resources/config/information.json";
-import { dateFormat, getAge } from "../../utils/Function";
-import DayJS from "../../utils/DayJS";
+import { request } from "$core/api/Request";
+import { getBirthdays, GetBirthdaysType, setBirthday } from "$core/api/requests/Member";
+import { simpleEmbed } from "$core/utils/Embed";
+import Command from "$core/commands/Command";
+import { minimumAge } from "$resources/config/information.json";
+import { dateFormat, getAge } from "$core/utils/Function";
+import DayJS from "$core/utils/DayJS";
 
 export default class Birthday extends Command {
 

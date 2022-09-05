@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs";
-import { localFormat } from "../../resources/config/information.json";
-import DayJS from "./DayJS";
+import { localFormat } from "$resources/config/information.json";
+import DayJS from "$core/utils/DayJS";
 
 export function numberFormat(number: number): string {
     return number.toLocaleString(localFormat);

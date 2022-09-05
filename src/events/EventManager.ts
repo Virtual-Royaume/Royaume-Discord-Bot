@@ -1,7 +1,7 @@
-import Client from "../Client";
-import { readdirSync } from "fs";
-import Event from "./Event";
-import Logger from "../utils/Logger";
+import Client from "$core/Client";
+import { readdirSync } from "node:fs";
+import Event from "$core/events/Event";
+import Logger from "$core/utils/Logger";
 
 export default class EventManager {
 

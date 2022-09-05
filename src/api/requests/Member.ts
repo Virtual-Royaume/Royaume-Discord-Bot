@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { ChannelMessageCount, DiscordActivity, DiscordMessageActivity, Member } from "../Schema";
+import { ChannelMessageCount, DiscordActivity, DiscordMessageActivity, Member } from "$core/api/Schema";
 
 export type CreateMemberType = { createMember: Pick<Member, "_id"> };
 export const createMember = gql`

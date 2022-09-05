@@ -1,5 +1,5 @@
 import { readdirSync } from "fs";
-import Logger from "../utils/Logger";
+import Logger from "$core/utils/Logger";
 
 export default class TaskManager {
 

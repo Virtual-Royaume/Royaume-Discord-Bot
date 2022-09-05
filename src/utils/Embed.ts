@@ -1,5 +1,5 @@
 import { HexColorString, MessageEmbed } from "discord.js";
-import { colors } from "../../resources/config/information.json";
+import { colors } from "$resources/config/information.json";
 
 type EmbedType = "normal" | "error";
 

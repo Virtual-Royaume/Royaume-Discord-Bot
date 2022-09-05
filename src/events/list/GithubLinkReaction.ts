@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
-import Event, { EventName } from "../Event";
-import { githubRaw, textFetch } from "../../utils/Fetch";
-import { getEnv } from "../../utils/EnvVariable";
+import Event, { EventName } from "$core/events/Event";
+import { githubRaw, textFetch } from "$core/utils/Fetch";
+import { getEnv } from "$core/utils/EnvVariable";
 
 export default class GithubLinkReaction extends Event {
 

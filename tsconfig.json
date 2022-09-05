@@ -8,9 +8,12 @@
     "strict": true,
     
     "resolveJsonModule": true,
-    "esModuleInterop": true
-  },
-  "ts-node": {
-    "swc": true
+    "esModuleInterop": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "$core/*": ["./src/*"],
+      "$resources/*": ["./resources/*"]
+    }
   }
 }

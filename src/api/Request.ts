@@ -1,8 +1,8 @@
 import gqlRequest, { Variables } from "graphql-request";
-import { api } from "../../resources/config/secret.json";
+import { getEnv } from "../utils/EnvVariable";
 
 export async function request<T>(request: string, variables?: Variables) : Promise<T> {
-    return await gqlRequest<T>(api.endpoint, request, variables, {
-        "authorization": api.token
+    return await gqlRequest<T>(getEnv<string>("API_LINK") ?? "", request, variables, {
+        "authorization": getEnv<string>("API_TOKEN") ?? ""
     });
 }

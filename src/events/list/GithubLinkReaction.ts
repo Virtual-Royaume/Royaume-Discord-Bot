@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import Event, { EventName } from "../Event";
-import { githubToken } from "../../../resources/config/secret.json";
 import { githubRaw, textFetch } from "../../utils/Fetch";
+import { getEnv } from "../../utils/EnvVariable";
 
 export default class GithubLinkReaction extends Event {
 
@@ -55,7 +55,7 @@ export default class GithubLinkReaction extends Event {
             const fileExtension = filePath[filePath.length - 1].match(/(?<=[.])\w*/gm)?.shift() ?? "";
 
             // Request for get the code :
-            const requestAuth = githubToken ? { headers: { Authorization: `token ${githubToken}` } } : {};
+            const requestAuth = { headers: { Authorization: `token ${getEnv<string>("GITHUB_TOKEN")}` } };
             const request = await textFetch(githubRaw + filePath.join("/"), requestAuth);
 
             if (request.status !== 200) return;

@@ -3,5 +3,5 @@ export function getEnv<T>(envName: string): T {
 
     if (!env) throw new Error(`Environment variable is missing : ${envName}`);
 
-    return env as T;
+    return <unknown>env as T;
 }

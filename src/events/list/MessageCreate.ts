@@ -1,12 +1,12 @@
 import { BaseGuildTextChannel, Message as Msg, TextBasedChannel } from "discord.js";
-import { request } from "../../api/Request";
-import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
-import { incChannelMessage, IncChannelMessageType } from "../../api/requests/Member";
-import { generalChannel } from "../../../resources/config/information.json";
-import Event, { EventName } from "../Event";
-import Client from "../../Client";
-import { simpleEmbed } from "../../utils/Embed";
-import { numberFormat } from "../../utils/Function";
+import { request } from "$core/api/Request";
+import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
+import { incChannelMessage, IncChannelMessageType } from "$core/api/requests/Member";
+import { generalChannel } from "$resources/config/information.json";
+import Event, { EventName } from "$core/events/Event";
+import Client from "$core/Client";
+import { simpleEmbed } from "$core/utils/Embed";
+import { numberFormat } from "$core/utils/Function";
 
 export default class MessageCreate extends Event {
 

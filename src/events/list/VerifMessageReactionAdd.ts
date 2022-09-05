@@ -1,8 +1,8 @@
 import { GuildMember, MessageReaction } from "discord.js";
-import Client from "../../Client";
-import Event, { EventName } from "../Event";
-import { verify } from "../../../resources/config/information.json";
-import { simpleEmbed } from "../../utils/Embed";
+import Client from "$core/Client";
+import Event, { EventName } from "$core/events/Event";
+import { verify } from "$resources/config/information.json";
+import { simpleEmbed } from "$core/utils/Embed";
 
 export default class VerifMessageReactionAdd extends Event {
 

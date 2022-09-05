@@ -1,6 +1,6 @@
-import Client from "../../Client";
-import Logger from "../../utils/Logger";
-import Event, { EventName } from "../Event";
+import Client from "$core/Client";
+import Logger from "$core/utils/Logger";
+import Event, { EventName } from "$core/events/Event";
 
 export default class Ready extends Event {
 

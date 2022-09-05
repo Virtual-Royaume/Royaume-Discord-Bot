@@ -1,10 +1,10 @@
 import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { request } from "../../api/Request";
-import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "../../api/requests/Member";
-import { simpleEmbed } from "../../utils/Embed";
-import { formatMinutes } from "../../utils/Function";
-import Command from "../Command";
+import { request } from "$core/api/Request";
+import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "$core/api/requests/Member";
+import { simpleEmbed } from "$core/utils/Embed";
+import { formatMinutes } from "$core/utils/Function";
+import Command from "$core/commands/Command";
 
 type Source = "total" | "mois";
 

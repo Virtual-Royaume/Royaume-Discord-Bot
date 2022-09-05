@@ -1,7 +1,7 @@
 import { GuildMemberRoleManager, Interaction } from "discord.js";
-import { simpleEmbed } from "../../utils/Embed";
-import Event, { EventName } from "../Event";
-import { selectMenu } from "../../../resources/config/interaction-ids.json";
+import { simpleEmbed } from "$core/utils/Embed";
+import Event, { EventName } from "$core/events/Event";
+import { selectMenu } from "$resources/config/interaction-ids.json";
 
 export default class RolesSelector extends Event {
 

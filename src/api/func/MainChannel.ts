@@ -1,5 +1,5 @@
-import { request } from "../Request";
-import { getChannels, GetChannelsType } from "../requests/MainChannel";
+import { request } from "$core/api/Request";
+import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
 
 type ChannelsByCategory = {
     [category: string]: string[]

@@ -1,6 +1,6 @@
-import Client from "../../Client";
-import Task from "../Task";
-import { voiceChannels } from "../../../resources/config/information.json";
+import Client from "$core/Client";
+import Task from "$core/tasks/Task";
+import { voiceChannels } from "$resources/config/information.json";
 import { Collection, VoiceChannel } from "discord.js";
 
 type ChannelType = "public" | "private";

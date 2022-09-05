@@ -1,8 +1,8 @@
-import { request } from "../../api/Request";
-import { incVoiceMinute } from "../../api/requests/Member";
-import { setMemberCount } from "../../api/requests/ServerActivity";
-import Client from "../../Client";
-import Task from "../Task";
+import { request } from "$core/api/Request";
+import { incVoiceMinute } from "$core/api/requests/Member";
+import { setMemberCount } from "$core/api/requests/ServerActivity";
+import Client from "$core/Client";
+import Task from "$core/tasks/Task";
 
 export default class ServerActivityUpdate extends Task {
 

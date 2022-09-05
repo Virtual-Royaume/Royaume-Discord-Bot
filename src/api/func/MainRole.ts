@@ -1,5 +1,5 @@
-import { request } from "../Request";
-import { getRoles, GetRolesType } from "../requests/MainRole";
+import { request } from "$core/api/Request";
+import { getRoles, GetRolesType } from "$core/api/requests/MainRole";
 
 type RolesByCategory = {
     [category: string]: string[]

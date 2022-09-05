@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
-import { request } from "../../api/Request";
-import { setUsernameAndprofilePicture } from "../../api/requests/Member";
-import Event, { EventName } from "../Event";
+import { request } from "$core/api/Request";
+import { setUsernameAndprofilePicture } from "$core/api/requests/Member";
+import Event, { EventName } from "$core/events/Event";
 
 export default class GuildMemberUpdate extends Event {
 

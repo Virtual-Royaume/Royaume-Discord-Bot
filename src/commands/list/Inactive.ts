@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { request } from "../../api/Request";
-import { getMonthActivity, GetMonthActivityType } from "../../api/requests/Member";
-import { simpleEmbed } from "../../utils/Embed";
-import Command from "../Command";
+import { request } from "$core/api/Request";
+import { getMonthActivity, GetMonthActivityType } from "$core/api/requests/Member";
+import { simpleEmbed } from "$core/utils/Embed";
+import Command from "$core/commands/Command";
 
 export default class Inactive extends Command {
 

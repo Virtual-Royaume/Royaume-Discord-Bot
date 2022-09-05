@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { CommandInteraction, MessageButton, MessageActionRow } from "discord.js";
-import { button } from "../../../resources/config/interaction-ids.json";
-import { simpleEmbed } from "../../utils/Embed";
-import Command from "../Command";
+import { button } from "$resources/config/interaction-ids.json";
+import { simpleEmbed } from "$core/utils/Embed";
+import Command from "$core/commands/Command";
 
 type InteractionType = "verif";
 

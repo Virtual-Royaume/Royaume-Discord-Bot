@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { MainRole } from "../Schema";
+import { MainRole } from "$core/api/Schema";
 
 export type AddRoleType = { addRole: boolean };
 export const addRole = gql`

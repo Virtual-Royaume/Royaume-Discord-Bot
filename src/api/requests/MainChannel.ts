@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { MainChannel } from "../Schema";
+import { MainChannel } from "$core/api/Schema";
 
 export type AddChannelType = { addChannel: boolean };
 export const addChannel = gql`

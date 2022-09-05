@@ -1,11 +1,11 @@
-import Task from "../Task";
-import { tiers as configTiers, verify, generalChannel } from "../../../resources/config/information.json";
-import Client from "../../Client";
-import { request } from "../../api/Request";
-import { getMembersTier, GetMembersTierType } from "../../api/requests/Member";
-import Logger from "../../utils/Logger";
+import Task from "$core/tasks/Task";
+import { tiers as configTiers, verify, generalChannel } from "$resources/config/information.json";
+import Client from "$core/Client";
+import { request } from "$core/api/Request";
+import { getMembersTier, GetMembersTierType } from "$core/api/requests/Member";
+import Logger from "$core/utils/Logger";
 import { BaseGuildTextChannel } from "discord.js";
-import { simpleEmbed } from "../../utils/Embed";
+import { simpleEmbed } from "$core/utils/Embed";
 
 interface RoleUpdate {
     memberId: string;

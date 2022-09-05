@@ -1,14 +1,14 @@
-import Event, { EventName } from "../Event";
+import Event, { EventName } from "$core/events/Event";
 import {
     BaseGuildTextChannel, ButtonInteraction,
     GuildMember, Interaction, MessageActionRow,
     Modal, ModalSubmitInteraction, TextInputComponent
 } from "discord.js";
-import { button, modal as modalIds } from "../../../resources/config/interaction-ids.json";
-import { generalChannel } from "../../../resources/config/information.json";
-import Client from "../../Client";
-import { simpleEmbed } from "../../utils/Embed";
-import { verify } from "../../../resources/config/information.json";
+import { button, modal as modalIds } from "$resources/config/interaction-ids.json";
+import { generalChannel } from "$resources/config/information.json";
+import Client from "$core/Client";
+import { simpleEmbed } from "$core/utils/Embed";
+import { verify } from "$resources/config/information.json";
 
 export default class VerifModal extends Event {
 

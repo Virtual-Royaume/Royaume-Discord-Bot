@@ -1,7 +1,7 @@
 import { Role } from "discord.js";
-import { request } from "../../api/Request";
-import { getRoles, GetRolesType, removeRole } from "../../api/requests/MainRole";
-import Event, { EventName } from "../Event";
+import { request } from "$core/api/Request";
+import { getRoles, GetRolesType, removeRole } from "$core/api/requests/MainRole";
+import Event, { EventName } from "$core/events/Event";
 
 export default class RoleDelete extends Event {
 

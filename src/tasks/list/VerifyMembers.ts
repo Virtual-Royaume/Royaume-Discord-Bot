@@ -1,12 +1,12 @@
-import { request } from "../../api/Request";
+import { request } from "$core/api/Request";
 import {
     createMember, getMembersOnServerStatus,
     GetMembersOnServerStatusType, setAlwaysOnServer,
     SetAlwaysOnServerType
-} from "../../api/requests/Member";
-import Client from "../../Client";
-import Logger from "../../utils/Logger";
-import Task from "../Task";
+} from "$core/api/requests/Member";
+import Client from "$core/Client";
+import Logger from "$core/utils/Logger";
+import Task from "$core/tasks/Task";
 
 export default class VerifyMembers extends Task {
 

@@ -16,7 +16,7 @@ export default {
 };
 
 export function logCrown() : void {
-    console.log(readFileSync(`${__dirname}/../../resources/art/crown.txt`, { encoding: "utf-8" }).replace(
+    console.log(readFileSync(`${__dirname}/$resources/art/crown.txt`, { encoding: "utf-8" }).replace(
         /(_|\||\*|\+)/g,
         input => ["_", "|"].includes(input) ? chalk.yellow(input) : chalk.red(input === "*" ? "_" : "|")
     ));

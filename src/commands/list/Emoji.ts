@@ -1,16 +1,16 @@
 import { SlashCommandAttachmentOption, SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { CommandInteraction, MessageAttachment, BaseGuildTextChannel, PremiumTier } from "discord.js";
+import { ChatInputCommandInteraction, AttachmentBuilder, BaseGuildTextChannel, GuildPremiumTier } from "discord.js";
 import Command from "$core/commands/Command";
 import { generalChannel } from "$resources/config/information.json";
 import { emojiProposal } from "$resources/config/proposal.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import Client from "$core/Client";
 
-const emojiForTier: Record<PremiumTier, number> = {
-    "NONE": 50,
-    "TIER_1": 100,
-    "TIER_2": 150,
-    "TIER_3": 250
+const emojiForTier: Record<GuildPremiumTier, number> = {
+    "0": 50,
+    "1": 100,
+    "2": 150,
+    "3": 250
 };
 
 export default class Emoji extends Command {
@@ -27,7 +27,7 @@ export default class Emoji extends Command {
             .setDescription("Choisir le nom de l'émoji")
             .setRequired(true));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         const guild = await Client.instance.getGuild();
         const maxEmoji = emojiForTier[guild.premiumTier];
 
@@ -64,7 +64,7 @@ export default class Emoji extends Command {
 
         // Send the vote message :
         const voteMessage = await generalChannelInstance.send({
-            files: [new MessageAttachment(attachment.url, "image.png")],
+            files: [new AttachmentBuilder(attachment.url, { name: "image.png" })],
             embeds: [simpleEmbed(
                 "**Proposition d'un nouveau émoji sur le serveur :**"
                 + `\n "\`\`${emojiIdentifier}\`\`"\n\nProposé par <@${command.user.id}>`,
@@ -91,7 +91,7 @@ export default class Emoji extends Command {
         });
 
         const removeReactions = () => voteMessage.reactions.removeAll();
-        const addEmojiRequest = () => command.guild?.emojis.create(attachment?.url, emojiIdentifier);
+        const addEmojiRequest = () => command.guild?.emojis.create({ attachment: attachment?.url, name: emojiIdentifier });
 
         reactionCollector.on("collect", (reaction) => {
             if (

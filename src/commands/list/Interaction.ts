@@ -56,6 +56,8 @@ export default class Interaction extends Command {
 
                 await command.channel?.send({
                     embeds: [embed],
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
                     components: [row]
                 });
                 break;

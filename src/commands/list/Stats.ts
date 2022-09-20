@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { CommandInteraction, HexColorString, MessageAttachment, MessageEmbed } from "discord.js";
+import { ChatInputCommandInteraction, HexColorString, MessageAttachment, MessageEmbed } from "discord.js";
 import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
@@ -20,7 +20,7 @@ export default class Stats extends Command {
             .setDescription("Nombre de jour d'historique")
             .setMinValue(5));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         // Get server activity :
         const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, {
             historyCount: command.options.getNumber("historique") ?? 30

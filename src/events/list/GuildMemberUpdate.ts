@@ -11,7 +11,7 @@ export default class GuildMemberUpdate extends Event {
         request(setUsernameAndprofilePicture, {
             id: newMember.id,
             username: newMember.displayName,
-            profilePicture: newMember.displayAvatarURL({ dynamic: true })
+            profilePicture: newMember.displayAvatarURL()
         });
     }
 }

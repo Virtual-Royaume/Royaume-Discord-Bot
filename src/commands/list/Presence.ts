@@ -95,7 +95,7 @@ export default class Role extends Command {
         const addPresenceRequest = async() => await request(addPresenceMessage, { type: presence, text: message });
 
         // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
-        if (command.member.permissions.has("ADMINISTRATOR")) {
+        if (command.member.permissions.has("Administrator")) {
             await addPresenceRequest();
 
             command.reply({
@@ -201,7 +201,7 @@ export default class Role extends Command {
             return;
         }
 
-        if (!command.member.permissions.has("ADMINISTRATOR")) {
+        if (!command.member.permissions.has("Administrator")) {
             command.reply({
                 embeds: [simpleEmbed("Vous n'avez pas la permission de supprimer une activité.", "error")],
                 ephemeral: true

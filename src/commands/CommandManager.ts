@@ -27,7 +27,7 @@ export default class CommandManager {
 
     private async listener() : Promise<void> {
         Client.instance.on("interactionCreate", async interaction => {
-            if (!interaction.isCommand()) return;
+            if (!interaction.isChatInputCommand()) return;
 
             const command = this.commands.get(interaction.commandName);
 

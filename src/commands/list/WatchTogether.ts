@@ -1,4 +1,4 @@
-import { CommandInteraction, GuildMember } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember } from "discord.js";
 import Client from "$core/Client";
 import Command from "$core/commands/Command";
 import { youtubeTogether } from "$resources/config/app-integration.json";
@@ -12,7 +12,7 @@ export default class WatchTogether extends Command {
         .setName("watch-together")
         .setDescription("Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"");
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         if (!(command.member instanceof GuildMember)) {
             command.reply({ embeds: [simpleEmbed("Erreur lors de l'exécution de la commande.", "error")], ephemeral: true });
             return;

@@ -1,4 +1,4 @@
-import { BaseGuildTextChannel, Message, MessageEmbed, NonThreadGuildBasedChannel } from "discord.js";
+import { BaseGuildTextChannel, Message, EmbedBuilder, NonThreadGuildBasedChannel } from "discord.js";
 import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
@@ -36,11 +36,13 @@ export default class MessageLinkReaction extends Event {
                 // Channel :
                 const tempChannel = await (await Client.instance.getGuild()).channels.fetch(ids[1][0]);
 
-                if (!tempChannel || !tempChannel.isText()) throw new Error("Channel not found");
+                if (!tempChannel || !tempChannel.isTextBased()) throw new Error("Channel not found");
 
                 channelQuoted = tempChannel;
 
                 // Message :
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
             } catch {
                 return;
@@ -50,7 +52,7 @@ export default class MessageLinkReaction extends Event {
         }
 
         // Send link reaction messages :
-        const embeds: MessageEmbed[] = [];
+        const embeds: EmbedBuilder[] = [];
 
         for (const index in messages) {
             const url = messages[index].url;
@@ -63,7 +65,7 @@ export default class MessageLinkReaction extends Event {
                 simpleEmbed(`**Message mentionné [#${Number(index) + 1}](${url}) dans <#${msg.channelId}>**\n\n${content}`, "normal")
                     .setAuthor({
                         name: msg.author.tag,
-                        iconURL: msg.author.displayAvatarURL({ dynamic: true })
+                        iconURL: msg.author.displayAvatarURL()
                     })
             );
         }

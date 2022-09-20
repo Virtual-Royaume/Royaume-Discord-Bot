@@ -1,5 +1,4 @@
-import { SlashCommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
-import { ChatInputCommandInteraction, GuildMember } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
 import { request } from "$core/api/Request";
 import { getMember, GetMemberType } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";

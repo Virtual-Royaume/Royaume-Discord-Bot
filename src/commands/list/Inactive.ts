@@ -1,5 +1,4 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { request } from "$core/api/Request";
 import { getMonthActivity, GetMonthActivityType } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";

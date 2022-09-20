@@ -1,9 +1,8 @@
-import { ChatInputCommandInteraction, GuildMember } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder } from "discord.js";
 import Client from "$core/Client";
 import Command from "$core/commands/Command";
 import { youtubeTogether } from "$resources/config/app-integration.json";
 import { generalChannel } from "$resources/config/information.json";
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { simpleEmbed } from "$core/utils/Embed";
 
 export default class WatchTogether extends Command {

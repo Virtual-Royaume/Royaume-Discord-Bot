@@ -1,5 +1,4 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { ChatInputCommandInteraction, MessageActionRow, MessageSelectMenu, GuildMemberRoleManager } from "discord.js";
+import { ChatInputCommandInteraction, MessageActionRow, MessageSelectMenu, GuildMemberRoleManager, SlashCommandBuilder } from "discord.js";
 import Command from "$core/commands/Command";
 import { simpleEmbed } from "$core/utils/Embed";
 import { getRolesByCategory } from "$core/api/func/MainRole";

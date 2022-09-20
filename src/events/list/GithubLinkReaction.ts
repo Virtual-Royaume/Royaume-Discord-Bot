@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import Event, { EventName } from "$core/events/Event";
-import { githubRaw, textFetch } from "$core/utils/Fetch";
+import { githubRaw, request } from "$core/utils/Request";
 import { getEnv } from "$core/utils/EnvVariable";
 
 export default class GithubLinkReaction extends Event {
@@ -55,12 +55,19 @@ export default class GithubLinkReaction extends Event {
             const fileExtension = filePath[filePath.length - 1].match(/(?<=[.])\w*/gm)?.shift() ?? "";
 
             // Request for get the code :
-            const requestAuth = { headers: { Authorization: `token ${getEnv<string>("GITHUB_TOKEN")}` } };
-            const request = await textFetch(githubRaw + filePath.join("/"), requestAuth);
+            const response = await request<string>(
+                githubRaw + filePath.join("/"),
+                {
+                    headers: {
+                        authorization: `token ${getEnv<string>("GITHUB_TOKEN")}`
+                    },
+                    responseType: "text"
+                }
+            );
 
-            if (request.status !== 200) return;
+            if (response.status !== 200) return;
 
-            const fileContent = request.body.split("\n");
+            const fileContent = response.body.split("\n");
 
             // Check if the line number is not too high :
             if (linesNumber[1] > fileContent.length) {

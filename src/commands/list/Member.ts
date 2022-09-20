@@ -68,15 +68,15 @@ export default class Member extends Command {
         const embed = simpleEmbed(message, "normal", `Activité de ${member.displayName}`);
 
         for (const [category, channelIds] of Object.entries(channelsIdsByCategory)) {
-            embed.addField(
-                firstLetterToUppercase(category),
-                channelIds.map(channelId => {
+            embed.addFields([{
+                name: firstLetterToUppercase(category),
+                value: channelIds.map(channelId => {
                     const messageCount = memberInfo.activity.messages.perChannel
                         .find(channel => channel?.channelId === channelId)?.messageCount ?? 0;
 
                     return `${messageCount} dans <#${channelId}>`;
                 }).join("\n")
-            );
+            }]);
         }
 
         command.reply({

@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "chalk": "^4.1.2",
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
     "dayjs": "^1.11.5",

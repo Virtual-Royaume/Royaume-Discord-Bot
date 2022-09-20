@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { CommandInteraction, MessageButton, MessageActionRow } from "discord.js";
+import { ChatInputCommandInteraction, MessageButton, MessageActionRow } from "discord.js";
 import { button } from "$resources/config/interaction-ids.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
@@ -26,7 +26,7 @@ export default class Interaction extends Command {
             .addChoices(...this.actionChoices)
             .setRequired(true));
 
-    public async execute(command: CommandInteraction): Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         const interaction: InteractionType = <InteractionType>command.options.getString("name", true);
 
         switch (interaction) {

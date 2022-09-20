@@ -11,7 +11,7 @@ export default class UserUpdate extends Event {
         request(setUsernameAndprofilePicture, {
             id: newUser.id,
             username: newUser.username,
-            profilePicture: newUser.displayAvatarURL({ dynamic: true })
+            profilePicture: newUser.displayAvatarURL()
         });
     }
 }

@@ -2,7 +2,7 @@ import {
     SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandNumberOption, SlashCommandStringOption
 } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { request } from "$core/api/Request";
 import {
     getChannelMessageCount, GetChannelMessageCountType,
@@ -45,7 +45,7 @@ export default class TopMessage extends Command {
 
     private memberPerPage = 20;
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         const source: Source = <Source>command.options.getString("source", true);
         let page = command.options.getNumber("page") ?? 1;
 

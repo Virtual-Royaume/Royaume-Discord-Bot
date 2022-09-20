@@ -2,6 +2,14 @@ import Client from "$core/Client";
 import Task from "$core/tasks/Task";
 import { request } from "$core/api/Request";
 import { GetPresenceMessagesType, getPresenceMessages } from "$core/api/requests/PresenceMessage";
+import { ActivityType } from "discord.js";
+
+const activityType: Record<string, ActivityType> = {
+    "COMPETING": ActivityType.Competing,
+    "LISTENING": ActivityType.Listening,
+    "PLAYING": ActivityType.Playing,
+    "WATCHING": ActivityType.Watching
+};
 
 export default class PresenceUpdate extends Task {
 
@@ -17,6 +25,6 @@ export default class PresenceUpdate extends Task {
             Math.floor(Math.random() * presenceMessages.length)
         ];
 
-        Client.instance.user?.setActivity(message.text, { type: message.type });
+        Client.instance.user?.setActivity({ name: message.text, type: activityType[message.type] });
     }
 }

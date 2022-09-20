@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { request } from "$core/api/Request";
 import { getMonthActivity, GetMonthActivityType } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
@@ -11,7 +11,7 @@ export default class Inactive extends Command {
         .setName("inactive")
         .setDescription("Voir les membres inactifs ce mois-ci");
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         const members = (await request<GetMonthActivityType>(getMonthActivity))
             .members.filter(member => {
                 const monthMessage = member.activity?.messages.monthCount;

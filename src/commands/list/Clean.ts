@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
+import { ChannelType, ChatInputCommandInteraction } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 
@@ -15,10 +15,10 @@ export default class Clean extends Command {
             .setMinValue(1)
             .setMaxValue(100));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         const number = command.options.getNumber("nombre") ?? 10;
 
-        if (command.channel?.type !== "GUILD_TEXT") {
+        if (command.channel?.type !== ChannelType.GuildText) {
             command.reply({ embeds: [simpleEmbed("Vous devez utilisé cette commande dans un salon textuel.", "error")], ephemeral: true });
             return;
         }

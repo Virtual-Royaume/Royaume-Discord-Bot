@@ -25,6 +25,8 @@ export default class PresenceUpdate extends Task {
             Math.floor(Math.random() * presenceMessages.length)
         ];
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         Client.instance.user?.setActivity({ name: message.text, type: activityType[message.type] });
     }
 }

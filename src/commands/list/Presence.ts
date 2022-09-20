@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
-import { BaseGuildTextChannel, CommandInteraction, GuildMember } from "discord.js";
+import { BaseGuildTextChannel, ChatInputCommandInteraction, GuildMember } from "discord.js";
 import { request } from "$core/api/Request";
 import {
     addPresenceMessage, getPresenceMessages,
@@ -58,7 +58,7 @@ export default class Role extends Command {
             .setName("id")
             .setDescription("Id de l'activité à supprimer"));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         // Get action and execute function of this action :
         const action: Action = <Action>command.options.getString("action", true);
 
@@ -67,7 +67,7 @@ export default class Role extends Command {
         if (action === "list") return this.list(command);
     }
 
-    private async add(command: CommandInteraction) : Promise<void> {
+    private async add(command: ChatInputCommandInteraction) : Promise<void> {
         const presence = command.options.getString("presence");
         const message = command.options.getString("message");
 
@@ -178,7 +178,7 @@ export default class Role extends Command {
         }
     }
 
-    private async remove(command: CommandInteraction) : Promise<void> {
+    private async remove(command: ChatInputCommandInteraction) : Promise<void> {
         const id = command.options.getString("id");
 
         // Checks :
@@ -226,7 +226,7 @@ export default class Role extends Command {
         }
     }
 
-    private async list(command: CommandInteraction) : Promise<void> {
+    private async list(command: ChatInputCommandInteraction) : Promise<void> {
         // Get data and sort it :
         let presenceMessages = (await request<GetPresenceMessagesType>(getPresenceMessages)).presenceMessages;
 

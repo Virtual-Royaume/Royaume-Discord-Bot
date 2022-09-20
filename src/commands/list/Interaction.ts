@@ -1,5 +1,7 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { ChatInputCommandInteraction, ButtonBuilder, ActionRowBuilder, ButtonStyle } from "discord.js";
+import {
+    ChatInputCommandInteraction, ButtonBuilder, ActionRowBuilder,
+    ButtonStyle, SlashCommandBuilder, SlashCommandStringOption
+} from "discord.js";
 import { button } from "$resources/config/interaction-ids.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";

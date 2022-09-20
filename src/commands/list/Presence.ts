@@ -1,5 +1,8 @@
-import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
-import { BaseGuildTextChannel, ChatInputCommandInteraction, GuildMember } from "discord.js";
+import {
+    BaseGuildTextChannel, ChatInputCommandInteraction,
+    GuildMember, SlashCommandBuilder, SlashCommandNumberOption,
+    SlashCommandStringOption
+} from "discord.js";
 import { request } from "$core/api/Request";
 import {
     addPresenceMessage, getPresenceMessages,

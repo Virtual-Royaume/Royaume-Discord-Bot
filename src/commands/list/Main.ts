@@ -1,8 +1,7 @@
 import {
-    SlashCommandBuilder, SlashCommandChannelOption,
+    ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandRoleOption, SlashCommandStringOption
-} from "@discordjs/builders";
-import { ChatInputCommandInteraction } from "discord.js";
+} from "discord.js";
 import { getChannelsByCategory } from "$core/api/func/MainChannel";
 import { getRolesByCategory } from "$core/api/func/MainRole";
 import { request } from "$core/api/Request";

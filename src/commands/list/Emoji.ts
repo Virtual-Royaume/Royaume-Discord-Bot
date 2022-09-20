@@ -1,5 +1,8 @@
-import { SlashCommandAttachmentOption, SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { ChatInputCommandInteraction, AttachmentBuilder, BaseGuildTextChannel, GuildPremiumTier } from "discord.js";
+import {
+    ChatInputCommandInteraction, AttachmentBuilder, BaseGuildTextChannel,
+    GuildPremiumTier, SlashCommandAttachmentOption, SlashCommandBuilder,
+    SlashCommandStringOption
+} from "discord.js";
 import Command from "$core/commands/Command";
 import { generalChannel } from "$resources/config/information.json";
 import { emojiProposal } from "$resources/config/proposal.json";

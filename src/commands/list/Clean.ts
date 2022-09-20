@@ -1,5 +1,4 @@
-import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { ChannelType, ChatInputCommandInteraction } from "discord.js";
+import { ChannelType, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 

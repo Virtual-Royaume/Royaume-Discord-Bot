@@ -1,5 +1,7 @@
-import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { ChatInputCommandInteraction, HexColorString, MessageAttachment, MessageEmbed } from "discord.js";
+import {
+    ChatInputCommandInteraction, HexColorString, MessageAttachment,
+    MessageEmbed, SlashCommandBuilder, SlashCommandNumberOption
+} from "discord.js";
 import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";

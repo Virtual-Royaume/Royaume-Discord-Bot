@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { ChatInputCommandInteraction, MessageButton, MessageActionRow } from "discord.js";
+import { ChatInputCommandInteraction, ButtonBuilder, ActionRowBuilder, ButtonStyle } from "discord.js";
 import { button } from "$resources/config/interaction-ids.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
@@ -46,10 +46,10 @@ export default class Interaction extends Command {
                     "Vérification pour entrer dans le Royaume"
                 );
 
-                const row = new MessageActionRow().addComponents(new MessageButton()
+                const row = new ActionRowBuilder().addComponents(new ButtonBuilder()
                     .setCustomId(button.verify)
                     .setLabel("Faire sa présentation")
-                    .setStyle("PRIMARY")
+                    .setStyle(ButtonStyle.Primary)
                     .setEmoji("📝"));
 
                 await command.channel?.send({

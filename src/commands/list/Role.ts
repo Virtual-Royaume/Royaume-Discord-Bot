@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, MessageActionRow, MessageSelectMenu, GuildMemberRoleManager } from "discord.js";
+import { ChatInputCommandInteraction, MessageActionRow, MessageSelectMenu, GuildMemberRoleManager } from "discord.js";
 import Command from "$core/commands/Command";
 import { simpleEmbed } from "$core/utils/Embed";
 import { getRolesByCategory } from "$core/api/func/MainRole";
@@ -12,7 +12,7 @@ export default class Role extends Command {
         .setName("role")
         .setDescription("Permet de choisir ses rôles");
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         // Generate select menu :
         const messageActionRows: MessageActionRow[] = [];
 

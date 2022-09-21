@@ -1,6 +1,6 @@
 import {
-    ChatInputCommandInteraction, HexColorString, MessageAttachment,
-    MessageEmbed, SlashCommandBuilder, SlashCommandNumberOption
+    ChatInputCommandInteraction, HexColorString, AttachmentBuilder,
+    EmbedBuilder, SlashCommandBuilder, SlashCommandNumberOption
 } from "discord.js";
 import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
@@ -41,8 +41,8 @@ export default class Stats extends Command {
         ];
 
         // Generate and send charts :
-        const embeds: MessageEmbed[] = [];
-        const files: MessageAttachment[] = [];
+        const embeds: EmbedBuilder[] = [];
+        const files: AttachmentBuilder[] = [];
 
         for (const type of types) {
             const config: ChartConfiguration = {
@@ -90,7 +90,7 @@ export default class Stats extends Command {
             };
 
             // Embed :
-            embeds.push(new MessageEmbed()
+            embeds.push(new EmbedBuilder()
                 .setTitle(type.description)
                 .setColor(colors.primary as HexColorString)
                 .setImage(`attachment://${type.columnName}-chart.png`));
@@ -100,9 +100,9 @@ export default class Stats extends Command {
 
             chart.registerFont(`${__dirname}/$resources/font/poppins-regular.ttf`, { family: "Poppins" });
 
-            files.push(new MessageAttachment(
+            files.push(new AttachmentBuilder(
                 chart.renderToBufferSync(config),
-                `${type.columnName}-chart.png`
+                { name: `${type.columnName}-chart.png` }
             ));
         }
 

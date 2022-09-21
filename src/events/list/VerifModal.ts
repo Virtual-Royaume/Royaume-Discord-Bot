@@ -1,8 +1,8 @@
 import Event, { EventName } from "$core/events/Event";
 import {
     BaseGuildTextChannel, ButtonInteraction,
-    GuildMember, Interaction, MessageActionRow,
-    Modal, ModalSubmitInteraction, TextInputComponent
+    GuildMember, Interaction, ActionRowBuilder,
+    ModalBuilder, ModalSubmitInteraction, TextInputComponent
 } from "discord.js";
 import { button, modal as modalIds } from "$resources/config/interaction-ids.json";
 import { generalChannel } from "$resources/config/information.json";
@@ -38,10 +38,14 @@ export default class VerifModal extends Event {
             return;
         }
 
-        const modal = new Modal()
+        const modal = new ModalBuilder()
             .setCustomId(modalIds.verify)
             .setTitle("Formulaire de présentation")
-            .addComponents(new MessageActionRow<TextInputComponent>().addComponents(new TextInputComponent()
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            .addComponents(new ActionRowBuilder<TextInputComponent>().addComponents(new TextInputComponent()
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 .setCustomId("presentation")
                 .setLabel("Présentation :")
                 .setStyle("PARAGRAPH")

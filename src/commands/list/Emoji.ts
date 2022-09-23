@@ -1,11 +1,11 @@
 import { SlashCommandAttachmentOption, SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 import { CommandInteraction, MessageAttachment, BaseGuildTextChannel, PremiumTier } from "discord.js";
-import Command from "../Command";
-import { generalChannel } from "../../../resources/config/information.json";
-import { emojiProposal } from "../../../resources/config/proposal.json";
-import { simpleEmbed } from "../../utils/Embed";
-import Client from "../../Client";
 import { msg } from "../../utils/Message";
+import Command from "$core/commands/Command";
+import { generalChannel } from "$resources/config/information.json";
+import { emojiProposal } from "$resources/config/proposal.json";
+import { simpleEmbed } from "$core/utils/Embed";
+import Client from "$core/Client";
 
 const emojiForTier: Record<PremiumTier, number> = {
     "NONE": 50,

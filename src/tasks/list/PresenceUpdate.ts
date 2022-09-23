@@ -1,7 +1,7 @@
-import Client from "../../Client";
-import Task from "../Task";
-import { request } from "../../api/Request";
-import { GetPresenceMessagesType, getPresenceMessages } from "../../api/requests/PresenceMessage";
+import Client from "$core/Client";
+import Task from "$core/tasks/Task";
+import { request } from "$core/api/Request";
+import { GetPresenceMessagesType, getPresenceMessages } from "$core/api/requests/PresenceMessage";
 
 export default class PresenceUpdate extends Task {
 

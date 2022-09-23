@@ -1,7 +1,7 @@
 import { BaseGuildTextChannel, Message, MessageEmbed, NonThreadGuildBasedChannel } from "discord.js";
-import Client from "../../Client";
-import { simpleEmbed } from "../../utils/Embed";
-import Event, { EventName } from "../Event";
+import Client from "$core/Client";
+import { simpleEmbed } from "$core/utils/Embed";
+import Event, { EventName } from "$core/events/Event";
 
 export default class MessageLinkReaction extends Event {
 

@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { ServerActivity } from "../Schema";
+import { ServerActivity } from "$core/api/Schema";
 
 export type GetCurrentServerActivityType = { todayServerActivity: ServerActivity };
 export const getCurrentServerActivity = gql`

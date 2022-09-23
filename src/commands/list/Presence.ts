@@ -1,17 +1,17 @@
 import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
 import { BaseGuildTextChannel, CommandInteraction, GuildMember } from "discord.js";
-import { request } from "../../api/Request";
+import { request } from "$core/api/Request";
 import {
     addPresenceMessage, getPresenceMessages,
     GetPresenceMessagesType, removePresenceMessage,
     RemovePresenceMessageType
-} from "../../api/requests/PresenceMessage";
-import { generalChannel } from "../../../resources/config/information.json";
-import { activityProposal } from "../../../resources/config/proposal.json";
-import { PresenceType } from "../../api/Schema";
-import { simpleEmbed } from "../../utils/Embed";
-import Command from "../Command";
-import Client from "../../Client";
+} from "$core/api/requests/PresenceMessage";
+import { generalChannel } from "$resources/config/information.json";
+import { activityProposal } from "$resources/config/proposal.json";
+import { PresenceType } from "$core/api/Schema";
+import { simpleEmbed } from "$core/utils/Embed";
+import Command from "$core/commands/Command";
+import Client from "$core/Client";
 
 type Action = "add" | "remove" | "list";
 

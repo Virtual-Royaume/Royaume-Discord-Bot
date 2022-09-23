@@ -1,5 +1,5 @@
-import { request } from "../Request";
-import { getChannels, GetChannelsType } from "../requests/MainChannel";
+import { request } from "$core/api/Request";
+import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
 
 type ChannelsByCategory = {
     [category: string]: string[]
@@ -12,11 +12,11 @@ export async function getChannelsByCategory() : Promise<ChannelsByCategory> {
     // Sort channels by category :
     const channelsIdsByCategory: ChannelsByCategory = {};
 
-    channels.forEach(channel => {
+    for (const channel of channels) {
         if (!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];
 
         channelsIdsByCategory[channel.category].push(channel.channelId);
-    });
+    }
 
     return channelsIdsByCategory;
 }

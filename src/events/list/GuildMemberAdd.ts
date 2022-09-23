@@ -1,9 +1,9 @@
 import { GuildMember } from "discord.js";
-import Client from "../../Client";
-import Event, { EventName } from "../Event";
-import { verify } from "../../../resources/config/information.json";
-import { request } from "../../api/Request";
-import { createMember, CreateMemberType, setAlwaysOnServer } from "../../api/requests/Member";
+import Client from "$core/Client";
+import Event, { EventName } from "$core/events/Event";
+import { verify } from "$resources/config/information.json";
+import { request } from "$core/api/Request";
+import { createMember, CreateMemberType, setAlwaysOnServer } from "$core/api/requests/Member";
 
 export default class GuildMemberAdd extends Event {
 

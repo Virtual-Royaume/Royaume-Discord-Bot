@@ -3,16 +3,16 @@ import {
     SlashCommandNumberOption, SlashCommandStringOption
 } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { request } from "../../api/Request";
+import { request } from "$core/api/Request";
 import {
     getChannelMessageCount, GetChannelMessageCountType,
     getMonthMessageCount, GetMonthMessageCountType,
     getTotalMessageCount, GetTotalMessageType
-} from "../../api/requests/Member";
-import { simpleEmbed } from "../../utils/Embed";
-import { numberFormat } from "../../utils/Function";
+} from "$core/api/requests/Member";
+import { simpleEmbed } from "$core/utils/Embed";
+import { numberFormat } from "$core/utils/Function";
+import Command from "$core/commands/Command";
 import { msg } from "../../utils/Message";
-import Command from "../Command";
 
 type Source = "total" | "mois" | "salon";
 

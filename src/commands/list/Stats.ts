@@ -1,15 +1,15 @@
 import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
 import { CommandInteraction, HexColorString, MessageAttachment, MessageEmbed } from "discord.js";
-import Command from "../Command";
+import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-import { request } from "../../api/Request";
-import { getServerActivityHistory, GetServerActivityHistoryType } from "../../api/requests/ServerActivity";
-import { ServerActivity } from "../../api/Schema";
-import { colors } from "../../../resources/config/information.json";
-import { dateFormat } from "../../utils/Function";
-import DayJS from "../../utils/DayJS";
 import { msg } from "../../utils/Message";
+import { request } from "$core/api/Request";
+import { getServerActivityHistory, GetServerActivityHistoryType } from "$core/api/requests/ServerActivity";
+import { ServerActivity } from "$core/api/Schema";
+import { colors } from "$resources/config/information.json";
+import { dateFormat } from "$core/utils/Function";
+import DayJS from "$core/utils/DayJS";
 
 export default class Stats extends Command {
 
@@ -43,7 +43,7 @@ export default class Stats extends Command {
         const embeds: MessageEmbed[] = [];
         const files: MessageAttachment[] = [];
 
-        types.forEach(type => {
+        for (const type of types) {
             const config: ChartConfiguration = {
                 type: "line",
                 data: {
@@ -97,13 +97,13 @@ export default class Stats extends Command {
             // Attachment :
             const chart = new ChartJSNodeCanvas({ height: 500, width: 1100 });
 
-            chart.registerFont(`${__dirname}/../../../resources/font/poppins-regular.ttf`, { family: "Poppins" });
+            chart.registerFont(`${__dirname}/$resources/font/poppins-regular.ttf`, { family: "Poppins" });
 
             files.push(new MessageAttachment(
                 chart.renderToBufferSync(config),
                 `${type.columnName}-chart.png`
             ));
-        });
+        }
 
         command.reply({ content: msg("cmd-stats-exec-embed-title", [serverActivity.length]), embeds, files });
     }

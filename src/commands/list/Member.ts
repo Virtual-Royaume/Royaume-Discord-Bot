@@ -1,12 +1,12 @@
 import { SlashCommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
 import { CommandInteraction, GuildMember } from "discord.js";
-import { request } from "../../api/Request";
-import { getMember, GetMemberType } from "../../api/requests/Member";
-import { simpleEmbed } from "../../utils/Embed";
-import Command from "../Command";
-import { getChannels, GetChannelsType } from "../../api/requests/MainChannel";
-import { dateFormat, firstLetterToUppercase, getAge, numberFormat, formatMinutes } from "../../utils/Function";
-import DayJS from "../../utils/DayJS";
+import { request } from "$core/api/Request";
+import { getMember, GetMemberType } from "$core/api/requests/Member";
+import { simpleEmbed } from "$core/utils/Embed";
+import Command from "$core/commands/Command";
+import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
+import { dateFormat, firstLetterToUppercase, getAge, numberFormat, formatMinutes } from "$core/utils/Function";
+import DayJS from "$core/utils/DayJS";
 
 export default class Member extends Command {
 
@@ -41,11 +41,11 @@ export default class Member extends Command {
         const channels = (await request<GetChannelsType>(getChannels)).channels;
         const channelsIdsByCategory: { [category: string]: string[] } = {};
 
-        channels.forEach(channel => {
+        for (const channel of channels) {
             if (!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];
 
             channelsIdsByCategory[channel.category].push(channel.channelId);
-        });
+        }
 
         // Format message :
         let message = "";

@@ -1,11 +1,11 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction, MessageActionRow, MessageSelectMenu, GuildMemberRoleManager } from "discord.js";
-import Command from "../Command";
-import { simpleEmbed } from "../../utils/Embed";
-import { getRolesByCategory } from "../../api/func/MainRole";
-import { selectMenu } from "../../../resources/config/interaction-ids.json";
-import Client from "../../Client";
 import { msg } from "../../utils/Message";
+import Command from "$core/commands/Command";
+import { simpleEmbed } from "$core/utils/Embed";
+import { getRolesByCategory } from "$core/api/func/MainRole";
+import { selectMenu } from "$resources/config/interaction-ids.json";
+import Client from "$core/Client";
 
 export default class Role extends Command {
 

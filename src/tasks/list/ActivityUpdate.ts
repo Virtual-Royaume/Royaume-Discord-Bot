@@ -1,8 +1,8 @@
-import { request } from "../../api/Request";
-import { incVoiceMinute } from "../../api/requests/Member";
-import { setMemberCount } from "../../api/requests/ServerActivity";
-import Client from "../../Client";
-import Task from "../Task";
+import { request } from "$core/api/Request";
+import { incVoiceMinute } from "$core/api/requests/Member";
+import { setMemberCount } from "$core/api/requests/ServerActivity";
+import Client from "$core/Client";
+import Task from "$core/tasks/Task";
 
 export default class ServerActivityUpdate extends Task {
 
@@ -19,13 +19,13 @@ export default class ServerActivityUpdate extends Task {
         // Update voice time of members :
         if (!Client.instance.isProdEnvironment()) return;
 
-        (await Client.instance.getGuild()).voiceStates.cache.forEach(voiceState => {
+        for (const voiceState of (await Client.instance.getGuild()).voiceStates.cache.values()) {
             if (
                 voiceState.member && !voiceState.member.user.bot && voiceState.channel
                 && (!voiceState.selfMute || !voiceState.mute)
             ) {
                 request(incVoiceMinute, { id: voiceState.member.user.id });
             }
-        });
+        }
     }
 }

@@ -9,11 +9,11 @@ export default class Ready extends Event {
     public once = true;
 
     public async execute() : Promise<void> {
-        // Register slash commands :
-        Client.instance.commandManager.register();
-
         // Load tasks :
-        Client.instance.taskManager.load();
+        await Client.instance.taskManager.load();
+
+        // Register slash commands :
+        await Client.instance.commandManager.register();
 
         // Finish :
         Logger.success("Client has been started");

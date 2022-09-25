@@ -3,11 +3,7 @@ import Logger from "$core/utils/Logger";
 
 export default class TaskManager {
 
-    constructor() {
-        this.load();
-    }
-
-    private async load() : Promise<void> {
+    public async load() : Promise<void> {
         const files = readdirSync(`${__dirname}/list`).filter(file => file.endsWith(".ts") || file.endsWith(".js"));
 
         for (const file of files) {

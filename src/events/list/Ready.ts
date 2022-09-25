@@ -12,6 +12,9 @@ export default class Ready extends Event {
         // Register slash commands :
         Client.instance.commandManager.register();
 
+        // Load tasks :
+        Client.instance.taskManager.load();
+
         // Finish :
         Logger.success("Client has been started");
     }

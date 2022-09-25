@@ -30,7 +30,6 @@ export default class PresenceUpdate extends Task {
         const updates: RoleUpdate[] = [];
 
         // Check if the member have the right role :
-
         for (const [id, member] of discordMembers) {
             if (member.user.bot || member.roles.cache.has(verify.roles.waiting)) continue;
 

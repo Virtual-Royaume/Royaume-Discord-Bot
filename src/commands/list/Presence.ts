@@ -12,6 +12,7 @@ import { PresenceType } from "$core/api/Schema";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 import Client from "$core/Client";
+import { msg } from "$core/utils/Message";
 
 type Action = "add" | "remove" | "list";
 
@@ -33,26 +34,26 @@ export default class Role extends Command {
     private messagePerPage = 20;
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("presence")
-        .setDescription("Gérer l'activité du bot Discord")
+        .setName(msg("cmd-presence-builder-name"))
+        .setDescription(msg("cmd-presence-builder-description"))
         .addStringOption(new SlashCommandStringOption()
-            .setName("action")
-            .setDescription("Ajout, suppression ou liste")
+            .setName(msg("cmd-presence-builder-action-name"))
+            .setDescription(msg("cmd-presence-builder-action-description"))
             .addChoices(...this.actionChoices)
             .setRequired(true))
 
         .addNumberOption(new SlashCommandNumberOption()
-            .setName("page")
-            .setDescription("Page de la liste")
+            .setName(msg("cmd-presence-builder-page-name"))
+            .setDescription(msg("cmd-presence-builder-page-description"))
             .setMinValue(1))
 
         .addStringOption(new SlashCommandStringOption()
-            .setName("presence")
-            .setDescription("Type de l'activité à ajouter")
+            .setName(msg("cmd-presence-builder-presence-name"))
+            .setDescription(msg("cmd-presence-builder-presence-description"))
             .addChoices(...this.presenceTypes))
         .addStringOption(new SlashCommandStringOption()
-            .setName("message")
-            .setDescription("Message de l'activité à ajouter"))
+            .setName(msg("cmd-presence-builder-message-name"))
+            .setDescription(msg("cmd-presence-builder-message-description")))
 
         .addStringOption(new SlashCommandStringOption()
             .setName("id")
@@ -68,8 +69,8 @@ export default class Role extends Command {
     }
 
     private async add(command: CommandInteraction) : Promise<void> {
-        const presence = command.options.getString("presence");
-        const message = command.options.getString("message");
+        const presence = command.options.getString(msg("cmd-presence-builder-presence-name"));
+        const message = command.options.getString(msg("cmd-presence-builder-message-name"));
 
         // Checks :
         if (!presence || !message) {

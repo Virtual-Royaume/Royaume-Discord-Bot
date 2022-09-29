@@ -100,6 +100,20 @@
     "cmd-topmessages-exec-embed-title": "Classements des membres les plus actifs ({source}) (page : {page}/{maxPage})",
     "cmd-topmessages-exec-embed-line": "**{position}. {username} :** {nbrMessages}\n",
 
+    "cmd-presence-builder-name": "presence",
+    "cmd-presence-builder-description": "Gérer l'activité du bot Discord",
+    "cmd-presence-builder-action-name": "action",
+    "cmd-presence-builder-action-description": "Ajout, suppression ou liste",
+    "cmd-presence-builder-page-name": "page",
+    "cmd-presence-builder-page-description": "Page de la liste",
+    "cmd-presence-builder-presence-name": "presence",
+    "cmd-presence-builder-presence-description": "Type de l'activité à ajouter",
+    "cmd-presence-builder-message-name": "message",
+    "cmd-presence-builder-message-description": "Message de l'activité à ajouter",
+    "cmd-presence-builder-id-name": "id",
+    "cmd-presence-builder-id-description": "Id de l'activité à supprimer",
+
+
     "cmd-together-builder-name": "watch-together",
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
     "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",

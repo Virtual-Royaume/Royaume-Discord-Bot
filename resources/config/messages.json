@@ -121,5 +121,9 @@
     "cmd-together-exec-general": "<@{id}> a lancé une activité **Youtube Together** !\n\n[Rejoindre l'activité](https://discord.gg/{code})",
 
 
-    "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉"
+    "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
+
+
+    "event-messagelinkreaction-exec-attachments": "🗂️ {attachmentsCount} fichiers joint(s)",
+    "event-messagelinkreaction-exec-replyed-embed": "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**\n\n{content}"
 }

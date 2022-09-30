@@ -2,12 +2,13 @@ import { BaseGuildTextChannel, Message, MessageEmbed, NonThreadGuildBasedChannel
 import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
+import { msg } from "$core/utils/Message";
 
 export default class MessageLinkReaction extends Event {
 
     public name: EventName = "messageCreate";
 
-    public async execute(message: Message) : Promise<void> {
+    public async execute(message: Message): Promise<void> {
         // Checks :
         if (message.author.bot && !(message.channel instanceof BaseGuildTextChannel)) return;
 
@@ -54,16 +55,16 @@ export default class MessageLinkReaction extends Event {
 
         for (const index in messages) {
             const url = messages[index].url;
-            const msg = messages[index].message;
+            const message = messages[index].message;
 
-            const attachment = msg.attachments.size ? `🗂️ ${msg.attachments.size} fichiers joint(s)` : "";
-            const content = msg.content ? msg.content + (attachment.length ? `\n\n${attachment}` : "") : attachment;
+            const attachment = message.attachments.size ? msg("event-messagelinkreaction-exec-attachments", [message.attachments.size]) : "";
+            const content = message.content ? message.content + (attachment.length ? `\n\n${attachment}` : "") : attachment;
 
             embeds.push(
-                simpleEmbed(`**Message mentionné [#${Number(index) + 1}](${url}) dans <#${msg.channelId}>**\n\n${content}`, "normal")
+                simpleEmbed(msg("event-messagelinkreaction-exec-replyed-embed", [Number(index) + 1, url, message.channelId, content]), "normal")
                     .setAuthor({
-                        name: msg.author.tag,
-                        iconURL: msg.author.displayAvatarURL({ dynamic: true })
+                        name: message.author.tag,
+                        iconURL: message.author.displayAvatarURL({ dynamic: true })
                     })
             );
         }

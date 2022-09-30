@@ -18,12 +18,8 @@ export default class PresenceUpdate extends Task {
     }
 
     public async run() : Promise<void> {
-        const presenceMessages = (await request<GetPresenceMessagesType>(getPresenceMessages))
-            .presenceMessages;
-
-        const message = presenceMessages[
-            Math.floor(Math.random() * presenceMessages.length)
-        ];
+        const presenceMessages = (await request<GetPresenceMessagesType>(getPresenceMessages)).presenceMessages;
+        const message = presenceMessages[Math.floor(Math.random() * presenceMessages.length)];
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

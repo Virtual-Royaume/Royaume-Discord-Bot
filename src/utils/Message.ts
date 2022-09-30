@@ -1,4 +1,4 @@
-import messages from "../../resources/config/messages.json";
+import messages from "$resources/config/messages.json";
 
 /// Format du fichier JSON :
 // SlashCommandBuilder: "command-{Nom de la commande}-builder-{variable}"

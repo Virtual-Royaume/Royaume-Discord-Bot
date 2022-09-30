@@ -5,7 +5,7 @@ import {
 import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-import { msg } from "../../utils/Message";
+import { msg } from "$core/utils/Message";
 import { request } from "$core/api/Request";
 import { getServerActivityHistory, GetServerActivityHistoryType } from "$core/api/requests/ServerActivity";
 import { ServerActivity } from "$core/api/Schema";

@@ -135,5 +135,14 @@
     "event-verifmessagereactionadd-exec-welcome-message": "Bienvenue parmis nous <@{userId}> !",
     "event-verifmessagereactionadd-exec-embed-member-accepted": "Les rôles que vous voyez sur votre droite sont définis selon votre activité au sein du Royaume !\n\nPour peut choisir les rôles qui convient à vos centres d'intérêt avec la commande `/role`",
     "event-verifmessagereactionadd-exec-embed-member-rejected": "La présentation de {userName} a été refusé.",
-    "event-verifmessagereactionadd-exec-embed-member-rejected-mp": "Votre présentation n'a pas convaincu les membres du Royaume."
+    "event-verifmessagereactionadd-exec-embed-member-rejected-mp": "Votre présentation n'a pas convaincu les membres du Royaume.",
+
+
+    "event-verifmodal-exec-embed-open-error": "Erreur lors de l'ouverture du formulaire, contactez un membre du serveur.",
+    "event-verifmodal-exec-embed-already-member-error": "Les membres du serveur ne peuvent pas utiliser cette interaction.",
+    "event-verifmodal-exec-modal-title": "Formulaire de présentation",
+    "event-verifmodal-exec-modal-label": "Présentation :",
+    "event-verifmodal-exec-embed-modal-send-error": "Erreur lors de l'envoie de votre présentation, contactez un membre du serveur.",
+    "event-verifmodal-exec-embed-title": "Présentation de {userName}",
+    "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps."
 }

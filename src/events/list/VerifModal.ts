@@ -9,6 +9,7 @@ import { generalChannel } from "$resources/config/information.json";
 import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import { verify } from "$resources/config/information.json";
+import { msg } from "$core/utils/Message";
 
 export default class VerifModal extends Event {
 
@@ -23,7 +24,7 @@ export default class VerifModal extends Event {
         // Checks :
         if (!(interaction.member instanceof GuildMember)) {
             interaction.reply({
-                embeds: [simpleEmbed("Erreur lors de l'ouverture du formulaire, contactez un membre du serveur.", "error")],
+                embeds: [simpleEmbed(msg("event-verifmodal-exec-embed-open-error"), "error")],
                 ephemeral: true
             });
 
@@ -32,7 +33,7 @@ export default class VerifModal extends Event {
 
         if (!interaction.member.roles?.cache.has(verify.roles.waiting)) {
             interaction.reply({
-                embeds: [simpleEmbed("Les membres du serveur ne peuvent pas utiliser cette interaction.", "error")],
+                embeds: [simpleEmbed(msg("event-verifmodal-exec-embed-already-member-error"), "error")],
                 ephemeral: true
             });
             return;
@@ -40,10 +41,10 @@ export default class VerifModal extends Event {
 
         const modal = new ModalBuilder()
             .setCustomId(modalIds.verify)
-            .setTitle("Formulaire de présentation")
+            .setTitle(msg("event-verifmodal-exec-modal-title"))
             .addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(new TextInputBuilder()
                 .setCustomId("presentation")
-                .setLabel("Présentation :")
+                .setLabel(msg("event-verifmodal-exec-modal-label"))
                 .setStyle(TextInputStyle.Paragraph)
                 .setMinLength(50)));
 
@@ -63,7 +64,7 @@ export default class VerifModal extends Event {
             || !(member instanceof GuildMember)
         ) {
             interaction.reply({
-                embeds: [simpleEmbed("Erreur lors de l'envoie de votre présentation, contactez un membre du serveur.", "error")],
+                embeds: [simpleEmbed(msg("event-verifmodal-exec-embed-modal-send-error"), "error")],
                 ephemeral: true
             });
 
@@ -72,7 +73,7 @@ export default class VerifModal extends Event {
 
         // Send the presentation in general channel with votes :
         const message = await generalChannelInstance.send({
-            embeds: [simpleEmbed(presentation, "normal", `Présentation de ${member.displayName}`).setFooter({ text: `ID : ${member.id}` })]
+            embeds: [simpleEmbed(presentation, "normal", msg("event-verifmodal-exec-embed-title", [member.displayName])).setFooter({ text: `ID : ${member.id}` })]
         });
 
         await message.react(verify.emoji.upVote);
@@ -80,7 +81,7 @@ export default class VerifModal extends Event {
 
         // Send confirmation reply :
         interaction.reply({
-            embeds: [simpleEmbed("Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps.")],
+            embeds: [simpleEmbed(msg("event-verifmodal-exec-modal-sent-successfully-mp"))],
             ephemeral: true
         });
     }

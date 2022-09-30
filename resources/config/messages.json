@@ -1,6 +1,10 @@
 {
     "message-execution-error": "Erreur lors de l'exécution de la commande",
 
+    // -------------------------------------
+    //      COMMANDS
+    // -------------------------------------
+
     "cmd-birthday-builder-name": "anniversaire",
     "cmd-birthday-builder-description": "Définir votre date d'anniversaire",
     "cmd-birthday-builder-subcmd-set-name": "set",
@@ -54,6 +58,22 @@
     "cmd-inactive-builder-description": "Voir les membres inactifs ce mois-ci",
     "cmd-inactive-exec-inactives": "Liste des membres inactif",
     "cmd-inactive-exec-no-inactives": "Aucun membre n'est inactif.",
+
+    "cmd-interaction-builder-name": "interaction",
+    "cmd-interaction-builder-description": "Permet d'envoyer une interaction dans le salon",
+    "cmd-interaction-builder-name-name": "name",
+    "cmd-interaction-builder-name-description": "Choisir l'interaction à envoyer.",
+    "cmd-interaction-exec-verif-embed-title": "Vérification pour entrer dans le Royaume",
+    "cmd-interaction-exec-verif-embed-content": [
+        "Bienvenue, tu es dans le salon de vérification des nouveaux membres.",
+        "",
+        "**Le Royaume** est un serveur privé où la bonne ambiance est donc obligatoire. Ici on parle principalement de **programmation**, **trading**, **graphisme** et d'autres choses encore. Parfois on joue, ou on regarde des films ensemble aussi... 🍿",
+        "",
+        "Si les domaines cités ci-dessus te correspondent et que tu as envie de faire parti de cette communauté privée et d'évoluer avec nous, il faudra que tu fasses une petite présentation de toi, tes ambitions, tes projets, tes centres d'intérêt... Donne nous envie quoi !"
+    ],
+    "cmd-interaction-exec-verif-button-label": "Faire sa présentation",
+    "cmd-interaction-exec-verif-button-emoji": "📝",
+    "cmd-interaction-exec-verif-succes-embed": "Votre interaction a bien était créé.",
 
     "cmd-main-builder-name": "main",
     "cmd-main-builder-description": "Ajouter, supprimer ou voir la liste des salons/rôles principaux",
@@ -139,6 +159,10 @@
     ],
 
 
+    // -------------------------------------
+    //      EVENTS
+    // -------------------------------------
+
     "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
 
 
@@ -172,6 +196,10 @@
     "event-verifmodal-exec-embed-title": "Présentation de {userName}",
     "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps.",
 
+
+    // -------------------------------------
+    //      TASKS
+    // -------------------------------------
 
     "task-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre",
 

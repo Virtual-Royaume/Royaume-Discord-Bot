@@ -147,5 +147,10 @@
     "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps.",
 
 
-    "event-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre"
+    "task-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre",
+
+
+    "task-tierupdate-exec-embed-member-no-old-rank-update": "<@{userId}> ➜ <@&{newRoleId}>",
+    "task-tierupdate-exec-embed-member-rank-update": "<@{userId}> <@&{oldRoleId}> ➜ <@&{newRoleId}>",
+    "task-tierupdate-exec-embed-title": "Changement des rôles d'activités"
 }

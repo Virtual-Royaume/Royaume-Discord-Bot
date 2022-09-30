@@ -116,47 +116,6 @@
     ],
     "cmd-member-exec-member-channel-activity": "{messageCount} dans <#{channelId}>",
 
-
-    "cmd-role-builder-name": "role",
-    "cmd-role-builder-description": "Permet de choisir ses rôles",
-    "cmd-role-exec-choose-role": "Veuillez choisir vos roles",
-
-    "cmd-stats-builder-name": "stats",
-    "cmd-stats-builder-description": "Voir les statistiques du serveurs",
-    "cmd-stats-builder-history-name": "historique",
-    "cmd-stats-builder-history-description": "Nombre de jour d'historique",
-    "cmd-stats-exec-embed-title": "**Statistiques sur {days} jours**",
-    "cmd-stats-exec-embed-voices": "Temps de vocal des utilisateurs en minutes",
-    "cmd-stats-exec-embed-messages": "Nombre de messages envoyés",
-    "cmd-stats-exec-embed-members": "Nombre de membres présents sur le serveur",
-
-    "cmd-topvoice-builder-name": "top-voice",
-    "cmd-topvoice-builder-description": "Voir le classement des membres les plus actifs en vocal",
-    "cmd-topvoice-builder-source-name": "source",
-    "cmd-topvoice-builder-source-description": "Source du classement",
-    "cmd-topvoice-builder-page-name": "page",
-    "cmd-topvoice-builder-page-description": "Page du classement",
-    "cmd-topvoice-exec-embed-title": "Classements des membres les plus actifs en vocal (en minute) ({source}) (page : {page}/{maxPage})",
-    "cmd-topvoice-exec-embed-line": [
-        "**{position}. {username} :** {minutes}",
-        ""
-    ],
-
-    "cmd-topmessages-builder-name": "top-message",
-    "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",
-    "cmd-topmessages-builder-source-name": "source",
-    "cmd-topmessages-builder-source-description": "Source du classement",
-    "cmd-topmessages-builder-page-name": "page",
-    "cmd-topmessages-builder-page-description": "Page du classement",
-    "cmd-topmessages-builder-channel-name": "salon",
-    "cmd-topmessages-builder-channel-description": "Choix du salon si vous avez choisi \"salon\" comme source",
-    "cmd-topmessages-exec-error-need-mention": "Vous devez mentionner un salon",
-    "cmd-topmessages-exec-embed-title": "Classements des membres les plus actifs ({source}) (page : {page}/{maxPage})",
-    "cmd-topmessages-exec-embed-line": [
-        "**{position}. {username} :** {nbrMessages}",
-        ""
-    ],
-
     "cmd-presence-builder-name": "presence",
     "cmd-presence-builder-description": "Gérer l'activité du bot Discord",
     "cmd-presence-builder-action-name": "action",
@@ -192,6 +151,45 @@
         "\n"
     ],
 
+    "cmd-role-builder-name": "role",
+    "cmd-role-builder-description": "Permet de choisir ses rôles",
+    "cmd-role-exec-choose-role": "Veuillez choisir vos roles",
+
+    "cmd-stats-builder-name": "stats",
+    "cmd-stats-builder-description": "Voir les statistiques du serveurs",
+    "cmd-stats-builder-history-name": "historique",
+    "cmd-stats-builder-history-description": "Nombre de jour d'historique",
+    "cmd-stats-exec-embed-title": "**Statistiques sur {days} jours**",
+    "cmd-stats-exec-embed-voices": "Temps de vocal des utilisateurs en minutes",
+    "cmd-stats-exec-embed-messages": "Nombre de messages envoyés",
+    "cmd-stats-exec-embed-members": "Nombre de membres présents sur le serveur",
+
+    "cmd-topmessages-builder-name": "top-message",
+    "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",
+    "cmd-topmessages-builder-source-name": "source",
+    "cmd-topmessages-builder-source-description": "Source du classement",
+    "cmd-topmessages-builder-page-name": "page",
+    "cmd-topmessages-builder-page-description": "Page du classement",
+    "cmd-topmessages-builder-channel-name": "salon",
+    "cmd-topmessages-builder-channel-description": "Choix du salon si vous avez choisi \"salon\" comme source",
+    "cmd-topmessages-exec-error-need-mention": "Vous devez mentionner un salon",
+    "cmd-topmessages-exec-embed-title": "Classements des membres les plus actifs ({source}) (page : {page}/{maxPage})",
+    "cmd-topmessages-exec-embed-line": [
+        "**{position}. {username} :** {nbrMessages}",
+        ""
+    ],
+
+    "cmd-topvoice-builder-name": "top-voice",
+    "cmd-topvoice-builder-description": "Voir le classement des membres les plus actifs en vocal",
+    "cmd-topvoice-builder-source-name": "source",
+    "cmd-topvoice-builder-source-description": "Source du classement",
+    "cmd-topvoice-builder-page-name": "page",
+    "cmd-topvoice-builder-page-description": "Page du classement",
+    "cmd-topvoice-exec-embed-title": "Classements des membres les plus actifs en vocal (en minute) ({source}) (page : {page}/{maxPage})",
+    "cmd-topvoice-exec-embed-line": [
+        "**{position}. {username} :** {minutes}",
+        ""
+    ],
 
     "cmd-together-builder-name": "watch-together",
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
@@ -210,7 +208,6 @@
 
     "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
 
-
     "event-messagelinkreaction-exec-attachments": "🗂️ {attachmentsCount} fichiers joint(s)",
     "event-messagelinkreaction-exec-replyed-embed": [
         "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**",
@@ -218,10 +215,8 @@
         "{content}"
     ],
 
-
     "event-rolesselector-exec-roles-fetch-error": "Une erreur s'est produite lors de l'acquisition des roles.",
     "event-rolesselector-exec-roles-edited": "Modifications de vos rôles effectuées dans la categorie **{category}**.",
-
 
     "event-verifmessagereactionadd-exec-welcome-message": "Bienvenue parmis nous <@{userId}> !",
     "event-verifmessagereactionadd-exec-embed-member-accepted": [
@@ -231,7 +226,6 @@
     ],
     "event-verifmessagereactionadd-exec-embed-member-rejected": "La présentation de {userName} a été refusé.",
     "event-verifmessagereactionadd-exec-embed-member-rejected-mp": "Votre présentation n'a pas convaincu les membres du Royaume.",
-
 
     "event-verifmodal-exec-embed-open-error": "Erreur lors de l'ouverture du formulaire, contactez un membre du serveur.",
     "event-verifmodal-exec-embed-already-member-error": "Les membres du serveur ne peuvent pas utiliser cette interaction.",
@@ -247,7 +241,6 @@
     // -------------------------------------
 
     "task-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre",
-
 
     "task-tierupdate-exec-embed-member-no-old-rank-update": "<@{userId}> ➜ <@&{newRoleId}>",
     "task-tierupdate-exec-embed-member-rank-update": "<@{userId}> <@&{oldRoleId}> ➜ <@&{newRoleId}>",

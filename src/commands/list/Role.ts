@@ -11,9 +11,9 @@ export default class Role extends Command {
         .setName("role")
         .setDescription("Permet de choisir ses rôles");
 
-    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Generate select menu :
-        const messageActionRows: ActionRowBuilder[] = [];
+        const messageActionRows: ActionRowBuilder<SelectMenuBuilder>[] = [];
 
         for (const [category, rolesId] of Object.entries(await getRolesByCategory())) {
             // Create category interaction :
@@ -40,14 +40,12 @@ export default class Role extends Command {
             }
 
             // Add interaction in message action row :
-            messageActionRows.push(new ActionRowBuilder().addComponents(interaction));
+            messageActionRows.push(new ActionRowBuilder<SelectMenuBuilder>().addComponents(interaction));
         }
 
         // Send the interaction :
         command.reply({
             embeds: [simpleEmbed("", "normal", "Veuillez choisir vos roles")],
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             components: messageActionRows,
             ephemeral: true
         });

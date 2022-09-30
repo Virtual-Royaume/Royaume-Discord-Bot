@@ -1,4 +1,4 @@
-import { BaseGuildTextChannel, Message, EmbedBuilder, NonThreadGuildBasedChannel } from "discord.js";
+import { BaseGuildTextChannel, Message, EmbedBuilder, NonThreadGuildBasedChannel, TextBasedChannel } from "discord.js";
 import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
@@ -7,7 +7,7 @@ export default class MessageLinkReaction extends Event {
 
     public name: EventName = "messageCreate";
 
-    public async execute(message: Message) : Promise<void> {
+    public async execute(message: Message): Promise<void> {
         // Checks :
         if (message.author.bot && !(message.channel instanceof BaseGuildTextChannel)) return;
 
@@ -29,7 +29,7 @@ export default class MessageLinkReaction extends Event {
             if (!ids.length) return;
 
             // Get channel and message instances :
-            let channelQuoted: NonThreadGuildBasedChannel;
+            let channelQuoted: TextBasedChannel;
             let messageQuoted: Message;
 
             try {
@@ -40,9 +40,6 @@ export default class MessageLinkReaction extends Event {
 
                 channelQuoted = tempChannel;
 
-                // Message :
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
             } catch {
                 return;

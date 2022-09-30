@@ -125,5 +125,10 @@
 
 
     "event-messagelinkreaction-exec-attachments": "🗂️ {attachmentsCount} fichiers joint(s)",
-    "event-messagelinkreaction-exec-replyed-embed": "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**\n\n{content}"
+    "event-messagelinkreaction-exec-replyed-embed": "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**\n\n{content}",
+
+
+    "event-rolesselector-exec-roles-fetch-error": "Une erreur s'est produite lors de l'acquisition des roles.",
+    "event-rolesselector-exec-roles-edited": "Modifications de vos rôles effectuées dans la categorie **{category}**."
+
 }

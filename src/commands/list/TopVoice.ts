@@ -1,4 +1,5 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "discord.js";
+import { msg } from "$core/utils/Message";
 import { request } from "$core/api/Request";
 import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
@@ -20,22 +21,22 @@ export default class TopVoice extends Command {
     ];
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("top-voice")
-        .setDescription("Voir le classement des membres les plus actifs en vocal")
+        .setName(msg("cmd-topvoice-builder-name"))
+        .setDescription(msg("cmd-topvoice-builder-description"))
         .addStringOption(new SlashCommandStringOption()
-            .setName("source")
-            .setDescription("Source du classement")
+            .setName(msg("cmd-topvoice-builder-source-name"))
+            .setDescription(msg("cmd-topvoice-builder-source-description"))
             .addChoices(...this.sourceChoices)
             .setRequired(true)).addNumberOption(new SlashCommandNumberOption()
-            .setName("page")
-            .setDescription("Page du classement")
+            .setName(msg("cmd-topvoice-builder-page-name"))
+            .setDescription(msg("cmd-topvoice-builder-page-description"))
             .setMinValue(1));
 
     private memberPerPage = 20;
 
-    public async execute(command: ChatInputCommandInteraction): Promise<void> {
-        const source: Source = <Source>command.options.getString("source", true);
-        let page = command.options.getNumber("page") ?? 1;
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+        const source: Source = <Source>command.options.getString(msg("cmd-topvoice-builder-source-name"), true);
+        let page = command.options.getNumber(msg("cmd-topvoice-builder-page-name")) ?? 1;
 
         // Get data and sort it :
         interface Data {
@@ -84,13 +85,15 @@ export default class TopVoice extends Command {
         for (let i = 0; i < members.length; i++) {
             const member = members[i];
 
-            message += `**${i + 1 + (page - 1) * this.memberPerPage}. ${member.username} :** ${formatMinutes(member.voiceMinute)}\n`;
+            message += msg("cmd-topvoice-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
+                formatMinutes(member.voiceMinute)
+            ]);
         }
 
         // Send leaderboard :
         command.reply({
             embeds: [
-                simpleEmbed(message, "normal", `Classements des membres les plus actifs en vocal (en minute) (${source}) (page : ${page}/${maxPage})`)
+                simpleEmbed(message, "normal", msg("cmd-topvoice-exec-embed-title", [source, page, maxPage]))
             ]
         });
     }

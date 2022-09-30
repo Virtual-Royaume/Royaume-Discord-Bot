@@ -1,4 +1,8 @@
-import { ChatInputCommandInteraction, ActionRowBuilder, SelectMenuBuilder, GuildMemberRoleManager, SlashCommandBuilder } from "discord.js";
+import {
+    ChatInputCommandInteraction, ActionRowBuilder, SelectMenuBuilder,
+    GuildMemberRoleManager, SlashCommandBuilder
+} from "discord.js";
+import { msg } from "$core/utils/Message";
 import Command from "$core/commands/Command";
 import { simpleEmbed } from "$core/utils/Embed";
 import { getRolesByCategory } from "$core/api/func/MainRole";
@@ -8,8 +12,8 @@ import Client from "$core/Client";
 export default class Role extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("role")
-        .setDescription("Permet de choisir ses rôles");
+        .setName(msg("cmd-role-builder-name"))
+        .setDescription(msg("cmd-role-builder-description"));
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Generate select menu :
@@ -45,7 +49,7 @@ export default class Role extends Command {
 
         // Send the interaction :
         command.reply({
-            embeds: [simpleEmbed("", "normal", "Veuillez choisir vos roles")],
+            embeds: [simpleEmbed("", "normal", msg("cmd-role-exec-choose-role"))],
             components: messageActionRows,
             ephemeral: true
         });

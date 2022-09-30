@@ -2,12 +2,13 @@ import { GuildMemberRoleManager, Interaction } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
 import { selectMenu } from "$resources/config/interaction-ids.json";
+import { msg } from "$core/utils/Message";
 
 export default class RolesSelector extends Event {
 
     public name: EventName = "interactionCreate";
 
-    public async execute(interaction: Interaction) : Promise<void> {
+    public async execute(interaction: Interaction): Promise<void> {
         if (!interaction.isSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
 
         // Get category :
@@ -23,7 +24,7 @@ export default class RolesSelector extends Event {
         const memberRoles = interaction.member?.roles;
 
         if (!(memberRoles instanceof GuildMemberRoleManager)) {
-            interaction.reply({ embeds: [simpleEmbed("Une erreur s'est produite lors de l'acquisition des roles.", "error")] });
+            interaction.reply({ embeds: [simpleEmbed(msg("event-rolesselector-exec-roles-fetch-error"), "error")] });
             return;
         }
 
@@ -33,7 +34,7 @@ export default class RolesSelector extends Event {
 
         // Send confirmation :
         interaction.reply({
-            embeds: [simpleEmbed(`Modifications de vos rôles effectuées dans la categorie **${category}**.`)],
+            embeds: [simpleEmbed(msg("event-rolesselector-exec-roles-edited", [category]))],
             ephemeral: true
         });
     }

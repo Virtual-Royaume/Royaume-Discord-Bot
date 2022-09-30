@@ -2,6 +2,7 @@ import {
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandRoleOption, SlashCommandStringOption
 } from "discord.js";
+import { msg } from "$core/utils/Message";
 import { getChannelsByCategory } from "$core/api/func/MainChannel";
 import { getRolesByCategory } from "$core/api/func/MainRole";
 import { request } from "$core/api/Request";
@@ -26,33 +27,33 @@ export default class Inactive extends Command {
     ];
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("main")
-        .setDescription("Ajouter, supprimer ou voir la liste des salons/rôles principaux")
+        .setName(msg("cmd-main-builder-name"))
+        .setDescription(msg("cmd-main-builder-description"))
         .setDefaultMemberPermissions(0)
         .addStringOption(new SlashCommandStringOption()
-            .setName("action")
-            .setDescription("Ajout, suppression ou liste")
+            .setName(msg("cmd-main-builder-action-name"))
+            .setDescription(msg("cmd-main-builder-action-description"))
             .addChoices(...this.actionChoices)
             .setRequired(true))
         .addChannelOption(new SlashCommandChannelOption()
-            .setName("channel")
-            .setDescription("Ajout ou supression de ce salon")
+            .setName(msg("cmd-main-builder-channel-name"))
+            .setDescription(msg("cmd-main-builder-channel-description"))
             .addChannelTypes(0))
         .addRoleOption(new SlashCommandRoleOption()
-            .setName("role")
-            .setDescription("Ajout ou supression de ce rôle"))
+            .setName(msg("cmd-main-builder-role-name"))
+            .setDescription(msg("cmd-main-builder-role-name")))
         .addStringOption(new SlashCommandStringOption()
-            .setName("category")
-            .setDescription("Catégorie du salon ou rôle"));
+            .setName(msg("cmd-main-builder-category-name"))
+            .setDescription(msg("cmd-main-builder-category-name")));
 
     public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         // Get action, channel/role and category :
         const action: Action = <Action>command.options.getString("action", true);
 
-        const channel = command.options.getChannel("channel");
-        const role = command.options.getRole("role");
+        const channel = command.options.getChannel(msg("cmd-main-builder-channel-name"));
+        const role = command.options.getRole(msg("cmd-main-builder-role-name"));
 
-        const category = command.options.getString("category");
+        const category = command.options.getString(msg("cmd-main-builder-category-name"));
 
         // List action :
         if (action === "list") {
@@ -65,16 +66,16 @@ export default class Inactive extends Command {
             let roleMessage = "";
 
             for (const [category, ids] of Object.entries(channels)) {
-                channelMessage += `**${category} :** ${ids.map(id => "<#" + id + ">").join(", ")}\n\n`;
+                channelMessage += msg("cmd-main-exec-channel-message", [category, ids.map(id => "<#" + id + ">").join(", ")]) + "\n\n";
             }
 
             for (const [category, ids] of Object.entries(roles)) {
-                roleMessage += `**${category} :** ${ids.map(id => "<@&" + id + ">").join(", ")}\n\n`;
+                roleMessage += msg("cmd-main-exec-channel-message", [category, ids.map(id => "<@&" + id + ">").join(", ")]) + "\n\n";
             }
 
             command.reply({ embeds: [
-                simpleEmbed(channelMessage, "normal", "Salons principaux"),
-                simpleEmbed(roleMessage, "normal", "Rôles principaux")
+                simpleEmbed(channelMessage, "normal", msg("cmd-main-exec-channels-title")),
+                simpleEmbed(roleMessage, "normal", msg("cmd-main-exec-role-title"))
             ], ephemeral: true });
         }
 
@@ -87,12 +88,12 @@ export default class Inactive extends Command {
 
         if (action === "add" || action === "remove") {
             if (!category && action === "add") {
-                command.reply({ embeds: [simpleEmbed("Vous devez choisir une catégorie.", "error")], ephemeral: true });
+                command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-category"), "error")], ephemeral: true });
                 return;
             }
 
             if (!channel && !role) {
-                command.reply({ embeds: [simpleEmbed("Vous devez mentionner un salon ou un rôle.", "error")], ephemeral: true });
+                command.reply({ embeds: [simpleEmbed("cmd-main-exec-need-mention", "error")], ephemeral: true });
                 return;
             }
 
@@ -112,9 +113,8 @@ export default class Inactive extends Command {
 
             const type = result.type === "role" ? "rôle" : "salon";
             const message = result.success
-                ? `Vous avez bien ${result.action === "add" ? "ajouté" : "supprimé"} le ${type}.`
-                : `Erreur lors de ${result.action === "add" ? "l'ajout" : "la suppression"} du ${type}.`;
-
+                ? msg("cmd-main-exec-success-add", [result.action === "add" ? "ajouté" : "supprimé", type])
+                : msg("cmd-main-exec-success-error", [result.action === "add" ? "l'ajout" : "la suppression", type]);
             command.reply({ embeds: [simpleEmbed(message, result.success ? "normal" : "error")], ephemeral: true });
         }
     }

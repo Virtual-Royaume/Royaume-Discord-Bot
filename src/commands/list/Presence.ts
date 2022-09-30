@@ -15,6 +15,7 @@ import { PresenceType } from "$core/api/Schema";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 import Client from "$core/Client";
+import { msg } from "$core/utils/Message";
 
 type Action = "add" | "remove" | "list";
 
@@ -36,32 +37,32 @@ export default class Role extends Command {
     private messagePerPage = 20;
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("presence")
-        .setDescription("Gérer l'activité du bot Discord")
+        .setName(msg("cmd-presence-builder-name"))
+        .setDescription(msg("cmd-presence-builder-description"))
         .addStringOption(new SlashCommandStringOption()
-            .setName("action")
-            .setDescription("Ajout, suppression ou liste")
+            .setName(msg("cmd-presence-builder-action-name"))
+            .setDescription(msg("cmd-presence-builder-action-description"))
             .addChoices(...this.actionChoices)
             .setRequired(true))
 
         .addNumberOption(new SlashCommandNumberOption()
-            .setName("page")
-            .setDescription("Page de la liste")
+            .setName(msg("cmd-presence-builder-page-name"))
+            .setDescription(msg("cmd-presence-builder-page-description"))
             .setMinValue(1))
 
         .addStringOption(new SlashCommandStringOption()
-            .setName("presence")
-            .setDescription("Type de l'activité à ajouter")
+            .setName(msg("cmd-presence-builder-presence-name"))
+            .setDescription(msg("cmd-presence-builder-presence-description"))
             .addChoices(...this.presenceTypes))
         .addStringOption(new SlashCommandStringOption()
-            .setName("message")
-            .setDescription("Message de l'activité à ajouter"))
+            .setName(msg("cmd-presence-builder-message-name"))
+            .setDescription(msg("cmd-presence-builder-message-description")))
 
         .addStringOption(new SlashCommandStringOption()
             .setName("id")
             .setDescription("Id de l'activité à supprimer"));
 
-    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Get action and execute function of this action :
         const action: Action = <Action>command.options.getString("action", true);
 
@@ -70,14 +71,14 @@ export default class Role extends Command {
         if (action === "list") return this.list(command);
     }
 
-    private async add(command: ChatInputCommandInteraction) : Promise<void> {
-        const presence = command.options.getString("presence");
-        const message = command.options.getString("message");
+    private async add(command: ChatInputCommandInteraction): Promise<void> {
+        const presence = command.options.getString(msg("cmd-presence-builder-presence-name"));
+        const message = command.options.getString(msg("cmd-presence-builder-message-name"));
 
         // Checks :
         if (!presence || !message) {
             command.reply({
-                embeds: [simpleEmbed("Vous devez définir les paramètres ``presence`` et ``message``.", "error")],
+                embeds: [simpleEmbed(msg("cmd-presence-exec-embed-missing-parameters"), "error")],
                 ephemeral: true
             });
             return;
@@ -85,21 +86,21 @@ export default class Role extends Command {
 
         if (!(command.member instanceof GuildMember)) {
             command.reply({
-                embeds: [simpleEmbed("Erreur lors de l'exécution de la commande.", "error")],
+                embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")],
                 ephemeral: true
             });
             return;
         }
 
         // Create function for the request for add presence message :
-        const addPresenceRequest = async() => await request(addPresenceMessage, { type: presence, text: message });
+        const addPresenceRequest = async () => await request(addPresenceMessage, { type: presence, text: message });
 
         // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
         if (command.member.permissions.has("Administrator")) {
             await addPresenceRequest();
 
             command.reply({
-                embeds: [simpleEmbed("Cette nouvelle activité a bien été sauvegardé.")],
+                embeds: [simpleEmbed(msg("cmd-presence-exec-embed-new-activity-succes"))],
                 ephemeral: true
             });
         } else {
@@ -108,21 +109,24 @@ export default class Role extends Command {
 
             if (!(generalChannelInstance instanceof BaseGuildTextChannel)) {
                 command.reply({
-                    embeds: [simpleEmbed("Erreur lors de l'exécution de la commande.", "error")],
+                    embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")],
                     ephemeral: true
                 });
                 return;
             }
 
             // Send the proposal/vote message :
-            const voteMessage = await generalChannelInstance.send({ embeds: [
-                simpleEmbed(
-                    "**Proposition d'une nouvelle activité aléatoire sur le bot :**"
-                    + `\n "\`\`${presence}\`\` ${message}"\n\nProposé par <@${command.user.id}>`,
-                    "normal",
-                    "Proposition d'activité"
-                )
-            ] });
+            const voteMessage = await generalChannelInstance.send({
+                embeds: [
+                    simpleEmbed(
+                        msg("cmd-presence-exec-embed-new-activity-proposal", [
+                            presence,
+                            message,
+                            command.user.id
+                        ])
+                    )
+                ]
+            });
 
             // Add reactions to the proposal message :
             await voteMessage.react(activityProposal.emoji.upVote);
@@ -130,7 +134,7 @@ export default class Role extends Command {
 
             // Confirm the creation of the proposal message :
             command.reply({
-                embeds: [simpleEmbed(`Votre proposition de nouvelle activité a était envoyé dans le salon <#${generalChannel}>.`)],
+                embeds: [simpleEmbed(msg("cmd-presence-exec-embed-new-activity-proposal-succes", [generalChannel]))],
                 ephemeral: true
             });
 
@@ -151,7 +155,7 @@ export default class Role extends Command {
                     reaction.emoji.name === activityProposal.emoji.upVote
                     && reaction.count >= activityProposal.reactionNeededCount.upVote
                 ) {
-                    voteMessage.reply({ embeds: [simpleEmbed("Proposition accepté.")] });
+                    voteMessage.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-activity-proposal-accepted"))] });
 
                     addPresenceRequest();
                     removeReactions();
@@ -161,9 +165,11 @@ export default class Role extends Command {
                     reaction.emoji.name === activityProposal.emoji.downVote
                     && reaction.count >= activityProposal.reactionNeededCount.downVote
                 ) {
-                    voteMessage.reply({ embeds: [
-                        simpleEmbed("Proposition refusé.", "error")
-                    ] });
+                    voteMessage.reply({
+                        embeds: [
+                            simpleEmbed(msg("cmd-presence-exec-embed-activity-proposal-refused"), "error")
+                        ]
+                    });
 
                     removeReactions();
                 }
@@ -171,9 +177,11 @@ export default class Role extends Command {
 
             reactionCollector.on("end", () => {
                 if (!voteMessage.reactions.cache.size) {
-                    voteMessage.reply({ embeds: [
-                        simpleEmbed("Le temps de vote pour cette proposition est écoulé.", "error")
-                    ] });
+                    voteMessage.reply({
+                        embeds: [
+                            simpleEmbed(msg("cmd-presence-exec-embed-activity-proposal-time-limit"), "error")
+                        ]
+                    });
 
                     removeReactions();
                 }
@@ -181,13 +189,13 @@ export default class Role extends Command {
         }
     }
 
-    private async remove(command: ChatInputCommandInteraction) : Promise<void> {
+    private async remove(command: ChatInputCommandInteraction): Promise<void> {
         const id = command.options.getString("id");
 
         // Checks :
         if (!id) {
             command.reply({
-                embeds: [simpleEmbed("Vous devez définir le paramètre ``id`` de l'activité que vous voulez supprimer.", "error")],
+                embeds: [simpleEmbed(msg("cmd-presence-exec-embed-activity-delete-missing-id"), "error")],
                 ephemeral: true
             });
             return;
@@ -195,7 +203,7 @@ export default class Role extends Command {
 
         if (!(command.member instanceof GuildMember)) {
             command.reply({
-                embeds: [simpleEmbed("Erreur lors de l'exécution de la commande.", "error")],
+                embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")],
                 ephemeral: true
             });
             return;
@@ -214,22 +222,22 @@ export default class Role extends Command {
             const deleted = await request<RemovePresenceMessageType>(removePresenceMessage, { id });
 
             if (deleted.removePresenceMessage) {
-                command.reply({ embeds: [simpleEmbed("Vous avez bien supprimé cette activité.")], ephemeral: true });
+                command.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-succes"))], ephemeral: true });
             } else {
                 command.reply({
-                    embeds: [simpleEmbed("Cette ID n'est relié à aucune activité.", "error")],
+                    embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-fail"), "error")],
                     ephemeral: true
                 });
             }
         } catch {
             command.reply({
-                embeds: [simpleEmbed("Votre ID est invalide.", "error")],
+                embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-error"), "error")],
                 ephemeral: true
             });
         }
     }
 
-    private async list(command: ChatInputCommandInteraction) : Promise<void> {
+    private async list(command: ChatInputCommandInteraction): Promise<void> {
         // Get data and sort it :
         let presenceMessages = (await request<GetPresenceMessagesType>(getPresenceMessages)).presenceMessages;
 
@@ -247,12 +255,16 @@ export default class Role extends Command {
         for (let i = 0; i < presenceMessages.length; i++) {
             const presence = presenceMessages[i];
 
-            message += `${presence._id} : \`\`${presence.type}\`\` ${presence.text}\n\n`;
+            message += msg("cmd-presence-exec-embed-activity-list-activity", [
+                presence._id,
+                presence.type,
+                presence.text
+            ]);
         }
 
         // Send leaderboard :
         command.reply({
-            embeds: [simpleEmbed(message, "normal", `Liste des messages d'activité du bot (page : ${page}/${maxPage})`)]
+            embeds: [simpleEmbed(message, "normal", msg("cmd-presence-exec-embed-activity-list-title", [page, maxPage]))]
         });
     }
 }

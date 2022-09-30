@@ -6,23 +6,24 @@ import Command from "$core/commands/Command";
 import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
 import { dateFormat, firstLetterToUppercase, getAge, numberFormat, formatMinutes } from "$core/utils/Function";
 import DayJS from "$core/utils/DayJS";
+import { msg } from "$core/utils/Message";
 
 export default class Member extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("member")
-        .setDescription("Voir les statistiques et information d'un utilisateur")
+        .setName(msg("cmd-member-builder-name"))
+        .setDescription(msg("cmd-member-builder-description"))
         .addUserOption(new SlashCommandUserOption()
-            .setName("member")
-            .setDescription("Membre ciblé"));
+            .setName(msg("cmd-member-builder-member-name"))
+            .setDescription(msg("cmd-member-builder-member-description")));
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
-        const member = command.options.getMember("member") ?? command.member;
+        const member = command.options.getMember(msg("cmd-member-builder-member-name")) ?? command.member;
 
         // Check :
         if (!(member instanceof GuildMember)) {
             command.reply({
-                embeds: [simpleEmbed("Erreur lors de l'utilisation de la commande.")],
+                embeds: [simpleEmbed(msg("message-execution-error-cmd"))],
                 ephemeral: true
             });
             return;
@@ -32,7 +33,7 @@ export default class Member extends Command {
         const memberInfo = (await request<GetMemberType>(getMember, { id: member.id })).member;
 
         if (!memberInfo) {
-            command.reply({ embeds: [simpleEmbed("Aucune donnée trouvée.", "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(msg("cmd-member-exec-member-info-error"), "error")], ephemeral: true });
             return;
         }
 
@@ -52,20 +53,19 @@ export default class Member extends Command {
         if (memberInfo.birthday) {
             const birthday = DayJS(memberInfo.birthday).tz();
 
-            message += `**👶 Né le ${dateFormat(birthday, "/")} *(${getAge(birthday)} ans)***\n\n`;
+            message += msg("cmd-member-exec-member-birth", [dateFormat(birthday, "/"), getAge(birthday)]);
         }
 
         const memberActivity = memberInfo.activity;
 
-        message += `**🔊 Temps de vocal (en minute) :** ${formatMinutes(memberActivity.voiceMinute)}\n`;
-        message += `**🔉 Temps de vocal ce mois (en minute) :** ${formatMinutes(memberActivity.monthVoiceMinute)}\n\n`;
+        message += msg("cmd-member-exec-member-activity", [
+            formatMinutes(memberActivity.voiceMinute),
+            formatMinutes(memberActivity.monthVoiceMinute),
+            numberFormat(memberActivity.messages.totalCount),
+            numberFormat(memberActivity.messages.monthCount)
+        ]);
 
-        message += `**📜 Nombre de message :** ${numberFormat(memberActivity.messages.totalCount)}\n`;
-        message += `**📝 Nombre de message ce mois :** ${numberFormat(memberActivity.messages.monthCount)}\n\n`;
-
-        message += "**📺 Nombre de message par salon :**\n";
-
-        const embed = simpleEmbed(message, "normal", `Activité de ${member.displayName}`);
+        const embed = simpleEmbed(message, "normal", msg("cmd-member-exec-embed-title", [member.displayName]));
 
         for (const [category, channelIds] of Object.entries(channelsIdsByCategory)) {
             embed.addFields([{
@@ -74,7 +74,7 @@ export default class Member extends Command {
                     const messageCount = memberInfo.activity.messages.perChannel
                         .find(channel => channel?.channelId === channelId)?.messageCount ?? 0;
 
-                    return `${messageCount} dans <#${channelId}>`;
+                    return msg("cmd-member-exec-member-channel-activity", [messageCount, channelId]);
                 }).join("\n")
             }]);
         }

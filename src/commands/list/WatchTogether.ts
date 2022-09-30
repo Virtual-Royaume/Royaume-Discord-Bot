@@ -3,22 +3,23 @@ import Client from "$core/Client";
 import Command from "$core/commands/Command";
 import { youtubeTogether } from "$resources/config/app-integration.json";
 import { generalChannel } from "$resources/config/information.json";
+import { msg } from "$core/utils/Message";
 import { simpleEmbed } from "$core/utils/Embed";
 
 export default class WatchTogether extends Command {
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("watch-together")
-        .setDescription("Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"");
+        .setName(msg("cmd-together-builder-name"))
+        .setDescription(msg("cmd-together-builder-description"));
 
-    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         if (!(command.member instanceof GuildMember)) {
-            command.reply({ embeds: [simpleEmbed("Erreur lors de l'exécution de la commande.", "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")], ephemeral: true });
             return;
         }
 
         if (!command.member.voice.channelId) {
-            command.reply({ embeds: [simpleEmbed("Vous devez être dans un salon vocal.", "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(msg("cmd-together-exec-voice-needed"), "error")], ephemeral: true });
             return;
         }
 
@@ -39,13 +40,12 @@ export default class WatchTogether extends Command {
         });
 
         command.reply({
-            embeds: [simpleEmbed(`Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/${invite.code}`)],
+            embeds: [simpleEmbed(msg("cmd-together-exec", [invite.code]))],
             ephemeral: true
         });
 
-        generalTextChannel.send({ embeds: [simpleEmbed(
-            "<@" + command.user.id + "> a lancé **Youtube Together** !\n\n"
-            + "[Rejoindre l'activité](https://discord.gg/" + invite.code + ")"
-        )] });
+        generalTextChannel.send({
+            embeds: [simpleEmbed(msg("cmd-together-exec-general", [command.user.id, invite.code]))]
+        });
     }
 }

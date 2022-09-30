@@ -7,12 +7,13 @@ import Event, { EventName } from "$core/events/Event";
 import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import { numberFormat } from "$core/utils/Function";
+import { msg } from "$core/utils/Message";
 
 export default class MessageCreate extends Event {
 
     public name: EventName = "messageCreate";
 
-    public async execute(message: Msg) : Promise<void> {
+    public async execute(message: Msg): Promise<void> {
         if (message.author.bot) return;
 
         // Get channel or parent channel (if is a thread channel) :
@@ -50,7 +51,7 @@ export default class MessageCreate extends Event {
 
                     generalChannelInstance.send({
                         embeds: [simpleEmbed(
-                            `<@${message.author.id}> vient de passer le cap des ${numberFormat(messageCount)} messages envoyés ! 🎉`
+                            msg("event-messagecreate-exec-message-cap-reached", [message.author.id, numberFormat(messageCount)])
                         )]
                     });
                 }

@@ -6,6 +6,7 @@ import { BaseGuildTextChannel } from "discord.js";
 import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import DayJS from "$core/utils/DayJS";
+import { msg } from "$core/utils/Message";
 
 export default class ServerActivityUpdate extends Task {
 
@@ -28,7 +29,7 @@ export default class ServerActivityUpdate extends Task {
         super(60_000);
     }
 
-    public async run() : Promise<void> {
+    public async run(): Promise<void> {
         // Check if time (00:00) :
         const currentDate = DayJS().tz();
 
@@ -58,7 +59,7 @@ export default class ServerActivityUpdate extends Task {
 
                 const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
                     .setThumbnail(member.profilePicture)
-                    .setFooter({ text: `${currentDate.year() - birthday.year()} années de vie sur terre` });
+                    .setFooter({ text: msg("event-birthdayschecker-exec-embed-footer", [currentDate.year() - birthday.year()]) });
 
                 generalChannelInstance.send({ embeds: [embed] });
             }

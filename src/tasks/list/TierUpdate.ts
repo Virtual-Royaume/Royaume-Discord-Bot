@@ -6,6 +6,7 @@ import { getMembersTier, GetMembersTierType } from "$core/api/requests/Member";
 import Logger from "$core/utils/Logger";
 import { BaseGuildTextChannel } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
+import { msg } from "$core/utils/Message";
 
 interface RoleUpdate {
     memberId: string;
@@ -19,7 +20,7 @@ export default class PresenceUpdate extends Task {
         super(60_000);
     }
 
-    public async run() : Promise<void> {
+    public async run(): Promise<void> {
         const guild = await Client.instance.getGuild();
 
         const tiers: { [key: string]: string } = configTiers;
@@ -63,8 +64,8 @@ export default class PresenceUpdate extends Task {
 
             if (tierMembers.length) {
                 message += tierMembers.map(element => {
-                    if (!element.oldRole) return `<@${element.memberId}> ➜ <@&${element.newRole}>`;
-                    else return `<@${element.memberId}> <@&${element.oldRole}> ➜ <@&${element.newRole}>`;
+                    if (!element.oldRole) return msg("task-tierupdate-exec-embed-member-no-old-rank-update", [element.memberId, element.newRole]);
+                    else return msg("task-tierupdate-exec-embed-member-rank-update", [element.memberId, element.oldRole, element.newRole]);
                 }).join("\n");
 
                 message += "\n\n";
@@ -72,7 +73,7 @@ export default class PresenceUpdate extends Task {
         }
 
         generalChannelInstance.send({
-            embeds: [simpleEmbed(message, "normal", "Changement des rôles d'activités")]
+            embeds: [simpleEmbed(message, "normal", msg("task-tierupdate-exec-embed-title"))]
         });
     }
 }

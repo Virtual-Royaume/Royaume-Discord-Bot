@@ -11,6 +11,7 @@ import {
 import { simpleEmbed } from "$core/utils/Embed";
 import { numberFormat } from "$core/utils/Function";
 import Command from "$core/commands/Command";
+import { msg } from "$core/utils/Message";
 
 type Source = "total" | "mois" | "salon";
 
@@ -28,25 +29,25 @@ export default class TopMessage extends Command {
     ];
 
     public readonly slashCommand = new SlashCommandBuilder()
-        .setName("top-message")
-        .setDescription("Voir le classement des membres les plus actifs en terme de nombre de message")
+        .setName(msg("cmd-topmessages-builder-name"))
+        .setDescription(msg("cmd-topmessages-builder-description"))
         .addStringOption(new SlashCommandStringOption()
-            .setName("source")
-            .setDescription("Source du classement")
+            .setName(msg("cmd-topmessages-builder-source-name"))
+            .setDescription(msg("cmd-topmessages-builder-source-description"))
             .addChoices(...this.sourceChoices)
             .setRequired(true)).addNumberOption(new SlashCommandNumberOption()
-            .setName("page")
-            .setDescription("Page du classement")
+            .setName(msg("cmd-topmessages-builder-page-name"))
+            .setDescription(msg("cmd-topmessages-builder-page-description"))
             .setMinValue(1)).addChannelOption(new SlashCommandChannelOption()
-            .setName("salon")
-            .setDescription("Choix du salon si vous avez choisi \"salon\" comme source")
+            .setName(msg("cmd-topmessages-builder-channel-name"))
+            .setDescription(msg("cmd-topmessages-builder-channel-description"))
             .addChannelTypes(0));
 
     private memberPerPage = 20;
 
     public async execute(command: ChatInputCommandInteraction) : Promise<void> {
-        const source: Source = <Source>command.options.getString("source", true);
-        let page = command.options.getNumber("page") ?? 1;
+        const source: Source = <Source>command.options.getString(msg("cmd-topmessages-builder-source-name"), true);
+        let page = command.options.getNumber(msg("cmd-topmessages-builder-page-name")) ?? 1;
 
         // Get data and sort it :
         interface Data {
@@ -82,10 +83,10 @@ export default class TopMessage extends Command {
             }
 
             case "salon": {
-                const channel = command.options.getChannel("salon");
+                const channel = command.options.getChannel(msg("cmd-topmessages-builder-channel-name"), true);
 
                 if (!channel) {
-                    command.reply({ embeds: [simpleEmbed("Vous devez mentionner un salon.", "error")], ephemeral: true });
+                    command.reply({ embeds: [simpleEmbed(msg("cmd-topmessage-exec-error-need-mention"), "error")], ephemeral: true });
                     return;
                 }
 
@@ -119,12 +120,16 @@ export default class TopMessage extends Command {
         for (let i = 0; i < members.length; i++) {
             const member = members[i];
 
-            message += `**${i + 1 + (page - 1) * this.memberPerPage}. ${member.username} :** ${numberFormat(member.messageCount)}\n`;
+            message += msg("cmd-topmessages-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
+                numberFormat(member.messageCount)
+            ]);
         }
 
         // Send leaderboard :
         command.reply({
-            embeds: [simpleEmbed(message, "normal", `Classements des membres les plus actifs (${source}) (page : ${page}/${maxPage})`)]
+            embeds: [
+                simpleEmbed(message, "normal", msg("cmd-topmessages-exec-embed-title", [source, page, maxPage]))
+            ]
         });
     }
 }

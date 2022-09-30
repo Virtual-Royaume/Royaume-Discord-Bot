@@ -2,7 +2,7 @@ import Event, { EventName } from "$core/events/Event";
 import {
     BaseGuildTextChannel, ButtonInteraction,
     GuildMember, Interaction, ActionRowBuilder,
-    ModalBuilder, ModalSubmitInteraction, TextInputComponent
+    ModalBuilder, ModalSubmitInteraction, TextInputComponent, TextInputBuilder, TextInputStyle
 } from "discord.js";
 import { button, modal as modalIds } from "$resources/config/interaction-ids.json";
 import { generalChannel } from "$resources/config/information.json";
@@ -14,12 +14,12 @@ export default class VerifModal extends Event {
 
     public name: EventName = "interactionCreate";
 
-    public async execute(interaction: Interaction) : Promise<void> {
+    public async execute(interaction: Interaction): Promise<void> {
         if (interaction.isButton() && interaction.customId === button.verify) this.openModal(interaction);
         if (interaction.isModalSubmit() && interaction.customId === modalIds.verify) this.submitModal(interaction);
     }
 
-    private async openModal(interaction: ButtonInteraction) : Promise<void> {
+    private async openModal(interaction: ButtonInteraction): Promise<void> {
         // Checks :
         if (!(interaction.member instanceof GuildMember)) {
             interaction.reply({
@@ -41,20 +41,16 @@ export default class VerifModal extends Event {
         const modal = new ModalBuilder()
             .setCustomId(modalIds.verify)
             .setTitle("Formulaire de présentation")
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            .addComponents(new ActionRowBuilder<TextInputComponent>().addComponents(new TextInputComponent()
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
+            .addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(new TextInputBuilder()
                 .setCustomId("presentation")
                 .setLabel("Présentation :")
-                .setStyle("PARAGRAPH")
+                .setStyle(TextInputStyle.Paragraph)
                 .setMinLength(50)));
 
         await interaction.showModal(modal);
     }
 
-    private async submitModal(interaction: ModalSubmitInteraction) : Promise<void> {
+    private async submitModal(interaction: ModalSubmitInteraction): Promise<void> {
         // Get presentation :
         const presentation = interaction.fields.getTextInputValue("presentation");
 

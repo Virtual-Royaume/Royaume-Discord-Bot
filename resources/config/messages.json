@@ -12,7 +12,10 @@
     "cmd-birthday-builder-subcmd-list-number-name": "page",
     "cmd-birthday-builder-subcmd-list-number-description": "Numéro de la page à afficher",
     "cmd-birthday-exec-embed-title": "Anniversaires des membres (page {page}/{maxPage})",
-    "cmd-birthday-exec-embed-line": "**{position}. {username} :** {age} ans ({date})\n",
+    "cmd-birthday-exec-embed-line": [
+        "**{position}. {username} :** {age} ans ({date})",
+        ""
+    ],
     "cmd-birthday-exec-badformat": "Le format de votre date n'est pas bon.",
     "cmd-birthday-exec-date-invalid": "Cette date est invalide.",
     "cmd-birthday-exec-date-incomplete": "La date est incomplète.",
@@ -36,7 +39,12 @@
     "cmd-emoji-exec-emojies-full": "Le serveur a atteint ça limite d'émojis, supprimez-en ou améliorer votre niveau à l'aide des boosts de serveur",
     "cmd-emoji-exec-emoji-already-exists": "Cet identifiant d'émoji `{emojiIdentifier}` existe déjà, choisissez en un autre",
     "cmd-emoji-exec-embed-poll-title": "Proposition d'émoji",
-    "cmd-emoji-exec-embed-poll-text": "Proposition d'un nouveau émoji sur le serveur :\n \"`{emojiIdentifier}`\"\n\nProposé par <@{userId}>",
+    "cmd-emoji-exec-embed-poll-text": [
+        "Proposition d'un nouveau émoji sur le serveur :",
+        "\"`{emojiIdentifier}`\"",
+        "",
+        "Proposé par <@{userId}>"
+    ],
     "cmd-emoji-exec-embed-poll-sent": "Votre proposition pour un nouvel émoji a bien été envoyé dans le salon <#{generalChannelId}>.",
     "cmd-emoji-exec-embed-accepted-poll-text": "Proposition accepté.",
     "cmd-emoji-exec-embed-refused-poll-text": "Proposition rejeté.",
@@ -86,7 +94,10 @@
     "cmd-topvoice-builder-page-name": "page",
     "cmd-topvoice-builder-page-description": "Page du classement",
     "cmd-topvoice-exec-embed-title": "Classements des membres les plus actifs en vocal (en minute) ({source}) (page : {page}/{maxPage})",
-    "cmd-topvoice-exec-embed-line": "**{position}. {username} :** {minutes}\n",
+    "cmd-topvoice-exec-embed-line": [
+        "**{position}. {username} :** {minutes}",
+        ""
+    ],
 
     "cmd-topmessages-builder-name": "top-message",
     "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",
@@ -98,7 +109,10 @@
     "cmd-topmessages-builder-channel-description": "Choix du salon si vous avez choisi \"salon\" comme source",
     "cmd-topmessages-exec-error-need-mention": "Vous devez mentionner un salon",
     "cmd-topmessages-exec-embed-title": "Classements des membres les plus actifs ({source}) (page : {page}/{maxPage})",
-    "cmd-topmessages-exec-embed-line": "**{position}. {username} :** {nbrMessages}\n",
+    "cmd-topmessages-exec-embed-line": [
+        "**{position}. {username} :** {nbrMessages}",
+        ""
+    ],
 
     "cmd-presence-builder-name": "presence",
     "cmd-presence-builder-description": "Gérer l'activité du bot Discord",
@@ -118,14 +132,22 @@
     "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
     "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",
     "cmd-together-exec": "Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/{code}",
-    "cmd-together-exec-general": "<@{id}> a lancé une activité **Youtube Together** !\n\n[Rejoindre l'activité](https://discord.gg/{code})",
+    "cmd-together-exec-general": [
+        "<@{id}> a lancé une activité **Youtube Together** !",
+        "",
+        "[Rejoindre l'activité](https://discord.gg/{code})"
+    ],
 
 
     "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
 
 
     "event-messagelinkreaction-exec-attachments": "🗂️ {attachmentsCount} fichiers joint(s)",
-    "event-messagelinkreaction-exec-replyed-embed": "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**\n\n{content}",
+    "event-messagelinkreaction-exec-replyed-embed": [
+        "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**",
+        "",
+        "{content}"
+    ],
 
 
     "event-rolesselector-exec-roles-fetch-error": "Une erreur s'est produite lors de l'acquisition des roles.",
@@ -133,7 +155,11 @@
 
 
     "event-verifmessagereactionadd-exec-welcome-message": "Bienvenue parmis nous <@{userId}> !",
-    "event-verifmessagereactionadd-exec-embed-member-accepted": "Les rôles que vous voyez sur votre droite sont définis selon votre activité au sein du Royaume !\n\nPour peut choisir les rôles qui convient à vos centres d'intérêt avec la commande `/role`",
+    "event-verifmessagereactionadd-exec-embed-member-accepted": [
+        "Les rôles que vous voyez sur votre droite sont définis selon votre activité au sein du Royaume !",
+        "",
+        "Pour peut choisir les rôles qui convient à vos centres d'intérêt avec la commande `/role`"
+    ],
     "event-verifmessagereactionadd-exec-embed-member-rejected": "La présentation de {userName} a été refusé.",
     "event-verifmessagereactionadd-exec-embed-member-rejected-mp": "Votre présentation n'a pas convaincu les membres du Royaume.",
 

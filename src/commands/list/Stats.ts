@@ -1,5 +1,7 @@
-import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { CommandInteraction, HexColorString, MessageAttachment, MessageEmbed } from "discord.js";
+import {
+    ChatInputCommandInteraction, HexColorString, AttachmentBuilder,
+    EmbedBuilder, SlashCommandBuilder, SlashCommandNumberOption
+} from "discord.js";
 import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
@@ -21,7 +23,7 @@ export default class Stats extends Command {
             .setDescription(msg("cmd-stats-builder-history-description"))
             .setMinValue(5));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         // Get server activity :
         const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, {
             historyCount: command.options.getNumber(msg("cmd-stats-builder-history-name")) ?? 30
@@ -40,8 +42,8 @@ export default class Stats extends Command {
         ];
 
         // Generate and send charts :
-        const embeds: MessageEmbed[] = [];
-        const files: MessageAttachment[] = [];
+        const embeds: EmbedBuilder[] = [];
+        const files: AttachmentBuilder[] = [];
 
         for (const type of types) {
             const config: ChartConfiguration = {
@@ -89,7 +91,7 @@ export default class Stats extends Command {
             };
 
             // Embed :
-            embeds.push(new MessageEmbed()
+            embeds.push(new EmbedBuilder()
                 .setTitle(type.description)
                 .setColor(colors.primary as HexColorString)
                 .setImage(`attachment://${type.columnName}-chart.png`));
@@ -99,9 +101,9 @@ export default class Stats extends Command {
 
             chart.registerFont(`${__dirname}/$resources/font/poppins-regular.ttf`, { family: "Poppins" });
 
-            files.push(new MessageAttachment(
+            files.push(new AttachmentBuilder(
                 chart.renderToBufferSync(config),
-                `${type.columnName}-chart.png`
+                { name: `${type.columnName}-chart.png` }
             ));
         }
 

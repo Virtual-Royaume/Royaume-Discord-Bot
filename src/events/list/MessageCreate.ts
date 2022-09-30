@@ -1,4 +1,4 @@
-import { BaseGuildTextChannel, Message as Msg, TextBasedChannel } from "discord.js";
+import { BaseGuildTextChannel, ChannelType, Message as Msg, TextBasedChannel } from "discord.js";
 import { request } from "$core/api/Request";
 import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
 import { incChannelMessage, IncChannelMessageType } from "$core/api/requests/Member";
@@ -20,13 +20,13 @@ export default class MessageCreate extends Event {
         let channel: TextBasedChannel | null = message.channel;
 
         if (
-            channel.type === "GUILD_PUBLIC_THREAD" || channel.type === "GUILD_PRIVATE_THREAD"
-            || channel.type === "GUILD_NEWS_THREAD"
+            channel.type === ChannelType.PublicThread || channel.type === ChannelType.PrivateThread
+            || channel.type === ChannelType.AnnouncementThread
         ) {
             channel = channel.parent;
         }
 
-        if (!Client.instance.isProdEnvironment()) return;
+        //if (!Client.instance.isProdEnvironment()) return;
 
         if (channel) {
             const channels = (await request<GetChannelsType>(getChannels)).channels;
@@ -56,6 +56,11 @@ export default class MessageCreate extends Event {
                     });
                 }
             }
+        } else {
+            (await request<IncChannelMessageType>(
+                incChannelMessage,
+                { id: message.author.id, channelId: "732392873667854372" }
+            )).incMemberDiscordActivityChannel;
         }
     }
 }

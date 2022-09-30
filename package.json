@@ -3,31 +3,31 @@
   "main": "build/src/Client.js",
   "scripts": {
     "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register .",
-    "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/Client.ts dev",
+    "dev": "nodemon -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts dev",
     "build": "tsc && copyfiles ./resources/**/**/*.* ./build/",
     "lint": "eslint src/**/*.ts --fix"
   },
   "dependencies": {
-    "@discordjs/builders": "^1.1.0",
-    "chalk": "^4.1.2",
+    "@swc/core": "^1.3.3",
+    "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
     "dayjs": "^1.11.5",
-    "discord.js": "^13.8.1",
-    "graphql": "^16.5.0",
-    "graphql-request": "^4.3.0",
-    "node-fetch": "^2.6.6"
+    "discord.js": "^14.5.0",
+    "graphql": "^16.6.0",
+    "graphql-request": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.7.3",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
+    "@swc-node/register": "^1.5.2",
+    "@types/node": "^18.7.21",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
     "copyfiles": "^2.4.1",
     "dotenv": "^16.0.2",
-    "eslint": "^8.21.0",
-    "nodemon": "^2.0.19",
+    "eslint": "^8.24.0",
+    "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.3"
   }
 }

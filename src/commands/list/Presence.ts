@@ -1,5 +1,8 @@
-import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
-import { BaseGuildTextChannel, CommandInteraction, GuildMember } from "discord.js";
+import {
+    BaseGuildTextChannel, ChatInputCommandInteraction,
+    GuildMember, SlashCommandBuilder, SlashCommandNumberOption,
+    SlashCommandStringOption
+} from "discord.js";
 import { request } from "$core/api/Request";
 import {
     addPresenceMessage, getPresenceMessages,
@@ -59,7 +62,7 @@ export default class Role extends Command {
             .setName("id")
             .setDescription("Id de l'activité à supprimer"));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         // Get action and execute function of this action :
         const action: Action = <Action>command.options.getString("action", true);
 
@@ -68,7 +71,7 @@ export default class Role extends Command {
         if (action === "list") return this.list(command);
     }
 
-    private async add(command: CommandInteraction) : Promise<void> {
+    private async add(command: ChatInputCommandInteraction) : Promise<void> {
         const presence = command.options.getString(msg("cmd-presence-builder-presence-name"));
         const message = command.options.getString(msg("cmd-presence-builder-message-name"));
 
@@ -93,7 +96,7 @@ export default class Role extends Command {
         const addPresenceRequest = async() => await request(addPresenceMessage, { type: presence, text: message });
 
         // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
-        if (command.member.permissions.has("ADMINISTRATOR")) {
+        if (command.member.permissions.has("Administrator")) {
             await addPresenceRequest();
 
             command.reply({
@@ -179,7 +182,7 @@ export default class Role extends Command {
         }
     }
 
-    private async remove(command: CommandInteraction) : Promise<void> {
+    private async remove(command: ChatInputCommandInteraction) : Promise<void> {
         const id = command.options.getString("id");
 
         // Checks :
@@ -199,7 +202,7 @@ export default class Role extends Command {
             return;
         }
 
-        if (!command.member.permissions.has("ADMINISTRATOR")) {
+        if (!command.member.permissions.has("Administrator")) {
             command.reply({
                 embeds: [simpleEmbed("Vous n'avez pas la permission de supprimer une activité.", "error")],
                 ephemeral: true
@@ -227,7 +230,7 @@ export default class Role extends Command {
         }
     }
 
-    private async list(command: CommandInteraction) : Promise<void> {
+    private async list(command: ChatInputCommandInteraction) : Promise<void> {
         // Get data and sort it :
         let presenceMessages = (await request<GetPresenceMessagesType>(getPresenceMessages)).presenceMessages;
 

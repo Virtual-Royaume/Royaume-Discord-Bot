@@ -1,6 +1,8 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, MessageActionRow, MessageSelectMenu, GuildMemberRoleManager } from "discord.js";
-import { msg } from "../../utils/Message";
+import {
+    ChatInputCommandInteraction, ActionRowBuilder, SelectMenuBuilder,
+    GuildMemberRoleManager, SlashCommandBuilder
+} from "discord.js";
+import { msg } from "$core/utils/Message";
 import Command from "$core/commands/Command";
 import { simpleEmbed } from "$core/utils/Embed";
 import { getRolesByCategory } from "$core/api/func/MainRole";
@@ -13,13 +15,13 @@ export default class Role extends Command {
         .setName(msg("cmd-role-builder-name"))
         .setDescription(msg("cmd-role-builder-description"));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Generate select menu :
-        const messageActionRows: MessageActionRow[] = [];
+        const messageActionRows: ActionRowBuilder<SelectMenuBuilder>[] = [];
 
         for (const [category, rolesId] of Object.entries(await getRolesByCategory())) {
             // Create category interaction :
-            const interaction = new MessageSelectMenu()
+            const interaction = new SelectMenuBuilder()
                 .setCustomId(`${selectMenu.rolesSelector}-${category}`)
                 .setMinValues(0)
                 .setMaxValues(rolesId.length)
@@ -42,7 +44,7 @@ export default class Role extends Command {
             }
 
             // Add interaction in message action row :
-            messageActionRows.push(new MessageActionRow().addComponents(interaction));
+            messageActionRows.push(new ActionRowBuilder<SelectMenuBuilder>().addComponents(interaction));
         }
 
         // Send the interaction :

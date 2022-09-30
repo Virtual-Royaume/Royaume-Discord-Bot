@@ -1,4 +1,4 @@
-import { BaseGuildTextChannel, Message, MessageEmbed, NonThreadGuildBasedChannel } from "discord.js";
+import { BaseGuildTextChannel, Message, EmbedBuilder, NonThreadGuildBasedChannel, TextBasedChannel } from "discord.js";
 import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
@@ -30,18 +30,17 @@ export default class MessageLinkReaction extends Event {
             if (!ids.length) return;
 
             // Get channel and message instances :
-            let channelQuoted: NonThreadGuildBasedChannel;
+            let channelQuoted: TextBasedChannel;
             let messageQuoted: Message;
 
             try {
                 // Channel :
                 const tempChannel = await (await Client.instance.getGuild()).channels.fetch(ids[1][0]);
 
-                if (!tempChannel || !tempChannel.isText()) throw new Error("Channel not found");
+                if (!tempChannel || !tempChannel.isTextBased()) throw new Error("Channel not found");
 
                 channelQuoted = tempChannel;
 
-                // Message :
                 messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
             } catch {
                 return;
@@ -51,7 +50,7 @@ export default class MessageLinkReaction extends Event {
         }
 
         // Send link reaction messages :
-        const embeds: MessageEmbed[] = [];
+        const embeds: EmbedBuilder[] = [];
 
         for (const index in messages) {
             const url = messages[index].url;
@@ -63,8 +62,8 @@ export default class MessageLinkReaction extends Event {
             embeds.push(
                 simpleEmbed(msg("event-messagelinkreaction-exec-replyed-embed", [Number(index) + 1, url, message.channelId, content]), "normal")
                     .setAuthor({
-                        name: message.author.tag,
-                        iconURL: message.author.displayAvatarURL({ dynamic: true })
+                        name: msg.author.tag,
+                        iconURL: msg.author.displayAvatarURL()
                     })
             );
         }

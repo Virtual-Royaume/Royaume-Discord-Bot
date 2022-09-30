@@ -1,10 +1,9 @@
-import { CommandInteraction, GuildMember } from "discord.js";
+import { ChannelType, ChatInputCommandInteraction, GuildMember, SlashCommandBuilder } from "discord.js";
 import Client from "$core/Client";
 import Command from "$core/commands/Command";
 import { youtubeTogether } from "$resources/config/app-integration.json";
 import { generalChannel } from "$resources/config/information.json";
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { msg } from "../../utils/Message";
+import { msg } from "$core/utils/Message";
 import { simpleEmbed } from "$core/utils/Embed";
 
 export default class WatchTogether extends Command {
@@ -13,7 +12,7 @@ export default class WatchTogether extends Command {
         .setName(msg("cmd-together-builder-name"))
         .setDescription(msg("cmd-together-builder-description"));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         if (!(command.member instanceof GuildMember)) {
             command.reply({ embeds: [simpleEmbed(msg("message-execution-error"), "error")], ephemeral: true });
             return;
@@ -27,7 +26,7 @@ export default class WatchTogether extends Command {
         const instance: any = Client.instance;
         const generalTextChannel = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
-        if (generalTextChannel?.type !== "GUILD_TEXT") return;
+        if (generalTextChannel?.type !== ChannelType.GuildText) return;
 
         const invite: { code: string } = await instance.api.channels(command.member.voice.channelId).invites.post({
             data: {

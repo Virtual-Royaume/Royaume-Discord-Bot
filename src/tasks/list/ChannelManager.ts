@@ -1,9 +1,9 @@
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
 import { voiceChannels } from "$resources/config/information.json";
-import { Collection, VoiceChannel } from "discord.js";
+import { ChannelType, Collection, VoiceChannel } from "discord.js";
 
-type ChannelType = "public" | "private";
+type ChannelVisibility = "public" | "private";
 
 export default class ChannelManager extends Task {
 
@@ -57,11 +57,12 @@ export default class ChannelManager extends Task {
      * Create a voice channel in the category defined in the configuration.
      * Define its number of places and its position according to its type (public or private).
      */
-    private async createChannel(name: string, type: ChannelType) : Promise<void> {
+    private async createChannel(name: string, type: ChannelVisibility) : Promise<void> {
         const channelPosition = await this.getChannelCount("public") - 1;
 
-        await (await Client.instance.getGuild()).channels.create(name, {
-            type: "GUILD_VOICE",
+        await (await Client.instance.getGuild()).channels.create({
+            name: name,
+            type: ChannelType.GuildVoice,
             parent: voiceChannels.category,
             position: type === "public" ? channelPosition : channelPosition + await this.getChannelCount("private"),
             userLimit: type === "private" ? 2 : undefined
@@ -74,7 +75,7 @@ export default class ChannelManager extends Task {
      */
     private async getEmptyChannels(channelsNames: string | string[]) : Promise<Collection<string, VoiceChannel>> {
         return (await Client.instance.getGuild()).channels.cache.filter((channel): channel is VoiceChannel => {
-            return channel.type === "GUILD_VOICE"
+            return channel.type === ChannelType.GuildVoice
                 && channel.parentId === voiceChannels.category
                 && !channel.members.size
                 && channelsNames.includes(channel.name);
@@ -86,7 +87,7 @@ export default class ChannelManager extends Task {
      */
     private async getAvailablePublicChannel() : Promise<string | undefined> {
         const channels = (await (await Client.instance.getGuild()).channels.fetch()).filter(channel => {
-            return channel.type === "GUILD_VOICE"
+            return channel.type === ChannelType.GuildVoice
                 && voiceChannels.public.nameList.includes(channel.name);
         }).map(channel => channel.name);
 
@@ -95,11 +96,11 @@ export default class ChannelManager extends Task {
         }).shift();
     }
 
-    private async getChannelCount(channelType: ChannelType) : Promise<number> {
+    private async getChannelCount(channelType: ChannelVisibility) : Promise<number> {
         const channelsNames = channelType === "public" ? voiceChannels.public.nameList : voiceChannels.private.name;
 
         return (await Client.instance.getGuild()).channels.cache.filter(channel => {
-            return channel.type === "GUILD_VOICE"
+            return channel.type === ChannelType.GuildVoice
                 && channel.parentId === voiceChannels.category
                 && channelsNames.includes(channel.name);
         }).size;

@@ -1,5 +1,4 @@
-import { SlashCommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
-import { CommandInteraction, GuildMember } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
 import { request } from "$core/api/Request";
 import { getMember, GetMemberType } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
@@ -17,7 +16,7 @@ export default class Member extends Command {
             .setName("member")
             .setDescription("Membre ciblé"));
 
-    public async execute(command: CommandInteraction): Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         const member = command.options.getMember("member") ?? command.member;
 
         // Check :
@@ -69,15 +68,15 @@ export default class Member extends Command {
         const embed = simpleEmbed(message, "normal", `Activité de ${member.displayName}`);
 
         for (const [category, channelIds] of Object.entries(channelsIdsByCategory)) {
-            embed.addField(
-                firstLetterToUppercase(category),
-                channelIds.map(channelId => {
+            embed.addFields([{
+                name: firstLetterToUppercase(category),
+                value: channelIds.map(channelId => {
                     const messageCount = memberInfo.activity.messages.perChannel
                         .find(channel => channel?.channelId === channelId)?.messageCount ?? 0;
 
                     return `${messageCount} dans <#${channelId}>`;
                 }).join("\n")
-            );
+            }]);
         }
 
         command.reply({

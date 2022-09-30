@@ -1,6 +1,5 @@
-import { SlashCommandBuilder, SlashCommandNumberOption } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
-import { msg } from "../../utils/Message";
+import { msg } from "$core/utils/Message";
+import { ChannelType, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 
@@ -16,10 +15,10 @@ export default class Clean extends Command {
             .setMinValue(1)
             .setMaxValue(100));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         const number = command.options.getNumber("nombre") ?? 10;
 
-        if (command.channel?.type !== "GUILD_TEXT") {
+        if (command.channel?.type !== ChannelType.GuildText) {
             command.reply({ embeds: [simpleEmbed(msg("cmd-clean-exec-need-textchannel"), "error")], ephemeral: true });
             return;
         }

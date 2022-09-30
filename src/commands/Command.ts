@@ -1,5 +1,4 @@
-import { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
 export default abstract class Command {
 
@@ -13,5 +12,5 @@ export default abstract class Command {
         return this.slashCommand.description;
     }
 
-    public abstract execute(command: CommandInteraction): void;
+    public abstract execute(command: ChatInputCommandInteraction): void;
 }

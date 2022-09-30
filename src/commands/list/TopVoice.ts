@@ -1,6 +1,5 @@
-import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
-import { msg } from "../../utils/Message";
+import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "discord.js";
+import { msg } from "$core/utils/Message";
 import { request } from "$core/api/Request";
 import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
@@ -35,7 +34,7 @@ export default class TopVoice extends Command {
 
     private memberPerPage = 20;
 
-    public async execute(command: CommandInteraction): Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         const source: Source = <Source>command.options.getString(msg("cmd-topvoice-builder-source-name"), true);
         let page = command.options.getNumber(msg("cmd-topvoice-builder-page-name")) ?? 1;
 

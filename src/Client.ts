@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { Client as DiscordClient, Guild, Intents, Team, User } from "discord.js";
+import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, Team, User } from "discord.js";
 import EventManager from "$core/events/EventManager";
 import CommandManager from "$core/commands/CommandManager";
 import TaskManager from "$core/tasks/TaskManager";
@@ -22,12 +22,12 @@ export default class Client extends DiscordClient {
     constructor() {
         super({
             intents: [
-                Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,
-                Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_MEMBERS,
-                Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES,
-                Intents.FLAGS.GUILD_BANS
+                GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMembers,
+                GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildVoiceStates,
+                GatewayIntentBits.GuildBans
             ],
-            partials: ["MESSAGE", "CHANNEL", "REACTION"]
+            partials: [Partials.Message, Partials.Channel, Partials.Reaction]
         });
 
         // Create bot instance and login it :

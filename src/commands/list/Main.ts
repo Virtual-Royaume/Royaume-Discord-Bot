@@ -1,9 +1,8 @@
 import {
-    SlashCommandBuilder, SlashCommandChannelOption,
+    ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandRoleOption, SlashCommandStringOption
-} from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
-import { msg } from "../../utils/Message";
+} from "discord.js";
+import { msg } from "$core/utils/Message";
 import { getChannelsByCategory } from "$core/api/func/MainChannel";
 import { getRolesByCategory } from "$core/api/func/MainRole";
 import { request } from "$core/api/Request";
@@ -47,7 +46,7 @@ export default class Inactive extends Command {
             .setName(msg("cmd-main-builder-category-name"))
             .setDescription(msg("cmd-main-builder-category-name")));
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         // Get action, channel/role and category :
         const action: Action = <Action>command.options.getString("action", true);
 

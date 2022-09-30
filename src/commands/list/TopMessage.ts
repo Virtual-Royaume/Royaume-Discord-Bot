@@ -1,8 +1,7 @@
 import {
-    SlashCommandBuilder, SlashCommandChannelOption,
+    ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandNumberOption, SlashCommandStringOption
-} from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
+} from "discord.js";
 import { request } from "$core/api/Request";
 import {
     getChannelMessageCount, GetChannelMessageCountType,
@@ -12,7 +11,7 @@ import {
 import { simpleEmbed } from "$core/utils/Embed";
 import { numberFormat } from "$core/utils/Function";
 import Command from "$core/commands/Command";
-import { msg } from "../../utils/Message";
+import { msg } from "$core/utils/Message";
 
 type Source = "total" | "mois" | "salon";
 
@@ -46,7 +45,7 @@ export default class TopMessage extends Command {
 
     private memberPerPage = 20;
 
-    public async execute(command: CommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         const source: Source = <Source>command.options.getString(msg("cmd-topmessages-builder-source-name"), true);
         let page = command.options.getNumber(msg("cmd-topmessages-builder-page-name")) ?? 1;
 

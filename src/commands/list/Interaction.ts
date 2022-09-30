@@ -1,5 +1,7 @@
-import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
-import { CommandInteraction, MessageButton, MessageActionRow } from "discord.js";
+import {
+    ChatInputCommandInteraction, ButtonBuilder, ActionRowBuilder,
+    ButtonStyle, SlashCommandBuilder, SlashCommandStringOption
+} from "discord.js";
 import { button } from "$resources/config/interaction-ids.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
@@ -26,7 +28,7 @@ export default class Interaction extends Command {
             .addChoices(...this.actionChoices)
             .setRequired(true));
 
-    public async execute(command: CommandInteraction): Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         const interaction: InteractionType = <InteractionType>command.options.getString("name", true);
 
         switch (interaction) {
@@ -34,22 +36,22 @@ export default class Interaction extends Command {
                 const embed = simpleEmbed(
                     "Bienvenue, tu es dans le salon de vérification des nouveaux membres.\n\n"
 
-                            + "**Le Royaume** est un serveur privé où la bonne ambiance est donc obligatoire. "
-                            + "Ici on parle principalement de **programmation**, **trading**, **graphisme** "
-                            + "et d'autres choses encore. Parfois on joue, ou on regarde des films ensemble aussi... 🍿\n\n"
+                    + "**Le Royaume** est un serveur privé où la bonne ambiance est donc obligatoire. "
+                    + "Ici on parle principalement de **programmation**, **trading**, **graphisme** "
+                    + "et d'autres choses encore. Parfois on joue, ou on regarde des films ensemble aussi... 🍿\n\n"
 
-                            + "Si les domaines cités ci-dessus te correspondent et que tu as envie de faire parti de "
-                            + "cette communauté privée et d'évoluer avec nous, il faudra que tu fasses une petite présentation "
-                            + "de toi, tes ambitions, tes projets, tes centres d'intérêt... Donne nous envie quoi !\n\n",
+                    + "Si les domaines cités ci-dessus te correspondent et que tu as envie de faire parti de "
+                    + "cette communauté privée et d'évoluer avec nous, il faudra que tu fasses une petite présentation "
+                    + "de toi, tes ambitions, tes projets, tes centres d'intérêt... Donne nous envie quoi !\n\n",
 
                     "normal",
                     "Vérification pour entrer dans le Royaume"
                 );
 
-                const row = new MessageActionRow().addComponents(new MessageButton()
+                const row = new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder()
                     .setCustomId(button.verify)
                     .setLabel("Faire sa présentation")
-                    .setStyle("PRIMARY")
+                    .setStyle(ButtonStyle.Primary)
                     .setEmoji("📝"));
 
                 await command.channel?.send({

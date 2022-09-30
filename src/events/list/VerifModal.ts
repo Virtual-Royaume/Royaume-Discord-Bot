@@ -1,8 +1,8 @@
 import Event, { EventName } from "$core/events/Event";
 import {
     BaseGuildTextChannel, ButtonInteraction,
-    GuildMember, Interaction, MessageActionRow,
-    Modal, ModalSubmitInteraction, TextInputComponent
+    GuildMember, Interaction, ActionRowBuilder,
+    ModalBuilder, ModalSubmitInteraction, TextInputComponent, TextInputBuilder, TextInputStyle
 } from "discord.js";
 import { button, modal as modalIds } from "$resources/config/interaction-ids.json";
 import { generalChannel } from "$resources/config/information.json";
@@ -14,12 +14,12 @@ export default class VerifModal extends Event {
 
     public name: EventName = "interactionCreate";
 
-    public async execute(interaction: Interaction) : Promise<void> {
+    public async execute(interaction: Interaction): Promise<void> {
         if (interaction.isButton() && interaction.customId === button.verify) this.openModal(interaction);
         if (interaction.isModalSubmit() && interaction.customId === modalIds.verify) this.submitModal(interaction);
     }
 
-    private async openModal(interaction: ButtonInteraction) : Promise<void> {
+    private async openModal(interaction: ButtonInteraction): Promise<void> {
         // Checks :
         if (!(interaction.member instanceof GuildMember)) {
             interaction.reply({
@@ -38,19 +38,19 @@ export default class VerifModal extends Event {
             return;
         }
 
-        const modal = new Modal()
+        const modal = new ModalBuilder()
             .setCustomId(modalIds.verify)
             .setTitle("Formulaire de présentation")
-            .addComponents(new MessageActionRow<TextInputComponent>().addComponents(new TextInputComponent()
+            .addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(new TextInputBuilder()
                 .setCustomId("presentation")
                 .setLabel("Présentation :")
-                .setStyle("PARAGRAPH")
+                .setStyle(TextInputStyle.Paragraph)
                 .setMinLength(50)));
 
         await interaction.showModal(modal);
     }
 
-    private async submitModal(interaction: ModalSubmitInteraction) : Promise<void> {
+    private async submitModal(interaction: ModalSubmitInteraction): Promise<void> {
         // Get presentation :
         const presentation = interaction.fields.getTextInputValue("presentation");
 
@@ -72,7 +72,7 @@ export default class VerifModal extends Event {
 
         // Send the presentation in general channel with votes :
         const message = await generalChannelInstance.send({
-            embeds: [simpleEmbed(presentation, "normal", `Présentation de ${member.displayName}`).setFooter(`ID : ${member.id}`)]
+            embeds: [simpleEmbed(presentation, "normal", `Présentation de ${member.displayName}`).setFooter({ text: `ID : ${member.id}` })]
         });
 
         await message.react(verify.emoji.upVote);

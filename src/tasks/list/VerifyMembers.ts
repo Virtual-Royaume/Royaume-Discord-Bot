@@ -45,7 +45,7 @@ export default class VerifyMembers extends Task {
             if (!response.updateMember) await request(createMember, {
                 id: realMember.id,
                 username: realMember.displayName,
-                profilePicture: realMember.avatarURL({ dynamic: true }) ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
+                profilePicture: realMember.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
             });
         }
     }

@@ -1,7 +1,8 @@
-import { SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
-
-import { msg } from "../../utils/Message";
+import { msg } from "$core/utils/Message";
+import {
+    ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption,
+    SlashCommandStringOption, SlashCommandSubcommandBuilder
+} from "discord.js";
 import { request } from "$core/api/Request";
 import { getBirthdays, GetBirthdaysType, setBirthday } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
@@ -32,8 +33,7 @@ export default class Birthday extends Command {
 
     private memberPerPage = 10;
 
-    public async execute(command: CommandInteraction): Promise<void> {
-
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         switch (command.options.getSubcommand()) {
             case "set": {
                 // Check parameter :

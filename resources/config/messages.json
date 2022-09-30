@@ -1,9 +1,10 @@
 {
-    "message-execution-error": "Erreur lors de l'exécution de la commande",
 
     // -------------------------------------
     //      COMMANDS
     // -------------------------------------
+
+    "message-execution-error-cmd": "Erreur lors de l'exécution de la commande",
 
     "cmd-birthday-builder-name": "anniversaire",
     "cmd-birthday-builder-description": "Définir votre date d'anniversaire",
@@ -93,6 +94,28 @@
     "cmd-main-exec-need-mention": "Vous devez mentionner un salon ou un rôle",
     "cmd-main-exec-success-add": "Vous avez bien {action} le {type}",
     "cmd-main-exec-success-error": "Erreur lors de {action} du {type}",
+
+    "cmd-member-builder-name": "member",
+    "cmd-member-builder-description": "Voir les statistiques et information d'un utilisateur",
+    "cmd-member-builder-member-name": "member",
+    "cmd-member-builder-member-description": "Membre ciblé",
+    "cmd-member-exec-member-info-error": "Aucune donnée trouvée.",
+    "cmd-member-exec-embed-title": "Activité de {displayName}",
+    "cmd-member-exec-member-birth": [
+        "**👶 Né le {date} *({yearsOld} ans)**",
+        "\n"
+    ],
+    "cmd-member-exec-member-activity": [
+        "**🔊 Temps de vocal (en minute) :** {time}",
+        "**🔉 Temps de vocal ce mois (en minute) :** {time}",
+        "",
+        "**📜 Nombre de message :** {messagesCount}",
+        "**📝 Nombre de message ce mois :** {messagesCount}",
+        "",
+        "**📺 Nombre de message par salon :**"
+    ],
+    "cmd-member-exec-member-channel-activity": "{messageCount} dans <#{channelId}>",
+
 
     "cmd-role-builder-name": "role",
     "cmd-role-builder-description": "Permet de choisir ses rôles",

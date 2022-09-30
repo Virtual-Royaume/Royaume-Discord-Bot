@@ -12,9 +12,9 @@ export default class WatchTogether extends Command {
         .setName(msg("cmd-together-builder-name"))
         .setDescription(msg("cmd-together-builder-description"));
 
-    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         if (!(command.member instanceof GuildMember)) {
-            command.reply({ embeds: [simpleEmbed(msg("message-execution-error"), "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")], ephemeral: true });
             return;
         }
 
@@ -40,12 +40,12 @@ export default class WatchTogether extends Command {
         });
 
         command.reply({
-            embeds: [simpleEmbed(msg("cmd-together-exec",[invite.code]))],
+            embeds: [simpleEmbed(msg("cmd-together-exec", [invite.code]))],
             ephemeral: true
         });
 
         generalTextChannel.send({
-            embeds: [simpleEmbed(msg("cmd-together-exec-general",[command.user.id, invite.code]))]
+            embeds: [simpleEmbed(msg("cmd-together-exec-general", [command.user.id, invite.code]))]
         });
     }
 }

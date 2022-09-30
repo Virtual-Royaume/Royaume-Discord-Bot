@@ -169,6 +169,28 @@
     "cmd-presence-builder-message-description": "Message de l'activité à ajouter",
     "cmd-presence-builder-id-name": "id",
     "cmd-presence-builder-id-description": "Id de l'activité à supprimer",
+    "cmd-presence-exec-embed-missing-parameters": "Vous devez définir les paramètres `presence` et `message`.",
+    "cmd-presence-exec-embed-new-activity-succes": "Cette nouvelle activité a bien été sauvegardé.",
+    "cmd-presence-exec-embed-new-activity-proposal": [
+        "**Proposition d'une nouvelle activité aléatoire sur le bot :**",
+        "\"`{presence}` {message}\"",
+        "",
+        "Proposé par <@{userId}>"
+    ],
+    "cmd-presence-exec-embed-new-activity-proposal-succes": "Votre proposition de nouvelle activité a était envoyé dans le salon <#{channelId}>.",
+    "cmd-presence-exec-embed-activity-proposal-accepted": "Proposition accepté.",
+    "cmd-presence-exec-embed-activity-proposal-refused": "Proposition refusé.",
+    "cmd-presence-exec-embed-activity-proposal-time-limit": "Le temps de vote pour cette proposition est écoulé.",
+    "cmd-presence-exec-embed-activity-delete-missing-id": "Vous devez définir le paramètre ``id`` de l'activité que vous voulez supprimer.",
+    "cmd-presence-exec-embed-missing-delete-activity-permission": "Vous n'avez pas la permission de supprimer une activité.",
+    "cmd-presence-exec-embed-delete-activity-succes": "Vous avez bien supprimé cette activité.",
+    "cmd-presence-exec-embed-delete-activity-fail": "Cette ID n'est relié à aucune activité.",
+    "cmd-presence-exec-embed-delete-activity-error": "Votre ID est invalide.",
+    "cmd-presence-exec-embed-activity-list-title": "Liste des messages d'activité du bot (page : {page}/{maxPage})",
+    "cmd-presence-exec-embed-activity-list-activity": [
+        "{id} : `{type}` ${text}",
+        "\n"
+    ],
 
 
     "cmd-together-builder-name": "watch-together",

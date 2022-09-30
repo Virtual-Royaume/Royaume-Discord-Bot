@@ -144,5 +144,8 @@
     "event-verifmodal-exec-modal-label": "Présentation :",
     "event-verifmodal-exec-embed-modal-send-error": "Erreur lors de l'envoie de votre présentation, contactez un membre du serveur.",
     "event-verifmodal-exec-embed-title": "Présentation de {userName}",
-    "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps."
+    "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps.",
+
+
+    "event-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre"
 }

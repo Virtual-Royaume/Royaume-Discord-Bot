@@ -26,7 +26,7 @@ export default class PresenceUpdate extends Task {
         const tiers: { [key: string]: string } = configTiers;
 
         const discordMembers = await guild.members.fetch();
-        const apiMembers = (await request<GetMembersTierType>(getMembersTier)).members;
+        const apiMembers = (await request<GetMembersTierType, undefined>(getMembersTier)).members;
 
         const updates: RoleUpdate[] = [];
 

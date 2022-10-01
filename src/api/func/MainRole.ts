@@ -7,7 +7,7 @@ type RolesByCategory = {
 
 export async function getRolesByCategory() : Promise<RolesByCategory> {
     // Get mains roles :
-    const roles = (await request<GetRolesType>(getRoles)).roles;
+    const roles = (await request<GetRolesType, undefined>(getRoles)).roles;
 
     // Sort roles by category :
     const rolesIdsByCategory: RolesByCategory = {};

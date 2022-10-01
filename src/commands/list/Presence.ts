@@ -7,7 +7,8 @@ import { request } from "$core/api/Request";
 import {
     addPresenceMessage, getPresenceMessages,
     GetPresenceMessagesType, removePresenceMessage,
-    RemovePresenceMessageType
+    RemovePresenceMessageType,
+    RemovePresenceMessageVariables
 } from "$core/api/requests/PresenceMessage";
 import { generalChannel } from "$resources/config/information.json";
 import { activityProposal } from "$resources/config/proposal.json";
@@ -219,7 +220,7 @@ export default class Role extends Command {
 
         // Try to delete the presence message :
         try {
-            const deleted = await request<RemovePresenceMessageType>(removePresenceMessage, { id });
+            const deleted = await request<RemovePresenceMessageType, RemovePresenceMessageVariables>(removePresenceMessage, { id });
 
             if (deleted.removePresenceMessage) {
                 command.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-succes"))], ephemeral: true });
@@ -239,7 +240,7 @@ export default class Role extends Command {
 
     private async list(command: ChatInputCommandInteraction): Promise<void> {
         // Get data and sort it :
-        let presenceMessages = (await request<GetPresenceMessagesType>(getPresenceMessages)).presenceMessages;
+        let presenceMessages = (await request<GetPresenceMessagesType, undefined>(getPresenceMessages)).presenceMessages;
 
         // Get page and max page :
         const maxPage = Math.ceil(presenceMessages.length / this.messagePerPage);

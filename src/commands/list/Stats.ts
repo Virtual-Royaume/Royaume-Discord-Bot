@@ -7,7 +7,7 @@ import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { msg } from "$core/utils/Message";
 import { request } from "$core/api/Request";
-import { getServerActivityHistory, GetServerActivityHistoryType } from "$core/api/requests/ServerActivity";
+import { getServerActivityHistory, GetServerActivityHistoryType, GetServerActivityHistoryVariables } from "$core/api/requests/ServerActivity";
 import { ServerActivity } from "$core/api/Schema";
 import { colors } from "$resources/config/information.json";
 import { dateFormat } from "$core/utils/Function";
@@ -25,7 +25,7 @@ export default class Stats extends Command {
 
     public async execute(command: ChatInputCommandInteraction) : Promise<void> {
         // Get server activity :
-        const serverActivity = (await request<GetServerActivityHistoryType>(getServerActivityHistory, {
+        const serverActivity = (await request<GetServerActivityHistoryType, GetServerActivityHistoryVariables>(getServerActivityHistory, {
             historyCount: command.options.getNumber(msg("cmd-stats-builder-history-name")) ?? 30
         })).serverActivity.reverse();
 

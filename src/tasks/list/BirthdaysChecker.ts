@@ -36,7 +36,7 @@ export default class ServerActivityUpdate extends Task {
         if (currentDate.hour() !== 0 || currentDate.minute() !== 0) return;
 
         // Check birthdays of the day :
-        const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => {
+        const birthdays = (await request<GetBirthdaysType, undefined>(getBirthdays)).members.filter(member => {
             if (!member.birthday) return false;
 
             const birthday = DayJS(member.birthday).tz();

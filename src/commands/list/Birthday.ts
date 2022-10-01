@@ -77,7 +77,7 @@ export default class Birthday extends Command {
 
             case "list": {
                 let page = command.options.getNumber("page") ?? 1;
-                let birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
+                let birthdays = (await request<GetBirthdaysType, undefined>(getBirthdays)).members.filter(member => member.birthday)
                     .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
 
                 const maxPage = Math.ceil(birthdays.length / this.memberPerPage);

@@ -59,7 +59,7 @@ export default class TopMessage extends Command {
 
         switch (source) {
             case "mois": {
-                members = (await request<GetMonthMessageCountType>(getMonthMessageCount)).members.sort((a, b) => {
+                members = (await request<GetMonthMessageCountType, undefined>(getMonthMessageCount)).members.sort((a, b) => {
                     return (b?.activity.messages.monthCount ?? 0) - (a?.activity.messages.monthCount ?? 0);
                 }).map(member => {
                     return {
@@ -71,7 +71,7 @@ export default class TopMessage extends Command {
             }
 
             case "total": {
-                members = (await request<GetTotalMessageType>(getTotalMessageCount)).members.sort((a, b) => {
+                members = (await request<GetTotalMessageType, undefined>(getTotalMessageCount)).members.sort((a, b) => {
                     return (b?.activity.messages.totalCount ?? 0) - (a?.activity.messages.totalCount ?? 0);
                 }).map(member => {
                     return {
@@ -90,7 +90,7 @@ export default class TopMessage extends Command {
                     return;
                 }
 
-                members = (await request<GetChannelMessageCountType>(getChannelMessageCount)).members.sort((a, b) => {
+                members = (await request<GetChannelMessageCountType, undefined>(getChannelMessageCount)).members.sort((a, b) => {
                     const aChannel = a.activity.messages.perChannel.find(c => channel.id === c?.channelId);
                     const bChannel = b.activity.messages.perChannel.find(c => channel.id === c?.channelId);
 

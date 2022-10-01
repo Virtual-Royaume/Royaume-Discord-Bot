@@ -12,7 +12,7 @@ export default class Inactive extends Command {
         .setDescription(msg("cmd-inactive-builder-description"));
 
     public async execute(command: ChatInputCommandInteraction) : Promise<void> {
-        const members = (await request<GetMonthActivityType>(getMonthActivity))
+        const members = (await request<GetMonthActivityType, undefined>(getMonthActivity))
             .members.filter(member => {
                 const monthMessage = member.activity?.messages.monthCount;
                 const monthVoice = member.activity?.monthVoiceMinute;

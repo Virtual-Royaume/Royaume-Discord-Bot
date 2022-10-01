@@ -34,7 +34,8 @@ export default class Interaction extends Command {
 
         switch (interaction) {
             case "verif": {
-                const embed = simpleEmbed(msg("cmd-interaction-exec-verif-embed-content"),
+                const embed = simpleEmbed(
+                    msg("cmd-interaction-exec-verif-embed-content"),
                     "normal",
                     msg("cmd-interaction-exec-verif-embed-title")
                 );

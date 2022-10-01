@@ -108,6 +108,37 @@ export default class Birthday extends Command {
             }
             
             case "next": {
+              const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
+                .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
+                
+              const now = DayJS();
+              const nextBirthday = birthdays.find(member => {
+                const birthday = DayJS(member.birthday ?? 0);
+                return birthday.month() >= now.month() && birthday.date() >= now.date();
+              });
+
+              if (!nextBirthday) {
+                return;
+              }
+
+              const birthday = DayJS(nextBirthday.birthday ?? 0);
+              const age = getAge(birthday);
+
+              let day = birthday.date().toString();
+              let month = birthday.month().toString();
+
+              if (day.length < 2) day = "0" + day;
+              if (month.length < 2) month = "0" + month;
+
+              let year = now.year().toString();
+
+              command.reply({
+                embeds: [simpleEmbed(
+                  msg("cmd-birthday-exec-next-embed-description", [nextBirthday.username, age, day, month, year]),
+                  "normal",
+                  msg("cmd-birthday-exec-next-embed-title")
+                )]
+              });
             break;
           }
         }

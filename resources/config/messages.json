@@ -13,6 +13,9 @@
     "cmd-birthday-builder-subcmd-list-number-description": "Numéro de la page à afficher",
     "cmd-birtdhay-builder-subcmd-next-name": "next",
     "cmd-birthday-builder-subcmd-next-description": "Afficher le prochain anniversaire",
+    "cmd-birthday-exec-next-embed-title": "Prochain anniversaire :birthday:",
+    "cmd-birthday-exec-next-embed-description": "Le prochain anniversaire est celui de **{username}** qui aura **{age} ans** le **{day}/{month}/{year}** !",
+
     "cmd-birthday-exec-embed-title": "Anniversaires des membres (page {page}/{maxPage})",
     "cmd-birthday-exec-embed-line": [
         "**{position}. {username} :** {age} ans ({date})",

@@ -39,7 +39,7 @@ export default class Member extends Command {
 
         // Get main channels en sort it :
         const channels = (await request<GetChannelsType>(getChannels)).channels;
-        const channelsIdsByCategory: { [category: string]: string[] } = {};
+        const channelsIdsByCategory: Record<string, string[]> = {};
 
         for (const channel of channels) {
             if (!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];

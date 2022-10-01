@@ -49,7 +49,15 @@ export default class VerifMessageReactionAdd extends Event {
             && messageReaction.count - 1 >= verify.reactionNeededCount.downVote
         ) {
             // Reject the member :
-            await messageReaction.message.reply({ embeds: [simpleEmbed(msg("event-verifmessagereactionadd-exec-embed-member-rejected", [member.displayName]), "error")] });
+            await messageReaction.message.reply({
+                embeds: [simpleEmbed(
+                    msg(
+                        "event-verifmessagereactionadd-exec-embed-member-rejected",
+                        [member.displayName]
+                    ),
+                    "error"
+                )]
+            });
 
             await member.send({ embeds: [simpleEmbed(msg("event-verifmessagereactionadd-exec-embed-member-rejected-mp"), "error")] });
 

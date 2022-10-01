@@ -1,4 +1,5 @@
 import {
+    ChannelType,
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandNumberOption, SlashCommandStringOption
 } from "discord.js";
@@ -41,7 +42,7 @@ export default class TopMessage extends Command {
             .setMinValue(1)).addChannelOption(new SlashCommandChannelOption()
             .setName(msg("cmd-topmessages-builder-channel-name"))
             .setDescription(msg("cmd-topmessages-builder-channel-description"))
-            .addChannelTypes(0));
+            .addChannelTypes(ChannelType.GuildText));
 
     private memberPerPage = 20;
 

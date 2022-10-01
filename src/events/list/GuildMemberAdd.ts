@@ -9,7 +9,7 @@ export default class GuildMemberAdd extends Event {
 
     public name: EventName = "guildMemberAdd";
 
-    public async execute(member: GuildMember) : Promise<void> {
+    public async execute(member: GuildMember): Promise<void> {
         if (member.user.bot) return;
 
         // Add verification role :

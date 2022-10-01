@@ -14,8 +14,7 @@
     "chartjs-node-canvas": "^4.1.6",
     "dayjs": "^1.11.5",
     "discord.js": "^14.5.0",
-    "graphql": "^16.6.0",
-    "graphql-request": "^5.0.0"
+    "graphql": "^16.6.0"
   },
   "devDependencies": {
     "@swc-node/register": "^1.5.2",

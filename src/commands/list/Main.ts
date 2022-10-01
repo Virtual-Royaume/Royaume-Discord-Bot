@@ -13,7 +13,7 @@ import Command from "$core/commands/Command";
 
 type Action = "add" | "remove" | "list";
 
-interface ActionChoices {
+type ActionChoices = {
     name: string;
     value: Action;
 }
@@ -80,7 +80,7 @@ export default class Inactive extends Command {
         }
 
         // Add and remove actions :
-        interface Result {
+        type Result = {
             success?: boolean;
             action?: "add" | "remove";
             type?: "role" | "channel";

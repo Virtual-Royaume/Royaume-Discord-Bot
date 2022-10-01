@@ -19,7 +19,7 @@ import { msg } from "$core/utils/Message";
 
 type Action = "add" | "remove" | "list";
 
-interface ActionChoices {
+type ActionChoices = {
     name: string;
     value: Action;
 }

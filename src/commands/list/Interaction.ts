@@ -9,7 +9,7 @@ import { msg } from "$core/utils/Message";
 
 type InteractionType = "verif";
 
-interface InteractionChoices {
+type InteractionChoices = {
     name: string;
     value: InteractionType;
 }

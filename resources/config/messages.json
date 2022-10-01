@@ -11,16 +11,15 @@
     "cmd-birthday-builder-subcmd-list-description": "Afficher la liste des anniversaires",
     "cmd-birthday-builder-subcmd-list-number-name": "page",
     "cmd-birthday-builder-subcmd-list-number-description": "Numéro de la page à afficher",
-    "cmd-birtdhay-builder-subcmd-next-name": "next",
-    "cmd-birthday-builder-subcmd-next-description": "Afficher le prochain anniversaire",
-    "cmd-birthday-exec-next-embed-title": "Prochain anniversaire :birthday:",
-    "cmd-birthday-exec-next-embed-description": "Le prochain anniversaire est celui de **{username}** qui aura **{age} ans** le **{day}/{month}/{year}** !",
-
     "cmd-birthday-exec-embed-title": "Anniversaires des membres (page {page}/{maxPage})",
     "cmd-birthday-exec-embed-line": [
         "**{position}. {username} :** {age} ans ({date})",
         ""
     ],
+    "cmd-birtdhay-builder-subcmd-next-name": "next",
+    "cmd-birthday-builder-subcmd-next-description": "Afficher le prochain anniversaire",
+    "cmd-birthday-exec-next-embed-title": "Prochain anniversaire :birthday:",
+    "cmd-birthday-exec-next-embed-description": "Le prochain anniversaire est celui de **{username}** qui aura **{age} ans** le **{date}** !",
     "cmd-birthday-exec-badformat": "Le format de votre date n'est pas bon.",
     "cmd-birthday-exec-date-invalid": "Cette date est invalide.",
     "cmd-birthday-exec-date-incomplete": "La date est incomplète.",

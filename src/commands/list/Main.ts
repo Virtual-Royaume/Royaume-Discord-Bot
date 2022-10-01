@@ -1,4 +1,5 @@
 import {
+    ChannelType,
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandRoleOption, SlashCommandStringOption
 } from "discord.js";
@@ -41,7 +42,7 @@ export default class Inactive extends Command {
         .addChannelOption(new SlashCommandChannelOption()
             .setName(msg("cmd-main-builder-channel-name"))
             .setDescription(msg("cmd-main-builder-channel-description"))
-            .addChannelTypes(0))
+            .addChannelTypes(ChannelType.GuildText))
         .addRoleOption(new SlashCommandRoleOption()
             .setName(msg("cmd-main-builder-role-name"))
             .setDescription(msg("cmd-main-builder-role-name")))

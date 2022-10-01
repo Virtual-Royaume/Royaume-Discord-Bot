@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { PresenceMessage } from "$core/api/Schema";
+import { PresenceMessage, PresenceType } from "$core/api/Schema";
 
 export type GetPresenceMessagesType = { presenceMessages: PresenceMessage[] };
 export const getPresenceMessages = gql`
@@ -13,6 +13,9 @@ export const getPresenceMessages = gql`
 `;
 
 export type AddPresenceMessageType = { addPresenceMessage: boolean };
+export type AddPresenceMessageVariables = {
+    type: PresenceType;
+};
 export const addPresenceMessage = gql`
     mutation($type: PresenceType!, $text: String!) {
         addPresenceMessage(type: $type, text: $text)
@@ -20,6 +23,9 @@ export const addPresenceMessage = gql`
 `;
 
 export type RemovePresenceMessageType = { removePresenceMessage: boolean };
+export type RemovePresenceMessageVariables = {
+    id: string;
+};
 export const removePresenceMessage = gql`
     mutation($id: ID!){
         removePresenceMessage(id: $id)

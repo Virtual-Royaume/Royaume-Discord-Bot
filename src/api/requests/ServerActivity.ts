@@ -14,6 +14,9 @@ export const getCurrentServerActivity = gql`
 `;
 
 export type GetServerActivityHistoryType = { serverActivity: ServerActivity[] };
+export type GetServerActivityHistoryVariables = {
+    historyCount: number;
+};
 export const getServerActivityHistory = gql`
     query($historyCount: Int!){
         serverActivity(historyCount: $historyCount){
@@ -26,6 +29,9 @@ export const getServerActivityHistory = gql`
 `;
 
 export type SetServerCountType = { setServerActivityMemberCount: boolean };
+export type SetServerCountVariables = {
+    count: number;
+};
 export const setMemberCount = gql`
     mutation($count: Int!) {
         setServerActivityMemberCount(count: $count)

@@ -2,6 +2,11 @@ import { gql } from "graphql-request";
 import { ChannelMessageCount, DiscordActivity, DiscordMessageActivity, Member } from "$core/api/Schema";
 
 export type CreateMemberType = { createMember: Pick<Member, "_id"> };
+export type CreateMemberVariables = {
+    id: string;
+    username: string;
+    profilePicture: string;
+};
 export const createMember = gql`
     mutation($id: ID!, $username: String!, $profilePicture: String!){
         createMember(id: $id, username: $username, profilePicture: $profilePicture){
@@ -11,6 +16,10 @@ export const createMember = gql`
 `;
 
 export type SetAlwaysOnServerType = { updateMember: boolean };
+export type SetAlwaysOnServerVariables = {
+    id: string;
+    value: boolean;
+};
 export const setAlwaysOnServer = gql`
     mutation($id: ID!, $value: Boolean!){
         updateMember(id: $id, input: {
@@ -20,6 +29,11 @@ export const setAlwaysOnServer = gql`
 `;
 
 export type SetUsernameAndprofilePictureType = { updateMember: boolean };
+export type SetUsernameAndprofilePictureVariables = {
+    id: string;
+    username: string;
+    profilePicture: string;
+};
 export const setUsernameAndprofilePicture = gql`
     mutation($id: ID!, $username: String!, $profilePicture: String!){
         updateMember(id: $id, input: {
@@ -30,6 +44,10 @@ export const setUsernameAndprofilePicture = gql`
 `;
 
 export type SetBirthdayType = { updateMember: boolean };
+export type SetBirthdayVariable = {
+    id: string;
+    date: number;
+};
 export const setBirthday = gql`
     mutation($id: ID!, $date: Date!){
         updateMember(id: $id, input: {
@@ -39,6 +57,10 @@ export const setBirthday = gql`
 `;
 
 export type IncChannelMessageType = { incMemberDiscordActivityChannel: number };
+export type IncChannelMessageVariables = {
+    id: string;
+    channelId: string;
+};
 export const incChannelMessage = gql`
     mutation($id: ID!, $channelId: ID!){
         incMemberDiscordActivityChannel(id: $id, channelId: $channelId)
@@ -46,6 +68,9 @@ export const incChannelMessage = gql`
 `;
 
 export type IncVoiceMinuteType = { incMemberDiscordVoiceMinute: number };
+export type IncVoiceMinuteVariables = {
+    id: string;
+}
 export const incVoiceMinute = gql`
     mutation($id: ID!){
         incMemberDiscordVoiceMinute(id: $id)
@@ -53,6 +78,9 @@ export const incVoiceMinute = gql`
 `;
 
 export type GetMemberType = { member: Member };
+export type GetMemberVariables = {
+    id: string;
+}
 export const getMember = gql`
     query($id: ID!){
         member(id: $id){

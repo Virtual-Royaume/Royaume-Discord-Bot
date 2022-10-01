@@ -29,7 +29,10 @@ export default class Birthday extends Command {
             .addNumberOption(new SlashCommandNumberOption()
                 .setName(msg("cmd-birthday-builder-subcmd-list-number-name"))
                 .setDescription(msg("cmd-birthday-builder-subcmd-list-number-description"))
-                .setMinValue(1)));
+                .setMinValue(1)))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-birtdhay-builder-subcmd-next-name"))
+            .setDescription(msg("cmd-birthday-builder-subcmd-next-description")));
 
     private memberPerPage = 10;
 
@@ -103,6 +106,10 @@ export default class Birthday extends Command {
 
                 break;
             }
+            
+            case "next": {
+            break;
+          }
         }
     }
 }

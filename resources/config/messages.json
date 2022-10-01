@@ -1,9 +1,4 @@
 {
-
-    // -------------------------------------
-    //      COMMANDS
-    // -------------------------------------
-
     "message-execution-error-cmd": "Erreur lors de l'exécution de la commande",
 
     "cmd-birthday-builder-name": "anniversaire",
@@ -16,6 +11,8 @@
     "cmd-birthday-builder-subcmd-list-description": "Afficher la liste des anniversaires",
     "cmd-birthday-builder-subcmd-list-number-name": "page",
     "cmd-birthday-builder-subcmd-list-number-description": "Numéro de la page à afficher",
+    "cmd-birtdhay-builder-subcmd-next-name": "next",
+    "cmd-birthday-builder-subcmd-next-description": "Afficher le prochain anniversaire",
     "cmd-birthday-exec-embed-title": "Anniversaires des membres (page {page}/{maxPage})",
     "cmd-birthday-exec-embed-line": [
         "**{position}. {username} :** {age} ans ({date})",
@@ -202,9 +199,6 @@
     ],
 
 
-    // -------------------------------------
-    //      EVENTS
-    // -------------------------------------
 
     "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
 
@@ -236,9 +230,6 @@
     "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps.",
 
 
-    // -------------------------------------
-    //      TASKS
-    // -------------------------------------
 
     "task-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre",
 

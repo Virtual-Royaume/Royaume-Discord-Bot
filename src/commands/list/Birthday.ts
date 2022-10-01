@@ -122,19 +122,13 @@ export default class Birthday extends Command {
               }
 
               const birthday = DayJS(nextBirthday.birthday ?? 0);
-              const age = getAge(birthday);
+              const age = getAge(birthday) + 1;
 
-              let day = birthday.date().toString();
-              let month = birthday.month().toString();
-
-              if (day.length < 2) day = "0" + day;
-              if (month.length < 2) month = "0" + month;
-
-              let year = now.year().toString();
+              let date = birthday.format("DD MMMM");
 
               command.reply({
                 embeds: [simpleEmbed(
-                  msg("cmd-birthday-exec-next-embed-description", [nextBirthday.username, age, day, month, year]),
+                  msg("cmd-birthday-exec-next-embed-description", [nextBirthday.username, age, date]),
                   "normal",
                   msg("cmd-birthday-exec-next-embed-title")
                 )]

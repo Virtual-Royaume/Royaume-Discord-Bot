@@ -30,7 +30,7 @@ export default class Stats extends Command {
         })).serverActivity.reverse();
 
         // Data types :
-        interface Type {
+        type Type = {
             columnName: keyof Omit<ServerActivity, "date" | "__typename">;
             description: string;
         }

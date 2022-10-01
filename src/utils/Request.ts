@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-export interface Response<T> {
+type Response<T> = {
     status: number;
     body: T;
 }

@@ -8,7 +8,7 @@ import Command from "$core/commands/Command";
 
 type Source = "total" | "mois";
 
-interface SourceChoice {
+type SourceChoice = {
     name: string;
     value: Source;
 }
@@ -39,7 +39,7 @@ export default class TopVoice extends Command {
         let page = command.options.getNumber(msg("cmd-topvoice-builder-page-name")) ?? 1;
 
         // Get data and sort it :
-        interface Data {
+        type Data = {
             username: string;
             voiceMinute: number;
         }

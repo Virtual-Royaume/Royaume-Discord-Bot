@@ -8,7 +8,7 @@ import { BaseGuildTextChannel } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
 
-interface RoleUpdate {
+type RoleUpdate = {
     memberId: string;
     oldRole?: string;
     newRole: string;

@@ -15,7 +15,7 @@ import { msg } from "$core/utils/Message";
 
 type Source = "total" | "mois" | "salon";
 
-interface SourceChoice {
+type SourceChoice = {
     name: string;
     value: Source;
 }
@@ -50,7 +50,7 @@ export default class TopMessage extends Command {
         let page = command.options.getNumber(msg("cmd-topmessages-builder-page-name")) ?? 1;
 
         // Get data and sort it :
-        interface Data {
+        type Data = {
             username: string;
             messageCount: number;
         }

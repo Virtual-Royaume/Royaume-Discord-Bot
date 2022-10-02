@@ -50,7 +50,13 @@ export default class VerifMessageReactionAdd extends Event {
         ) {
             // Reject the member :
             await messageReaction.message.reply({
-                embeds: [simpleEmbed(msg("event-verifmessagereactionadd-exec-embed-member-rejected", [member.displayName]), "error")]
+                embeds: [simpleEmbed(
+                    msg(
+                        "event-verifmessagereactionadd-exec-embed-member-rejected",
+                        [member.displayName]
+                    ),
+                    "error"
+                )]
             });
 
             await member.send({ embeds: [simpleEmbed(msg("event-verifmessagereactionadd-exec-embed-member-rejected-mp"), "error")] });

@@ -23,7 +23,7 @@ export default class PresenceUpdate extends Task {
     public async run(): Promise<void> {
         const guild = await Client.instance.getGuild();
 
-        const tiers: { [key: string]: string } = configTiers;
+        const tiers: Record<string, string> = configTiers;
 
         const discordMembers = await guild.members.fetch();
         const apiMembers = (await request<GetMembersTierType, undefined>(getMembersTier)).members;

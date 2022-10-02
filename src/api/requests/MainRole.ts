@@ -1,22 +1,28 @@
-import { gql } from "graphql-request";
 import { MainRole } from "$core/api/Schema";
 
 export type AddRoleType = { addRole: boolean };
-export const addRole = gql`
+export type AddRoleVariables = {
+    roleId: string;
+    category: string;
+};
+export const addRole = `
     mutation($roleId: ID!, $category: String!){
         addRole(roleId: $roleId, category: $category)
     }
 `;
 
 export type RemoveRoleType = { removeRole: boolean };
-export const removeRole = gql`
+export type RemoveRoleVariables = {
+    roleId: string;
+};
+export const removeRole = `
     mutation($roleId: ID!){
         removeRole(roleId: $roleId)
     }
 `;
 
 export type GetRolesType = { roles: MainRole[] };
-export const getRoles = gql`
+export const getRoles = `
     query {
         roles {
             roleId

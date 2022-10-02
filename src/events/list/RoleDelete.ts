@@ -8,7 +8,7 @@ export default class RoleDelete extends Event {
     public name: EventName = "roleDelete";
 
     public async execute(role: Role) : Promise<void> {
-        const roles = (await request<GetRolesType>(getRoles)).roles;
+        const roles = (await request<GetRolesType, undefined>(getRoles)).roles;
 
         if (roles.find(r => r.roleId === role.id)) request(removeRole, { roleId: role.id });
     }

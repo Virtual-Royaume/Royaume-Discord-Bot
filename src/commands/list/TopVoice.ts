@@ -8,7 +8,7 @@ import Command from "$core/commands/Command";
 
 type Source = "total" | "mois";
 
-interface SourceChoice {
+type SourceChoice = {
     name: string;
     value: Source;
 }
@@ -39,7 +39,7 @@ export default class TopVoice extends Command {
         let page = command.options.getNumber(msg("cmd-topvoice-builder-page-name")) ?? 1;
 
         // Get data and sort it :
-        interface Data {
+        type Data = {
             username: string;
             voiceMinute: number;
         }
@@ -48,7 +48,7 @@ export default class TopVoice extends Command {
 
         switch (source) {
             case "mois": {
-                members = (await request<GetMonthVoiceMinuteType>(getMonthVoiceMinute)).members.sort((a, b) => {
+                members = (await request<GetMonthVoiceMinuteType, undefined>(getMonthVoiceMinute)).members.sort((a, b) => {
                     return (b?.activity.monthVoiceMinute ?? 0) - (a?.activity.monthVoiceMinute ?? 0);
                 }).map(member => {
                     return {
@@ -60,7 +60,7 @@ export default class TopVoice extends Command {
             }
 
             case "total": {
-                members = (await request<GetVoiceTimeType>(getVoiceTime)).members.sort((a, b) => {
+                members = (await request<GetVoiceTimeType, undefined>(getVoiceTime)).members.sort((a, b) => {
                     return (b?.activity.voiceMinute ?? 0) - (a?.activity.voiceMinute ?? 0);
                 }).map(member => {
                     return {

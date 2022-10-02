@@ -17,7 +17,7 @@ export default class MessageLinkReaction extends Event {
         if (!urls) return;
 
         // Get messages :
-        interface MessageElement {
+        type MessageElement = {
             url: string;
             message: Message;
         }

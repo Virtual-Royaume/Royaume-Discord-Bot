@@ -8,7 +8,7 @@ import { BaseGuildTextChannel } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
 
-interface RoleUpdate {
+type RoleUpdate = {
     memberId: string;
     oldRole?: string;
     newRole: string;
@@ -26,7 +26,7 @@ export default class PresenceUpdate extends Task {
         const tiers: Record<string, string> = configTiers;
 
         const discordMembers = await guild.members.fetch();
-        const apiMembers = (await request<GetMembersTierType>(getMembersTier)).members;
+        const apiMembers = (await request<GetMembersTierType, undefined>(getMembersTier)).members;
 
         const updates: RoleUpdate[] = [];
 

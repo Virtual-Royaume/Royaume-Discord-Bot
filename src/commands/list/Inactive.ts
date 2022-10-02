@@ -15,7 +15,7 @@ export default class Inactive extends Command {
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
         const verifMembers = (await (await Client.instance.getGuild()).members.fetch()).filter(m => m.roles.cache.has(verify.roles.waiting));
-        const members = (await request<GetMonthActivityType>(getMonthActivity))
+        const members = (await request<GetMonthActivityType, undefined>(getMonthActivity))
             .members.filter(member => {
                 const isInVerif = verifMembers.has(member._id);
                 const monthMessage = member.activity?.messages.monthCount;

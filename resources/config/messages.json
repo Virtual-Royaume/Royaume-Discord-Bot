@@ -1,9 +1,4 @@
 {
-
-    // -------------------------------------
-    //      COMMANDS
-    // -------------------------------------
-
     "message-execution-error-cmd": "Erreur lors de l'exécution de la commande",
 
     "cmd-birthday-builder-name": "anniversaire",
@@ -210,10 +205,6 @@
     ],
 
 
-    // -------------------------------------
-    //      EVENTS
-    // -------------------------------------
-
     "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
 
     "event-messagelinkreaction-exec-attachments": "🗂️ {attachmentsCount} fichiers joint(s)",
@@ -225,6 +216,12 @@
 
     "event-rolesselector-exec-roles-fetch-error": "Une erreur s'est produite lors de l'acquisition des roles.",
     "event-rolesselector-exec-roles-edited": "Modifications de vos rôles effectuées dans la categorie **{category}**.",
+
+    "event-roulettemodal-exec-embed": [
+        "Parmis {choices}",
+        "",
+        "Le destin a choisi `{choice}`"
+    ],
 
     "event-verifmessagereactionadd-exec-welcome-message": "Bienvenue parmis nous <@{userId}> !",
     "event-verifmessagereactionadd-exec-embed-member-accepted": [
@@ -243,10 +240,6 @@
     "event-verifmodal-exec-embed-title": "Présentation de {userName}",
     "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps.",
 
-
-    // -------------------------------------
-    //      TASKS
-    // -------------------------------------
 
     "task-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre",
 

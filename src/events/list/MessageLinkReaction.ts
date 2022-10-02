@@ -62,8 +62,8 @@ export default class MessageLinkReaction extends Event {
             embeds.push(
                 simpleEmbed(msg("event-messagelinkreaction-exec-replyed-embed", [Number(index) + 1, url, message.channelId, content]), "normal")
                     .setAuthor({
-                        name: msg.author.tag,
-                        iconURL: msg.author.displayAvatarURL()
+                        name: message.author.tag,
+                        iconURL: message.author.displayAvatarURL()
                     })
             );
         }

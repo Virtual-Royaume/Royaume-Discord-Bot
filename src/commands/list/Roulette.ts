@@ -8,6 +8,7 @@ import { modal as modalIds } from "$resources/config/interaction-ids.json";
 export default class Roulette extends Command {
 
     public static titleInputId = "title";
+
     public static choicesInputId = "choices";
 
     public readonly slashCommand = new SlashCommandBuilder()
@@ -24,14 +25,12 @@ export default class Roulette extends Command {
                     .setStyle(TextInputStyle.Short)
                     .setRequired(false)
                     .setLabel(msg("cmd-roulette-exec-modal-input-title-label"))
-                    .setPlaceholder(msg("cmd-roulette-exec-modal-input-title-placeholder"))
-                ),
+                    .setPlaceholder(msg("cmd-roulette-exec-modal-input-title-placeholder"))),
                 new ActionRowBuilder<TextInputBuilder>().addComponents(new TextInputBuilder()
                     .setCustomId(Roulette.choicesInputId)
                     .setStyle(TextInputStyle.Paragraph)
                     .setLabel(msg("cmd-roulette-exec-modal-input-choices-label"))
-                    .setPlaceholder(msg("cmd-roulette-exec-modal-input-choices-placeholder"))
-                )
+                    .setPlaceholder(msg("cmd-roulette-exec-modal-input-choices-placeholder")))
             );
 
         await command.showModal(modal);

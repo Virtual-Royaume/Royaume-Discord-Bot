@@ -106,35 +106,35 @@ export default class Birthday extends Command {
 
                 break;
             }
-            
+
             case "next": {
-              const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
-                .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
-                
-              const now = DayJS();
-              const nextBirthday = birthdays.find(member => {
-                const birthday = DayJS(member.birthday ?? 0);
-                return birthday.month() >= now.month() && birthday.date() >= now.date();
-              });
+                const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
+                    .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
 
-              if (!nextBirthday) {
-                return;
-              }
+                const now = DayJS();
+                const nextBirthday = birthdays.find(member => {
+                    const birthday = DayJS(member.birthday ?? 0);
+                    return birthday.month() >= now.month() && birthday.date() >= now.date();
+                });
 
-              const birthday = DayJS(nextBirthday.birthday ?? 0);
-              const age = getAge(birthday) + 1;
+                if (!nextBirthday) {
+                    return;
+                }
 
-              let date = birthday.format("DD MMMM");
+                const birthday = DayJS(nextBirthday.birthday ?? 0);
+                const age = getAge(birthday) + 1;
 
-              command.reply({
-                embeds: [simpleEmbed(
-                  msg("cmd-birthday-exec-next-embed-description", [nextBirthday.username, age, date]),
-                  "normal",
-                  msg("cmd-birthday-exec-next-embed-title")
-                )]
-              });
-            break;
-          }
+                const date = birthday.format("DD MMMM");
+
+                command.reply({
+                    embeds: [simpleEmbed(
+                        msg("cmd-birthday-exec-next-embed-description", [nextBirthday.username, age, date]),
+                        "normal",
+                        msg("cmd-birthday-exec-next-embed-title")
+                    )]
+                });
+                break;
+            }
         }
     }
 }

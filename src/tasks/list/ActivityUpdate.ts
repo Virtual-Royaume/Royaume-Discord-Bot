@@ -1,8 +1,8 @@
-import { request } from "$core/api/Request";
 import { incVoiceMinute } from "$core/api/requests/Member";
 import { setMemberCount } from "$core/api/requests/ServerActivity";
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
+import { gqlRequest } from "$core/utils/Request";
 
 export default class ServerActivityUpdate extends Task {
 
@@ -10,11 +10,11 @@ export default class ServerActivityUpdate extends Task {
         super(60_000);
     }
 
-    public async run() : Promise<void> {
+    public async run(): Promise<void> {
         // Update daily member count :
         const memberCount = (await Client.instance.getGuild()).memberCount;
 
-        if (memberCount) request(setMemberCount, { count: memberCount });
+        if (memberCount) gqlRequest(setMemberCount, { count: memberCount });
 
         // Update voice time of members :
         if (!Client.instance.isProdEnvironment()) return;
@@ -24,7 +24,7 @@ export default class ServerActivityUpdate extends Task {
                 voiceState.member && !voiceState.member.user.bot && voiceState.channel
                 && (!voiceState.selfMute || !voiceState.mute)
             ) {
-                request(incVoiceMinute, { id: voiceState.member.user.id });
+                gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
             }
         }
     }

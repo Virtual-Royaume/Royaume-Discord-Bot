@@ -6,7 +6,6 @@ import {
 import { msg } from "$core/utils/Message";
 import { getChannelsByCategory } from "$core/api/func/MainChannel";
 import { getRolesByCategory } from "$core/api/func/MainRole";
-import { request } from "$core/api/Request";
 import {
     addChannel, AddChannelType, AddChannelVariables,
     removeChannel, RemoveChannelType, RemoveChannelVariables
@@ -14,6 +13,7 @@ import {
 import { addRole, AddRoleType, AddRoleVariables, removeRole, RemoveRoleType, RemoveRoleVariables } from "$core/api/requests/MainRole";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
+import { gqlRequest } from "$core/utils/Request";
 
 type Action = "add" | "remove" | "list";
 
@@ -50,7 +50,7 @@ export default class Inactive extends Command {
             .setName(msg("cmd-main-builder-category-name"))
             .setDescription(msg("cmd-main-builder-category-name")));
 
-    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Get action, channel/role and category :
         const action: Action = <Action>command.options.getString("action", true);
 
@@ -77,10 +77,13 @@ export default class Inactive extends Command {
                 roleMessage += msg("cmd-main-exec-channel-message", [category, ids.map(id => "<@&" + id + ">").join(", ")]) + "\n\n";
             }
 
-            command.reply({ embeds: [
-                simpleEmbed(channelMessage, "normal", msg("cmd-main-exec-channels-title")),
-                simpleEmbed(roleMessage, "normal", msg("cmd-main-exec-role-title"))
-            ], ephemeral: true });
+            command.reply({
+                embeds: [
+                    simpleEmbed(channelMessage, "normal", msg("cmd-main-exec-channels-title")),
+                    simpleEmbed(roleMessage, "normal", msg("cmd-main-exec-role-title"))
+                ], ephemeral: true
+            });
+            return;
         }
 
         // Add and remove actions :
@@ -90,36 +93,36 @@ export default class Inactive extends Command {
             type?: "role" | "channel";
         }
 
-        if (action === "add" || action === "remove") {
-            if (action === "add" && !category) {
-                command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-category"), "error")], ephemeral: true });
-                return;
-            }
-
-            if (!channel && !role) {
-                command.reply({ embeds: [simpleEmbed("cmd-main-exec-need-mention", "error")], ephemeral: true });
-                return;
-            }
-
-            const result: Result = { action: action };
-
-            if (channel) {
-                result.type = "channel";
-                result.success = action === "add" && category
-                    ? (await request<AddChannelType, AddChannelVariables>(addChannel, { channelId: channel.id, category: category })).addChannel
-                    : (await request<RemoveChannelType, RemoveChannelVariables>(removeChannel, { channelId: channel.id })).removeChannel;
-            } else if (role) {
-                result.type = "role";
-                result.success = action === "add" && category
-                    ? (await request<AddRoleType, AddRoleVariables>(addRole, { roleId: role.id, category: category })).addRole
-                    : (await request<RemoveRoleType, RemoveRoleVariables>(removeRole, { roleId: role.id })).removeRole;
-            }
-
-            const type = result.type === "role" ? "rôle" : "salon";
-            const message = result.success
-                ? msg("cmd-main-exec-success-add", [result.action === "add" ? "ajouté" : "supprimé", type])
-                : msg("cmd-main-exec-success-error", [result.action === "add" ? "l'ajout" : "la suppression", type]);
-            command.reply({ embeds: [simpleEmbed(message, result.success ? "normal" : "error")], ephemeral: true });
+        if (action === "add" && !category) {
+            command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-category"), "error")], ephemeral: true });
+            return;
         }
+
+        if (!channel || !role) {
+            command.reply({ embeds: [simpleEmbed("cmd-main-exec-need-mention", "error")], ephemeral: true });
+            return;
+        }
+
+        const result: Result = { action: action };
+
+        if (channel) {
+            result.type = "channel";
+            result.success = action === "add" && category
+                ? (await gqlRequest<AddChannelType, AddChannelVariables>(addChannel, { channelId: channel.id, category: category })).data?.addChannel
+                : (await gqlRequest<RemoveChannelType, RemoveChannelVariables>(removeChannel, { channelId: channel.id })).data?.removeChannel;
+
+        } else if (role) {
+            result.type = "role";
+            result.success = action === "add" && category
+                ? (await gqlRequest<AddRoleType, AddRoleVariables>(addRole, { roleId: role.id, category: category })).data?.addRole
+                : (await gqlRequest<RemoveRoleType, RemoveRoleVariables>(removeRole, { roleId: role.id })).data?.removeRole;
+        }
+
+        const type = result.type === "role" ? "rôle" : "salon";
+        const message = result.success
+            ? msg("cmd-main-exec-success-add", [result.action === "add" ? "ajouté" : "supprimé", type])
+            : msg("cmd-main-exec-success-error", [result.action === "add" ? "l'ajout" : "la suppression", type]);
+
+        command.reply({ embeds: [simpleEmbed(message, result.success ? "normal" : "error")], ephemeral: true });
     }
 }

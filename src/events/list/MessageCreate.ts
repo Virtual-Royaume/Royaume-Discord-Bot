@@ -1,5 +1,4 @@
 import { BaseGuildTextChannel, ChannelType, Message as Msg, TextBasedChannel } from "discord.js";
-import { request } from "$core/api/Request";
 import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
 import { incChannelMessage, IncChannelMessageType, IncChannelMessageVariables } from "$core/api/requests/Member";
 import { generalChannel } from "$resources/config/information.json";
@@ -8,6 +7,7 @@ import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import { numberFormat } from "$core/utils/Function";
 import { msg } from "$core/utils/Message";
+import { gqlRequest } from "$core/utils/Request";
 
 export default class MessageCreate extends Event {
 
@@ -30,13 +30,17 @@ export default class MessageCreate extends Event {
         if (!Client.instance.isProdEnvironment()) return;
 
         if (channel) {
-            const channels = (await request<GetChannelsType, undefined>(getChannels)).channels;
+            const channels = (await gqlRequest<GetChannelsType, undefined>(getChannels)).data?.channels;
+
+            if (!channels) return;
 
             if (channels.find(c => c.channelId === channel?.id)) {
-                const messageCount = (await request<IncChannelMessageType, IncChannelMessageVariables>(
+                const messageCount = (await gqlRequest<IncChannelMessageType, IncChannelMessageVariables>(
                     incChannelMessage,
                     { id: message.author.id, channelId: channel.id }
-                )).incMemberDiscordActivityChannel;
+                )).data?.incMemberDiscordActivityChannel;
+
+                if (!messageCount) return;
 
                 // Send an announcement when the member reaches a message count step :
                 let step = false;
@@ -58,10 +62,10 @@ export default class MessageCreate extends Event {
                 }
             }
         } else {
-            (await request<IncChannelMessageType, IncChannelMessageVariables>(
+            (await gqlRequest<IncChannelMessageType, IncChannelMessageVariables>(
                 incChannelMessage,
                 { id: message.author.id, channelId: "732392873667854372" }
-            )).incMemberDiscordActivityChannel;
+            )).data?.incMemberDiscordActivityChannel;
         }
     }
 }

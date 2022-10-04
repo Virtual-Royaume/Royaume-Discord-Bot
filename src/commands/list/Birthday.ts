@@ -3,13 +3,13 @@ import {
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption,
     SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
-import { request } from "$core/api/Request";
 import { getBirthdays, GetBirthdaysType, setBirthday } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 import { minimumAge } from "$resources/config/information.json";
 import { dateFormat, getAge } from "$core/utils/Function";
 import DayJS from "$core/utils/DayJS";
+import { gqlRequest } from "$core/utils/Request";
 
 export default class Birthday extends Command {
 
@@ -69,7 +69,12 @@ export default class Birthday extends Command {
                 }
 
                 // Save birthday :
-                await request(setBirthday, { id: command.user.id, date: date.valueOf() });
+                const response = await gqlRequest(setBirthday, { id: command.user.id, date: date.valueOf() });
+
+                if (!response.success) {
+                    command.reply({ embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")] });
+                    return;
+                }
 
                 command.reply({ embeds: [simpleEmbed(msg("cmd-birthday-exec-date-saved"))], ephemeral: true });
                 break;
@@ -77,8 +82,18 @@ export default class Birthday extends Command {
 
             case "list": {
                 let page = command.options.getNumber("page") ?? 1;
-                let birthdays = (await request<GetBirthdaysType, undefined>(getBirthdays)).members.filter(member => member.birthday)
+                let birthdays = (await gqlRequest<GetBirthdaysType, undefined>(getBirthdays)).data?.members.filter(member => member.birthday)
                     .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
+
+                if (!birthdays) {
+                    command.reply({ embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")] });
+                    return;
+                }
+
+                if (!birthdays.length) {
+                    command.reply({ embeds: [simpleEmbed(msg("cmd-birthday-exec-empty-birthday-list"), "error")] });
+                    return;
+                }
 
                 const maxPage = Math.ceil(birthdays.length / this.memberPerPage);
                 page = page > maxPage ? maxPage : page;

@@ -1,10 +1,10 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "discord.js";
 import { msg } from "$core/utils/Message";
-import { request } from "$core/api/Request";
 import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
 import { formatMinutes } from "$core/utils/Function";
 import Command from "$core/commands/Command";
+import { gqlRequest } from "$core/utils/Request";
 
 type Source = "total" | "mois";
 
@@ -28,13 +28,13 @@ export default class TopVoice extends Command {
             .setDescription(msg("cmd-topvoice-builder-source-description"))
             .addChoices(...this.sourceChoices)
             .setRequired(true)).addNumberOption(new SlashCommandNumberOption()
-            .setName(msg("cmd-topvoice-builder-page-name"))
-            .setDescription(msg("cmd-topvoice-builder-page-description"))
-            .setMinValue(1));
+                .setName(msg("cmd-topvoice-builder-page-name"))
+                .setDescription(msg("cmd-topvoice-builder-page-description"))
+                .setMinValue(1));
 
     private memberPerPage = 20;
 
-    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         const source: Source = <Source>command.options.getString(msg("cmd-topvoice-builder-source-name"), true);
         let page = command.options.getNumber(msg("cmd-topvoice-builder-page-name")) ?? 1;
 
@@ -48,26 +48,26 @@ export default class TopVoice extends Command {
 
         switch (source) {
             case "mois": {
-                members = (await request<GetMonthVoiceMinuteType, undefined>(getMonthVoiceMinute)).members.sort((a, b) => {
+                members = (await gqlRequest<GetMonthVoiceMinuteType, undefined>(getMonthVoiceMinute)).data?.members.sort((a, b) => {
                     return (b?.activity.monthVoiceMinute ?? 0) - (a?.activity.monthVoiceMinute ?? 0);
                 }).map(member => {
                     return {
                         username: member.username,
                         voiceMinute: member.activity.monthVoiceMinute
                     };
-                });
+                }) ?? [];
                 break;
             }
 
             case "total": {
-                members = (await request<GetVoiceTimeType, undefined>(getVoiceTime)).members.sort((a, b) => {
+                members = (await gqlRequest<GetVoiceTimeType, undefined>(getVoiceTime)).data?.members.sort((a, b) => {
                     return (b?.activity.voiceMinute ?? 0) - (a?.activity.voiceMinute ?? 0);
                 }).map(member => {
                     return {
                         username: member.username,
                         voiceMinute: member.activity.voiceMinute
                     };
-                });
+                }) ?? [];
                 break;
             }
         }
@@ -86,7 +86,7 @@ export default class TopVoice extends Command {
             const member = members[i];
 
             message += msg("cmd-topvoice-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
-                formatMinutes(member.voiceMinute)
+            formatMinutes(member.voiceMinute)
             ]);
         }
 

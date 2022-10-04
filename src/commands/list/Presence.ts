@@ -3,7 +3,6 @@ import {
     GuildMember, SlashCommandBuilder, SlashCommandNumberOption,
     SlashCommandStringOption
 } from "discord.js";
-import { request } from "$core/api/Request";
 import {
     addPresenceMessage, getPresenceMessages,
     GetPresenceMessagesType, removePresenceMessage,
@@ -17,6 +16,7 @@ import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 import Client from "$core/Client";
 import { msg } from "$core/utils/Message";
+import { gqlRequest } from "$core/utils/Request";
 
 type Action = "add" | "remove" | "list";
 
@@ -94,7 +94,7 @@ export default class Role extends Command {
         }
 
         // Create function for the request for add presence message :
-        const addPresenceRequest = async() => await request(addPresenceMessage, { type: presence, text: message });
+        const addPresenceRequest = async () => await gqlRequest(addPresenceMessage, { type: presence, text: message });
 
         // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
         if (command.member.permissions.has("Administrator")) {
@@ -220,9 +220,9 @@ export default class Role extends Command {
 
         // Try to delete the presence message :
         try {
-            const deleted = await request<RemovePresenceMessageType, RemovePresenceMessageVariables>(removePresenceMessage, { id });
+            const response = await gqlRequest<RemovePresenceMessageType, RemovePresenceMessageVariables>(removePresenceMessage, { id });
 
-            if (deleted.removePresenceMessage) {
+            if (response.success) {
                 command.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-succes"))], ephemeral: true });
             } else {
                 command.reply({
@@ -240,7 +240,15 @@ export default class Role extends Command {
 
     private async list(command: ChatInputCommandInteraction): Promise<void> {
         // Get data and sort it :
-        let presenceMessages = (await request<GetPresenceMessagesType, undefined>(getPresenceMessages)).presenceMessages;
+        let presenceMessages = (await gqlRequest<GetPresenceMessagesType, undefined>(getPresenceMessages)).data?.presenceMessages;
+
+        if (!presenceMessages) {
+            command.reply({
+                embeds: [simpleEmbed(msg("message-execution-error-cmd"))],
+                ephemeral: true
+            });
+            return;
+        }
 
         // Get page and max page :
         const maxPage = Math.ceil(presenceMessages.length / this.messagePerPage);

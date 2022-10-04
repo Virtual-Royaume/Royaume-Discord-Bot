@@ -1,25 +1,29 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-type Response<T> = {
-    status: number;
-    body: T;
+export type ResponseSuccess<T> = {
+    success: true;
+    data: T;
 }
 
-export const githubRaw = "https://raw.githubusercontent.com/";
+export type ResponseError<T> = {
+    success: false;
+    data: null;
+}
 
-// TODO : rewrite this
-export async function request<T>(link: string, config: AxiosRequestConfig = {}): Promise<Response<T>> {
+export type Response<T> = ResponseSuccess<T> | ResponseError<T>;
+
+export async function request<T>(endpoint: string, config?: AxiosRequestConfig): Promise<Response<T>> {
     try {
-        const response = await axios(link, config);
+        const response = await axios(endpoint, config);
 
         return {
-            status: response.status,
-            body: response.data
-        };
+            success: response.status === 200,
+            data: response.status === 200 ? response.data : null
+        }
     } catch {
         return {
-            status: 400,
-            body: {} as T
-        };
+            success: false,
+            data: null
+        }
     }
 }

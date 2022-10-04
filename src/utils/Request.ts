@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { getEnv } from "./EnvVariable";
 
 export type ResponseSuccess<T> = {
     success: true;
@@ -26,4 +27,20 @@ export async function request<T>(endpoint: string, config?: AxiosRequestConfig):
             data: null
         }
     }
+}
+
+type GqlVariableType = Record<string, string | number | boolean>;
+
+export async function gqlRequest<ReturnType, Variables extends GqlVariableType | undefined>(query: string, variables?: Variables): Promise<Response<ReturnType>> {
+    return await request(
+        getEnv<string>("API_LINK"),
+        {
+            method: "POST",
+            headers: {
+                "Authorization": getEnv<string>("API_TOKEN"),
+                "content-type": "application/json"
+            },
+            data: { query, variables }
+        }
+    );
 }

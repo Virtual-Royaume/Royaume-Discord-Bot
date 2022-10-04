@@ -6,12 +6,13 @@ import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { msg } from "$core/utils/Message";
-import { request } from "$core/api/Request";
 import { getServerActivityHistory, GetServerActivityHistoryType, GetServerActivityHistoryVariables } from "$core/api/requests/ServerActivity";
 import { ServerActivity } from "$core/api/Schema";
 import { colors } from "$resources/config/information.json";
 import { dateFormat } from "$core/utils/Function";
 import DayJS from "$core/utils/DayJS";
+import { gqlRequest } from "$core/utils/Request";
+import { simpleEmbed } from "$core/utils/Embed";
 
 export default class Stats extends Command {
 
@@ -23,11 +24,19 @@ export default class Stats extends Command {
             .setDescription(msg("cmd-stats-builder-history-description"))
             .setMinValue(5));
 
-    public async execute(command: ChatInputCommandInteraction) : Promise<void> {
+    public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Get server activity :
-        const serverActivity = (await request<GetServerActivityHistoryType, GetServerActivityHistoryVariables>(getServerActivityHistory, {
+        const serverActivity = (await gqlRequest<GetServerActivityHistoryType, GetServerActivityHistoryVariables>(getServerActivityHistory, {
             historyCount: command.options.getNumber(msg("cmd-stats-builder-history-name")) ?? 30
-        })).serverActivity.reverse();
+        })).data?.serverActivity.reverse();
+
+        if (!serverActivity) {
+            command.reply({
+                embeds: [simpleEmbed(msg("message-execution-error-cmd"))],
+                ephemeral: true
+            });
+            return;
+        }
 
         // Data types :
         type Type = {

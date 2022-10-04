@@ -1,8 +1,8 @@
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
-import { request } from "$core/api/Request";
 import { GetPresenceMessagesType, getPresenceMessages } from "$core/api/requests/PresenceMessage";
 import { ActivityType } from "discord.js";
+import { gqlRequest } from "$core/utils/Request";
 
 const activityType: Record<string, ActivityType> = {
     "COMPETING": ActivityType.Competing,
@@ -17,8 +17,11 @@ export default class PresenceUpdate extends Task {
         super(10_000);
     }
 
-    public async run() : Promise<void> {
-        const presenceMessages = (await request<GetPresenceMessagesType, undefined>(getPresenceMessages)).presenceMessages;
+    public async run(): Promise<void> {
+        const presenceMessages = (await gqlRequest<GetPresenceMessagesType, undefined>(getPresenceMessages)).data?.presenceMessages;
+
+        if (!presenceMessages) return;
+
         const message = presenceMessages[Math.floor(Math.random() * presenceMessages.length)];
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

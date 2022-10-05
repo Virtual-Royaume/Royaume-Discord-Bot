@@ -32,7 +32,7 @@ export async function request<T>(endpoint: string, config?: AxiosRequestConfig):
 type GqlVariableType = Record<string, string | number | boolean>;
 
 export async function gqlRequest<ReturnType, Variables extends GqlVariableType | undefined>(query: string, variables?: Variables): Promise<Response<ReturnType>> {
-    return await request(
+    const response = await request<{ data: ReturnType }>(
         getEnv<string>("API_LINK"),
         {
             method: "POST",
@@ -43,4 +43,6 @@ export async function gqlRequest<ReturnType, Variables extends GqlVariableType |
             data: { query, variables }
         }
     );
+
+    return response.data ? { success: response.success, data: response.data?.data } : { success: response.success, data: response.data };
 }

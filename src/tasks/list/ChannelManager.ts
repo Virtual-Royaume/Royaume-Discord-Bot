@@ -17,7 +17,7 @@ export default class ChannelManager extends Task {
         const channels = await (await Client.instance.getGuild()).channels.fetch();
 
         for (const channelName of voiceChannels.public.nameList.slice(0, voiceChannels.public.defaultCount).reverse()) {
-            if (!channels.find(channel => channel.name === channelName)) this.createChannel(channelName, "public");
+            if (!channels.find(channel => channel?.name === channelName)) this.createChannel(channelName, "public");
         }
     }
 
@@ -87,9 +87,9 @@ export default class ChannelManager extends Task {
      */
     private async getAvailablePublicChannel() : Promise<string | undefined> {
         const channels = (await (await Client.instance.getGuild()).channels.fetch()).filter(channel => {
-            return channel.type === ChannelType.GuildVoice
+            return channel?.type === ChannelType.GuildVoice
                 && voiceChannels.public.nameList.includes(channel.name);
-        }).map(channel => channel.name);
+        }).map(channel => channel?.name);
 
         return voiceChannels.public.nameList.filter(name => {
             return !channels.includes(name);

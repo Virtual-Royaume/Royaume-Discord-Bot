@@ -1,8 +1,18 @@
-import gqlRequest, { Variables } from "graphql-request";
 import { getEnv } from "$core/utils/EnvVariable";
+import { request as simpleRequest } from "$core/utils/Request";
 
-export async function request<T>(request: string, variables?: Variables) : Promise<T> {
-    return await gqlRequest<T>(getEnv<string>("API_LINK") ?? "", request, variables, {
-        "authorization": getEnv<string>("API_TOKEN") ?? ""
-    });
+type VariableType = Record<string, string | number | boolean>;
+
+export async function request<ReturnType, Variables extends VariableType | undefined>(request: string, variables?: Variables) : Promise<ReturnType> {
+    if (variables) for (const [key, value] of Object.entries(variables)) request = request.replace(key, value.toString());
+
+    return (await simpleRequest<ReturnType>(
+        getEnv<string>("API_LINK"),
+        {
+            headers: {
+                authorization: getEnv<string>("API_TOKEN")
+            },
+            data: request
+        }
+    )).body;
 }

@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
 import { request } from "$core/api/Request";
-import { getMember, GetMemberType } from "$core/api/requests/Member";
+import { getMember, GetMemberType, GetMemberVariables } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
@@ -30,7 +30,7 @@ export default class Member extends Command {
         }
 
         // Get member info :
-        const memberInfo = (await request<GetMemberType>(getMember, { id: member.id })).member;
+        const memberInfo = (await request<GetMemberType, GetMemberVariables>(getMember, { id: member.id })).member;
 
         if (!memberInfo) {
             command.reply({ embeds: [simpleEmbed(msg("cmd-member-exec-member-info-error"), "error")], ephemeral: true });
@@ -38,8 +38,8 @@ export default class Member extends Command {
         }
 
         // Get main channels en sort it :
-        const channels = (await request<GetChannelsType>(getChannels)).channels;
-        const channelsIdsByCategory: { [category: string]: string[] } = {};
+        const channels = (await request<GetChannelsType, undefined>(getChannels)).channels;
+        const channelsIdsByCategory: Record<string, string[]> = {};
 
         for (const channel of channels) {
             if (!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];

@@ -14,7 +14,7 @@ export default class GithubLinkReaction extends Event {
         if (!urls) return;
 
         // Get codes, lines... :
-        interface CodeElement {
+        type CodeElement = {
             link: string;
 
             lines: number[];

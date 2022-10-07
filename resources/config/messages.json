@@ -154,6 +154,14 @@
     "cmd-role-builder-description": "Permet de choisir ses rôles",
     "cmd-role-exec-choose-role": "Veuillez choisir vos roles",
 
+    "cmd-roulette-builder-name": "roulette",
+    "cmd-roulette-builder-description": "Choisir une valeur aléatoire parmis une liste d'éléments",
+    "cmd-roulette-exec-modal-title": "Différents choix",
+    "cmd-roulette-exec-modal-input-title-label": "Titre",
+    "cmd-roulette-exec-modal-input-title-placeholder": "facultatif",
+    "cmd-roulette-exec-modal-input-choices-label": "Différents valeurs",
+    "cmd-roulette-exec-modal-input-choices-placeholder": "Les valeurs doivent être séparées par des retours a la ligne",
+
     "cmd-stats-builder-name": "stats",
     "cmd-stats-builder-description": "Voir les statistiques du serveurs",
     "cmd-stats-builder-history-name": "historique",
@@ -201,7 +209,6 @@
     ],
 
 
-
     "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
 
     "event-messagelinkreaction-exec-attachments": "🗂️ {attachmentsCount} fichiers joint(s)",
@@ -213,6 +220,12 @@
 
     "event-rolesselector-exec-roles-fetch-error": "Une erreur s'est produite lors de l'acquisition des roles.",
     "event-rolesselector-exec-roles-edited": "Modifications de vos rôles effectuées dans la categorie **{category}**.",
+
+    "event-roulettemodal-exec-embed": [
+        "Parmis {choices}",
+        "",
+        "Le destin a choisi `{choice}`"
+    ],
 
     "event-verifmessagereactionadd-exec-welcome-message": "Bienvenue parmis nous <@{userId}> !",
     "event-verifmessagereactionadd-exec-embed-member-accepted": [
@@ -231,8 +244,7 @@
     "event-verifmodal-exec-embed-title": "Présentation de {userName}",
     "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps.",
 
-
-
+    
     "task-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre",
 
     "task-tierupdate-exec-embed-member-no-old-rank-update": "<@{userId}> ➜ <@&{newRoleId}>",

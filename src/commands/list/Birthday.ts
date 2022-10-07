@@ -38,7 +38,7 @@ export default class Birthday extends Command {
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
         switch (command.options.getSubcommand()) {
-            case "set": {
+            case msg("cmd-birthday-builder-subcmd-set-name"): {
                 // Check parameter :
                 const badFormat = (error: string) => {
                     command.reply({ embeds: [simpleEmbed(error, "error")], ephemeral: true });
@@ -78,7 +78,7 @@ export default class Birthday extends Command {
                 break;
             }
 
-            case "list": {
+            case msg("cmd-birthday-builder-subcmd-list-name"): {
                 let page = command.options.getNumber("page") ?? 1;
                 let birthdays = (await request<GetBirthdaysType, undefined>(getBirthdays)).members.filter(member => member.birthday)
                     .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
@@ -107,8 +107,8 @@ export default class Birthday extends Command {
                 break;
             }
 
-            case "next": {
                 const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
+            case msg("cmd-birtdhay-builder-subcmd-next-name"): {
                     .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
 
                 const now = DayJS();

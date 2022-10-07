@@ -107,32 +107,49 @@ export default class Birthday extends Command {
                 break;
             }
 
-                const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
             case msg("cmd-birtdhay-builder-subcmd-next-name"): {
+                const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
                     .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
 
-                const now = DayJS();
-                const nextBirthday = birthdays.find(member => {
+                const today = DayJS();
+
+                const birthdaysOfTheMonth = birthdays.filter(member => {
                     const birthday = DayJS(member.birthday ?? 0);
-                    return birthday.month() >= now.month() && birthday.date() >= now.date();
+                    return birthday.month() === today.month() && birthday.date() >= today.date();
                 });
 
-                if (!nextBirthday) {
-                    return;
+                let nextBirthday = 31;
+                let nextBirthdayMember: GetBirthdaysType["members"][number] | undefined;
+
+                birthdaysOfTheMonth.map(member => {
+                    const birthday = DayJS(member.birthday ?? 0);
+                    if (birthday.date() < nextBirthday) {
+                        nextBirthday = birthday.date();
+                        nextBirthdayMember = member;
+                    }
+                });
+
+                if (nextBirthdayMember) {
+                    const birthday = DayJS(nextBirthdayMember.birthday ?? 0);
+
+                    command.reply({
+                        embeds: [
+                            simpleEmbed(
+                                msg("cmd-birthday-exec-next-embed-description", [
+                                    nextBirthdayMember.username,
+                                    getAge(birthday) + 1,
+                                    birthday.format("DD MMMM")
+                                ]),
+                                "normal",
+                                msg("cmd-birthday-exec-next-embed-title")
+                            )
+                        ]
+                    });
+                } else {
+                    command.reply({
+                        embeds: [simpleEmbed(msg("cmd-birthday-exec-next-embed-none"), "error", msg("cmd-birthday-exec-next-embed-title"))]
+                    });
                 }
-
-                const birthday = DayJS(nextBirthday.birthday ?? 0);
-                const age = getAge(birthday) + 1;
-
-                const date = birthday.format("DD MMMM");
-
-                command.reply({
-                    embeds: [simpleEmbed(
-                        msg("cmd-birthday-exec-next-embed-description", [nextBirthday.username, age, date]),
-                        "normal",
-                        msg("cmd-birthday-exec-next-embed-title")
-                    )]
-                });
                 break;
             }
         }

@@ -1,5 +1,4 @@
 import {
-    ChannelType,
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandRoleOption, SlashCommandStringOption
 } from "discord.js";
@@ -7,17 +6,14 @@ import { msg } from "$core/utils/Message";
 import { getChannelsByCategory } from "$core/api/func/MainChannel";
 import { getRolesByCategory } from "$core/api/func/MainRole";
 import { request } from "$core/api/Request";
-import {
-    addChannel, AddChannelType, AddChannelVariables,
-    removeChannel, RemoveChannelType, RemoveChannelVariables
-} from "$core/api/requests/MainChannel";
-import { addRole, AddRoleType, AddRoleVariables, removeRole, RemoveRoleType, RemoveRoleVariables } from "$core/api/requests/MainRole";
+import { addChannel, AddChannelType, removeChannel, RemoveChannelType } from "$core/api/requests/MainChannel";
+import { addRole, AddRoleType, removeRole, RemoveRoleType } from "$core/api/requests/MainRole";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 
 type Action = "add" | "remove" | "list";
 
-type ActionChoices = {
+interface ActionChoices {
     name: string;
     value: Action;
 }
@@ -42,7 +38,7 @@ export default class Inactive extends Command {
         .addChannelOption(new SlashCommandChannelOption()
             .setName(msg("cmd-main-builder-channel-name"))
             .setDescription(msg("cmd-main-builder-channel-description"))
-            .addChannelTypes(ChannelType.GuildText))
+            .addChannelTypes(0))
         .addRoleOption(new SlashCommandRoleOption()
             .setName(msg("cmd-main-builder-role-name"))
             .setDescription(msg("cmd-main-builder-role-name")))
@@ -84,14 +80,14 @@ export default class Inactive extends Command {
         }
 
         // Add and remove actions :
-        type Result = {
+        interface Result {
             success?: boolean;
             action?: "add" | "remove";
             type?: "role" | "channel";
         }
 
         if (action === "add" || action === "remove") {
-            if (action === "add" && !category) {
+            if (!category && action === "add") {
                 command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-category"), "error")], ephemeral: true });
                 return;
             }
@@ -105,14 +101,14 @@ export default class Inactive extends Command {
 
             if (channel) {
                 result.type = "channel";
-                result.success = action === "add" && category
-                    ? (await request<AddChannelType, AddChannelVariables>(addChannel, { channelId: channel.id, category: category })).addChannel
-                    : (await request<RemoveChannelType, RemoveChannelVariables>(removeChannel, { channelId: channel.id })).removeChannel;
+                result.success = action === "add"
+                    ? (await request<AddChannelType>(addChannel, { channelId: channel.id, category: category })).addChannel
+                    : (await request<RemoveChannelType>(removeChannel, { channelId: channel.id })).removeChannel;
             } else if (role) {
                 result.type = "role";
-                result.success = action === "add" && category
-                    ? (await request<AddRoleType, AddRoleVariables>(addRole, { roleId: role.id, category: category })).addRole
-                    : (await request<RemoveRoleType, RemoveRoleVariables>(removeRole, { roleId: role.id })).removeRole;
+                result.success = action === "add"
+                    ? (await request<AddRoleType>(addRole, { roleId: role.id, category: category })).addRole
+                    : (await request<RemoveRoleType>(removeRole, { roleId: role.id })).removeRole;
             }
 
             const type = result.type === "role" ? "rôle" : "salon";

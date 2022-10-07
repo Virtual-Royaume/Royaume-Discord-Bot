@@ -1,12 +1,8 @@
+import { gql } from "graphql-request";
 import { ChannelMessageCount, DiscordActivity, DiscordMessageActivity, Member } from "$core/api/Schema";
 
 export type CreateMemberType = { createMember: Pick<Member, "_id"> };
-export type CreateMemberVariables = {
-    id: string;
-    username: string;
-    profilePicture: string;
-};
-export const createMember = `
+export const createMember = gql`
     mutation($id: ID!, $username: String!, $profilePicture: String!){
         createMember(id: $id, username: $username, profilePicture: $profilePicture){
             _id
@@ -15,11 +11,7 @@ export const createMember = `
 `;
 
 export type SetAlwaysOnServerType = { updateMember: boolean };
-export type SetAlwaysOnServerVariables = {
-    id: string;
-    value: boolean;
-};
-export const setAlwaysOnServer = `
+export const setAlwaysOnServer = gql`
     mutation($id: ID!, $value: Boolean!){
         updateMember(id: $id, input: {
             isOnServer: $value
@@ -28,12 +20,7 @@ export const setAlwaysOnServer = `
 `;
 
 export type SetUsernameAndprofilePictureType = { updateMember: boolean };
-export type SetUsernameAndprofilePictureVariables = {
-    id: string;
-    username: string;
-    profilePicture: string;
-};
-export const setUsernameAndprofilePicture = `
+export const setUsernameAndprofilePicture = gql`
     mutation($id: ID!, $username: String!, $profilePicture: String!){
         updateMember(id: $id, input: {
             username: $username
@@ -43,11 +30,7 @@ export const setUsernameAndprofilePicture = `
 `;
 
 export type SetBirthdayType = { updateMember: boolean };
-export type SetBirthdayVariable = {
-    id: string;
-    date: number;
-};
-export const setBirthday = `
+export const setBirthday = gql`
     mutation($id: ID!, $date: Date!){
         updateMember(id: $id, input: {
             birthday: $date
@@ -56,31 +39,21 @@ export const setBirthday = `
 `;
 
 export type IncChannelMessageType = { incMemberDiscordActivityChannel: number };
-export type IncChannelMessageVariables = {
-    id: string;
-    channelId: string;
-};
-export const incChannelMessage = `
+export const incChannelMessage = gql`
     mutation($id: ID!, $channelId: ID!){
         incMemberDiscordActivityChannel(id: $id, channelId: $channelId)
     }
 `;
 
 export type IncVoiceMinuteType = { incMemberDiscordVoiceMinute: number };
-export type IncVoiceMinuteVariables = {
-    id: string;
-}
-export const incVoiceMinute = `
+export const incVoiceMinute = gql`
     mutation($id: ID!){
         incMemberDiscordVoiceMinute(id: $id)
     }
 `;
 
 export type GetMemberType = { member: Member };
-export type GetMemberVariables = {
-    id: string;
-}
-export const getMember = `
+export const getMember = gql`
     query($id: ID!){
         member(id: $id){
             _id
@@ -107,7 +80,7 @@ export const getMember = `
 export type GetMembersTierType = { members: (Pick<Member, "_id"> & {
     activity: Pick<DiscordActivity, "tier">
 })[] };
-export const getMembersTier = `
+export const getMembersTier = gql`
     query {
         members {
             _id
@@ -121,7 +94,7 @@ export const getMembersTier = `
 export type GetMembersOnServerStatusType = {
     members: Pick<Member, "_id" | "username" | "isOnServer">[]
 };
-export const getMembersOnServerStatus = `
+export const getMembersOnServerStatus = gql`
     query {
         members {
             _id
@@ -134,7 +107,7 @@ export const getMembersOnServerStatus = `
 export type GetBirthdaysType = {
     members: Pick<Member, "_id" | "username" | "birthday" | "profilePicture">[]
 };
-export const getBirthdays = `
+export const getBirthdays = gql`
     query {
         members {
             _id
@@ -148,7 +121,7 @@ export const getBirthdays = `
 export type GetVoiceTimeType = { members: (Pick<Member, "_id" | "username"> & {
     activity: Pick<DiscordActivity, "voiceMinute">
 })[] };
-export const getVoiceTime = `
+export const getVoiceTime = gql`
     query {
         members {
             _id
@@ -163,7 +136,7 @@ export const getVoiceTime = `
 export type GetMonthMessageCountType = { members: (Pick<Member, "_id" | "username"> & {
     activity: { messages: Pick<DiscordMessageActivity, "monthCount"> }
 })[] };
-export const getMonthMessageCount = `
+export const getMonthMessageCount = gql`
     query {
         members {
             _id
@@ -180,7 +153,7 @@ export const getMonthMessageCount = `
 export type GetMonthVoiceMinuteType = { members: (Pick<Member, "_id" | "username"> & {
     activity: Pick<DiscordActivity, "monthVoiceMinute">
 })[] };
-export const getMonthVoiceMinute = `
+export const getMonthVoiceMinute = gql`
     query {
         members {
             _id
@@ -197,7 +170,7 @@ export type GetMonthActivityType = { members: (Pick<Member, "_id" | "username"> 
         messages: Pick<DiscordMessageActivity, "monthCount">
     }
 })[] };
-export const getMonthActivity = `
+export const getMonthActivity = gql`
     query {
         members {
             _id
@@ -217,7 +190,7 @@ export type GetTotalMessageType = { members: (Pick<Member, "_id" | "username"> &
         messages: Pick<DiscordMessageActivity, "totalCount">
     }
 })[] };
-export const getTotalMessageCount = `
+export const getTotalMessageCount = gql`
     query {
         members {
             _id
@@ -238,7 +211,7 @@ export type GetChannelMessageCountType = { members: (Pick<Member, "_id" | "usern
         }
     }
 })[] };
-export const getChannelMessageCount = `
+export const getChannelMessageCount = gql`
     query {
         members {
             _id

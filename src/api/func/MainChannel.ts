@@ -7,7 +7,7 @@ type ChannelsByCategory = {
 
 export async function getChannelsByCategory() : Promise<ChannelsByCategory> {
     // Get mains channels :
-    const channels = (await request<GetChannelsType, undefined>(getChannels)).channels;
+    const channels = (await request<GetChannelsType>(getChannels)).channels;
 
     // Sort channels by category :
     const channelsIdsByCategory: ChannelsByCategory = {};

@@ -2,7 +2,7 @@ import Event, { EventName } from "$core/events/Event";
 import {
     BaseGuildTextChannel, ButtonInteraction,
     GuildMember, Interaction, ActionRowBuilder,
-    ModalBuilder, ModalSubmitInteraction, TextInputBuilder, TextInputStyle
+    ModalBuilder, ModalSubmitInteraction, TextInputComponent, TextInputBuilder, TextInputStyle
 } from "discord.js";
 import { button, modal as modalIds } from "$resources/config/interaction-ids.json";
 import { generalChannel } from "$resources/config/information.json";
@@ -73,13 +73,7 @@ export default class VerifModal extends Event {
 
         // Send the presentation in general channel with votes :
         const message = await generalChannelInstance.send({
-            embeds: [
-                simpleEmbed(
-                    presentation,
-                    "normal",
-                    msg("event-verifmodal-exec-embed-title", [member.displayName])
-                ).setFooter({ text: `ID : ${member.id}` })
-            ]
+            embeds: [simpleEmbed(presentation, "normal", msg("event-verifmodal-exec-embed-title", [member.displayName])).setFooter({ text: `ID : ${member.id}` })]
         });
 
         await message.react(verify.emoji.upVote);

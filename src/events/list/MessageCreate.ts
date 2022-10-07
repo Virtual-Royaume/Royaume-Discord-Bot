@@ -1,7 +1,7 @@
 import { BaseGuildTextChannel, ChannelType, Message as Msg, TextBasedChannel } from "discord.js";
 import { request } from "$core/api/Request";
 import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
-import { incChannelMessage, IncChannelMessageType, IncChannelMessageVariables } from "$core/api/requests/Member";
+import { incChannelMessage, IncChannelMessageType } from "$core/api/requests/Member";
 import { generalChannel } from "$resources/config/information.json";
 import Event, { EventName } from "$core/events/Event";
 import Client from "$core/Client";
@@ -23,17 +23,16 @@ export default class MessageCreate extends Event {
             channel.type === ChannelType.PublicThread || channel.type === ChannelType.PrivateThread
             || channel.type === ChannelType.AnnouncementThread
         ) {
-            // @ts-ignore
             channel = channel.parent;
         }
 
-        if (!Client.instance.isProdEnvironment()) return;
+        //if (!Client.instance.isProdEnvironment()) return;
 
         if (channel) {
-            const channels = (await request<GetChannelsType, undefined>(getChannels)).channels;
+            const channels = (await request<GetChannelsType>(getChannels)).channels;
 
             if (channels.find(c => c.channelId === channel?.id)) {
-                const messageCount = (await request<IncChannelMessageType, IncChannelMessageVariables>(
+                const messageCount = (await request<IncChannelMessageType>(
                     incChannelMessage,
                     { id: message.author.id, channelId: channel.id }
                 )).incMemberDiscordActivityChannel;
@@ -58,7 +57,7 @@ export default class MessageCreate extends Event {
                 }
             }
         } else {
-            (await request<IncChannelMessageType, IncChannelMessageVariables>(
+            (await request<IncChannelMessageType>(
                 incChannelMessage,
                 { id: message.author.id, channelId: "732392873667854372" }
             )).incMemberDiscordActivityChannel;

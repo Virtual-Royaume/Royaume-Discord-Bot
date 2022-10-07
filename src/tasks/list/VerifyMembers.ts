@@ -2,8 +2,7 @@ import { request } from "$core/api/Request";
 import {
     createMember, getMembersOnServerStatus,
     GetMembersOnServerStatusType, setAlwaysOnServer,
-    SetAlwaysOnServerType,
-    SetAlwaysOnServerVariables
+    SetAlwaysOnServerType
 } from "$core/api/requests/Member";
 import Client from "$core/Client";
 import Logger from "$core/utils/Logger";
@@ -17,7 +16,7 @@ export default class VerifyMembers extends Task {
 
     public async run(): Promise<void> {
         const realMembers = await (await Client.instance.getGuild()).members.fetch();
-        const apiMembers = (await request<GetMembersOnServerStatusType, undefined>(getMembersOnServerStatus)).members;
+        const apiMembers = (await request<GetMembersOnServerStatusType>(getMembersOnServerStatus)).members;
 
         for (const apiMember of apiMembers) {
             const realMember = realMembers.get(apiMember._id);
@@ -38,7 +37,7 @@ export default class VerifyMembers extends Task {
             // Add member :
             Logger.info(`Fix ${realMember.id} isOnServer value to true (${realMember.displayName})`);
 
-            const response = await request<SetAlwaysOnServerType, SetAlwaysOnServerVariables>(
+            const response = await request<SetAlwaysOnServerType>(
                 setAlwaysOnServer, { id: realMember.id, value: true }
             );
 

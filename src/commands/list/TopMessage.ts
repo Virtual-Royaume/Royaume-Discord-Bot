@@ -1,5 +1,4 @@
 import {
-    ChannelType,
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
     SlashCommandNumberOption, SlashCommandStringOption
 } from "discord.js";
@@ -16,7 +15,7 @@ import { msg } from "$core/utils/Message";
 
 type Source = "total" | "mois" | "salon";
 
-type SourceChoice = {
+interface SourceChoice {
     name: string;
     value: Source;
 }
@@ -42,7 +41,7 @@ export default class TopMessage extends Command {
             .setMinValue(1)).addChannelOption(new SlashCommandChannelOption()
             .setName(msg("cmd-topmessages-builder-channel-name"))
             .setDescription(msg("cmd-topmessages-builder-channel-description"))
-            .addChannelTypes(ChannelType.GuildText));
+            .addChannelTypes(0));
 
     private memberPerPage = 20;
 
@@ -51,7 +50,7 @@ export default class TopMessage extends Command {
         let page = command.options.getNumber(msg("cmd-topmessages-builder-page-name")) ?? 1;
 
         // Get data and sort it :
-        type Data = {
+        interface Data {
             username: string;
             messageCount: number;
         }
@@ -60,7 +59,7 @@ export default class TopMessage extends Command {
 
         switch (source) {
             case "mois": {
-                members = (await request<GetMonthMessageCountType, undefined>(getMonthMessageCount)).members.sort((a, b) => {
+                members = (await request<GetMonthMessageCountType>(getMonthMessageCount)).members.sort((a, b) => {
                     return (b?.activity.messages.monthCount ?? 0) - (a?.activity.messages.monthCount ?? 0);
                 }).map(member => {
                     return {
@@ -72,7 +71,7 @@ export default class TopMessage extends Command {
             }
 
             case "total": {
-                members = (await request<GetTotalMessageType, undefined>(getTotalMessageCount)).members.sort((a, b) => {
+                members = (await request<GetTotalMessageType>(getTotalMessageCount)).members.sort((a, b) => {
                     return (b?.activity.messages.totalCount ?? 0) - (a?.activity.messages.totalCount ?? 0);
                 }).map(member => {
                     return {
@@ -91,7 +90,7 @@ export default class TopMessage extends Command {
                     return;
                 }
 
-                members = (await request<GetChannelMessageCountType, undefined>(getChannelMessageCount)).members.sort((a, b) => {
+                members = (await request<GetChannelMessageCountType>(getChannelMessageCount)).members.sort((a, b) => {
                     const aChannel = a.activity.messages.perChannel.find(c => channel.id === c?.channelId);
                     const bChannel = b.activity.messages.perChannel.find(c => channel.id === c?.channelId);
 

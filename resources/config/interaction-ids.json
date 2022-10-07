@@ -6,7 +6,6 @@
         "verify": "b0"
     },
     "modal": {
-        "verify": "m0",
-        "roulette": "m1"
+        "verify": "m0"
     }
 }

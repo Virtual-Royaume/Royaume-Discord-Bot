@@ -108,7 +108,7 @@ export default class Stats extends Command {
             // Attachment :
             const chart = new ChartJSNodeCanvas({ height: 500, width: 1100 });
 
-            chart.registerFont(`${__dirname}/$resources/font/poppins-regular.ttf`, { family: "Poppins" });
+            chart.registerFont(`${__dirname}/../../../resources/font/poppins-regular.ttf`, { family: "Poppins" });
 
             files.push(new AttachmentBuilder(
                 chart.renderToBufferSync(config),

@@ -34,6 +34,7 @@ type GqlVariableType = Record<string, string | number | boolean>;
 export async function gqlRequest<ReturnType, Variables extends GqlVariableType | undefined>(
     query: string, variables?: Variables
 ): Promise<Response<ReturnType>> {
+    console.log(process.env.API_LINK, process.env.API_TOKEN);
     const response = await request<{ data: ReturnType }>(
         process.env.API_LINK as string,
         {

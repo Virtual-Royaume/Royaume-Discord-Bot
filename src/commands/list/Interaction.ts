@@ -36,8 +36,7 @@ export default class Interaction extends Command {
             case "verif": {
                 const embed = simpleEmbed(msg("cmd-interaction-exec-verif-embed-content"),
                     "normal",
-                    msg("cmd-interaction-exec-verif-embed-title")
-                );
+                    msg("cmd-interaction-exec-verif-embed-title"));
 
                 const row = new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder()
                     .setCustomId(button.verify)

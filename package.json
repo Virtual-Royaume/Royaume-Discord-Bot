@@ -2,13 +2,11 @@
   "version": "2.3.0",
   "main": "build/src/Client.js",
   "scripts": {
-    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register .",
+    "start": "tsc && copyfiles ./resources/**/**/*.* ./build/ && node -r ts-node/register/transpile-only -r tsconfig-paths/register .",
     "dev": "nodemon -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts dev",
-    "build": "tsc && copyfiles ./resources/**/**/*.* ./build/",
     "lint": "eslint src/**/*.ts --fix"
   },
   "dependencies": {
-    "@swc/core": "^1.3.4",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
@@ -16,7 +14,8 @@
     "discord.js": "^14.5.0"
   },
   "devDependencies": {
-    "@swc-node/register": "^1.5.2",
+    "@swc-node/register": "^1.5.4",
+    "@swc/core": "^1.3.6",
     "@types/node": "^18.8.0",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",

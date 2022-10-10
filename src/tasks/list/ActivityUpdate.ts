@@ -17,8 +17,6 @@ export default class ServerActivityUpdate extends Task {
         if (memberCount) gqlRequest(setMemberCount, { count: memberCount });
 
         // Update voice time of members :
-        if (!Client.instance.isProdEnvironment()) return;
-
         for (const voiceState of (await Client.instance.getGuild()).voiceStates.cache.values()) {
             if (
                 voiceState.member && !voiceState.member.user.bot && voiceState.channel

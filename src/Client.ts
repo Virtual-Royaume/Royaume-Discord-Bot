@@ -32,7 +32,7 @@ export default class Client extends DiscordClient {
 
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(getEnv<string>("BOT_TOKEN"));
+        this.login(process.env.BOT_TOKEN as string);
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();

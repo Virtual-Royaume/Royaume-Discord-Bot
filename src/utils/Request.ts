@@ -44,5 +44,6 @@ export async function gqlRequest<ReturnType, Variables extends GqlVariableType |
         }
     );
 
+    console.log(response.data);
     return response.data ? { success: response.success, data: response.data?.data } : { success: response.success, data: response.data };
 }

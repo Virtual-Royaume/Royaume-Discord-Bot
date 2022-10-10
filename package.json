@@ -2,8 +2,8 @@
   "version": "2.3.0",
   "main": "build/src/Client.js",
   "scripts": {
-    "start": "tsc && copyfiles ./resources/**/**/*.* ./build/ && node -r ts-node/register/transpile-only -r tsconfig-paths/register .",
-    "dev": "nodemon -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts dev",
+    "dev": "npx nodemon -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts dev",
+    "start": "node -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts",
     "lint": "eslint src/**/*.ts --fix"
   },
   "dependencies": {
@@ -19,7 +19,6 @@
     "@types/node": "^18.8.0",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
-    "copyfiles": "^2.4.1",
     "dotenv": "^16.0.3",
     "eslint": "^8.24.0",
     "nodemon": "^2.0.20",

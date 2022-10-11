@@ -4,8 +4,10 @@ import { colors } from "$resources/config/information.json";
 type EmbedType = "normal" | "error";
 
 export function simpleEmbed(message: string, type: EmbedType = "normal", title?: string): EmbedBuilder {
-    return new EmbedBuilder()
-        .setDescription(message)
-        .setColor((type === "normal" ? colors.primary : colors.error) as HexColorString)
-        .setTitle(title ?? null);
+    const embed = new EmbedBuilder().setColor((type === "normal" ? colors.primary : colors.error) as HexColorString);
+
+    if (message) embed.setDescription(message);
+    if (title) embed.setTitle(title);
+
+    return embed;
 }

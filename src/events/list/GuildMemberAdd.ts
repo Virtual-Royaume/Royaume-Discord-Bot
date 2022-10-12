@@ -46,6 +46,6 @@ export default class GuildMemberAdd extends Event {
             profilePicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
         });
 
-        // if (!result.data?.createMember._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
+        if (!result.data?.createMember._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
     }
 }

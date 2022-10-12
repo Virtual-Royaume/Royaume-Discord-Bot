@@ -2,7 +2,7 @@ import {ChannelType, GuildMember } from "discord.js";
 import Client from "$core/Client";
 import Event, { EventName } from "$core/events/Event";
 import { verify, privateMode, generalChannel, tiers as configTiers } from "$resources/config/information.json";
-import { createMember, CreateMemberType, CreateMemberVariables, getMemberActivityTier, GetMemberActivityTierType, GetMemberActivityTierVariables } from "$core/api/requests/Member";
+import { createMember, CreateMemberType, CreateMemberVariables, getMemberActivityTier, GetMemberActivityTierType, GetMemberActivityTierVariables, setAlwaysOnServer } from "$core/api/requests/Member";
 import { gqlRequest } from "$core/utils/Request";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";

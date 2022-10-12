@@ -1,13 +1,15 @@
 import { Message } from "discord.js";
 import Event, { EventName } from "$core/events/Event";
-import { githubRaw, request } from "$core/utils/Request";
+import { request } from "$core/utils/Request";
 import { getEnv } from "$core/utils/EnvVariable";
+
+const githubRaw = "https://raw.githubusercontent.com/";
 
 export default class GithubLinkReaction extends Event {
 
     public name: EventName = "messageCreate";
 
-    public async execute(message: Message) : Promise<void> {
+    public async execute(message: Message): Promise<void> {
         // Get urls :
         const urls = message.content.match(/http(s?):\/\/(www\.)?github.com\/([^\s]+)blob([^\s]+)#L\d+(-L\d+)?/gi);
 
@@ -59,15 +61,15 @@ export default class GithubLinkReaction extends Event {
                 githubRaw + filePath.join("/"),
                 {
                     headers: {
-                        authorization: `token ${getEnv<string>("GITHUB_TOKEN")}`
+                        authorization: `token ${process.env.GITHUB_TOKEN as string}`
                     },
                     responseType: "text"
                 }
             );
 
-            if (response.status !== 200) return;
+            if (!response.success) return;
 
-            const fileContent = response.body.split("\n");
+            const fileContent = response.data.split("\n");
 
             // Check if the line number is not too high :
             if (linesNumber[1] > fileContent.length) {

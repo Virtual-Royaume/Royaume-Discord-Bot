@@ -1,17 +1,50 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { getEnv } from "./EnvVariable";
 
-export interface Response<T> {
-    status: number;
-    body: T;
+export type ResponseSuccess<T> = {
+    success: true;
+    data: T;
 }
 
-export const githubRaw = "https://raw.githubusercontent.com/";
+export type ResponseError<T> = {
+    success: false;
+    data: null;
+}
 
-export async function request<T>(link: string, config: AxiosRequestConfig = {}): Promise<Response<T>> {
-    const response = await axios(link, config);
+export type Response<T> = ResponseSuccess<T> | ResponseError<T>;
 
-    return {
-        status: response.status,
-        body: response.data
-    };
+export async function request<T>(endpoint: string, config?: AxiosRequestConfig): Promise<Response<T>> {
+    try {
+        const response = await axios(endpoint, config);
+
+        return {
+            success: response.status === 200,
+            data: response.status === 200 ? response.data : null
+        }
+    } catch {
+        return {
+            success: false,
+            data: null
+        }
+    }
+}
+
+type GqlVariableType = Record<string, string | number | boolean>;
+
+export async function gqlRequest<ReturnType, Variables extends GqlVariableType | undefined>(
+    query: string, variables?: Variables
+): Promise<Response<ReturnType>> {
+    const response = await request<{ data: ReturnType }>(
+        process.env.API_LINK as string,
+        {
+            method: "POST",
+            headers: {
+                "Authorization": process.env.API_TOKEN as string,
+                "content-type": "application/json"
+            },
+            data: { query, variables }
+        }
+    );
+
+    return response.data ? { success: response.success, data: response.data?.data } : { success: response.success, data: response.data };
 }

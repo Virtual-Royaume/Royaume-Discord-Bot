@@ -1,4 +1,3 @@
-import { request } from "$core/api/Request";
 import { getBirthdays, GetBirthdaysType } from "$core/api/requests/Member";
 import Task from "$core/tasks/Task";
 import { generalChannel } from "$resources/config/information.json";
@@ -7,6 +6,7 @@ import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import DayJS from "$core/utils/DayJS";
 import { msg } from "$core/utils/Message";
+import { gqlRequest } from "$core/utils/Request";
 
 export default class ServerActivityUpdate extends Task {
 
@@ -36,7 +36,7 @@ export default class ServerActivityUpdate extends Task {
         if (currentDate.hour() !== 0 || currentDate.minute() !== 0) return;
 
         // Check birthdays of the day :
-        const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => {
+        const birthdays = (await gqlRequest<GetBirthdaysType, undefined>(getBirthdays)).data?.members.filter(member => {
             if (!member.birthday) return false;
 
             const birthday = DayJS(member.birthday).tz();
@@ -44,6 +44,8 @@ export default class ServerActivityUpdate extends Task {
             return birthday.date() === currentDate.date()
                 && birthday.month() === currentDate.month();
         });
+
+        if (!birthdays) return;
 
         // Send birthday message :
         if (birthdays.length) {

@@ -246,5 +246,7 @@
 
     "task-tierupdate-exec-embed-member-no-old-rank-update": "<@{userId}> ➜ <@&{newRoleId}>",
     "task-tierupdate-exec-embed-member-rank-update": "<@{userId}> <@&{oldRoleId}> ➜ <@&{newRoleId}>",
-    "task-tierupdate-exec-embed-title": "Changement des rôles d'activités"
+    "task-tierupdate-exec-embed-title": "Changement des rôles d'activités",
+    
+    "event-guildmemberadd-welcome": "//TODO: Add a welcome message"
 }

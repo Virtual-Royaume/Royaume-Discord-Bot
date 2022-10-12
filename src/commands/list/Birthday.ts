@@ -69,6 +69,7 @@ export default class Birthday extends Command {
                 if (getAge(date) < minimumAge) {
                     badFormat(msg("cmd-birthday-exec-date-too-young", [minimumAge]));
                     return;
+
                 }
 
                 // Save birthday :
@@ -76,12 +77,14 @@ export default class Birthday extends Command {
 
                 command.reply({ embeds: [simpleEmbed(msg("cmd-birthday-exec-date-saved"))], ephemeral: true });
                 break;
+
             }
 
             case msg("cmd-birthday-builder-subcmd-list-name"): {
                 let page = command.options.getNumber("page") ?? 1;
                 let birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
                     .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
+
 
                 const maxPage = Math.ceil(birthdays.length / this.memberPerPage);
                 page = page > maxPage ? maxPage : page;
@@ -108,49 +111,8 @@ export default class Birthday extends Command {
             }
 
             case msg("cmd-birtdhay-builder-subcmd-next-name"): {
-                const birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
+                let birthdays = (await request<GetBirthdaysType>(getBirthdays)).members.filter(member => member.birthday)
                     .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
-
-                const today = DayJS();
-
-                const birthdaysOfTheMonth = birthdays.filter(member => {
-                    const birthday = DayJS(member.birthday ?? 0);
-                    return birthday.month() === today.month() && birthday.date() >= today.date();
-                });
-
-                let nextBirthday = 31;
-                let nextBirthdayMember: GetBirthdaysType["members"][number] | undefined;
-
-                birthdaysOfTheMonth.map(member => {
-                    const birthday = DayJS(member.birthday ?? 0);
-                    if (birthday.date() < nextBirthday) {
-                        nextBirthday = birthday.date();
-                        nextBirthdayMember = member;
-                    }
-                });
-
-                if (nextBirthdayMember) {
-                    const birthday = DayJS(nextBirthdayMember.birthday ?? 0);
-
-                    command.reply({
-                        embeds: [
-                            simpleEmbed(
-                                msg("cmd-birthday-exec-next-embed-description", [
-                                    nextBirthdayMember.username,
-                                    getAge(birthday) + 1,
-                                    birthday.format("DD MMMM")
-                                ]),
-                                "normal",
-                                msg("cmd-birthday-exec-next-embed-title")
-                            )
-                        ]
-                    });
-                } else {
-                    command.reply({
-                        embeds: [simpleEmbed(msg("cmd-birthday-exec-next-embed-none"), "error", msg("cmd-birthday-exec-next-embed-title"))]
-                    });
-                }
-                break;
             }
         }
     }

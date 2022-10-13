@@ -61,7 +61,7 @@ export default class ServerActivityUpdate extends Task {
 
                 const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
                     .setThumbnail(member.profilePicture)
-                    .setFooter({ text: msg("event-birthdayschecker-exec-embed-footer", [currentDate.year() - birthday.year()]) });
+                    .setFooter({ text: msg("task-birthdayschecker-exec-embed-footer", [currentDate.year() - birthday.year()]) });
 
                 generalChannelInstance.send({ embeds: [embed] });
             }

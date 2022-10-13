@@ -62,5 +62,5 @@ export default class Client extends DiscordClient {
 }
 
 logCrown();
-Logger.info(`Sarting Royaume-Discord-Bot V${version}...`);
+Logger.info(`Starting Royaume-Discord-Bot V${version}...`);
 new Client();

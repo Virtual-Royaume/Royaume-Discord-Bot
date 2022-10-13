@@ -27,4 +27,4 @@ API_TOKEN="get the API token in our Discord"
 ```
 
 ### Recommended VSCode extensions
-- [GraphQL](https://marketplace.visualstudio.com/items?itemName=orsenkucher.vscode-graphql)
+- [GraphQL](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql-syntax)

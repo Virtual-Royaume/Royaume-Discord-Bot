@@ -21,27 +21,28 @@ export default class GuildMemberAdd extends Event {
             profilePicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
         });
 
-        if (!result.data?.createMember._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
+        // if (!result.data?.createMember._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
 
         // Add verification role :
         if (privateMode) {
             const role = await (await Client.instance.getGuild()).roles.fetch(verify.roles.waiting);
 
             if (role) member.roles.add(role);
-
         } else {
-
             const guild = await Client.instance.getGuild();
             const channel = await guild.channels.fetch(generalChannel);
 
             if (channel?.type === ChannelType.GuildText) {
-                channel.send({ embeds: [simpleEmbed(msg("event-guildmemberadd-welcome"), "normal")] });
+                const ClientId: any = Client.instance.user?.id
+                const embed = simpleEmbed(msg("event-guildmemberadd-welcome-message", [ClientId]));
+
+                (await channel.send({ content: msg("event-guildmemberadd-welcome", [member.id]), embeds: [embed] })).react("👋");
             }
 
             const tier = await gqlRequest<GetMemberActivityTierType, GetMemberActivityTierVariables>(getMemberActivityTier, {
                 memberId: member.id
             });
-
+            
             const tiers: Record<string, string> = configTiers;
 
             if (tier.data?.member.activity.tier) {

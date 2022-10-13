@@ -20,12 +20,12 @@ export async function request<T>(endpoint: string, config?: AxiosRequestConfig):
         return {
             success: response.status === 200,
             data: response.status === 200 ? response.data : null
-        }
+        };
     } catch {
         return {
             success: false,
             data: null
-        }
+        };
     }
 }
 

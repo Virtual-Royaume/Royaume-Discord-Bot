@@ -1,4 +1,4 @@
-import {ChannelType, GuildMember } from "discord.js";
+import { ChannelType, GuildMember } from "discord.js";
 import Client from "$core/Client";
 import Event, { EventName } from "$core/events/Event";
 import { verify, privateMode, generalChannel, tiers as configTiers } from "$resources/config/information.json";
@@ -14,12 +14,23 @@ export default class GuildMemberAdd extends Event {
     public async execute(member: GuildMember): Promise<void> {
         if (member.user.bot) return;
 
+        // Create the member if he doesn't exist :
+        const result = await gqlRequest<CreateMemberType, CreateMemberVariables>(createMember, {
+            id: member.id,
+            username: member.user.username,
+            profilePicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
+        });
+
+        if (!result.data?.createMember._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
+
         // Add verification role :
         if (privateMode) {
             const role = await (await Client.instance.getGuild()).roles.fetch(verify.roles.waiting);
 
             if (role) member.roles.add(role);
+
         } else {
+
             const guild = await Client.instance.getGuild();
             const channel = await guild.channels.fetch(generalChannel);
 
@@ -31,21 +42,12 @@ export default class GuildMemberAdd extends Event {
                 memberId: member.id
             });
 
-            if (!tier.data?.member.activity.tier) return;
-
             const tiers: Record<string, string> = configTiers;
 
-            member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
+            if (tier.data?.member.activity.tier) {
+                member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
+            }
         }
 
-
-        // Create the member if he dosen't exist :
-        const result = await gqlRequest<CreateMemberType, CreateMemberVariables>(createMember, {
-            id: member.id,
-            username: member.user.username,
-            profilePicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
-        });
-
-        if (!result.data?.createMember._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
     }
 }

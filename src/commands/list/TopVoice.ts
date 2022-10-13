@@ -28,9 +28,9 @@ export default class TopVoice extends Command {
             .setDescription(msg("cmd-topvoice-builder-source-description"))
             .addChoices(...this.sourceChoices)
             .setRequired(true)).addNumberOption(new SlashCommandNumberOption()
-                .setName(msg("cmd-topvoice-builder-page-name"))
-                .setDescription(msg("cmd-topvoice-builder-page-description"))
-                .setMinValue(1));
+            .setName(msg("cmd-topvoice-builder-page-name"))
+            .setDescription(msg("cmd-topvoice-builder-page-description"))
+            .setMinValue(1));
 
     private memberPerPage = 20;
 
@@ -86,7 +86,7 @@ export default class TopVoice extends Command {
             const member = members[i];
 
             message += msg("cmd-topvoice-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
-            formatMinutes(member.voiceMinute)
+                formatMinutes(member.voiceMinute)
             ]);
         }
 

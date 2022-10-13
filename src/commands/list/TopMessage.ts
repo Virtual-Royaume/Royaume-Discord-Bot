@@ -37,12 +37,12 @@ export default class TopMessage extends Command {
             .setDescription(msg("cmd-topmessages-builder-source-description"))
             .addChoices(...this.sourceChoices)
             .setRequired(true)).addNumberOption(new SlashCommandNumberOption()
-                .setName(msg("cmd-topmessages-builder-page-name"))
-                .setDescription(msg("cmd-topmessages-builder-page-description"))
-                .setMinValue(1)).addChannelOption(new SlashCommandChannelOption()
-                    .setName(msg("cmd-topmessages-builder-channel-name"))
-                    .setDescription(msg("cmd-topmessages-builder-channel-description"))
-                    .addChannelTypes(ChannelType.GuildText));
+            .setName(msg("cmd-topmessages-builder-page-name"))
+            .setDescription(msg("cmd-topmessages-builder-page-description"))
+            .setMinValue(1)).addChannelOption(new SlashCommandChannelOption()
+            .setName(msg("cmd-topmessages-builder-channel-name"))
+            .setDescription(msg("cmd-topmessages-builder-channel-description"))
+            .addChannelTypes(ChannelType.GuildText));
 
     private memberPerPage = 20;
 
@@ -122,7 +122,7 @@ export default class TopMessage extends Command {
             const member = members[i];
 
             message += msg("cmd-topmessages-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
-            numberFormat(member.messageCount)
+                numberFormat(member.messageCount)
             ]);
         }
 

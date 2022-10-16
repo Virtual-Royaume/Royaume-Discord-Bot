@@ -2,6 +2,7 @@
     "guildId": "732251741999071303",
     "generalChannel": "786216771723198514",
     "localFormat": "fr-FR",
+    "privateMode": false,
     "minimumAge": 14,
     "colors": {
         "primary": "#5339DD",

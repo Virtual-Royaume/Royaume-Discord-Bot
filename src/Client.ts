@@ -22,7 +22,7 @@ export default class Client extends DiscordClient {
     constructor() {
         super({
             intents: [
-                GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
                 GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMembers,
                 GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildVoiceStates,
                 GatewayIntentBits.GuildBans
@@ -32,7 +32,7 @@ export default class Client extends DiscordClient {
 
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(getEnv<string>("BOT_TOKEN"));
+        this.login(process.env.BOT_TOKEN as string);
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();
@@ -57,7 +57,7 @@ export default class Client extends DiscordClient {
     }
 
     public isProdEnvironment() : boolean {
-        return process.argv.includes("prod");
+        return process.argv.includes("prod"); // TODO : refactor this
     }
 }
 

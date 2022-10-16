@@ -20,24 +20,26 @@ export async function request<T>(endpoint: string, config?: AxiosRequestConfig):
         return {
             success: response.status === 200,
             data: response.status === 200 ? response.data : null
-        }
+        };
     } catch {
         return {
             success: false,
             data: null
-        }
+        };
     }
 }
 
 type GqlVariableType = Record<string, string | number | boolean>;
 
-export async function gqlRequest<ReturnType, Variables extends GqlVariableType | undefined>(query: string, variables?: Variables): Promise<Response<ReturnType>> {
+export async function gqlRequest<ReturnType, Variables extends GqlVariableType | undefined>(
+    query: string, variables?: Variables
+): Promise<Response<ReturnType>> {
     const response = await request<{ data: ReturnType }>(
-        getEnv<string>("API_LINK"),
+        process.env.API_LINK as string,
         {
             method: "POST",
             headers: {
-                "Authorization": getEnv<string>("API_TOKEN"),
+                "Authorization": process.env.API_TOKEN as string,
                 "content-type": "application/json"
             },
             data: { query, variables }

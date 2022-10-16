@@ -17,19 +17,22 @@ export default class Birthday extends Command {
         .setName(msg("cmd-birthday-builder-name"))
         .setDescription(msg("cmd-birthday-builder-description"))
         .addSubcommand(new SlashCommandSubcommandBuilder()
-            .setName(msg("cmd-birthday-builder-subcmd-set-name"))
+            .setName("set")
             .setDescription(msg("cmd-birthday-builder-subcmd-set-description"))
             .addStringOption(new SlashCommandStringOption()
                 .setName(msg("cmd-birthday-builder-subcmd-set-date-name"))
                 .setDescription(msg("cmd-birthday-builder-subcmd-set-date-description"))
                 .setRequired(true)))
         .addSubcommand(new SlashCommandSubcommandBuilder()
-            .setName(msg("cmd-birthday-builder-subcmd-list-name"))
+            .setName("list")
             .setDescription(msg("cmd-birthday-builder-subcmd-list-description"))
             .addNumberOption(new SlashCommandNumberOption()
                 .setName(msg("cmd-birthday-builder-subcmd-list-number-name"))
                 .setDescription(msg("cmd-birthday-builder-subcmd-list-number-description"))
-                .setMinValue(1)));
+                .setMinValue(1)))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName("next")
+            .setDescription(msg("cmd-birthday-builder-subcmd-next-description")));
 
     private memberPerPage = 10;
 
@@ -117,6 +120,46 @@ export default class Birthday extends Command {
                 });
 
                 break;
+            }
+
+            case "next": {
+                // Get members with their dates of birth from API :
+                const response = await gqlRequest<GetBirthdaysType, undefined>(getBirthdays);
+
+                // Checking the success of the request to the API :
+                if (!response.success || !response.data.members.length) {
+                    command.reply({ embeds: [simpleEmbed(msg("Erreur lors de l'obtention de la liste des anniversaires."), "error")] });
+                    return;
+                }
+
+                // Save birth dates as record with the member ID :
+                const birthDates = [...response.data.members.map(member => ({ ...member }))];
+
+                // Remove not defined birthdays and transform birth date to birtday :
+                const birthdays = response.data.members.filter(member => member.birthday).map(member => {
+                    member.birthday = DayJS(member.birthday).set(
+                        "year", DayJS().year() + (DayJS().valueOf() > DayJS(member.birthday).set("year", DayJS().year()).valueOf() ? 1 : 0)
+                    ).valueOf();
+
+                    return member;
+                });
+
+                // Get the next birthday :
+                const nextBirthday = birthdays.slice(1).reduce((pre, curr) => {
+                    return DayJS(curr.birthday).isBefore(DayJS(pre.birthday)) ? curr : pre;
+                }, birthdays[0]);
+
+                // Format and send message of the next birthday :
+                const message = msg(
+                    "cmd-birthday-exec-next-birthday",
+                    [
+                        nextBirthday.username,
+                        DayJS(nextBirthday.birthday).format("DD/MM"),
+                        DayJS().diff(DayJS(birthDates.find(member => member._id === nextBirthday._id)?.birthday), "year")
+                    ]
+                );
+
+                command.reply({ embeds: [simpleEmbed(message)] });
             }
         }
     }

@@ -61,7 +61,7 @@ export default class GithubLinkReaction extends Event {
                 githubRaw + filePath.join("/"),
                 {
                     headers: {
-                        authorization: `token ${getEnv<string>("GITHUB_TOKEN")}`
+                        authorization: `token ${process.env.GITHUB_TOKEN as string}`
                     },
                     responseType: "text"
                 }

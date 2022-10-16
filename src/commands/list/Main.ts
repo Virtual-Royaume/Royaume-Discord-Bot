@@ -99,7 +99,7 @@ export default class Inactive extends Command {
         }
 
         if (!channel || !role) {
-            command.reply({ embeds: [simpleEmbed("cmd-main-exec-need-mention", "error")], ephemeral: true });
+            command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-mention"), "error")], ephemeral: true });
             return;
         }
 

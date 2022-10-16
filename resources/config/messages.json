@@ -103,8 +103,8 @@
         "\n"
     ],
     "cmd-member-exec-member-activity": [
-        "**🔊 Temps de vocal (en minute) :** {time}",
-        "**🔉 Temps de vocal ce mois (en minute) :** {time}",
+        "**🔊 Temps de vocal :** {time}",
+        "**🔉 Temps de vocal ce mois :** {time}",
         "",
         "**📜 Nombre de message :** {messagesCount}",
         "**📝 Nombre de message ce mois :** {messagesCount}",

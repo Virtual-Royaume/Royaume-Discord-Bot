@@ -7,6 +7,7 @@ import { dateFormat, firstLetterToUppercase, getAge, numberFormat, formatMinutes
 import DayJS from "$core/utils/DayJS";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/Request";
+import { TierUpdate } from "$core/api/Schema";
 
 export default class Member extends Command {
 
@@ -57,6 +58,21 @@ export default class Member extends Command {
         }
 
         const memberActivity = memberInfo.activity;
+
+        console.log(memberActivity.tier);
+
+
+        switch (memberActivity.points.progress) {
+            case TierUpdate.Up:
+                message += msg("cmd-member-exec-member-progress-up");
+                break;
+            case TierUpdate.Neutral:
+                message += msg("cmd-member-exec-member-progress-neutral");
+                break;
+            case TierUpdate.Down:
+                message += msg("cmd-member-exec-member-progress-down");
+                break;
+        }
 
         message += msg("cmd-member-exec-member-activity", [
             formatMinutes(memberActivity.voiceMinute),

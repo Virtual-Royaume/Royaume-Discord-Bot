@@ -82,31 +82,38 @@ export type GetMemberVariables = {
 }
 export const getMember = `
     query($id: ID!){
-        member(id: $id){
-            _id
-            username
-            profilePicture
-            isOnServer
-            birthday
-            activity {
+        member(id: $id) {
+          _id
+          username
+          profilePicture
+          birthday
+          isOnServer
+          activity {
+            tier
             voiceMinute
             monthVoiceMinute
-                messages {
-                    totalCount
-                    monthCount
-                    perChannel {
-                        channelId
-                        messageCount
-                    }
-                }
+            messages {
+              totalCount
+              monthCount
+              perChannel {
+                channelId
+                messageCount
+              }
             }
+            points {
+              count
+              progress
+            }
+          }
         }
-    }
+      }
 `;
 
-export type GetMembersTierType = { members: (Pick<Member, "_id"> & {
-    activity: Pick<DiscordActivity, "tier">
-})[] };
+export type GetMembersTierType = {
+    members: (Pick<Member, "_id"> & {
+        activity: Pick<DiscordActivity, "tier">
+    })[]
+};
 export const getMembersTier = `
     query {
         members {
@@ -145,9 +152,11 @@ export const getBirthdays = `
     }
 `;
 
-export type GetVoiceTimeType = { members: (Pick<Member, "_id" | "username"> & {
-    activity: Pick<DiscordActivity, "voiceMinute">
-})[] };
+export type GetVoiceTimeType = {
+    members: (Pick<Member, "_id" | "username"> & {
+        activity: Pick<DiscordActivity, "voiceMinute">
+    })[]
+};
 export const getVoiceTime = `
     query {
         members {
@@ -160,9 +169,11 @@ export const getVoiceTime = `
     }
 `;
 
-export type GetMonthMessageCountType = { members: (Pick<Member, "_id" | "username"> & {
-    activity: { messages: Pick<DiscordMessageActivity, "monthCount"> }
-})[] };
+export type GetMonthMessageCountType = {
+    members: (Pick<Member, "_id" | "username"> & {
+        activity: { messages: Pick<DiscordMessageActivity, "monthCount"> }
+    })[]
+};
 export const getMonthMessageCount = `
     query {
         members {
@@ -177,9 +188,11 @@ export const getMonthMessageCount = `
     }
 `;
 
-export type GetMonthVoiceMinuteType = { members: (Pick<Member, "_id" | "username"> & {
-    activity: Pick<DiscordActivity, "monthVoiceMinute">
-})[] };
+export type GetMonthVoiceMinuteType = {
+    members: (Pick<Member, "_id" | "username"> & {
+        activity: Pick<DiscordActivity, "monthVoiceMinute">
+    })[]
+};
 export const getMonthVoiceMinute = `
     query {
         members {
@@ -192,11 +205,13 @@ export const getMonthVoiceMinute = `
     }
 `;
 
-export type GetMonthActivityType = { members: (Pick<Member, "_id" | "username"> & {
-    activity: Pick<DiscordActivity, "monthVoiceMinute"> & {
-        messages: Pick<DiscordMessageActivity, "monthCount">
-    }
-})[] };
+export type GetMonthActivityType = {
+    members: (Pick<Member, "_id" | "username"> & {
+        activity: Pick<DiscordActivity, "monthVoiceMinute"> & {
+            messages: Pick<DiscordMessageActivity, "monthCount">
+        }
+    })[]
+};
 export const getMonthActivity = `
     query {
         members {
@@ -212,11 +227,13 @@ export const getMonthActivity = `
     }
 `;
 
-export type GetTotalMessageType = { members: (Pick<Member, "_id" | "username"> & {
-    activity: {
-        messages: Pick<DiscordMessageActivity, "totalCount">
-    }
-})[] };
+export type GetTotalMessageType = {
+    members: (Pick<Member, "_id" | "username"> & {
+        activity: {
+            messages: Pick<DiscordMessageActivity, "totalCount">
+        }
+    })[]
+};
 export const getTotalMessageCount = `
     query {
         members {
@@ -231,13 +248,15 @@ export const getTotalMessageCount = `
     }
 `;
 
-export type GetChannelMessageCountType = { members: (Pick<Member, "_id" | "username"> & {
-    activity: {
-        messages: {
-            perChannel: Pick<ChannelMessageCount, "channelId" | "messageCount">[]
+export type GetChannelMessageCountType = {
+    members: (Pick<Member, "_id" | "username"> & {
+        activity: {
+            messages: {
+                perChannel: Pick<ChannelMessageCount, "channelId" | "messageCount">[]
+            }
         }
-    }
-})[] };
+    })[]
+};
 export const getChannelMessageCount = `
     query {
         members {

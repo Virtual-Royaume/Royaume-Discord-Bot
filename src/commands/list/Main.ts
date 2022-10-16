@@ -1,7 +1,7 @@
 import {
     ChannelType,
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
-    SlashCommandRoleOption, SlashCommandStringOption
+    SlashCommandRoleOption, SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
 import { msg } from "$core/utils/Message";
 import { getChannelsByCategory } from "$core/api/func/MainChannel";
@@ -15,52 +15,53 @@ import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 import { gqlRequest } from "$core/utils/Request";
 
-type Action = "add" | "remove" | "list";
-
-type ActionChoices = {
-    name: string;
-    value: Action;
-}
-
 export default class Inactive extends Command {
-
-    private actionChoices: ActionChoices[] = [
-        { name: "Ajout", value: "add" },
-        { name: "Suppression", value: "remove" },
-        { name: "Liste", value: "list" }
-    ];
 
     public readonly slashCommand = new SlashCommandBuilder()
         .setName(msg("cmd-main-builder-name"))
         .setDescription(msg("cmd-main-builder-description"))
         .setDefaultMemberPermissions(0)
-        .addStringOption(new SlashCommandStringOption()
-            .setName(msg("cmd-main-builder-action-name"))
-            .setDescription(msg("cmd-main-builder-action-description"))
-            .addChoices(...this.actionChoices)
-            .setRequired(true))
-        .addChannelOption(new SlashCommandChannelOption()
-            .setName(msg("cmd-main-builder-channel-name"))
-            .setDescription(msg("cmd-main-builder-channel-description"))
-            .addChannelTypes(ChannelType.GuildText))
-        .addRoleOption(new SlashCommandRoleOption()
-            .setName(msg("cmd-main-builder-role-name"))
-            .setDescription(msg("cmd-main-builder-role-name")))
-        .addStringOption(new SlashCommandStringOption()
-            .setName(msg("cmd-main-builder-category-name"))
-            .setDescription(msg("cmd-main-builder-category-name")));
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-main-builder-add-name"))
+            .setDescription(msg("cmd-main-builder-add-description"))
+            .addStringOption(new SlashCommandStringOption()
+                .setName(msg("cmd-main-builder-category-name"))
+                .setDescription(msg("cmd-main-builder-category-description"))
+                .setRequired(true))
+            .addChannelOption(new SlashCommandChannelOption()
+                .setName(msg("cmd-main-builder-channel-name"))
+                .setDescription(msg("cmd-main-builder-channel-description"))
+                .addChannelTypes(ChannelType.GuildText)
+                .setRequired(false))
+            .addRoleOption(new SlashCommandRoleOption()
+                .setName(msg("cmd-main-builder-role-name"))
+                .setDescription(msg("cmd-main-builder-role-description"))
+                .setRequired(false)))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-main-builder-remove-name"))
+            .setDescription(msg("cmd-main-builder-remove-description"))
+            .addChannelOption(new SlashCommandChannelOption()
+                .setName(msg("cmd-main-builder-channel-name"))
+                .setDescription(msg("cmd-main-builder-channel-description"))
+                .addChannelTypes(ChannelType.GuildText)
+                .setRequired(false))
+            .addRoleOption(new SlashCommandRoleOption()
+                .setName(msg("cmd-main-builder-role-name"))
+                .setDescription(msg("cmd-main-builder-role-description"))
+                .setRequired(false)))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-main-builder-list-name"))
+            .setDescription(msg("cmd-main-builder-list-description")));
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Get action, channel/role and category :
-        const action: Action = <Action>command.options.getString("action", true);
-
         const channel = command.options.getChannel(msg("cmd-main-builder-channel-name"));
         const role = command.options.getRole(msg("cmd-main-builder-role-name"));
 
         const category = command.options.getString(msg("cmd-main-builder-category-name"));
 
         // List action :
-        if (action === "list") {
+        if (command.options.getSubcommand() === "list") {
             // Get mains channels and roles :
             const channels = await getChannelsByCategory();
             const roles = await getRolesByCategory();
@@ -89,11 +90,11 @@ export default class Inactive extends Command {
         // Add and remove actions :
         type Result = {
             success?: boolean;
-            action?: "add" | "remove";
+            action?: string;
             type?: "role" | "channel";
         }
 
-        if (action === "add" && !category) {
+        if (command.options.getSubcommand() === "add" && !category) {
             command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-category"), "error")], ephemeral: true });
             return;
         }
@@ -103,17 +104,17 @@ export default class Inactive extends Command {
             return;
         }
 
-        const result: Result = { action: action };
+        const result: Result = { action: command.options.getSubcommand() };
 
         if (channel) {
             result.type = "channel";
-            result.success = action === "add" && category
+            result.success = command.options.getSubcommand() === "add" && category
                 ? (await gqlRequest<AddChannelType, AddChannelVariables>(addChannel, { channelId: channel.id, category: category })).data?.addChannel
                 : (await gqlRequest<RemoveChannelType, RemoveChannelVariables>(removeChannel, { channelId: channel.id })).data?.removeChannel;
 
         } else if (role) {
             result.type = "role";
-            result.success = action === "add" && category
+            result.success = command.options.getSubcommand() === "add" && category
                 ? (await gqlRequest<AddRoleType, AddRoleVariables>(addRole, { roleId: role.id, category: category })).data?.addRole
                 : (await gqlRequest<RemoveRoleType, RemoveRoleVariables>(removeRole, { roleId: role.id })).data?.removeRole;
         }

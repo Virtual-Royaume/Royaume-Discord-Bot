@@ -136,7 +136,7 @@ export default class Birthday extends Command {
                 // Save birth dates as record with the member ID :
                 const birthDates = [...response.data.members.map(member => ({ ...member }))];
 
-                // Remove not defined birthdays and change birth date to birtday :
+                // Remove not defined birthdays and transform birth date to birtday :
                 const birthdays = response.data.members.filter(member => member.birthday).map(member => {
                     member.birthday = DayJS(member.birthday).set(
                         "year", DayJS().year() + (DayJS().valueOf() > DayJS(member.birthday).set("year", DayJS().year()).valueOf() ? 1 : 0)

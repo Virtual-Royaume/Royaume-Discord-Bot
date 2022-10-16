@@ -227,3 +227,17 @@ export const getChannelMessageCount = gql`
         }
     }
 `;
+
+export type GetMemberActivityTierType = { member: Member };
+export type GetMemberActivityTierVariables = {
+    memberId: string;
+}
+export const getMemberActivityTier = `
+    query Member($memberId: ID!) {
+        member(id: $memberId) {
+            activity {
+                tier
+            }
+        }
+    }
+`;

@@ -93,7 +93,7 @@ export default class Role extends Command {
         }
 
         // Create function for the request for add presence message :
-        const addPresenceRequest = async () => await gqlRequest(addPresenceMessage, { type: presence, text: message });
+        const addPresenceRequest = async() => await gqlRequest(addPresenceMessage, { type: presence, text: message });
 
         // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
         if (command.member.permissions.has("Administrator")) {

@@ -1,5 +1,6 @@
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
+import { isDevEnvironment, isProdEnvironment } from "$core/utils/Environment";
 import { voiceChannels } from "$resources/config/information.json";
 import { ChannelType, Collection, VoiceChannel } from "discord.js";
 
@@ -10,7 +11,7 @@ export default class ChannelManager extends Task {
     constructor() {
         super(5_000);
 
-        this.createDefaultChannels();
+        if (isProdEnvironment) this.createDefaultChannels();
     }
 
     private async createDefaultChannels() : Promise<void> {
@@ -22,6 +23,8 @@ export default class ChannelManager extends Task {
     }
 
     public async run() : Promise<void> {
+        if (isDevEnvironment) return;
+
         // Creation of new voice channels if they are all full :
         if (!(await this.getEmptyChannels(voiceChannels.public.nameList)).size) {
             const channelToCreate = await this.getAvailablePublicChannel();

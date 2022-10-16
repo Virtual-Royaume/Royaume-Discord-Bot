@@ -33,7 +33,7 @@ export default class GuildMemberAdd extends Event {
             const channel = await guild.channels.fetch(generalChannel);
 
             if (channel?.type === ChannelType.GuildText) {
-                const ClientId: any = Client.instance.user?.id
+                const ClientId: any = Client.instance.user?.id;
                 const embed = simpleEmbed(msg("event-guildmemberadd-welcome-message", [ClientId]));
 
                 (await channel.send({ content: msg("event-guildmemberadd-welcome", [member.id]), embeds: [embed] })).react("👋");
@@ -42,7 +42,7 @@ export default class GuildMemberAdd extends Event {
             const tier = await gqlRequest<GetMemberActivityTierType, GetMemberActivityTierVariables>(getMemberActivityTier, {
                 memberId: member.id
             });
-            
+
             const tiers: Record<string, string> = configTiers;
 
             if (tier.data?.member.activity.tier) {

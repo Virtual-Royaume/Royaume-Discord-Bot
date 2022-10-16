@@ -1,7 +1,7 @@
 import {
     BaseGuildTextChannel, ChatInputCommandInteraction,
     GuildMember, SlashCommandBuilder, SlashCommandNumberOption,
-    SlashCommandStringOption
+    SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
 import {
     addPresenceMessage, getPresenceMessages,
@@ -18,21 +18,7 @@ import Client from "$core/Client";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/Request";
 
-type Action = "add" | "remove" | "list";
-
-type ActionChoices = {
-    name: string;
-    value: Action;
-}
-
 export default class Role extends Command {
-
-    private actionChoices: ActionChoices[] = [
-        { name: "Ajout", value: "add" },
-        { name: "Suppression", value: "remove" },
-        { name: "Liste", value: "list" }
-    ];
-
     private presenceTypes = Object.values(PresenceType).map(presence => ({ name: presence, value: presence }));
 
     private messagePerPage = 20;
@@ -40,36 +26,49 @@ export default class Role extends Command {
     public readonly slashCommand = new SlashCommandBuilder()
         .setName(msg("cmd-presence-builder-name"))
         .setDescription(msg("cmd-presence-builder-description"))
-        .addStringOption(new SlashCommandStringOption()
-            .setName(msg("cmd-presence-builder-action-name"))
-            .setDescription(msg("cmd-presence-builder-action-description"))
-            .addChoices(...this.actionChoices)
-            .setRequired(true))
 
-        .addNumberOption(new SlashCommandNumberOption()
-            .setName(msg("cmd-presence-builder-page-name"))
-            .setDescription(msg("cmd-presence-builder-page-description"))
-            .setMinValue(1))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-presence-builder-list-name"))
+            .setDescription(msg("cmd-presence-builder-list-description"))
+            .addNumberOption(new SlashCommandNumberOption()
+                .setName(msg("cmd-presence-builder-page-name"))
+                .setDescription(msg("cmd-presence-builder-page-description"))
+                .setMinValue(1)))
 
-        .addStringOption(new SlashCommandStringOption()
-            .setName(msg("cmd-presence-builder-presence-name"))
-            .setDescription(msg("cmd-presence-builder-presence-description"))
-            .addChoices(...this.presenceTypes))
-        .addStringOption(new SlashCommandStringOption()
-            .setName(msg("cmd-presence-builder-message-name"))
-            .setDescription(msg("cmd-presence-builder-message-description")))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-presence-builder-add-name"))
+            .setDescription(msg("cmd-presence-builder-add-description"))
+            .addStringOption(new SlashCommandStringOption()
+                .setName(msg("cmd-presence-builder-message-name"))
+                .setDescription(msg("cmd-presence-builder-message-description"))
+                .setRequired(true))
+            .addStringOption(new SlashCommandStringOption()
+                .setName(msg("cmd-presence-builder-presence-name"))
+                .setDescription(msg("cmd-presence-builder-presence-description"))
+                .addChoices(...this.presenceTypes)
+                .setRequired(true)))
 
-        .addStringOption(new SlashCommandStringOption()
-            .setName("id")
-            .setDescription("Id de l'activité à supprimer"));
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-presence-builder-remove-name"))
+            .setDescription(msg("cmd-presence-builder-remove-description"))
+            .addStringOption(new SlashCommandStringOption()
+                .setName(msg("cmd-presence-builder-id-name"))
+                .setDescription(msg("cmd-presence-builder-id-description"))
+                .setRequired(true)));
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Get action and execute function of this action :
-        const action: Action = <Action>command.options.getString("action", true);
-
-        if (action === "add") return this.add(command);
-        if (action === "remove") return this.remove(command);
-        if (action === "list") return this.list(command);
+        switch (command.options.getSubcommand()) {
+            case "list":
+                this.list(command);
+                break;
+            case "add":
+                this.add(command);
+                break;
+            case "remove":
+                this.remove(command);
+                break;
+        }
     }
 
     private async add(command: ChatInputCommandInteraction): Promise<void> {

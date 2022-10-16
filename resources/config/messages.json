@@ -75,14 +75,22 @@
 
     "cmd-main-builder-name": "main",
     "cmd-main-builder-description": "Ajouter, supprimer ou voir la liste des salons/rôles principaux",
-    "cmd-main-builder-action-name": "action",
-    "cmd-main-builder-action-description": "Ajout, suppression ou liste",
+    "cmd-main-builder-add-name": "add",
+    "cmd-main-builder-add-description": "Ajoute un rôle ou un salon à la liste des rôles ou salons principaux",
     "cmd-main-builder-channel-name": "channel",
     "cmd-main-builder-channel-description": "Ajout ou supression de ce salon",
+    "cmd-main-builder-forum-name": "forum",
+    "cmd-main-builder-forum-description": "Ajout ou supression de ce salon",
+
+
+    "cmd-main-builder-remove-name": "remove",
+    "cmd-main-builder-remove-description": "Supprime un rôle ou un salon de la liste des rôles ou salons principaux",
     "cmd-main-builder-role-name": "role",
     "cmd-main-builder-role-description": "Ajout ou supression de ce rôle",
     "cmd-main-builder-category-name": "category",
     "cmd-main-builder-category-description": "Catégorie du salon ou rôle",
+    "cmd-main-builder-list-name": "list",
+    "cmd-main-builder-list-description": "Affiche la liste des rôles ou salons principaux",
     "cmd-main-exec-channels-title": "Salons principaux",
     "cmd-main-exec-roles-title": "Rôles principaux",
     "cmd-main-exec-channel-message": "**{category} :** {members}",
@@ -102,6 +110,18 @@
         "**👶 Né le {date} ({yearsOld} ans)**",
         "\n"
     ],
+    "cmd-member-exec-member-progress-up": [
+        "📈 **Rôle d'activité :** {role} *(rôle en augmentation)*",
+        "\n"
+    ],
+    "cmd-member-exec-member-progress-neutral": [
+        "📊 **Rôle d'activité :** {role} *(rôle en stagnation)*",
+        "\n"
+    ],
+    "cmd-member-exec-member-progress-down": [
+        "📉 **Rôle d'activité :** {role} *(rôle en diminution)*",
+        "\n"
+    ],
     "cmd-member-exec-member-activity": [
         "**🔊 Temps de vocal :** {time}",
         "**🔉 Temps de vocal ce mois :** {time}",
@@ -115,10 +135,14 @@
 
     "cmd-presence-builder-name": "presence",
     "cmd-presence-builder-description": "Gérer l'activité du bot Discord",
-    "cmd-presence-builder-action-name": "action",
-    "cmd-presence-builder-action-description": "Ajout, suppression ou liste",
+    "cmd-presence-builder-list-name": "list",
+    "cmd-presence-builder-list-description": "Liste des activités",
     "cmd-presence-builder-page-name": "page",
     "cmd-presence-builder-page-description": "Page de la liste",
+    "cmd-presence-builder-add-name": "add",
+    "cmd-presence-builder-add-description": "Ajouter une activité",
+    "cmd-presence-builder-remove-name": "remove",
+    "cmd-presence-builder-remove-description": "Supprimer une activité",
     "cmd-presence-builder-presence-name": "presence",
     "cmd-presence-builder-presence-description": "Type de l'activité à ajouter",
     "cmd-presence-builder-message-name": "message",
@@ -171,12 +195,14 @@
 
     "cmd-topmessages-builder-name": "top-message",
     "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",
-    "cmd-topmessages-builder-source-name": "source",
-    "cmd-topmessages-builder-source-description": "Source du classement",
     "cmd-topmessages-builder-page-name": "page",
     "cmd-topmessages-builder-page-description": "Page du classement",
     "cmd-topmessages-builder-channel-name": "salon",
-    "cmd-topmessages-builder-channel-description": "Choix du salon si vous avez choisi \"salon\" comme source",
+    "cmd-topmessages-builder-channel-description": "Affiche le classement des membres par nombre de messages dans un salon",
+    "cmd-topmessages-builder-month-name": "mois",
+    "cmd-topmessages-builder-month-description": "Affiche le classement des membres par nombre de messages du mois",
+    "cmd-topmessages-builder-total-name": "total",
+    "cmd-topmessages-builder-total-description": "Affiche le classement des membres par nombre de messages total",
     "cmd-topmessages-exec-error-need-mention": "Vous devez mentionner un salon",
     "cmd-topmessages-exec-embed-title": "Classements des membres les plus actifs ({source}) (page : {page}/{maxPage})",
     "cmd-topmessages-exec-embed-line": [
@@ -186,8 +212,10 @@
 
     "cmd-topvoice-builder-name": "top-voice",
     "cmd-topvoice-builder-description": "Voir le classement des membres les plus actifs en vocal",
-    "cmd-topvoice-builder-source-name": "source",
-    "cmd-topvoice-builder-source-description": "Source du classement",
+    "cmd-topvoice-builder-month-name": "mois",
+    "cmd-topvoice-builder-month-description": "Affiche le classement du mois des membres les plus actifs en vocal",
+    "cmd-topvoice-builder-total-name": "total",
+    "cmd-topvoice-builder-total-description": "Affiche le classement global des membres les plus actifs en vocal",
     "cmd-topvoice-builder-page-name": "page",
     "cmd-topvoice-builder-page-description": "Page du classement",
     "cmd-topvoice-exec-embed-title": "Classements des membres les plus actifs en vocal (en minute) ({source}) (page : {page}/{maxPage})",
@@ -248,9 +276,9 @@
     "task-tierupdate-exec-embed-member-no-old-rank-update": "<@{userId}> ➜ <@&{newRoleId}>",
     "task-tierupdate-exec-embed-member-rank-update": "<@{userId}> <@&{oldRoleId}> ➜ <@&{newRoleId}>",
     "task-tierupdate-exec-embed-title": "Changement des rôles d'activités",
-    
+
     "event-guildmemberadd-welcome": "Bienvenue parmis nous <@{userId}> !",
-    "event-guildmemberadd-welcome-message": ["Le Royaume est une communauté de développeurs passionnés regroupée dans l'objectif de progresser, échanger ou même travailler ensemble. Nous sommes ouverts à tout profile donc que tu sois débutant ou déjà sénior dans le domaine, tu trouveras ta place parmi nous !", 
+    "event-guildmemberadd-welcome-message": [ "Le Royaume est une communauté de développeurs passionnés regroupée dans l'objectif de progresser, échanger ou même travailler ensemble. Nous sommes ouverts à tout profile donc que tu sois débutant ou déjà sénior dans le domaine, tu trouveras ta place parmi nous !",
         "",
         "Tu peux choisir les rôles qui correspondent à ton profil via la commande `/rôle` de notre bot <@{userId}>, ceci permet de montrer aux membres ton domaine précis dans la programmation ou encore d'être mentionné une fois de temps en temps pour un sujet qui pourrait te plaire.",
         "",

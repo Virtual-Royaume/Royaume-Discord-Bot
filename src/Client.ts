@@ -22,7 +22,7 @@ export default class Client extends DiscordClient {
     constructor() {
         super({
             intents: [
-                GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
                 GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMembers,
                 GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildVoiceStates,
                 GatewayIntentBits.GuildBans

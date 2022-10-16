@@ -80,7 +80,7 @@ export default class Inactive extends Command {
             command.reply({
                 embeds: [
                     simpleEmbed(channelMessage, "normal", msg("cmd-main-exec-channels-title")),
-                    simpleEmbed(roleMessage, "normal", msg("cmd-main-exec-role-title"))
+                    simpleEmbed(roleMessage, "normal", msg("cmd-main-exec-roles-title"))
                 ], ephemeral: true
             });
             return;

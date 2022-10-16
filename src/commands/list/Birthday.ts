@@ -10,7 +10,6 @@ import { minimumAge } from "$resources/config/information.json";
 import { dateFormat, getAge } from "$core/utils/Function";
 import DayJS from "$core/utils/DayJS";
 import { gqlRequest } from "$core/utils/Request";
-import { Dayjs } from "dayjs";
 
 export default class Birthday extends Command {
 

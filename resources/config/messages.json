@@ -22,6 +22,7 @@
     "cmd-birthday-exec-date-too-young": "L'age minimum requis est de {minimumAge} ans.",
     "cmd-birthday-exec-date-saved": "Votre date d'anniversaire a bien été enregistrée.",
     "cmd-birthday-exec-empty-birthday-list": "Il n'y a aucun anniversaire enregistré...",
+    "cmd-birthday-exec-next-birthday": "Le prochain anniversaire est celui de **{username}** le **{date}**, il aura **{age}** ans ! 🎉",
 
     "cmd-clean-builder-name": "clean",
     "cmd-clean-builder-description": "Permet de supprimer plusieurs messages en même temps",

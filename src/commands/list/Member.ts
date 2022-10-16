@@ -8,6 +8,7 @@ import DayJS from "$core/utils/DayJS";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/Request";
 import { TierUpdate } from "$core/api/Schema";
+import { tiers as configTiers, verify, generalChannel } from "$resources/config/information.json";
 
 export default class Member extends Command {
 
@@ -59,9 +60,10 @@ export default class Member extends Command {
 
         const memberActivity = memberInfo.activity;
 
-        console.log(memberActivity.tier);
+        const tiers: Record<string, string> = configTiers;
+        const tierRole = tiers[memberActivity.tier ?? ""];
 
-
+        message += msg("cmd-member-exec-member-progress", [`<@&${tierRole}>`]);
         switch (memberActivity.points.progress) {
             case TierUpdate.Up:
                 message += msg("cmd-member-exec-member-progress-up");

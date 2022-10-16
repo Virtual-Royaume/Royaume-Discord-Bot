@@ -102,16 +102,20 @@
         "**👶 Né le {date} ({yearsOld} ans)**",
         "\n"
     ],
+    "cmd-member-exec-member-progress": [
+        "**Rôle d'activité :** {role}",
+        ""
+    ],
     "cmd-member-exec-member-progress-up": [
-        "📈 Role en augmentation",
+        "> 📈 Rôle en augmentation",
         "\n"
     ],
     "cmd-member-exec-member-progress-neutral": [
-        "😐 Role en stagnation",
+        "> 😐 Rôle en stagnation",
         "\n"
     ],
     "cmd-member-exec-member-progress-down": [
-        "📉 Role en diminution",
+        "> 📉 Rôle en diminution",
         "\n"
     ],
     "cmd-member-exec-member-activity": [

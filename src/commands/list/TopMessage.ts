@@ -20,25 +20,25 @@ export default class TopMessage extends Command {
         .setName(msg("cmd-topmessages-builder-name"))
         .setDescription(msg("cmd-topmessages-builder-description"))
         .addSubcommand(new SlashCommandSubcommandBuilder()
-            .setName("total")
-            .setDescription("Affiche le classement des membres par nombre de messages total")
+            .setName(msg("cmd-topmessages-builder-total-name"))
+            .setDescription(msg("cmd-topmessages-builder-total-description"))
             .addNumberOption(new SlashCommandNumberOption()
                 .setName(msg("cmd-topmessages-builder-page-name"))
                 .setDescription(msg("cmd-topmessages-builder-page-description"))
                 .setMinValue(1)))
         .addSubcommand(new SlashCommandSubcommandBuilder()
-            .setName("mois")
-            .setDescription("Affiche le classement des membres par nombre de messages du mois")
+            .setName(msg("cmd-topmessages-builder-month-name"))
+            .setDescription(msg("cmd-topmessages-builder-month-description"))
             .addNumberOption(new SlashCommandNumberOption()
                 .setName(msg("cmd-topmessages-builder-page-name"))
                 .setDescription(msg("cmd-topmessages-builder-page-description"))
                 .setMinValue(1)))
         .addSubcommand(new SlashCommandSubcommandBuilder()
-            .setName("salon")
-            .setDescription("Affiche le classement des membres par nombre de messages dans un salon")
+            .setName(msg("cmd-topmessages-builder-channel-name"))
+            .setDescription(msg("cmd-topmessages-builder-channel-description"))
             .addChannelOption(new SlashCommandChannelOption()
-                .setName("salon")
-                .setDescription("Le salon à analyser")
+                .setName(msg("cmd-topmessages-builder-channel-name"))
+                .setDescription(msg("cmd-topmessages-builder-channel-description"))
                 .addChannelTypes(ChannelType.GuildText)
                 .setRequired(true))
             .addNumberOption(new SlashCommandNumberOption()
@@ -60,7 +60,7 @@ export default class TopMessage extends Command {
         let members: Data[] = [];
 
         switch (command.options.getSubcommand()) {
-            case "mois": {
+            case msg("cmd-topmessages-builder-month-name"): {
                 members = (await gqlRequest<GetMonthMessageCountType, undefined>(getMonthMessageCount)).data?.members.sort((a, b) => {
                     return (b?.activity.messages.monthCount ?? 0) - (a?.activity.messages.monthCount ?? 0);
                 }).map(member => {
@@ -72,7 +72,7 @@ export default class TopMessage extends Command {
                 break;
             }
 
-            case "total": {
+            case msg("cmd-topmessages-builder-total-name"): {
                 members = (await gqlRequest<GetTotalMessageType, undefined>(getTotalMessageCount)).data?.members.sort((a, b) => {
                     return (b?.activity.messages.totalCount ?? 0) - (a?.activity.messages.totalCount ?? 0);
                 }).map(member => {
@@ -84,7 +84,7 @@ export default class TopMessage extends Command {
                 break;
             }
 
-            case "salon": {
+            case msg("cmd-topmessages-builder-channel-name"): {
                 const channel = command.options.getChannel(msg("cmd-topmessages-builder-channel-name"), true);
 
                 if (!channel) {

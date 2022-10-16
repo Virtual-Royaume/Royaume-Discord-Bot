@@ -170,12 +170,14 @@
 
     "cmd-topmessages-builder-name": "top-message",
     "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",
-    "cmd-topmessages-builder-source-name": "source",
-    "cmd-topmessages-builder-source-description": "Source du classement",
     "cmd-topmessages-builder-page-name": "page",
     "cmd-topmessages-builder-page-description": "Page du classement",
     "cmd-topmessages-builder-channel-name": "salon",
-    "cmd-topmessages-builder-channel-description": "Choix du salon si vous avez choisi \"salon\" comme source",
+    "cmd-topmessages-builder-channel-description": "Affiche le classement des membres par nombre de messages dans un salon",
+    "cmd-topmessages-builder-month-name": "mois",
+    "cmd-topmessages-builder-month-description": "Affiche le classement des membres par nombre de messages du mois",
+    "cmd-topmessages-builder-total-name": "total",
+    "cmd-topmessages-builder-total-description": "Affiche le classement des membres par nombre de messages total",
     "cmd-topmessages-exec-error-need-mention": "Vous devez mentionner un salon",
     "cmd-topmessages-exec-embed-title": "Classements des membres les plus actifs ({source}) (page : {page}/{maxPage})",
     "cmd-topmessages-exec-embed-line": [

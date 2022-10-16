@@ -1,7 +1,7 @@
 import {
     ChannelType,
-    ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandChannelOption,
-    SlashCommandNumberOption, SlashCommandStringOption
+    ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder,
+    SlashCommandChannelOption, SlashCommandNumberOption, SlashCommandStringOption
 } from "discord.js";
 import {
     getChannelMessageCount, GetChannelMessageCountType,
@@ -14,40 +14,41 @@ import Command from "$core/commands/Command";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/Request";
 
-type Source = "total" | "mois" | "salon";
-
-type SourceChoice = {
-    name: string;
-    value: Source;
-}
-
 export default class TopMessage extends Command {
-
-    private sourceChoices: SourceChoice[] = [
-        { name: "Total", value: "total" },
-        { name: "Mois", value: "mois" },
-        { name: "Salon", value: "salon" }
-    ];
 
     public readonly slashCommand = new SlashCommandBuilder()
         .setName(msg("cmd-topmessages-builder-name"))
         .setDescription(msg("cmd-topmessages-builder-description"))
-        .addStringOption(new SlashCommandStringOption()
-            .setName(msg("cmd-topmessages-builder-source-name"))
-            .setDescription(msg("cmd-topmessages-builder-source-description"))
-            .addChoices(...this.sourceChoices)
-            .setRequired(true)).addNumberOption(new SlashCommandNumberOption()
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName("total")
+            .setDescription("Affiche le classement des membres par nombre de messages total")
+            .addNumberOption(new SlashCommandNumberOption()
                 .setName(msg("cmd-topmessages-builder-page-name"))
                 .setDescription(msg("cmd-topmessages-builder-page-description"))
-                .setMinValue(1)).addChannelOption(new SlashCommandChannelOption()
-                    .setName(msg("cmd-topmessages-builder-channel-name"))
-                    .setDescription(msg("cmd-topmessages-builder-channel-description"))
-                    .addChannelTypes(ChannelType.GuildText));
+                .setMinValue(1)))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName("mois")
+            .setDescription("Affiche le classement des membres par nombre de messages du mois")
+            .addNumberOption(new SlashCommandNumberOption()
+                .setName(msg("cmd-topmessages-builder-page-name"))
+                .setDescription(msg("cmd-topmessages-builder-page-description"))
+                .setMinValue(1)))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName("salon")
+            .setDescription("Affiche le classement des membres par nombre de messages dans un salon")
+            .addChannelOption(new SlashCommandChannelOption()
+                .setName("salon")
+                .setDescription("Le salon à analyser")
+                .addChannelTypes(ChannelType.GuildText)
+                .setRequired(true))
+            .addNumberOption(new SlashCommandNumberOption()
+                .setName(msg("cmd-topmessages-builder-page-name"))
+                .setDescription(msg("cmd-topmessages-builder-page-description"))
+                .setMinValue(1)));
 
     private memberPerPage = 20;
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
-        const source: Source = <Source>command.options.getString(msg("cmd-topmessages-builder-source-name"), true);
         let page = command.options.getNumber(msg("cmd-topmessages-builder-page-name")) ?? 1;
 
         // Get data and sort it :
@@ -58,7 +59,7 @@ export default class TopMessage extends Command {
 
         let members: Data[] = [];
 
-        switch (source) {
+        switch (command.options.getSubcommand()) {
             case "mois": {
                 members = (await gqlRequest<GetMonthMessageCountType, undefined>(getMonthMessageCount)).data?.members.sort((a, b) => {
                     return (b?.activity.messages.monthCount ?? 0) - (a?.activity.messages.monthCount ?? 0);
@@ -122,14 +123,14 @@ export default class TopMessage extends Command {
             const member = members[i];
 
             message += msg("cmd-topmessages-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
-            numberFormat(member.messageCount)
+                numberFormat(member.messageCount)
             ]);
         }
 
         // Send leaderboard :
         command.reply({
             embeds: [
-                simpleEmbed(message, "normal", msg("cmd-topmessages-exec-embed-title", [source, page, maxPage]))
+                simpleEmbed(message, "normal", msg("cmd-topmessages-exec-embed-title", [command.options.getSubcommand(), page, maxPage]))
             ]
         });
     }

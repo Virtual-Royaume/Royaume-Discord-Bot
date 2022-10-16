@@ -155,7 +155,7 @@ export default class Birthday extends Command {
                     [
                         nextBirthday.username,
                         DayJS(nextBirthday.birthday).format("DD/MM"),
-                        DayJS().diff(DayJS(birthDates.find(member => member._id === nextBirthday._id)?.birthday), "year")
+                        DayJS().diff(DayJS(birthDates.find(member => member._id === nextBirthday._id)?.birthday), "year") + 1
                     ]
                 );
 

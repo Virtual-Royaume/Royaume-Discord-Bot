@@ -102,6 +102,18 @@
         "**👶 Né le {date} ({yearsOld} ans)**",
         "\n"
     ],
+    "cmd-member-exec-member-progress-up": [
+        "📈 Role en augmentation",
+        "\n"
+    ],
+    "cmd-member-exec-member-progress-neutral": [
+        "😐 Role en stagnation",
+        "\n"
+    ],
+    "cmd-member-exec-member-progress-down": [
+        "📉 Role en diminution",
+        "\n"
+    ],
     "cmd-member-exec-member-activity": [
         "**🔊 Temps de vocal :** {time}",
         "**🔉 Temps de vocal ce mois :** {time}",
@@ -248,9 +260,9 @@
     "task-tierupdate-exec-embed-member-no-old-rank-update": "<@{userId}> ➜ <@&{newRoleId}>",
     "task-tierupdate-exec-embed-member-rank-update": "<@{userId}> <@&{oldRoleId}> ➜ <@&{newRoleId}>",
     "task-tierupdate-exec-embed-title": "Changement des rôles d'activités",
-    
+
     "event-guildmemberadd-welcome": "Bienvenue parmis nous <@{userId}> !",
-    "event-guildmemberadd-welcome-message": ["Le Royaume est une communauté de développeurs passionnés regroupée dans l'objectif de progresser, échanger ou même travailler ensemble. Nous sommes ouverts à tout profile donc que tu sois débutant ou déjà sénior dans le domaine, tu trouveras ta place parmi nous !", 
+    "event-guildmemberadd-welcome-message": [ "Le Royaume est une communauté de développeurs passionnés regroupée dans l'objectif de progresser, échanger ou même travailler ensemble. Nous sommes ouverts à tout profile donc que tu sois débutant ou déjà sénior dans le domaine, tu trouveras ta place parmi nous !",
         "",
         "Tu peux choisir les rôles qui correspondent à ton profil via la commande `/rôle` de notre bot <@{userId}>, ceci permet de montrer aux membres ton domaine précis dans la programmation ou encore d'être mentionné une fois de temps en temps pour un sujet qui pourrait te plaire.",
         "",

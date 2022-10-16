@@ -1,7 +1,7 @@
 import {
     ChannelType,
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder,
-    SlashCommandChannelOption, SlashCommandNumberOption, SlashCommandStringOption
+    SlashCommandChannelOption, SlashCommandNumberOption
 } from "discord.js";
 import {
     getChannelMessageCount, GetChannelMessageCountType,

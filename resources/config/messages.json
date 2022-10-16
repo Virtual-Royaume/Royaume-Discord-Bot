@@ -187,8 +187,10 @@
 
     "cmd-topvoice-builder-name": "top-voice",
     "cmd-topvoice-builder-description": "Voir le classement des membres les plus actifs en vocal",
-    "cmd-topvoice-builder-source-name": "source",
-    "cmd-topvoice-builder-source-description": "Source du classement",
+    "cmd-topvoice-builder-month-name": "mois",
+    "cmd-topvoice-builder-month-description": "Affiche le classement du mois des membres les plus actifs en vocal",
+    "cmd-topvoice-builder-total-name": "total",
+    "cmd-topvoice-builder-total-description": "Affiche le classement global des membres les plus actifs en vocal",
     "cmd-topvoice-builder-page-name": "page",
     "cmd-topvoice-builder-page-description": "Page du classement",
     "cmd-topvoice-exec-embed-title": "Classements des membres les plus actifs en vocal (en minute) ({source}) (page : {page}/{maxPage})",

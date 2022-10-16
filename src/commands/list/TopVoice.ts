@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption, SlashCommandStringOption } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder, SlashCommandNumberOption } from "discord.js";
 import { msg } from "$core/utils/Message";
 import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
@@ -6,36 +6,28 @@ import { formatMinutes } from "$core/utils/Function";
 import Command from "$core/commands/Command";
 import { gqlRequest } from "$core/utils/Request";
 
-type Source = "total" | "mois";
-
-type SourceChoice = {
-    name: string;
-    value: Source;
-}
-
 export default class TopVoice extends Command {
-
-    private sourceChoices: SourceChoice[] = [
-        { name: "Total", value: "total" },
-        { name: "Mois", value: "mois" }
-    ];
 
     public readonly slashCommand = new SlashCommandBuilder()
         .setName(msg("cmd-topvoice-builder-name"))
         .setDescription(msg("cmd-topvoice-builder-description"))
-        .addStringOption(new SlashCommandStringOption()
-            .setName(msg("cmd-topvoice-builder-source-name"))
-            .setDescription(msg("cmd-topvoice-builder-source-description"))
-            .addChoices(...this.sourceChoices)
-            .setRequired(true)).addNumberOption(new SlashCommandNumberOption()
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-topvoice-builder-total-name"))
+            .setDescription(msg("cmd-topvoice-builder-total-description"))
+            .addNumberOption(new SlashCommandNumberOption()
                 .setName(msg("cmd-topvoice-builder-page-name"))
                 .setDescription(msg("cmd-topvoice-builder-page-description"))
-                .setMinValue(1));
+                .setMinValue(1)))
+        .addSubcommand(new SlashCommandSubcommandBuilder()
+            .setName(msg("cmd-topvoice-builder-month-name"))
+            .setDescription(msg("cmd-topvoice-builder-month-description"))
+            .addNumberOption(new SlashCommandNumberOption()
+                .setName(msg("cmd-topvoice-builder-page-name"))
+                .setDescription(msg("cmd-topvoice-builder-page-description"))));
 
     private memberPerPage = 20;
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
-        const source: Source = <Source>command.options.getString(msg("cmd-topvoice-builder-source-name"), true);
         let page = command.options.getNumber(msg("cmd-topvoice-builder-page-name")) ?? 1;
 
         // Get data and sort it :
@@ -46,8 +38,8 @@ export default class TopVoice extends Command {
 
         let members: Data[] = [];
 
-        switch (source) {
-            case "mois": {
+        switch (command.options.getSubcommand()) {
+            case msg("cmd-topvoice-builder-total-name"): {
                 members = (await gqlRequest<GetMonthVoiceMinuteType, undefined>(getMonthVoiceMinute)).data?.members.sort((a, b) => {
                     return (b?.activity.monthVoiceMinute ?? 0) - (a?.activity.monthVoiceMinute ?? 0);
                 }).map(member => {
@@ -59,7 +51,7 @@ export default class TopVoice extends Command {
                 break;
             }
 
-            case "total": {
+            case msg("cmd-topvoice-builder-month-name"): {
                 members = (await gqlRequest<GetVoiceTimeType, undefined>(getVoiceTime)).data?.members.sort((a, b) => {
                     return (b?.activity.voiceMinute ?? 0) - (a?.activity.voiceMinute ?? 0);
                 }).map(member => {
@@ -86,14 +78,14 @@ export default class TopVoice extends Command {
             const member = members[i];
 
             message += msg("cmd-topvoice-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
-            formatMinutes(member.voiceMinute)
+                formatMinutes(member.voiceMinute)
             ]);
         }
 
         // Send leaderboard :
         command.reply({
             embeds: [
-                simpleEmbed(message, "normal", msg("cmd-topvoice-exec-embed-title", [source, page, maxPage]))
+                simpleEmbed(message, "normal", msg("cmd-topvoice-exec-embed-title", [command.options.getSubcommand(), page, maxPage]))
             ]
         });
     }

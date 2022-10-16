@@ -82,6 +82,9 @@
         // Possible Problems :
         "no-floating-decimal": "error",
         "no-lonely-if": "error",
-        "no-multi-assign": "error"
+        "no-multi-assign": "error",
+
+        // TypeScript linting :
+        //"@typescript-eslint/consistent-type-imports": "error"
     }
 }

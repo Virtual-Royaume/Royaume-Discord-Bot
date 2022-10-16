@@ -98,7 +98,7 @@
     "cmd-member-exec-member-info-error": "Aucune donnée trouvée.",
     "cmd-member-exec-embed-title": "Activité de {displayName}",
     "cmd-member-exec-member-birth": [
-        "**👶 Né le {date} *({yearsOld} ans)**",
+        "**👶 Né le {date} ({yearsOld} ans)**",
         "\n"
     ],
     "cmd-member-exec-member-activity": [

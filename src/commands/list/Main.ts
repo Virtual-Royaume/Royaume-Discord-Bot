@@ -33,6 +33,11 @@ export default class Inactive extends Command {
                 .setDescription(msg("cmd-main-builder-channel-description"))
                 .addChannelTypes(ChannelType.GuildText)
                 .setRequired(false))
+            .addChannelOption(new SlashCommandChannelOption()
+                .setName(msg("cmd-main-builder-forum-name"))
+                .setDescription(msg("cmd-main-builder-forum-description"))
+                .addChannelTypes(ChannelType.GuildForum)
+                .setRequired(false))
             .addRoleOption(new SlashCommandRoleOption()
                 .setName(msg("cmd-main-builder-role-name"))
                 .setDescription(msg("cmd-main-builder-role-description"))
@@ -45,6 +50,11 @@ export default class Inactive extends Command {
                 .setDescription(msg("cmd-main-builder-channel-description"))
                 .addChannelTypes(ChannelType.GuildText)
                 .setRequired(false))
+            .addChannelOption(new SlashCommandChannelOption()
+                .setName(msg("cmd-main-builder-forum-name"))
+                .setDescription(msg("cmd-main-builder-forum-description"))
+                .addChannelTypes(ChannelType.GuildForum)
+                .setRequired(false))
             .addRoleOption(new SlashCommandRoleOption()
                 .setName(msg("cmd-main-builder-role-name"))
                 .setDescription(msg("cmd-main-builder-role-description"))
@@ -56,6 +66,7 @@ export default class Inactive extends Command {
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Get action, channel/role and category :
         const channel = command.options.getChannel(msg("cmd-main-builder-channel-name"));
+        const forum = command.options.getChannel(msg("cmd-main-builder-forum-name"));
         const role = command.options.getRole(msg("cmd-main-builder-role-name"));
 
         const category = command.options.getString(msg("cmd-main-builder-category-name"));
@@ -99,7 +110,7 @@ export default class Inactive extends Command {
             return;
         }
 
-        if (!channel || !role) {
+        if (!channel && !role && !forum) {
             command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-mention"), "error")], ephemeral: true });
             return;
         }
@@ -111,7 +122,11 @@ export default class Inactive extends Command {
             result.success = command.options.getSubcommand() === "add" && category
                 ? (await gqlRequest<AddChannelType, AddChannelVariables>(addChannel, { channelId: channel.id, category: category })).data?.addChannel
                 : (await gqlRequest<RemoveChannelType, RemoveChannelVariables>(removeChannel, { channelId: channel.id })).data?.removeChannel;
-
+        } else if (forum) {
+            result.type = "channel";
+            result.success = command.options.getSubcommand() === "add" && category
+                ? (await gqlRequest<AddChannelType, AddChannelVariables>(addChannel, { channelId: forum.id, category: category })).data?.addChannel
+                : (await gqlRequest<RemoveChannelType, RemoveChannelVariables>(removeChannel, { channelId: forum.id })).data?.removeChannel;
         } else if (role) {
             result.type = "role";
             result.success = command.options.getSubcommand() === "add" && category

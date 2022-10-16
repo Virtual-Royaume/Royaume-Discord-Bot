@@ -59,20 +59,18 @@ export default class Member extends Command {
         }
 
         const memberActivity = memberInfo.activity;
-
         const tiers: Record<string, string> = configTiers;
         const tierRole = tiers[memberActivity.tier ?? ""];
 
-        message += msg("cmd-member-exec-member-progress", [`<@&${tierRole}>`]);
         switch (memberActivity.points.progress) {
             case TierUpdate.Up:
-                message += msg("cmd-member-exec-member-progress-up");
+                message += msg("cmd-member-exec-member-progress-up", [`<@&${tierRole}>`]);
                 break;
             case TierUpdate.Neutral:
-                message += msg("cmd-member-exec-member-progress-neutral");
+                message += msg("cmd-member-exec-member-progress-neutral", [`<@&${tierRole}>`]);
                 break;
             case TierUpdate.Down:
-                message += msg("cmd-member-exec-member-progress-down");
+                message += msg("cmd-member-exec-member-progress-down", [`<@&${tierRole}>`]);
                 break;
         }
 

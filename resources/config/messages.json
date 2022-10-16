@@ -79,6 +79,10 @@
     "cmd-main-builder-add-description": "Ajoute un rôle ou un salon à la liste des rôles ou salons principaux",
     "cmd-main-builder-channel-name": "channel",
     "cmd-main-builder-channel-description": "Ajout ou supression de ce salon",
+    "cmd-main-builder-forum-name": "forum",
+    "cmd-main-builder-forum-description": "Ajout ou supression de ce salon",
+
+
     "cmd-main-builder-remove-name": "remove",
     "cmd-main-builder-remove-description": "Supprime un rôle ou un salon de la liste des rôles ou salons principaux",
     "cmd-main-builder-role-name": "role",
@@ -106,20 +110,16 @@
         "**👶 Né le {date} ({yearsOld} ans)**",
         "\n"
     ],
-    "cmd-member-exec-member-progress": [
-        "**Rôle d'activité :** {role}",
-        ""
-    ],
     "cmd-member-exec-member-progress-up": [
-        "> 📈 Rôle en augmentation",
+        "📈 **Rôle d'activité :** {role} *(rôle en augmentation)*",
         "\n"
     ],
     "cmd-member-exec-member-progress-neutral": [
-        "> 😐 Rôle en stagnation",
+        "📊 **Rôle d'activité :** {role} *(rôle en stagnation)*",
         "\n"
     ],
     "cmd-member-exec-member-progress-down": [
-        "> 📉 Rôle en diminution",
+        "📉 **Rôle d'activité :** {role} *(rôle en diminution)*",
         "\n"
     ],
     "cmd-member-exec-member-activity": [

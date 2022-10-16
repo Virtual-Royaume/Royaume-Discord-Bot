@@ -1,4 +1,4 @@
-import { BaseGuildTextChannel, ChannelType, Message as Msg, TextBasedChannel } from "discord.js";
+import { BaseGuildTextChannel, ChannelType, ForumChannel, Message as Msg, TextBasedChannel } from "discord.js";
 import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
 import { incChannelMessage, IncChannelMessageType, IncChannelMessageVariables } from "$core/api/requests/Member";
 import { generalChannel } from "$resources/config/information.json";
@@ -17,13 +17,9 @@ export default class MessageCreate extends Event {
         if (message.author.bot) return;
 
         // Get channel or parent channel (if is a thread channel) :
-        let channel: TextBasedChannel | null = message.channel;
+        let channel: TextBasedChannel | ForumChannel | null = message.channel;
 
-        if (
-            channel.type === ChannelType.PublicThread || channel.type === ChannelType.PrivateThread
-            || channel.type === ChannelType.AnnouncementThread
-        ) {
-            // @ts-ignore
+        if (channel.type === ChannelType.PublicThread || channel.type === ChannelType.PrivateThread || channel.type === ChannelType.AnnouncementThread) {
             channel = channel.parent;
         }
 
@@ -59,11 +55,6 @@ export default class MessageCreate extends Event {
                     });
                 }
             }
-        } else {
-            (await gqlRequest<IncChannelMessageType, IncChannelMessageVariables>(
-                incChannelMessage,
-                { id: message.author.id, channelId: "732392873667854372" }
-            )).data?.incMemberDiscordActivityChannel;
         }
     }
 }

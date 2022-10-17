@@ -33,8 +33,8 @@ export default class GuildMemberAdd extends Event {
             const channel = await guild.channels.fetch(generalChannel);
 
             if (channel?.type === ChannelType.GuildText) {
-                const ClientId: any = Client.instance.user?.id;
-                const embed = simpleEmbed(msg("event-guildmemberadd-welcome-message", [ClientId]));
+                const clientId = Client.instance.user?.id;
+                const embed = simpleEmbed(msg("event-guildmemberadd-welcome-message", [clientId ?? ""])); // TODO : error if undefined ID
 
                 (await channel.send({ content: msg("event-guildmemberadd-welcome", [member.id]), embeds: [embed] })).react("👋");
             }

@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import Event, { EventName } from "$core/events/Event";
-import { request } from "$core/utils/Request";
+import { restRequest } from "$core/utils/request";
 import { getStringEnv } from "$core/utils/EnvVariable";
 
 const githubRaw = "https://raw.githubusercontent.com/";
@@ -57,15 +57,12 @@ export default class GithubLinkReaction extends Event {
             const fileExtension = filePath[filePath.length - 1].match(/(?<=[.])\w*/gm)?.shift() ?? "";
 
             // Request for get the code :
-            const response = await request<string>(
-                githubRaw + filePath.join("/"),
-                {
-                    headers: {
-                        authorization: `token ${getStringEnv("GITHUB_TOKEN")}`
-                    },
-                    responseType: "text"
-                }
-            );
+            const response = await restRequest<string>("get", githubRaw + filePath.join("/"), {
+                headers: {
+                    authorization: `token ${getStringEnv("GITHUB_TOKEN")}`
+                },
+                responseType: "text"
+            });
 
             if (!response.success) return;
 

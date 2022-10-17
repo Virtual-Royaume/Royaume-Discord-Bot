@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, Team, User } from "discord.js";
 import EventManager from "$core/events/EventManager";
 import CommandManager from "$core/commands/CommandManager";
@@ -6,7 +5,6 @@ import TaskManager from "$core/tasks/TaskManager";
 import Logger, { logCrown } from "$core/utils/Logger";
 import { guildId } from "$resources/config/information.json";
 import { version } from "../package.json";
-import { getEnv } from "$core/utils/EnvVariable";
 
 export default class Client extends DiscordClient {
 

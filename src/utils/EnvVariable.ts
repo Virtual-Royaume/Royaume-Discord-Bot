@@ -1,7 +1,25 @@
-export function getEnv<T>(envName: string): T {
-    const env = process.env[envName];
+import "dotenv/config";
 
-    if (!env) throw new Error(`Environment variable is missing : ${envName}`);
+export const getStringEnv = (name: string): string => {
+    const env = process.env[name];
 
-    return <unknown>env as T;
-}
+    if (!env) throw new Error(`Missing environment variable : ${name}`);
+
+    return env;
+};
+
+export const getNumberEnv = (name: string): number => {
+    try {
+        return Number(getStringEnv(name));
+    } catch {
+        throw new Error(`Unable to parse environment variable "${name}" as a number`);
+    }
+};
+
+export const getBooleanEnv = (name: string): boolean => {
+    try {
+        return Boolean(getStringEnv(name));
+    } catch {
+        throw new Error(`Unable to parse environment variable "${name}" as a boolean`);
+    }
+};

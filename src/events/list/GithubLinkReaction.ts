@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import Event, { EventName } from "$core/events/Event";
 import { request } from "$core/utils/Request";
-import { getEnv } from "$core/utils/EnvVariable";
+import { getStringEnv } from "$core/utils/EnvVariable";
 
 const githubRaw = "https://raw.githubusercontent.com/";
 
@@ -61,7 +61,7 @@ export default class GithubLinkReaction extends Event {
                 githubRaw + filePath.join("/"),
                 {
                     headers: {
-                        authorization: `token ${process.env.GITHUB_TOKEN as string}`
+                        authorization: `token ${getStringEnv("GITHUB_TOKEN")}`
                     },
                     responseType: "text"
                 }

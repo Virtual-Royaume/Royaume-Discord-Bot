@@ -1,8 +1,7 @@
-import { ServerActivity } from "$core/api/Schema";
+import { graphql } from "$core/utils/request/graphql";
 
-export type GetCurrentServerActivityType = { todayServerActivity: ServerActivity };
-export const getCurrentServerActivity = `
-    query {
+export const getCurrentServerActivity = graphql(`
+    query getCurrentServerActivity {
         todayServerActivity {
             date
             voiceMinute
@@ -10,14 +9,10 @@ export const getCurrentServerActivity = `
             memberCount
         }
     }
-`;
+`);
 
-export type GetServerActivityHistoryType = { serverActivity: ServerActivity[] };
-export type GetServerActivityHistoryVariables = {
-    historyCount: number;
-};
-export const getServerActivityHistory = `
-    query($historyCount: Int!){
+export const getServerActivityHistory = graphql(`
+    query getServerActivityHistory($historyCount: Int!){
         serverActivity(historyCount: $historyCount){
             date
             voiceMinute
@@ -25,14 +20,10 @@ export const getServerActivityHistory = `
             memberCount
         }
     }
-`;
+`);
 
-export type SetServerCountType = { setServerActivityMemberCount: boolean };
-export type SetServerCountVariables = {
-    count: number;
-};
-export const setMemberCount = `
-    mutation($count: Int!) {
+export const setMemberCount = graphql(`
+    mutation setMemberCount($count: Int!) {
         setServerActivityMemberCount(count: $count)
     }
-`;
+`);

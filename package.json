@@ -13,8 +13,7 @@
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
     "dayjs": "^1.11.5",
-    "discord.js": "^14.6.0",
-    "graphql-request": "^5.0.0"
+    "discord.js": "^14.6.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.13.7",

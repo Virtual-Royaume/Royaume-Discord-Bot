@@ -8,7 +8,7 @@ const config: CodegenConfig = {
     schema: [
         { [apiLink]: { headers: { authorization: apiToken } } }
     ],
-    documents: "./src/**/*.ts",
+    documents: "./src/utils/request/**/*.ts",
     generates: {
         "./src/utils/request/gql": {
             preset: "client",

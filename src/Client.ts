@@ -5,6 +5,7 @@ import TaskManager from "$core/tasks/TaskManager";
 import Logger, { logCrown } from "$core/utils/Logger";
 import { guildId } from "$resources/config/information.json";
 import { version } from "../package.json";
+import { getStringEnv } from "./utils/EnvVariable";
 
 export default class Client extends DiscordClient {
 
@@ -30,7 +31,7 @@ export default class Client extends DiscordClient {
 
         // Create bot instance and login it :
         Client.instance = this;
-        this.login(process.env.BOT_TOKEN as string);
+        this.login(getStringEnv("BOT_TOKEN"));
 
         // Load events, commands and tasks managers :
         this.eventManager = new EventManager();

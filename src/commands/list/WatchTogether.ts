@@ -23,21 +23,25 @@ export default class WatchTogether extends Command {
             return;
         }
 
-        const instance: any = Client.instance;
         const generalTextChannel = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
         if (generalTextChannel?.type !== ChannelType.GuildText) return;
 
-        const invite: { code: string } = await instance.api.channels(command.member.voice.channelId).invites.post({
-            data: {
-                temporary: true,
-                max_age: 86_400,
-                max_uses: 0,
-                unique: true,
-                target_type: 2,
-                target_application_id: youtubeTogether
-            }
-        });
+        const channel = await Client.instance.channels.fetch(command.member.voice.channelId);
+
+        if (channel?.type !== ChannelType.GuildVoice) {
+            command.reply({ embeds: [simpleEmbed(msg("cmd-together-exec-voice-needed"), "error")], ephemeral: true });
+            return;
+        }
+
+        const invite = await channel.createInvite({
+            temporary: true,
+            maxAge: 86_400,
+            maxUses: 0,
+            unique: true,
+            targetType: 2,
+            targetApplication: youtubeTogether
+        })
 
         command.reply({
             embeds: [simpleEmbed(msg("cmd-together-exec", [invite.code]))],

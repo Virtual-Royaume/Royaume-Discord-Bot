@@ -6,14 +6,11 @@ import {
 import { msg } from "$core/utils/Message";
 import { getChannelsByCategory } from "$core/api/func/MainChannel";
 import { getRolesByCategory } from "$core/api/func/MainRole";
-import {
-    addChannel, AddChannelType, AddChannelVariables,
-    removeChannel, RemoveChannelType, RemoveChannelVariables
-} from "$core/api/requests/MainChannel";
-import { addRole, AddRoleType, AddRoleVariables, removeRole, RemoveRoleType, RemoveRoleVariables } from "$core/api/requests/MainRole";
+import { addChannel, removeChannel } from "$core/api/requests/MainChannel";
+import { addRole, removeRole } from "$core/api/requests/MainRole";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class Inactive extends Command {
 
@@ -120,18 +117,18 @@ export default class Inactive extends Command {
         if (channel) {
             result.type = "channel";
             result.success = command.options.getSubcommand() === "add" && category
-                ? (await gqlRequest<AddChannelType, AddChannelVariables>(addChannel, { channelId: channel.id, category: category })).data?.addChannel
-                : (await gqlRequest<RemoveChannelType, RemoveChannelVariables>(removeChannel, { channelId: channel.id })).data?.removeChannel;
+                ? (await gqlRequest(addChannel, { channelId: channel.id, category: category })).data?.addChannel
+                : (await gqlRequest(removeChannel, { channelId: channel.id })).data?.removeChannel;
         } else if (forum) {
             result.type = "channel";
             result.success = command.options.getSubcommand() === "add" && category
-                ? (await gqlRequest<AddChannelType, AddChannelVariables>(addChannel, { channelId: forum.id, category: category })).data?.addChannel
-                : (await gqlRequest<RemoveChannelType, RemoveChannelVariables>(removeChannel, { channelId: forum.id })).data?.removeChannel;
+                ? (await gqlRequest(addChannel, { channelId: forum.id, category: category })).data?.addChannel
+                : (await gqlRequest(removeChannel, { channelId: forum.id })).data?.removeChannel;
         } else if (role) {
             result.type = "role";
             result.success = command.options.getSubcommand() === "add" && category
-                ? (await gqlRequest<AddRoleType, AddRoleVariables>(addRole, { roleId: role.id, category: category })).data?.addRole
-                : (await gqlRequest<RemoveRoleType, RemoveRoleVariables>(removeRole, { roleId: role.id })).data?.removeRole;
+                ? (await gqlRequest(addRole, { roleId: role.id, category: category })).data?.addRole
+                : (await gqlRequest(removeRole, { roleId: role.id })).data?.removeRole;
         }
 
         const type = result.type === "role" ? "rôle" : "salon";

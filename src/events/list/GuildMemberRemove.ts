@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
 import { setAlwaysOnServer } from "$core/api/requests/Member";
 import Event, { EventName } from "$core/events/Event";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class GuildMemberRemove extends Event {
 

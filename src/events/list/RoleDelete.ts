@@ -1,14 +1,14 @@
 import { Role } from "discord.js";
-import { getRoles, GetRolesType, removeRole } from "$core/api/requests/MainRole";
+import { getRoles, removeRole } from "$core/api/requests/MainRole";
 import Event, { EventName } from "$core/events/Event";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class RoleDelete extends Event {
 
     public name: EventName = "roleDelete";
 
     public async execute(role: Role): Promise<void> {
-        const roles = (await gqlRequest<GetRolesType, undefined>(getRoles)).data?.roles;
+        const roles = (await gqlRequest(getRoles)).data?.roles;
 
         if (!roles) return;
 

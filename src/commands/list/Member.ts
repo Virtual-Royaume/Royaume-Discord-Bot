@@ -1,14 +1,14 @@
 import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
-import { getMember, GetMemberType, GetMemberVariables } from "$core/api/requests/Member";
+import { getMember } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
-import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
+import { getChannels } from "$core/api/requests/MainChannel";
 import { dateFormat, firstLetterToUppercase, getAge, numberFormat, formatMinutes } from "$core/utils/Function";
 import DayJS from "$core/utils/DayJS";
 import { msg } from "$core/utils/Message";
-import { gqlRequest } from "$core/utils/Request";
-import { TierUpdate } from "$core/api/Schema";
-import { tiers as configTiers, verify, generalChannel } from "$resources/config/information.json";
+import { gqlRequest } from "$core/utils/request";
+import { tiers as configTiers } from "$resources/config/information.json";
+import { TierUpdate } from "$core/utils/request/graphql/graphql";
 
 export default class Member extends Command {
 
@@ -32,9 +32,9 @@ export default class Member extends Command {
         }
 
         // Get member info :
-        const memberInfo = (await gqlRequest<GetMemberType, GetMemberVariables>(getMember, { id: member.id })).data?.member;
+        const memberInfo = (await gqlRequest(getMember, { id: member.id })).data?.member;
         // Get main channels en sort it :
-        const channels = (await gqlRequest<GetChannelsType, undefined>(getChannels)).data?.channels;
+        const channels = (await gqlRequest(getChannels)).data?.channels;
 
         if (!memberInfo || !channels) {
             command.reply({ embeds: [simpleEmbed(msg("cmd-member-exec-member-info-error"), "error")], ephemeral: true });

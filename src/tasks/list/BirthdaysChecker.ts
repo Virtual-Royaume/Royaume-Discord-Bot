@@ -1,4 +1,4 @@
-import { getBirthdays, GetBirthdaysType } from "$core/api/requests/Member";
+import { getBirthdays } from "$core/api/requests/Member";
 import Task from "$core/tasks/Task";
 import { generalChannel } from "$resources/config/information.json";
 import { BaseGuildTextChannel } from "discord.js";
@@ -6,7 +6,7 @@ import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import DayJS from "$core/utils/DayJS";
 import { msg } from "$core/utils/Message";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class ServerActivityUpdate extends Task {
 
@@ -36,7 +36,7 @@ export default class ServerActivityUpdate extends Task {
         if (currentDate.hour() !== 0 || currentDate.minute() !== 0) return;
 
         // Check birthdays of the day :
-        const birthdays = (await gqlRequest<GetBirthdaysType, undefined>(getBirthdays)).data?.members.filter(member => {
+        const birthdays = (await gqlRequest(getBirthdays)).data?.members.filter(member => {
             if (!member.birthday) return false;
 
             const birthday = DayJS(member.birthday).tz();

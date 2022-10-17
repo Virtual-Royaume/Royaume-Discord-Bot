@@ -1,12 +1,12 @@
 import Task from "$core/tasks/Task";
 import { tiers as configTiers, verify, generalChannel } from "$resources/config/information.json";
 import Client from "$core/Client";
-import { getMembersTier, GetMembersTierType } from "$core/api/requests/Member";
+import { getMembersTier } from "$core/api/requests/Member";
 import Logger from "$core/utils/Logger";
 import { BaseGuildTextChannel } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 type RoleUpdate = {
     memberId: string;
@@ -26,7 +26,7 @@ export default class PresenceUpdate extends Task {
         const tiers: Record<string, string> = configTiers;
 
         const discordMembers = await guild.members.fetch();
-        const apiMembers = (await gqlRequest<GetMembersTierType, undefined>(getMembersTier)).data?.members;
+        const apiMembers = (await gqlRequest(getMembersTier)).data?.members;
 
         if (!apiMembers) return;
 

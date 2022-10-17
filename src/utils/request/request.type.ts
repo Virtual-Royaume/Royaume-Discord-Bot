@@ -5,6 +5,7 @@ export type ResponseSuccess<T> = {
 
 export type ResponseError = {
   success: false;
+  data: null; // TODO : remove this
 }
 
 export type Response<T> = ResponseSuccess<T> | ResponseError;

@@ -3,16 +3,12 @@ import {
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder,
     SlashCommandChannelOption, SlashCommandNumberOption
 } from "discord.js";
-import {
-    getChannelMessageCount, GetChannelMessageCountType,
-    getMonthMessageCount, GetMonthMessageCountType,
-    getTotalMessageCount, GetTotalMessageType
-} from "$core/api/requests/Member";
+import { getChannelMessageCount, getMonthMessageCount, getTotalMessageCount } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
 import { numberFormat } from "$core/utils/Function";
 import Command from "$core/commands/Command";
 import { msg } from "$core/utils/Message";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class TopMessage extends Command {
 
@@ -61,7 +57,7 @@ export default class TopMessage extends Command {
 
         switch (command.options.getSubcommand()) {
             case msg("cmd-topmessages-builder-month-name"): {
-                members = (await gqlRequest<GetMonthMessageCountType, undefined>(getMonthMessageCount)).data?.members.sort((a, b) => {
+                members = (await gqlRequest(getMonthMessageCount)).data?.members.sort((a, b) => {
                     return (b?.activity.messages.monthCount ?? 0) - (a?.activity.messages.monthCount ?? 0);
                 }).map(member => {
                     return {
@@ -73,7 +69,7 @@ export default class TopMessage extends Command {
             }
 
             case msg("cmd-topmessages-builder-total-name"): {
-                members = (await gqlRequest<GetTotalMessageType, undefined>(getTotalMessageCount)).data?.members.sort((a, b) => {
+                members = (await gqlRequest(getTotalMessageCount)).data?.members.sort((a, b) => {
                     return (b?.activity.messages.totalCount ?? 0) - (a?.activity.messages.totalCount ?? 0);
                 }).map(member => {
                     return {
@@ -92,7 +88,7 @@ export default class TopMessage extends Command {
                     return;
                 }
 
-                members = (await gqlRequest<GetChannelMessageCountType, undefined>(getChannelMessageCount)).data?.members.sort((a, b) => {
+                members = (await gqlRequest(getChannelMessageCount)).data?.members.sort((a, b) => {
                     const aChannel = a.activity.messages.perChannel.find(c => channel.id === c?.channelId);
                     const bChannel = b.activity.messages.perChannel.find(c => channel.id === c?.channelId);
 

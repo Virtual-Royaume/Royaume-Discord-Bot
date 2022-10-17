@@ -1,5 +1,5 @@
-import { getRoles, GetRolesType } from "$core/api/requests/MainRole";
-import { gqlRequest } from "$core/utils/Request";
+import { getRoles } from "$core/api/requests/MainRole";
+import { gqlRequest } from "$core/utils/request";
 
 type RolesByCategory = {
     [category: string]: string[]
@@ -7,7 +7,11 @@ type RolesByCategory = {
 
 export async function getRolesByCategory(): Promise<RolesByCategory> {
     // Get mains roles :
-    const roles = (await gqlRequest<GetRolesType, undefined>(getRoles)).data?.roles;
+    const response = await gqlRequest(getRoles);
+
+    if (!response.success) return {};
+
+    const roles = response.data.roles;
 
     // Sort roles by category :
     const rolesIdsByCategory: RolesByCategory = {};

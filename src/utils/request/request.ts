@@ -20,7 +20,10 @@ export const restRequest = async<T>(method: Lowercase<Method>, endpoint: string,
         Logger.error("Rest request failed :");
         console.log(config);
 
-        return { success: false };
+        return {
+            success: false,
+            data: null
+        };
     }
 };
 
@@ -46,6 +49,9 @@ export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variabl
         Logger.error("GraphQL request failed :");
         console.log(error instanceof AxiosError ? error.response?.data.errors ?? error : error);
 
-        return { success: false };
+        return {
+            success: false,
+            data: null
+        };
     }
 };

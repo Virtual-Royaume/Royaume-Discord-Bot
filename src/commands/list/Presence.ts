@@ -3,20 +3,15 @@ import {
     GuildMember, SlashCommandBuilder, SlashCommandNumberOption,
     SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
-import {
-    addPresenceMessage, getPresenceMessages,
-    GetPresenceMessagesType, removePresenceMessage,
-    RemovePresenceMessageType,
-    RemovePresenceMessageVariables
-} from "$core/api/requests/PresenceMessage";
+import { addPresenceMessage, getPresenceMessages, removePresenceMessage } from "$core/api/requests/PresenceMessage";
 import { generalChannel } from "$resources/config/information.json";
 import { activityProposal } from "$resources/config/proposal.json";
-import { PresenceType } from "$core/api/Schema";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 import Client from "$core/Client";
 import { msg } from "$core/utils/Message";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
+import { PresenceType } from "$core/utils/request/graphql/graphql";
 
 export default class Role extends Command {
     private presenceTypes = Object.values(PresenceType).map(presence => ({ name: presence, value: presence }));
@@ -72,7 +67,7 @@ export default class Role extends Command {
     }
 
     private async add(command: ChatInputCommandInteraction): Promise<void> {
-        const presence = command.options.getString(msg("cmd-presence-builder-presence-name"));
+        const presence: PresenceType = command.options.getString(msg("cmd-presence-builder-presence-name")) as PresenceType;
         const message = command.options.getString(msg("cmd-presence-builder-message-name"));
 
         // Checks :
@@ -219,7 +214,7 @@ export default class Role extends Command {
 
         // Try to delete the presence message :
         try {
-            const response = await gqlRequest<RemovePresenceMessageType, RemovePresenceMessageVariables>(removePresenceMessage, { id });
+            const response = await gqlRequest(removePresenceMessage, { id });
 
             if (response.success) {
                 command.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-succes"))], ephemeral: true });
@@ -239,7 +234,7 @@ export default class Role extends Command {
 
     private async list(command: ChatInputCommandInteraction): Promise<void> {
         // Get data and sort it :
-        let presenceMessages = (await gqlRequest<GetPresenceMessagesType, undefined>(getPresenceMessages)).data?.presenceMessages;
+        let presenceMessages = (await gqlRequest(getPresenceMessages)).data?.presenceMessages;
 
         if (!presenceMessages) {
             command.reply({

@@ -2,8 +2,8 @@ import { ChannelType, GuildMember } from "discord.js";
 import Client from "$core/Client";
 import Event, { EventName } from "$core/events/Event";
 import { verify, privateMode, generalChannel, tiers as configTiers } from "$resources/config/information.json";
-import { createMember, CreateMemberType, CreateMemberVariables, getMemberActivityTier, GetMemberActivityTierType, GetMemberActivityTierVariables, setAlwaysOnServer } from "$core/api/requests/Member";
-import { gqlRequest } from "$core/utils/Request";
+import { createMember, getMemberActivityTier, setAlwaysOnServer } from "$core/api/requests/Member";
+import { gqlRequest } from "$core/utils/request";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
 
@@ -15,13 +15,13 @@ export default class GuildMemberAdd extends Event {
         if (member.user.bot) return;
 
         // Create the member if he doesn't exist :
-        const result = await gqlRequest<CreateMemberType, CreateMemberVariables>(createMember, {
+        const response = await gqlRequest(createMember, {
             id: member.id,
             username: member.user.username,
             profilePicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
         });
 
-        // if (!result.data?.createMember._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
+        if (response.success && !response.data.createMember?._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
 
         // Add verification role :
         if (privateMode) {
@@ -39,13 +39,13 @@ export default class GuildMemberAdd extends Event {
                 (await channel.send({ content: msg("event-guildmemberadd-welcome", [member.id]), embeds: [embed] })).react("👋");
             }
 
-            const tier = await gqlRequest<GetMemberActivityTierType, GetMemberActivityTierVariables>(getMemberActivityTier, {
+            const tier = await gqlRequest(getMemberActivityTier, {
                 memberId: member.id
             });
 
             const tiers: Record<string, string> = configTiers;
 
-            if (tier.data?.member.activity.tier) {
+            if (tier.data?.member?.activity.tier) {
                 member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
             }
         }

@@ -1,8 +1,8 @@
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
-import { GetPresenceMessagesType, getPresenceMessages } from "$core/api/requests/PresenceMessage";
+import { getPresenceMessages } from "$core/api/requests/PresenceMessage";
 import { ActivityType } from "discord.js";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 const activityType: Record<string, ActivityType> = {
     "COMPETING": ActivityType.Competing,
@@ -18,7 +18,7 @@ export default class PresenceUpdate extends Task {
     }
 
     public async run(): Promise<void> {
-        const presenceMessages = (await gqlRequest<GetPresenceMessagesType, undefined>(getPresenceMessages)).data?.presenceMessages;
+        const presenceMessages = (await gqlRequest(getPresenceMessages)).data?.presenceMessages;
 
         if (!presenceMessages) return;
 

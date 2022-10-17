@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { getEnv } from "./EnvVariable";
 
 export type ResponseSuccess<T> = {
     success: true;

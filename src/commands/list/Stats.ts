@@ -6,13 +6,13 @@ import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { msg } from "$core/utils/Message";
-import { getServerActivityHistory, GetServerActivityHistoryType, GetServerActivityHistoryVariables } from "$core/api/requests/ServerActivity";
-import { ServerActivity } from "$core/api/Schema";
+import { getServerActivityHistory } from "$core/api/requests/ServerActivity";
 import { colors } from "$resources/config/information.json";
 import { dateFormat } from "$core/utils/Function";
 import DayJS from "$core/utils/DayJS";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 import { simpleEmbed } from "$core/utils/Embed";
+import { ServerActivity } from "$core/utils/request/graphql/graphql";
 
 export default class Stats extends Command {
 
@@ -26,7 +26,7 @@ export default class Stats extends Command {
 
     public async execute(command: ChatInputCommandInteraction): Promise<void> {
         // Get server activity :
-        const serverActivity = (await gqlRequest<GetServerActivityHistoryType, GetServerActivityHistoryVariables>(getServerActivityHistory, {
+        const serverActivity = (await gqlRequest(getServerActivityHistory, {
             historyCount: command.options.getNumber(msg("cmd-stats-builder-history-name")) ?? 30
         })).data?.serverActivity.reverse();
 

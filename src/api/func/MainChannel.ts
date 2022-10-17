@@ -1,5 +1,5 @@
-import { getChannels, GetChannelsType } from "$core/api/requests/MainChannel";
-import { gqlRequest } from "$core/utils/Request";
+import { getChannels } from "$core/api/requests/MainChannel";
+import { gqlRequest } from "$core/utils/request";
 
 type ChannelsByCategory = {
     [category: string]: string[]
@@ -7,7 +7,11 @@ type ChannelsByCategory = {
 
 export async function getChannelsByCategory(): Promise<ChannelsByCategory> {
     // Get mains channels :
-    const channels = (await gqlRequest<GetChannelsType, undefined>(getChannels)).data?.channels;
+    const response = await gqlRequest(getChannels);
+
+    if (!response.success) return {};
+
+    const channels = response.data.channels;
 
     // Sort channels by category :
     const channelsIdsByCategory: ChannelsByCategory = {};

@@ -1,13 +1,8 @@
-import {
-    createMember, getMembersOnServerStatus,
-    GetMembersOnServerStatusType, setAlwaysOnServer,
-    SetAlwaysOnServerType,
-    SetAlwaysOnServerVariables
-} from "$core/api/requests/Member";
+import { createMember, getMembersOnServerStatus, setAlwaysOnServer } from "$core/api/requests/Member";
 import Client from "$core/Client";
 import Logger from "$core/utils/Logger";
 import Task from "$core/tasks/Task";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class VerifyMembers extends Task {
 
@@ -17,7 +12,7 @@ export default class VerifyMembers extends Task {
 
     public async run(): Promise<void> {
         const realMembers = await (await Client.instance.getGuild()).members.fetch();
-        const apiMembers = (await gqlRequest<GetMembersOnServerStatusType, undefined>(getMembersOnServerStatus)).data?.members;
+        const apiMembers = (await gqlRequest(getMembersOnServerStatus)).data?.members;
 
         if (!apiMembers) return;
 
@@ -40,7 +35,7 @@ export default class VerifyMembers extends Task {
             // Add member :
             Logger.info(`Fix ${realMember.id} isOnServer value to true (${realMember.displayName})`);
 
-            const response = await gqlRequest<SetAlwaysOnServerType, SetAlwaysOnServerVariables>(
+            const response = await gqlRequest(
                 setAlwaysOnServer, { id: realMember.id, value: true }
             );
 

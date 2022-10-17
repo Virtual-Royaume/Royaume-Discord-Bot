@@ -1,10 +1,10 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder, SlashCommandNumberOption } from "discord.js";
 import { msg } from "$core/utils/Message";
-import { getMonthVoiceMinute, GetMonthVoiceMinuteType, getVoiceTime, GetVoiceTimeType } from "$core/api/requests/Member";
+import { getMonthVoiceMinute, getVoiceTime } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
 import { formatMinutes } from "$core/utils/Function";
 import Command from "$core/commands/Command";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class TopVoice extends Command {
 
@@ -40,7 +40,7 @@ export default class TopVoice extends Command {
 
         switch (command.options.getSubcommand()) {
             case msg("cmd-topvoice-builder-total-name"): {
-                members = (await gqlRequest<GetMonthVoiceMinuteType, undefined>(getMonthVoiceMinute)).data?.members.sort((a, b) => {
+                members = (await gqlRequest(getMonthVoiceMinute)).data?.members.sort((a, b) => {
                     return (b?.activity.monthVoiceMinute ?? 0) - (a?.activity.monthVoiceMinute ?? 0);
                 }).map(member => {
                     return {
@@ -52,7 +52,7 @@ export default class TopVoice extends Command {
             }
 
             case msg("cmd-topvoice-builder-month-name"): {
-                members = (await gqlRequest<GetVoiceTimeType, undefined>(getVoiceTime)).data?.members.sort((a, b) => {
+                members = (await gqlRequest(getVoiceTime)).data?.members.sort((a, b) => {
                     return (b?.activity.voiceMinute ?? 0) - (a?.activity.voiceMinute ?? 0);
                 }).map(member => {
                     return {

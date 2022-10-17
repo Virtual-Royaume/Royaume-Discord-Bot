@@ -3,13 +3,13 @@ import {
     ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption,
     SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
-import { getBirthdays, GetBirthdaysType, setBirthday } from "$core/api/requests/Member";
+import { getBirthdays, setBirthday } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
 import { minimumAge } from "$resources/config/information.json";
 import { dateFormat, getAge } from "$core/utils/Function";
 import DayJS from "$core/utils/DayJS";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class Birthday extends Command {
 
@@ -85,7 +85,15 @@ export default class Birthday extends Command {
 
             case "list": {
                 let page = command.options.getNumber("page") ?? 1;
-                let birthdays = (await gqlRequest<GetBirthdaysType, undefined>(getBirthdays)).data?.members.filter(member => member.birthday)
+
+                const response = await gqlRequest(getBirthdays);
+
+                if (!response.success) {
+                    command.reply({ embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")] });
+                    return;
+                }
+
+                let birthdays = response.data.members.filter(member => member.birthday)
                     .sort((a, b) => (a.birthday ?? 0) - (b.birthday ?? 0));
 
                 if (!birthdays) {
@@ -124,7 +132,7 @@ export default class Birthday extends Command {
 
             case "next": {
                 // Get members with their dates of birth from API :
-                const response = await gqlRequest<GetBirthdaysType, undefined>(getBirthdays);
+                const response = await gqlRequest(getBirthdays);
 
                 // Checking the success of the request to the API :
                 if (!response.success || !response.data.members.length) {

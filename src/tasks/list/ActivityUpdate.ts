@@ -2,7 +2,7 @@ import { incVoiceMinute } from "$core/api/requests/Member";
 import { setMemberCount } from "$core/api/requests/ServerActivity";
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
-import { gqlRequest } from "$core/utils/Request";
+import { gqlRequest } from "$core/utils/request";
 
 export default class ServerActivityUpdate extends Task {
 

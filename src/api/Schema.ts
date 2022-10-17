@@ -13,6 +13,12 @@ export type Scalars = {
     Date: number;
 };
 
+export type ActivityPoints = {
+    __typename?: "ActivityPoints";
+    count: Scalars["Int"];
+    progress: TierUpdate;
+};
+
 export type ChannelMessageCount = {
     __typename?: "ChannelMessageCount";
     channelId: Scalars["String"];
@@ -23,6 +29,7 @@ export type DiscordActivity = {
     __typename?: "DiscordActivity";
     messages: DiscordMessageActivity;
     monthVoiceMinute: Scalars["Int"];
+    points: ActivityPoints;
     tier: Scalars["Int"];
     voiceMinute: Scalars["Int"];
 };
@@ -183,3 +190,9 @@ export type ServerActivity = {
     messageCount: Scalars["Int"];
     voiceMinute: Scalars["Int"];
 };
+
+export enum TierUpdate {
+    Down = "DOWN",
+    Neutral = "NEUTRAL",
+    Up = "UP"
+}

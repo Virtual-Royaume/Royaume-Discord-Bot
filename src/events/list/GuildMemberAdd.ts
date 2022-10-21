@@ -1,4 +1,4 @@
-import { ChannelType, GuildMember } from "discord.js";
+import { ChannelType, DiscordAPIError, GuildMember } from "discord.js";
 import Client from "$core/Client";
 import Event, { EventName } from "$core/events/Event";
 import { verify, privateMode, generalChannel, tiers as configTiers } from "$resources/config/information.json";
@@ -28,27 +28,34 @@ export default class GuildMemberAdd extends Event {
             const role = await (await Client.instance.getGuild()).roles.fetch(verify.roles.waiting);
 
             if (role) member.roles.add(role);
-        } else {
-            const guild = await Client.instance.getGuild();
-            const channel = await guild.channels.fetch(generalChannel);
-
-            if (channel?.type === ChannelType.GuildText) {
-                const clientId = Client.instance.user?.id;
-                const embed = simpleEmbed(msg("event-guildmemberadd-welcome-message", [clientId ?? ""])); // TODO : error if undefined ID
-
-                (await channel.send({ content: msg("event-guildmemberadd-welcome", [member.id]), embeds: [embed] })).react("👋");
-            }
-
-            const tier = await gqlRequest(getMemberActivityTier, {
-                memberId: member.id
-            });
-
-            const tiers: Record<string, string> = configTiers;
-
-            if (tier.data?.member?.activity.tier) {
-                member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
-            }
+            return;
         }
 
+        const guild = await Client.instance.getGuild();
+        const channel = await guild.channels.fetch(generalChannel);
+
+        if (channel?.type === ChannelType.GuildText) {
+            const clientId = Client.instance.user?.id;
+            const embed = simpleEmbed(msg("event-guildmemberadd-welcome-message", [clientId ?? ""])); // TODO : error if undefined ID
+            const embeds = [];
+
+            try {
+                await member.send({ embeds: [embed] });
+            } catch (error) {
+                embeds.push(embed);
+            }
+
+            (await channel.send({ content: msg("event-guildmemberadd-welcome", [member.id]), embeds })).react("👋");
+        }
+
+        const tier = await gqlRequest(getMemberActivityTier, {
+            memberId: member.id
+        });
+
+        const tiers: Record<string, string> = configTiers;
+
+        if (tier.data?.member?.activity.tier) {
+            member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
+        }
     }
 }

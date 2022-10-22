@@ -33,9 +33,13 @@ export default class MessageCreate extends Event {
             if (!channels) return;
 
             if (channels.find(c => c.channelId === channel?.id)) {
+                let channelId: string = channel.id;
+
+                if (channel.type === ChannelType.GuildForum) channelId = "732392873667854372";
+
                 const messageCount = (await gqlRequest(
                     incChannelMessage,
-                    { id: message.author.id, channelId: channel.id }
+                    { id: message.author.id, channelId: channelId }
                 )).data?.incMemberDiscordActivityChannel;
 
                 if (!messageCount) return;

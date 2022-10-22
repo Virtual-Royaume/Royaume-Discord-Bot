@@ -39,7 +39,7 @@ export default class TopVoice extends Command {
         let members: Data[] = [];
 
         switch (command.options.getSubcommand()) {
-            case msg("cmd-topvoice-builder-total-name"): {
+            case msg("cmd-topvoice-builder-month-name"): {
                 members = (await gqlRequest(getMonthVoiceMinute)).data?.members.sort((a, b) => {
                     return (b?.activity.monthVoiceMinute ?? 0) - (a?.activity.monthVoiceMinute ?? 0);
                 }).map(member => {
@@ -51,7 +51,7 @@ export default class TopVoice extends Command {
                 break;
             }
 
-            case msg("cmd-topvoice-builder-month-name"): {
+            case msg("cmd-topvoice-builder-total-name"): {
                 members = (await gqlRequest(getVoiceTime)).data?.members.sort((a, b) => {
                     return (b?.activity.voiceMinute ?? 0) - (a?.activity.voiceMinute ?? 0);
                 }).map(member => {

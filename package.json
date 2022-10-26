@@ -2,7 +2,7 @@
   "version": "2.5.0",
   "main": "build/src/Client.js",
   "scripts": {
-    "dev": "npx nodemon --exec node -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts dev",
+    "dev": "node --watch -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts dev",
     "start": "node -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts",
     "lint": "eslint src/**/*.ts --fix",
     "gqlgen": "graphql-codegen --config gql-codegen.ts",
@@ -26,7 +26,6 @@
     "dotenv": "^16.0.3",
     "eslint": "^8.25.0",
     "graphql": "^16.6.0",
-    "nodemon": "^2.0.20",
     "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.4"
   }

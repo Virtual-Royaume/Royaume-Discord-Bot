@@ -10,7 +10,7 @@ It is the bot of our Discord community, it offers various utility features. It i
 You must have NodeJS and NPM installed on your PC with this versions :
 | NodeJS  | NPM   |
 | ------- | ----- |
-| 16.X    | 8.X   |
+| 18.X    | 8.X   |
 
 ### Environment variables
 You must set this environment variables in your .env file :

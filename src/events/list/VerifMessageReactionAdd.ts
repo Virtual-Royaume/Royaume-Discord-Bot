@@ -36,9 +36,9 @@ export default class VerifMessageReactionAdd extends Event {
             await member.roles.add(verify.roles.verified);
             await member.roles.remove(verify.roles.waiting);
 
-            const embed = simpleEmbed(msg("event-verifmessagereactionadd-exec-embed-member-accepted", [member.id]));
+            const embed = simpleEmbed(msg("event-verifmessagereactionadd-exec-embed-member-accepted", []));
 
-            messageReaction.message.reply({ content: msg("event-verifmessagereactionadd-exec-welcome-message", []), embeds: [embed] });
+            messageReaction.message.reply({ content: msg("event-verifmessagereactionadd-exec-welcome-message", [member.id]), embeds: [embed] });
 
             removeReactions();
         }

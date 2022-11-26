@@ -6,23 +6,23 @@ type RolesByCategory = {
 }
 
 export async function getRolesByCategory(): Promise<RolesByCategory> {
-    // Get mains roles :
-    const response = await gqlRequest(getRoles);
+  // Get mains roles :
+  const response = await gqlRequest(getRoles);
 
-    if (!response.success) return {};
+  if (!response.success) return {};
 
-    const roles = response.data.roles;
+  const roles = response.data.roles;
 
-    // Sort roles by category :
-    const rolesIdsByCategory: RolesByCategory = {};
+  // Sort roles by category :
+  const rolesIdsByCategory: RolesByCategory = {};
 
-    if (!roles) return rolesIdsByCategory;
+  if (!roles) return rolesIdsByCategory;
 
-    for (const role of roles) {
-        if (!rolesIdsByCategory[role.category]) rolesIdsByCategory[role.category] = [];
+  for (const role of roles) {
+    if (!rolesIdsByCategory[role.category]) rolesIdsByCategory[role.category] = [];
 
-        rolesIdsByCategory[role.category].push(role.roleId);
-    }
+    rolesIdsByCategory[role.category].push(role.roleId);
+  }
 
-    return rolesIdsByCategory;
+  return rolesIdsByCategory;
 }

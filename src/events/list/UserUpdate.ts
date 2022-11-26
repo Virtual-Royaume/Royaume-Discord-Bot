@@ -5,13 +5,13 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class UserUpdate extends Event {
 
-    public name: EventName = "userUpdate";
+  public name: EventName = "userUpdate";
 
-    public async execute(_: User, newUser: User): Promise<void> {
-        gqlRequest(setUsernameAndProfilePicture, {
-            id: newUser.id,
-            username: newUser.username,
-            profilePicture: newUser.displayAvatarURL()
-        });
-    }
+  public async execute(_: User, newUser: User): Promise<void> {
+    gqlRequest(setUsernameAndProfilePicture, {
+      id: newUser.id,
+      username: newUser.username,
+      profilePicture: newUser.displayAvatarURL()
+    });
+  }
 }

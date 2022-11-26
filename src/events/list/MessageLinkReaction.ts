@@ -6,15 +6,15 @@ import { msg } from "$core/utils/Message";
 
 export default class MessageLinkReaction extends Event {
 
-    public name: EventName = "messageCreate";
+  public name: EventName = "messageCreate";
 
-    public async execute(message: Message): Promise<void> {
-        // Checks :
-        if (message.author.bot && !(message.channel instanceof BaseGuildTextChannel)) return;
+  public async execute(message: Message): Promise<void> {
+    // Checks :
+    if (message.author.bot && !(message.channel instanceof BaseGuildTextChannel)) return;
 
-        const urls = message.content.match(/http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}/gi);
+    const urls = message.content.match(/http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}/gi);
 
-        if (!urls) return;
+    if (!urls) return;
 
         // Get messages :
         type MessageElement = {
@@ -25,49 +25,49 @@ export default class MessageLinkReaction extends Event {
         const messages: MessageElement[] = [];
 
         for (const url of urls) {
-            const ids = [...url.matchAll(/(\/\d+)/g)];
+          const ids = [...url.matchAll(/(\/\d+)/g)];
 
-            if (!ids.length) return;
+          if (!ids.length) return;
 
-            // Get channel and message instances :
-            let channelQuoted: TextBasedChannel;
-            let messageQuoted: Message;
+          // Get channel and message instances :
+          let channelQuoted: TextBasedChannel;
+          let messageQuoted: Message;
 
-            try {
-                // Channel :
-                const tempChannel = await (await Client.instance.getGuild()).channels.fetch(ids[1][0]);
+          try {
+            // Channel :
+            const tempChannel = await (await Client.instance.getGuild()).channels.fetch(ids[1][0]);
 
-                if (!tempChannel || !tempChannel.isTextBased()) throw new Error("Channel not found");
+            if (!tempChannel || !tempChannel.isTextBased()) throw new Error("Channel not found");
 
-                channelQuoted = tempChannel;
+            channelQuoted = tempChannel;
 
-                messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
-            } catch {
-                return;
-            }
+            messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
+          } catch {
+            return;
+          }
 
-            messages.push({ url, message: messageQuoted });
+          messages.push({ url, message: messageQuoted });
         }
 
         // Send link reaction messages :
         const embeds: EmbedBuilder[] = [];
 
         for (const index in messages) {
-            const url = messages[index].url;
-            const message = messages[index].message;
+          const url = messages[index].url;
+          const message = messages[index].message;
 
-            const attachment = message.attachments.size ? msg("event-messagelinkreaction-exec-attachments", [message.attachments.size]) : "";
-            const content = message.content ? message.content + (attachment.length ? `\n\n${attachment}` : "") : attachment;
+          const attachment = message.attachments.size ? msg("event-messagelinkreaction-exec-attachments", [message.attachments.size]) : "";
+          const content = message.content ? message.content + (attachment.length ? `\n\n${attachment}` : "") : attachment;
 
-            embeds.push(
-                simpleEmbed(msg("event-messagelinkreaction-exec-replyed-embed", [Number(index) + 1, url, message.channelId, content]), "normal")
-                    .setAuthor({
-                        name: message.author.tag,
-                        iconURL: message.author.displayAvatarURL()
-                    })
-            );
+          embeds.push(
+            simpleEmbed(msg("event-messagelinkreaction-exec-replyed-embed", [Number(index) + 1, url, message.channelId, content]), "normal")
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.displayAvatarURL()
+              })
+          );
         }
 
         message.reply({ embeds, allowedMentions: { repliedUser: false } });
-    }
+  }
 }

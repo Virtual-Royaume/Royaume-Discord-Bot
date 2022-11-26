@@ -5,13 +5,13 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class RoleDelete extends Event {
 
-    public name: EventName = "roleDelete";
+  public name: EventName = "roleDelete";
 
-    public async execute(role: Role): Promise<void> {
-        const roles = (await gqlRequest(getRoles)).data?.roles;
+  public async execute(role: Role): Promise<void> {
+    const roles = (await gqlRequest(getRoles)).data?.roles;
 
-        if (!roles) return;
+    if (!roles) return;
 
-        if (roles.find(r => r.roleId === role.id)) gqlRequest(removeRole, { roleId: role.id });
-    }
+    if (roles.find(r => r.roleId === role.id)) gqlRequest(removeRole, { roleId: role.id });
+  }
 }

@@ -6,23 +6,23 @@ type ChannelsByCategory = {
 }
 
 export async function getChannelsByCategory(): Promise<ChannelsByCategory> {
-    // Get mains channels :
-    const response = await gqlRequest(getChannels);
+  // Get mains channels :
+  const response = await gqlRequest(getChannels);
 
-    if (!response.success) return {};
+  if (!response.success) return {};
 
-    const channels = response.data.channels;
+  const channels = response.data.channels;
 
-    // Sort channels by category :
-    const channelsIdsByCategory: ChannelsByCategory = {};
+  // Sort channels by category :
+  const channelsIdsByCategory: ChannelsByCategory = {};
 
-    if (!channels) return channelsIdsByCategory;
+  if (!channels) return channelsIdsByCategory;
 
-    for (const channel of channels) {
-        if (!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];
+  for (const channel of channels) {
+    if (!channelsIdsByCategory[channel.category]) channelsIdsByCategory[channel.category] = [];
 
-        channelsIdsByCategory[channel.category].push(channel.channelId);
-    }
+    channelsIdsByCategory[channel.category].push(channel.channelId);
+  }
 
-    return channelsIdsByCategory;
+  return channelsIdsByCategory;
 }

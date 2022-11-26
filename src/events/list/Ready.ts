@@ -4,18 +4,18 @@ import Event, { EventName } from "$core/events/Event";
 
 export default class Ready extends Event {
 
-    public name: EventName = "ready";
+  public name: EventName = "ready";
 
-    public once = true;
+  public once = true;
 
-    public async execute() : Promise<void> {
-        // Load tasks :
-        await Client.instance.taskManager.load();
+  public async execute() : Promise<void> {
+    // Load tasks :
+    await Client.instance.taskManager.load();
 
-        // Register slash commands :
-        await Client.instance.commandManager.register();
+    // Register slash commands :
+    await Client.instance.commandManager.register();
 
-        // Finish :
-        Logger.success("Client has been started");
-    }
+    // Finish :
+    Logger.success("Client has been started");
+  }
 }

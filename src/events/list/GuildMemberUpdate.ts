@@ -5,13 +5,13 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class GuildMemberUpdate extends Event {
 
-    public name: EventName = "guildMemberUpdate";
+  public name: EventName = "guildMemberUpdate";
 
-    public async execute(_: GuildMember, newMember: GuildMember): Promise<void> {
-        gqlRequest(setUsernameAndProfilePicture, {
-            id: newMember.id,
-            username: newMember.displayName,
-            profilePicture: newMember.displayAvatarURL()
-        });
-    }
+  public async execute(_: GuildMember, newMember: GuildMember): Promise<void> {
+    gqlRequest(setUsernameAndProfilePicture, {
+      id: newMember.id,
+      username: newMember.displayName,
+      profilePicture: newMember.displayAvatarURL()
+    });
+  }
 }

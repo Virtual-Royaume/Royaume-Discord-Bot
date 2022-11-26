@@ -10,61 +10,61 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class ServerActivityUpdate extends Task {
 
-    private readonly messages = [
-        {
-            title: "SURPRISE !!",
-            text: "Aujourd'hui est un jour spécial pour {MENTION} !!!!"
-        },
-        {
-            title: "QUOI ???",
-            text: "Feur ! C'est l'anniversaire de {MENTION}."
-        },
-        {
-            title: "WOWWW",
-            text: "Bon anniversaire {MENTION} !! 🎁🎉"
-        }
-    ];
-
-    constructor() {
-        super(60_000);
+  private readonly messages = [
+    {
+      title: "SURPRISE !!",
+      text: "Aujourd'hui est un jour spécial pour {MENTION} !!!!"
+    },
+    {
+      title: "QUOI ???",
+      text: "Feur ! C'est l'anniversaire de {MENTION}."
+    },
+    {
+      title: "WOWWW",
+      text: "Bon anniversaire {MENTION} !! 🎁🎉"
     }
+  ];
 
-    public async run(): Promise<void> {
-        // Check if time (00:00) :
-        const currentDate = DayJS().tz();
+  constructor() {
+    super(60_000);
+  }
 
-        if (currentDate.hour() !== 0 || currentDate.minute() !== 0) return;
+  public async run(): Promise<void> {
+    // Check if time (00:00) :
+    const currentDate = DayJS().tz();
 
-        // Check birthdays of the day :
-        const birthdays = (await gqlRequest(getBirthdays)).data?.members.filter(member => {
-            if (!member.birthday) return false;
+    if (currentDate.hour() !== 0 || currentDate.minute() !== 0) return;
 
-            const birthday = DayJS(member.birthday).tz();
+    // Check birthdays of the day :
+    const birthdays = (await gqlRequest(getBirthdays)).data?.members.filter(member => {
+      if (!member.birthday) return false;
 
-            return birthday.date() === currentDate.date()
+      const birthday = DayJS(member.birthday).tz();
+
+      return birthday.date() === currentDate.date()
                 && birthday.month() === currentDate.month();
-        });
+    });
 
-        if (!birthdays) return;
+    if (!birthdays) return;
 
-        // Send birthday message :
-        if (birthdays.length) {
-            const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
+    // Send birthday message :
+    if (birthdays.length) {
+      const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
-            if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
+      if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
-            for (const member of birthdays) {
-                if (!member.birthday) continue;
+      for (const member of birthdays) {
+        if (!member.birthday) continue;
 
-                const message = this.messages[Math.floor(Math.random() * this.messages.length)];
-                const birthday = DayJS(member.birthday).tz();
+        const message = this.messages[Math.floor(Math.random() * this.messages.length)];
+        const birthday = DayJS(member.birthday).tz();
 
-                const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
-                    .setThumbnail(member.profilePicture)
-                    .setFooter({ text: msg("event-birthdayschecker-exec-embed-footer", [currentDate.year() - birthday.year()]) });
+        const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
+          .setThumbnail(member.profilePicture)
+          .setFooter({ text: msg("event-birthdayschecker-exec-embed-footer", [currentDate.year() - birthday.year()]) });
 
-                generalChannelInstance.send({ embeds: [embed] });
-            }
-        }
+        generalChannelInstance.send({ embeds: [embed] });
+      }
     }
+  }
 }

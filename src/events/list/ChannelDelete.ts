@@ -5,13 +5,13 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class ChannelDelete extends Event {
 
-    public name: EventName = "channelDelete";
+  public name: EventName = "channelDelete";
 
-    public async execute(channel: DMChannel | GuildChannel): Promise<void> {
-        const channels = (await gqlRequest(getChannels)).data?.channels;
+  public async execute(channel: DMChannel | GuildChannel): Promise<void> {
+    const channels = (await gqlRequest(getChannels)).data?.channels;
 
-        if (!channels) return;
+    if (!channels) return;
 
-        if (channels.find(c => c.channelId === channel.id)) gqlRequest(removeChannel, { channelId: channel.id });
-    }
+    if (channels.find(c => c.channelId === channel.id)) gqlRequest(removeChannel, { channelId: channel.id });
+  }
 }

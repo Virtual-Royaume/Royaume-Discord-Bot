@@ -16,6 +16,6 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v2
       - name: Install deps
-        run: npm install
+        run: npm install --only=dev
       - name: Run ESLint
         run: eslint src/**/*.ts

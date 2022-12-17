@@ -1,11 +1,23 @@
 name: ESLint
-on: push
+on:
+  pull_request:
+    branches: 
+      - main
+env:
+  NODE_VERSION: 18
+  
 jobs:
-  build:
+  eslint:
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install deps
-      run: npm install
-    - name: Run ESLint
-      run: eslint src/**/*.ts
+      - name: Install NodeJS
+        uses:  actions/setup-node@v2
+        with: 
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Code checkout
+        uses: actions/checkout@v2
+      - name: Install deps
+        run: npm install
+      - name: Run ESLint
+        run: eslint src/**/*.ts

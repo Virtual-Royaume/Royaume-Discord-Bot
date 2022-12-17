@@ -3,7 +3,7 @@ import EventManager from "$core/events/EventManager";
 import CommandManager from "$core/commands/CommandManager";
 import TaskManager from "$core/tasks/TaskManager";
 import Logger, { logCrown } from "$core/utils/Logger";
-import { guildId } from "$resources/config/information.json";
+import { guildId } from '$resources/config/information.json';
 import { version } from "../package.json";
 import { getStringEnv } from "./utils/EnvVariable";
 

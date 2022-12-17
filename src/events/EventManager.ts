@@ -21,4 +21,5 @@ export default class EventManager {
 
     Logger.info(`${files.length} events loaded`);
   }
+
 }

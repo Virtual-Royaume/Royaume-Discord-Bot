@@ -112,4 +112,5 @@ export default class GithubLinkReaction extends Event {
           }
         }
   }
+
 }

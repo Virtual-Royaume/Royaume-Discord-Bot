@@ -78,4 +78,5 @@ export default class PresenceUpdate extends Task {
       embeds: [simpleEmbed(message, "normal", msg("task-tierupdate-exec-embed-title"))]
     });
   }
+
 }

@@ -47,4 +47,5 @@ export default class VerifyMembers extends Task {
       });
     }
   }
+
 }

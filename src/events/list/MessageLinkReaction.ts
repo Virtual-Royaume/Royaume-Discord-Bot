@@ -70,4 +70,5 @@ export default class MessageLinkReaction extends Event {
 
         message.reply({ embeds, allowedMentions: { repliedUser: false } });
   }
+
 }

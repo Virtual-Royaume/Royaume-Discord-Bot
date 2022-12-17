@@ -13,4 +13,5 @@ export default abstract class Command {
     }
 
     public abstract execute(command: ChatInputCommandInteraction): void;
+
 }

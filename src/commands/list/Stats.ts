@@ -118,4 +118,5 @@ export default class Stats extends Command {
 
         command.reply({ content: msg("cmd-stats-exec-embed-title", [serverActivity.length]), embeds, files });
   }
+
 }

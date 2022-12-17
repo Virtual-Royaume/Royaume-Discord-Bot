@@ -108,4 +108,5 @@ export default class ChannelManager extends Task {
                 && channelsNames.includes(channel.name);
     }).size;
   }
+
 }

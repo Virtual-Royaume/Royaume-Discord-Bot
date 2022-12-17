@@ -45,4 +45,5 @@ export default class CommandManager {
 
     Logger.info("Successfully registered application (/) commands");
   }
+
 }

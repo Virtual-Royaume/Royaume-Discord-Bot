@@ -14,4 +14,5 @@ export default class TaskManager {
 
     Logger.info(`${files.length} tasks loaded`);
   }
+
 }

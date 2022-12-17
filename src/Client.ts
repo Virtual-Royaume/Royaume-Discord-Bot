@@ -58,6 +58,7 @@ export default class Client extends DiscordClient {
   public isProdEnvironment() : boolean {
     return process.argv.includes("prod"); // TODO : refactor this
   }
+
 }
 
 logCrown();

@@ -15,4 +15,5 @@ export default class GuildMemberRemove extends Event {
       value: false
     });
   }
+
 }

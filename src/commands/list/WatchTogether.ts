@@ -52,4 +52,5 @@ export default class WatchTogether extends Command {
       embeds: [simpleEmbed(msg("cmd-together-exec-general", [command.user.id, invite.code]))]
     });
   }
+
 }

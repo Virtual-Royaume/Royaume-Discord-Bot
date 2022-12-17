@@ -35,4 +35,5 @@ export default class Roulette extends Command {
 
     await command.showModal(modal);
   }
+
 }

@@ -26,4 +26,5 @@ export default class ServerActivityUpdate extends Task {
       }
     }
   }
+
 }

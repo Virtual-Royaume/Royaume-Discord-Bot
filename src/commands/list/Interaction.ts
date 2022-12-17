@@ -56,4 +56,5 @@ export default class Interaction extends Command {
 
     command.reply({ embeds: [simpleEmbed(msg("cmd-interaction-exec-verif-succes-embed"))], ephemeral: true });
   }
+
 }

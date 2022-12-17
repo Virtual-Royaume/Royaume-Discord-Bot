@@ -28,4 +28,5 @@ export default class PresenceUpdate extends Task {
     // @ts-ignore
     Client.instance.user?.setActivity({ name: message.text, type: activityType[message.type] });
   }
+
 }

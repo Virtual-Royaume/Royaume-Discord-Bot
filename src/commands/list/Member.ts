@@ -99,4 +99,5 @@ export default class Member extends Command {
       embeds: [embed]
     });
   }
+
 }

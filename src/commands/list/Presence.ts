@@ -14,6 +14,7 @@ import { gqlRequest } from "$core/utils/request";
 import { PresenceType } from "$core/utils/request/graphql/graphql";
 
 export default class Role extends Command {
+
   private presenceTypes = Object.values(PresenceType).map(presence => ({ name: presence, value: presence }));
 
   private messagePerPage = 20;
@@ -270,4 +271,5 @@ export default class Role extends Command {
       embeds: [simpleEmbed(message, "normal", msg("cmd-presence-exec-embed-activity-list-title", [page, maxPage]))]
     });
   }
+
 }

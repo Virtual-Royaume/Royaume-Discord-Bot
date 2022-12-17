@@ -17,7 +17,7 @@
     "discord.js": "^14.6.0"
   },
   "devDependencies": {
-    "@bluzzi/eslint-config": "^0.8.0",
+    "@bluzzi/eslint-config": "^0.8.2",
     "@graphql-codegen/cli": "2.14.1",
     "@graphql-codegen/client-preset": "1.1.5",
     "@swc-node/register": "^1.5.4",

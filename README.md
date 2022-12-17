@@ -1,5 +1,5 @@
 # Royaume Discord Bot
-It is the bot of our Discord community, it offers various utility features. It is written in TypeScript and uses the DiscordJS package to interact with the Discord API.
+It is the bot of our Discord community, it offers various utility features. It is written in TypeScript and uses the DiscordJS package to interact with the Discord API. 
 
 ## Invite link (only work for Royaume server)
 - [INVITE LINK](https://discord.com/api/oauth2/authorize?client_id=831542935014867014&permissions=0&scope=applications.commands%20bot)  

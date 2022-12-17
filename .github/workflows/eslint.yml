@@ -1,0 +1,11 @@
+name: ESLint
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install deps
+      run: npm install
+    - name: Run ESLint
+      run: eslint src/**/*.ts

@@ -68,8 +68,8 @@ export default class Role extends Command {
   }
 
   private async add(command: ChatInputCommandInteraction): Promise<void> {
-    const presence: PresenceType = command.options.getString(msg("cmd-presence-builder-presence-name")) as PresenceType;
-    const message = command.options.getString(msg("cmd-presence-builder-message-name"));
+    const presence: PresenceType = command.options.getString(msg("cmd-presence-builder-presence-name"), true) as PresenceType; // TODO : remove cast
+    const message = command.options.getString(msg("cmd-presence-builder-message-name"), true);
 
     // Checks :
     if (!presence || !message) {

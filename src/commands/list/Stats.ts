@@ -1,5 +1,5 @@
 import {
-  ChatInputCommandInteraction, HexColorString, AttachmentBuilder,
+  ChatInputCommandInteraction, AttachmentBuilder,
   EmbedBuilder, SlashCommandBuilder, SlashCommandNumberOption
 } from "discord.js";
 import Command from "$core/commands/Command";
@@ -13,6 +13,7 @@ import DayJS from "$core/utils/DayJS";
 import { gqlRequest } from "$core/utils/request";
 import { simpleEmbed } from "$core/utils/Embed";
 import { ServerActivity } from "$core/utils/request/graphql/graphql";
+import { isHexColor } from "$core/utils/validator";
 
 export default class Stats extends Command {
 
@@ -100,9 +101,11 @@ export default class Stats extends Command {
           };
 
           // Embed :
+          if (!isHexColor(colors.primary)) throw new Error("Invalid config: \"colors\" field in information.json need to be a valid hex color code");
+
           embeds.push(new EmbedBuilder()
             .setTitle(type.description)
-            .setColor(colors.primary as HexColorString)
+            .setColor(colors.primary)
             .setImage(`attachment://${type.columnName}-chart.png`));
 
           // Attachment :

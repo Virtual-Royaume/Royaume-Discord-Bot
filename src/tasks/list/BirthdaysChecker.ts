@@ -7,6 +7,7 @@ import { simpleEmbed } from "$core/utils/Embed";
 import DayJS from "$core/utils/DayJS";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/request";
+import { isDevEnvironment } from "$core/utils/Environment";
 
 export default class ServerActivityUpdate extends Task {
 
@@ -30,6 +31,8 @@ export default class ServerActivityUpdate extends Task {
   }
 
   public async run(): Promise<void> {
+    if (isDevEnvironment) return;
+
     // Check if time (00:00) :
     const currentDate = DayJS().tz();
 

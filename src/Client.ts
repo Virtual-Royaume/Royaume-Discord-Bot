@@ -6,10 +6,13 @@ import Logger, { logCrown } from "$core/utils/Logger";
 import { guildId } from "$resources/config/information.json";
 import { version } from "../package.json";
 import { getStringEnv } from "./utils/EnvVariable";
+import { Configuration, OpenAIApi } from "openai";
 
 export default class Client extends DiscordClient {
 
   public static instance: Client;
+
+  public static OpenAI: OpenAIApi;
 
   // Events and commands managers :
   public readonly eventManager: EventManager;
@@ -37,6 +40,10 @@ export default class Client extends DiscordClient {
     this.eventManager = new EventManager();
     this.commandManager = new CommandManager();
     this.taskManager = new TaskManager();
+
+    Client.OpenAI = new OpenAIApi(new Configuration({
+      apiKey: getStringEnv("OPENAI_API_KEY")
+    }));
   }
 
   public async getGuild() : Promise<Guild> {

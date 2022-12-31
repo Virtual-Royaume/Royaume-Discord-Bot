@@ -45,8 +45,12 @@ export default class PresenceUpdate extends Task {
       if (!member.roles.cache.has(tierRole) || member.roles.cache.hasAny(...otherRoles)) {
         const oldRole = member.roles.cache.filter(role => otherRoles.includes(role.id)).first()?.id;
 
-        await member.roles.remove(Object.values(tiers));
-        member.roles.add(tierRole);
+        try {
+          await member.roles.remove(Object.values(tiers));
+          member.roles.add(tierRole);
+        } catch (e) {
+          Logger.error(`Error while updating member ${member.id} tier : ${e}`);
+        }
 
         updates.push({ memberId: id, newRole: tierRole, oldRole: oldRole });
       }

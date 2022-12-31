@@ -224,17 +224,6 @@
         ""
     ],
 
-    "cmd-together-builder-name": "watch-together",
-    "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
-    "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",
-    "cmd-together-exec": "Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/{code}",
-    "cmd-together-exec-general": [
-        "<@{id}> a lancé une activité **Youtube Together** !",
-        "",
-        "[Rejoindre l'activité](https://discord.gg/{code})"
-    ],
-
-
     "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
 
     "event-messagelinkreaction-exec-attachments": "🗂️ {attachmentsCount} fichiers joint(s)",

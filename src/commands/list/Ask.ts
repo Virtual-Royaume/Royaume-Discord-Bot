@@ -1,40 +1,28 @@
 import { msg } from "$core/utils/Message";
-import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandNumberOption, SlashCommandStringOption } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
-import Client from "$core/Client";
+import { chatWithAI } from "$core/utils/OpenAPI";
 
 export default class Ask extends Command {
 
   public readonly slashCommand = new SlashCommandBuilder()
-    .setName("ask")
-    .setDescription("Poser une question")
+    .setName(msg("cmd-ask-builder-name"))
+    .setDescription(msg("cmd-ask-builder-description"))
     .setDefaultMemberPermissions(0)
     .addStringOption(new SlashCommandStringOption()
-      .setName("question")
-      .setDescription("Quel est le président de la France ?")
-      .setRequired(true))
-    .addIntegerOption(new SlashCommandIntegerOption()
-      .setName("max_tokens")
-      .setDescription("Nombre de caractères maximum"));
+      .setName(msg("cmd-ask-builder-args-question-name"))
+      .setDescription(msg("cmd-ask-builder-args-question-description"))
+      .setRequired(true));
 
   public async execute(command: ChatInputCommandInteraction) : Promise<void> {
     command.deferReply();
-    let rep = "";
+    let rep = "Je n'ai pas compris votre question";
+    const question = command.options.getString("question") ?? "Quel est le 3 ème président de la France ?";
 
-    const response = await Client.OpenAI.createCompletion({
-      model: "text-davinci-003",
-      prompt: command.options.getString("question"),
-      max_tokens: command.options.getInteger("max_tokens") ?? 150,
-      temperature: 0.9
-    });
-
-    rep = response.data.choices[0].text ?? "Je n'ai pas compris votre question";
-    console.log(rep);
-
-    // Remove defear and send message :
+    rep = await chatWithAI(question);
     command.editReply({
-      embeds: [simpleEmbed("Question: **" + command.options.getString("question") + "**" + rep, "normal", "ChatGPT")]
+      embeds: [simpleEmbed(msg("cmd-ask-exec-embed-line", [question, rep]), "normal", msg("cmd-ask-exec-embed-title"))]
     });
   }
 

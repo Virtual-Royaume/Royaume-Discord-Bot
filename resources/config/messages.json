@@ -1,6 +1,13 @@
 {
     "message-execution-error-cmd": "Erreur lors de l'exécution de la commande",
 
+    "cmd-ask-builder-name": "ask",
+    "cmd-ask-builder-description": "Pose une question à laquelle je répondrai avec ma super intéligence !",
+    "cmd-ask-builder-args-question-name": "question",
+    "cmd-ask-builder-args-question-description": "Quel est le 3 ème président de la France?",
+    "cmd-ask-exec-embed-title": "ChatGPT",
+    "cmd-ask-exec-embed-line": "Question: **{question}** {rep}",
+
     "cmd-birthday-builder-name": "anniversaire",
     "cmd-birthday-builder-description": "Définir votre date d'anniversaire",
     "cmd-birthday-builder-subcmd-set-name": "set",

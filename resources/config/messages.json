@@ -210,6 +210,8 @@
     "cmd-stats-builder-description": "Voir les statistiques du serveurs",
     "cmd-stats-builder-history-name": "historique",
     "cmd-stats-builder-history-description": "Nombre de jour d'historique",
+    "cmd-stats-builder-dark-name": "dark",
+    "cmd-stats-builder-dark-description": "Mode sombre sur les graphiques (par défaut : Non)",
     "cmd-stats-exec-embed-title": "**Statistiques sur {days} jours**",
     "cmd-stats-exec-embed-voices": "Temps de vocal des utilisateurs en minutes",
     "cmd-stats-exec-embed-messages": "Nombre de messages envoyés",

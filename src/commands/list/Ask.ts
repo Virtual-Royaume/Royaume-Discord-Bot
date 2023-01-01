@@ -9,7 +9,6 @@ export default class Ask extends Command {
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-ask-builder-name"))
     .setDescription(msg("cmd-ask-builder-description"))
-    .setDefaultMemberPermissions(0)
     .addStringOption(new SlashCommandStringOption()
       .setName(msg("cmd-ask-builder-args-question-name"))
       .setDescription(msg("cmd-ask-builder-args-question-description"))

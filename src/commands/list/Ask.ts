@@ -17,8 +17,8 @@ export default class Ask extends Command {
 
   public async execute(command: ChatInputCommandInteraction) : Promise<void> {
     command.deferReply();
-    let rep = "Je n'ai pas compris votre question";
-    const question = command.options.getString("question") ?? "Quel est le 3 ème président de la France ?";
+    let rep = msg("cmd-ask-exec-loading");
+    const question = command.options.getString("question", true);
 
     rep = await chatWithAI(question);
     command.editReply({

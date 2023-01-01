@@ -1,12 +1,11 @@
 import {
   ChannelType,
-  ChatInputCommandInteraction, ForumChannel, SlashCommandBooleanOption, SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder
+  ChatInputCommandInteraction, ForumChannel, SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
 import { msg } from "$core/utils/Message";
 import Command from "$core/commands/Command";
 import { simpleEmbed } from "$core/utils/Embed";
 import Logger from "$core/utils/Logger";
-import { channel } from "diagnostics_channel";
 
 export default class Forum extends Command {
 

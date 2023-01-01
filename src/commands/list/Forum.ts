@@ -6,56 +6,82 @@ import { msg } from "$core/utils/Message";
 import Command from "$core/commands/Command";
 import { simpleEmbed } from "$core/utils/Embed";
 import Logger from "$core/utils/Logger";
+import { channel } from "diagnostics_channel";
 
 export default class Forum extends Command {
 
   public readonly slashCommand = new SlashCommandBuilder()
-    .setName("forum")
-    .setDescription("Commande pour accompagner l'utilisation des salons forum")
+    .setName(msg("cmd-forum-builder-name"))
+    .setDescription(msg("cmd-forum-builder-description"))
     .addSubcommand(new SlashCommandSubcommandBuilder()
-      .setName("why")
-      .setDescription("Pourquoi utiliser les salons forum ?")
-      .addBooleanOption(new SlashCommandBooleanOption()
-        .setName("ephemeral")
-        .setDescription("Si le message n'est vu que par vous ou par tout le monde")))
+      .setName(msg("cmd-forum-builder-why-name"))
+      .setDescription(msg("cmd-forum-builder-why-description")))
     .addSubcommand(new SlashCommandSubcommandBuilder()
-      .setName("rename")
-      .setDescription("Renommer un post")
+      .setName(msg("cmd-forum-builder-rename-name"))
+      .setDescription(msg("cmd-forum-builder-rename-description"))
       .addStringOption(new SlashCommandStringOption()
-        .setName("nom")
-        .setDescription("PocketMine - Système de niveau")))
+        .setName(msg("cmd-forum-builder-rename-new-name"))
+        .setDescription(msg("cmd-forum-builder-rename-new-description"))))
     .addSubcommand(new SlashCommandSubcommandBuilder()
-      .setName("resolve")
-      .setDescription("Indiquer que le problème est résolu avec le lien du message de résolution")
+      .setName(msg("cmd-forum-builder-resolve-name"))
+      .setDescription(msg("cmd-forum-builder-resolve-description"))
       .addStringOption(new SlashCommandStringOption()
-        .setName("link")
-        .setDescription("Lien du message de résolution")));
+        .setName(msg("cmd-forum-builder-resolve-link-name"))
+        .setDescription(msg("cmd-forum-builder-resolve-link-description"))
+        .setRequired(true)));
 
   public async execute(command: ChatInputCommandInteraction) : Promise<void> {
-    console.log(command.options.getSubcommand());
     switch (command.options.getSubcommand()) {
-      case "why": {
+      case msg("cmd-forum-builder-why-name"): {
         await command.reply({
-          content: msg("cmd-forum-exec-why-message"),
-          ephemeral: command.options.getBoolean("ephemeral") ?? true
+          embeds: [simpleEmbed(msg("cmd-forum-exec-why-embed-description"), "normal", msg("cmd-forum-exec-why-embed-title"))]
         });
         break;
       }
-      case "rename": {
+
+      case msg("cmd-forum-builder-rename-name") : {
         if (command.channel?.type == ChannelType.PublicThread) {
           const parentChannel = command.channel.parent;
           if (parentChannel instanceof ForumChannel) {
-            // const channel = command.channel;
+            const channel = command.channel;
 
-            // const oldName = channel.name;
-            // const newName = command.options.getString("nom");
+            const oldName = channel.name;
+            const newName = command.options.getString(msg("cmd-forum-builder-rename-new-name")) ?? oldName;
 
-            // try {
-            // await channel.setName(newName);
-            // await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-rename-success", { oldName, newName }), "success")] });
-            // } catch (e) {
-            //   Logger.error(`Error while renaming post channel "${oldName}" to "${newName}" : ${e}`);
-            // }
+            try {
+              channel.setName(newName);
+              await command.reply({
+                embeds: [simpleEmbed(msg("cmd-forum-exec-rename-success", [newName]), "normal")],
+                ephemeral: true
+              });
+            } catch (e) {
+              Logger.error(`Error while renaming post channel "${oldName}" to "${newName}" : ${e}`);
+              await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-rename-error"), "error")], ephemeral: true });
+            }
+            return;
+          }
+        }
+
+        await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-rename-only-posts"), "error")] });
+        return;
+      }
+
+      case msg("cmd-forum-builder-resolve-name") : {
+        if (!command.options.getString(msg("cmd-forum-builder-resolve-link-name"))) {
+          await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-missing-link"), "error")] });
+          return;
+        }
+
+        if (command.channel?.type == ChannelType.PublicThread) {
+          const parentChannel = command.channel.parent;
+          if (parentChannel instanceof ForumChannel) {
+            const channel = command.channel;
+
+            const link = command.options.getString(msg("cmd-forum-builder-resolve-link-name")) ?? "";
+
+            await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")] }).then(() => {
+              channel.setArchived(true);
+            });
             return;
           }
         }

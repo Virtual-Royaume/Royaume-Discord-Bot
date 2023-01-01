@@ -201,6 +201,22 @@
     "cmd-stats-exec-embed-messages": "Nombre de messages envoyés",
     "cmd-stats-exec-embed-members": "Nombre de membres présents sur le serveur",
 
+    "cmd-forum-builder-name": "forum",
+    "cmd-forum-builder-description": "Commande pour accompagner l'utilisation des salons forum",
+    "cmd-forum-builder-why-name": "why",
+    "cmd-forum-builder-why-description": "Pourquoi utiliser les salons forum ?", 
+    "cmd-forum-builder-rename-name": "rename",
+    "cmd-forum-builder-rename-description": "Renommer un salon forum",
+    "cmd-forum-exec-why-message": [
+        "__**Pourquoi utiliser les salons forum ?**__",
+        "",
+        "• Les salons forum sont là pour vous permettre de poser des questions et de trouver des réponses.",
+        "• Cela permet de garder un maximum de clarté dans les salons de discussion pour ne pas en avoir plusieurs en même temps et ce perdre avec celle d'autres personnes.",
+        "• De plus, cela permet de garder une trace des questions et des réponses, sans avoir à remonter un salon de discussion pendant plusieurs minutes voir des heures du nombre excessif de messages.",
+        "• Cela peut être aussi utile pour les personnes qui rencontrent le même problème que vous."
+    ],
+    "cmd-forum-exec-rename-only-posts": "Vous ne pouvez renommer posts dans un salon forum.",
+
     "cmd-topmessages-builder-name": "top-message",
     "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",
     "cmd-topmessages-builder-page-name": "page",

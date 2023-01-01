@@ -5,6 +5,7 @@
     "cmd-ask-builder-description": "Pose une question à laquelle je répondrai avec ma super intéligence !",
     "cmd-ask-builder-args-question-name": "question",
     "cmd-ask-builder-args-question-description": "Quel est le 3 ème président de la France?",
+    "cmd-ask-exec-loading": "Je n'ai pas compris votre question",
     "cmd-ask-exec-embed-title": "ChatGPT",
     "cmd-ask-exec-embed-line": "Question: **{question}** {rep}",
 

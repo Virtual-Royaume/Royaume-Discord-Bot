@@ -8,12 +8,14 @@ import { simpleEmbed } from "$core/utils/Embed";
 import { numberFormat } from "$core/utils/Function";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/request";
+import { isDevEnvironment } from "$core/utils/Environment";
 
 export default class MessageCreate extends Event {
 
   public name: EventName = "messageCreate";
 
   public async execute(message: Msg): Promise<void> {
+    if (isDevEnvironment) return;
     if (message.author.bot) return;
 
     // Get channel or parent channel (if is a thread channel) :

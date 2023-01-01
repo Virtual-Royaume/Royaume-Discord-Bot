@@ -53,7 +53,7 @@ export default class MessageCreate extends Event {
   private async sendStepEmbed(memberId: Snowflake, messageCount: number): Promise<void> {
     const guild = await Client.instance.getGuild();
     const channel = await guild.channels.fetch(generalChannel);
-  
+
     if (channel?.type !== ChannelType.GuildText) {
       Logger.error("Unable to fetch the general channel");
       return;

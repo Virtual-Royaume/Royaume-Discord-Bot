@@ -77,7 +77,7 @@ export default class Forum extends Command {
           if (parentChannel instanceof ForumChannel) {
             const channel = command.channel;
 
-            const link = command.options.getString(msg("cmd-forum-builder-resolve-link-name")) ?? "";
+            const link = command.options.getString(msg("cmd-forum-builder-resolve-link-name"), true);
 
             await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")] }).then(() => {
               channel.setArchived(true);

@@ -3,10 +3,20 @@ import { getStringEnv } from "$core/utils/EnvVariable";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
 import Logger from "../Logger";
+import { URLSearchParams } from "url";
 
 type Method = "get" | "delete" | "post"| "put";
 
-export const restRequest = async<T>(method: Method, endpoint: string, config: Omit<RequestInit, "method"> = {}): Promise<Response<T>> => {
+interface RequestParams extends Omit<RequestInit, "method"> {
+  query?: Record<string, string | string[]>
+}
+
+export const restRequest = async<T>(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<T>> => {
+  if (config.query) {
+    const urlParams = new URLSearchParams(config.query);
+    endpoint = `${endpoint}?${urlParams.toString()}`;
+  }
+
   const response = await fetch(endpoint, { ...config, method: method });
 
   if (!response.ok) {

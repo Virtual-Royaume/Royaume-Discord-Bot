@@ -219,7 +219,8 @@
         "• Cela permet de garder un maximum de clarté car vous ne vous mélanger pas avec la discussion générale.\n",
         "• Garder une trace des questions et des réponses, il est plus facile pour les membres de retrouver la réponse dont ils pourraient avoir besoin dans les salons forums.\n",
         "• Il est plus motivant pour la personne qui vous aide à pouvoir le faire de manière isolée avec une trace dans le temps plus forte.\n",
-        "• Que votre question soit très simple ou complexe les forums seront mieux, une aide sur plusieurs jours dans un salon isolé permet un meilleur suivi et les meilleures questions du célèbre forum d'aide Stack overflow sont les plus simples."
+        "• Que votre question soit très simple ou complexe les forums seront mieux, une aide sur plusieurs jours dans un salon isolé permet un meilleur suivi et les meilleures questions du célèbre forum d'aide Stack overflow sont les plus simples.\n",
+        "• Pensez à rechercher si un post a déjà été créé avant de créer le votre avec une même ou ressemblante question, cela permet de ne pas créer de doublons et de garder une trace plus claire."
     ],
     "cmd-forum-exec-rename-only-posts": "Vous ne pouvez renommer posts dans un salon forum.",
     "cmd-forum-exec-rename-success": "Vous avez bien renommé ce post en **{name}**.",

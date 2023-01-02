@@ -7,6 +7,7 @@ import { BaseGuildTextChannel } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/request";
+import { isDevEnvironment } from "$core/utils/Environment";
 
 type RoleUpdate = {
     memberId: string;
@@ -21,6 +22,8 @@ export default class PresenceUpdate extends Task {
   }
 
   public async run(): Promise<void> {
+    if (isDevEnvironment) return;
+
     const guild = await Client.instance.getGuild();
 
     const tiers: Record<string, string> = configTiers;

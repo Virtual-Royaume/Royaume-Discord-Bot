@@ -2,6 +2,7 @@ import { incVoiceMinute } from "$core/api/requests/Member";
 import { setMemberCount } from "$core/api/requests/ServerActivity";
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
+import { isDevEnvironment } from "$core/utils/Environment";
 import { gqlRequest } from "$core/utils/request";
 
 export default class ServerActivityUpdate extends Task {
@@ -11,6 +12,8 @@ export default class ServerActivityUpdate extends Task {
   }
 
   public async run(): Promise<void> {
+    if (isDevEnvironment) return;
+
     // Update daily member count :
     const memberCount = (await Client.instance.getGuild()).memberCount;
 

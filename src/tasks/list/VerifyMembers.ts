@@ -3,6 +3,7 @@ import Client from "$core/Client";
 import Logger from "$core/utils/Logger";
 import Task from "$core/tasks/Task";
 import { gqlRequest } from "$core/utils/request";
+import { isDevEnvironment } from "$core/utils/Environment";
 
 export default class VerifyMembers extends Task {
 
@@ -11,6 +12,8 @@ export default class VerifyMembers extends Task {
   }
 
   public async run(): Promise<void> {
+    if (isDevEnvironment) return;
+
     const realMembers = await (await Client.instance.getGuild()).members.fetch();
     const apiMembers = (await gqlRequest(getMembersOnServerStatus)).data?.members;
 

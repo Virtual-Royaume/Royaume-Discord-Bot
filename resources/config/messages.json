@@ -222,11 +222,13 @@
         "• Que votre question soit très simple ou complexe les forums seront mieux, une aide sur plusieurs jours dans un salon isolé permet un meilleur suivi et les meilleures questions du célèbre forum d'aide Stack overflow sont les plus simples.\n",
         "• Avant de créer votre propre post avec une question similaire ou identique, pensez à vérifier si un post sur ce sujet n'a pas déjà été créé."
     ],
-    "cmd-forum-exec-rename-only-posts": "Vous ne pouvez renommer posts dans un salon forum.",
+    "cmd-forum-exec-rename-only-posts": "Vous ne pouvez renommer que des posts dans un salon forum.",
     "cmd-forum-exec-rename-success": "Vous avez bien renommé ce post en **{name}**.",
+    "cmd-forum-exec-resolve-only-posts": "Vous ne pouvez résoudre que des posts dans un salon forum.",
     "cmd-forum-exec-resolve-success": "Le message qui a été désigné comme réponse est [celui-ci]({url}).",
-    "cmd-forum-exec-resolve-missing-link": "Vous avez oublié de mettre le lien du message qui a été désigné comme réponse.",
+    "cmd-forum-exec-resolve-missing-link": "Vous avez oublié de mettre le lien du message à désigné comme réponse.",
     "cmd-forum-exec-rename-error": "Une erreur est survenue lors du renommage de ce post.",
+    "cmd-forum-exec-resolve-error": "Une erreur est survenue lors du renommage de ce post.",
 
     "cmd-topmessages-builder-name": "top-message",
     "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",

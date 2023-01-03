@@ -45,8 +45,10 @@ export default class MessageCreate extends Event {
 
     const messageCount = messageCountResponse.data.incMemberDiscordActivityChannel;
 
+    if (!messageCount) return;
+
     // Send an announcement when the member reaches a message count step :
-    if (messageCount < 10_000) if (messageCount !== 0 && messageCount % 1_000 === 0) this.sendStepEmbed(message.author.id, messageCount);
+    if (messageCount < 10_000) if (messageCount % 1_000 === 0) this.sendStepEmbed(message.author.id, messageCount);
     if (messageCount % 10_000 === 0) this.sendStepEmbed(message.author.id, messageCount);
   }
 

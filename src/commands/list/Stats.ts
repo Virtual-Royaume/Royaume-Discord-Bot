@@ -17,6 +17,8 @@ import { isHexColor } from "$core/utils/validator";
 
 export default class Stats extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-stats-builder-name"))
     .setDescription(msg("cmd-stats-builder-description"))

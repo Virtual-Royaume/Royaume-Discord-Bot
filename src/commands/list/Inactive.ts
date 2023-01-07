@@ -9,6 +9,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class Inactive extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-inactive-builder-name"))
     .setDescription(msg("cmd-inactive-builder-description"));

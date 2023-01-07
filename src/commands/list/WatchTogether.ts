@@ -8,6 +8,8 @@ import { simpleEmbed } from "$core/utils/Embed";
 
 export default class WatchTogether extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-together-builder-name"))
     .setDescription(msg("cmd-together-builder-description"));

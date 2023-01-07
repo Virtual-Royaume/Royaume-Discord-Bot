@@ -4,6 +4,8 @@ import Event, { EventName } from "$core/events/Event";
 
 export default class Ready extends Event {
 
+  public readonly enabledInDev = true;
+
   public name: EventName = "ready";
 
   public once = true;

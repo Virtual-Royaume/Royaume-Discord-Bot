@@ -6,17 +6,17 @@ import { simpleEmbed } from "$core/utils/Embed";
 import { numberFormat } from "$core/utils/Function";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/request";
-import { isDevEnvironment } from "$core/utils/Environment";
 import Logger from "$core/utils/Logger";
 import Client from "$core/Client";
 import Event, { EventName } from "$core/events/Event";
 
 export default class MessageCreate extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "messageCreate";
 
   public async execute(message: Msg): Promise<void> {
-    if (isDevEnvironment) return;
     if (message.author.bot) return;
 
     // Get channel where the message is sent :

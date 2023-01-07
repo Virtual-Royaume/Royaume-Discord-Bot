@@ -6,14 +6,14 @@ import { modal as modalIds } from "$resources/config/interaction-ids.json";
 import Roulette from "$core/commands/list/Roulette";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
-import { isDevEnvironment } from "$core/utils/Environment";
 
 export default class RouletteModal extends Event {
+
+  public readonly enabledInDev = true;
 
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {
-    if (isDevEnvironment) return;
     if (!interaction.isModalSubmit() || interaction.customId !== modalIds.roulette) return;
 
     const title = interaction.fields.getTextInputValue(Roulette.titleInputId);

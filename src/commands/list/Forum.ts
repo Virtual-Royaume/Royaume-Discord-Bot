@@ -9,6 +9,8 @@ import Logger from "$core/utils/Logger";
 
 export default class Forum extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-forum-builder-name"))
     .setDescription(msg("cmd-forum-builder-description"))

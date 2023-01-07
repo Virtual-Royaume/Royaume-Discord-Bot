@@ -4,14 +4,14 @@ import Event, { EventName } from "$core/events/Event";
 import { verify } from "$resources/config/information.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
-import { isDevEnvironment } from "$core/utils/Environment";
 
 export default class VerifMessageReactionAdd extends Event {
+
+  public readonly enabledInDev = false;
 
   public name: EventName = "messageReactionAdd";
 
   public async execute(messageReaction: MessageReaction): Promise<void> {
-    if (isDevEnvironment) return;
     // Check if the embed are a "presentation" message :
     const embed = (await messageReaction.fetch()).message.embeds[0];
 

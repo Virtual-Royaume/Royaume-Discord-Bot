@@ -6,14 +6,14 @@ import { createMember, getMemberActivityTier, setAlwaysOnServer } from "$core/ap
 import { gqlRequest } from "$core/utils/request";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
-import { isDevEnvironment } from "$core/utils/Environment";
 
 export default class GuildMemberAdd extends Event {
+
+  public readonly enabledInDev = false;
 
   public name: EventName = "guildMemberAdd";
 
   public async execute(member: GuildMember): Promise<void> {
-    if (isDevEnvironment) return;
     if (member.user.bot) return;
 
     // Create the member if he doesn't exist :

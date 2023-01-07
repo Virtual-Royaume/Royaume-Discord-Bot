@@ -2,16 +2,16 @@ import { Message } from "discord.js";
 import Event, { EventName } from "$core/events/Event";
 import { restRequest } from "$core/utils/request";
 import { getStringEnv } from "$core/utils/EnvVariable";
-import { isDevEnvironment } from "$core/utils/Environment";
 
 const githubRaw = "https://raw.githubusercontent.com/";
 
 export default class GithubLinkReaction extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "messageCreate";
 
   public async execute(message: Message): Promise<void> {
-    if (isDevEnvironment) return;
     // Get urls :
     const urls = message.content.match(/http(s?):\/\/(www\.)?github.com\/([^\s]+)blob([^\s]+)#L\d+(-L\d+)?/gi);
 

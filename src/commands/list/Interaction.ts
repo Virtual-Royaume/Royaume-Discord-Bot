@@ -16,6 +16,8 @@ type InteractionChoices = {
 
 export default class Interaction extends Command {
 
+  public readonly enabledInDev = true;
+
   private actionChoices: InteractionChoices[] = [
     { name: "Vérification", value: "verif" }
   ];

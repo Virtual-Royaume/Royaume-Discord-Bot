@@ -7,7 +7,6 @@ import { BaseGuildTextChannel } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/request";
-import { isDevEnvironment } from "$core/utils/Environment";
 
 type RoleUpdate = {
     memberId: string;
@@ -17,12 +16,13 @@ type RoleUpdate = {
 
 export default class PresenceUpdate extends Task {
 
+  public readonly enabledInDev = false;
+
   constructor() {
     super(60_000);
   }
 
   public async run(): Promise<void> {
-    if (isDevEnvironment) return;
 
     const guild = await Client.instance.getGuild();
 

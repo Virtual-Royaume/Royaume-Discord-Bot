@@ -3,14 +3,14 @@ import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
 import { selectMenu } from "$resources/config/interaction-ids.json";
 import { msg } from "$core/utils/Message";
-import { isDevEnvironment } from "$core/utils/Environment";
 
 export default class RolesSelector extends Event {
+
+  public readonly enabledInDev = false;
 
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {
-    if (isDevEnvironment) return;
     if (!interaction.isStringSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
 
     // Get category :

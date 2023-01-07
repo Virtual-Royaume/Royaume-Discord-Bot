@@ -138,4 +138,5 @@ export default class Inactive extends Command {
 
         command.reply({ embeds: [simpleEmbed(message, result.success ? "normal" : "error")], ephemeral: true });
   }
+
 }

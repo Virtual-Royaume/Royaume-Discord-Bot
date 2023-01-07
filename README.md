@@ -24,6 +24,9 @@ GITHUB_TOKEN="your GitHub PAT (personal access token)"
 # Royaume API :
 API_LINK=https://dev-api.royaume.world
 API_TOKEN="get the API token in our Discord"
+
+# Open API:
+OPEN_API="Your API_KEY from https://beta.openai.com/account/api-keys"
 ```
 
 ### Recommended VSCode extensions

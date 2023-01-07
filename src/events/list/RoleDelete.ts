@@ -14,4 +14,5 @@ export default class RoleDelete extends Event {
 
     if (roles.find(r => r.roleId === role.id)) gqlRequest(removeRole, { roleId: role.id });
   }
+
 }

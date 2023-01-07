@@ -45,4 +45,5 @@ export default class Inactive extends Command {
 
     command.reply({ embeds: [simpleEmbed(message, "normal", msg("cmd-inactive-exec-inactives"))], ephemeral: true });
   }
+
 }

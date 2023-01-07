@@ -27,4 +27,5 @@ export default class Clean extends Command {
 
     command.reply({ embeds: [simpleEmbed(msg("cmd-clean-exec-cleaned", [number]))], ephemeral: true });
   }
+
 }

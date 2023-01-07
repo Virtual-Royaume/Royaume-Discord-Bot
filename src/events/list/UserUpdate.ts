@@ -14,4 +14,5 @@ export default class UserUpdate extends Event {
       profilePicture: newUser.displayAvatarURL()
     });
   }
+
 }

@@ -58,4 +58,5 @@ export default class GuildMemberAdd extends Event {
       member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
     }
   }
+
 }

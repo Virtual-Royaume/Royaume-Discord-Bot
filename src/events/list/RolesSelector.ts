@@ -9,7 +9,7 @@ export default class RolesSelector extends Event {
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {
-    if (!interaction.isSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
+    if (!interaction.isStringSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
 
     // Get category :
     const category = interaction.customId.replace(`${selectMenu.rolesSelector}-`, "");
@@ -38,4 +38,5 @@ export default class RolesSelector extends Event {
       ephemeral: true
     });
   }
+
 }

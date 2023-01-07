@@ -91,4 +91,5 @@ export default class VerifModal extends Event {
       ephemeral: true
     });
   }
+
 }

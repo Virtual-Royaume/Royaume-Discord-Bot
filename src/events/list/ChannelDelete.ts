@@ -14,4 +14,5 @@ export default class ChannelDelete extends Event {
 
     if (channels.find(c => c.channelId === channel.id)) gqlRequest(removeChannel, { channelId: channel.id });
   }
+
 }

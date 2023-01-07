@@ -14,4 +14,5 @@ export default class GuildMemberUpdate extends Event {
       profilePicture: newMember.displayAvatarURL()
     });
   }
+
 }

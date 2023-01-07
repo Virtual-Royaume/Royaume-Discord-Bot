@@ -1,0 +1,21 @@
+name: ESLint
+on: pull_request
+
+env:
+  NODE_VERSION: 18
+  
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS
+        uses:  actions/setup-node@v2
+        with: 
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Code checkout
+        uses: actions/checkout@v2
+      - name: Install deps
+        run: npm install --force
+      - name: Run ESLint
+        run: npm run lint

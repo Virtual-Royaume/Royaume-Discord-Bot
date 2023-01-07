@@ -66,4 +66,5 @@ export default class VerifMessageReactionAdd extends Event {
       removeReactions();
     }
   }
+
 }

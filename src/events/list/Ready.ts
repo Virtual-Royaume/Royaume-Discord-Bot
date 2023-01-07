@@ -18,4 +18,5 @@ export default class Ready extends Event {
     // Finish :
     Logger.success("Client has been started");
   }
+
 }

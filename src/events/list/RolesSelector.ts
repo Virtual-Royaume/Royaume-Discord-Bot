@@ -11,7 +11,7 @@ export default class RolesSelector extends Event {
 
   public async execute(interaction: Interaction): Promise<void> {
     if (isDevEnvironment) return;
-    if (!interaction.isSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
+    if (!interaction.isStringSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
 
     // Get category :
     const category = interaction.customId.replace(`${selectMenu.rolesSelector}-`, "");

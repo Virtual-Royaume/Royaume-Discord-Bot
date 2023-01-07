@@ -1,57 +1,65 @@
 import { Response } from "./request.type";
-import axios, { AxiosError, AxiosRequestConfig, Method } from "axios";
 import { getStringEnv } from "$core/utils/EnvVariable";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
 import Logger from "../Logger";
+import { URLSearchParams } from "url";
 
-export const restRequest = async<T>(method: Lowercase<Method>, endpoint: string, config: AxiosRequestConfig = {}): Promise<Response<T>> => {
-  try {
-    config.method = method;
-    config.url = endpoint;
+type Method = "get" | "delete" | "post"| "put";
 
-    const response = await axios(config);
+interface RequestParams extends Omit<RequestInit, "method"> {
+  query?: Record<string, string | string[]>
+}
 
-    return {
-      success: true,
-      data: response.data
-    };
-  } catch (error) {
+export const restRequest = async<T>(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<T>> => {
+  if (config.query) {
+    const urlParams = new URLSearchParams(config.query);
+    endpoint = `${endpoint}?${urlParams.toString()}`;
+  }
+
+  const response = await fetch(endpoint, { ...config, method: method });
+
+  if (!response.ok) {
     Logger.error("Rest request failed :");
-    console.log(config);
+    console.log(method, endpoint, config);
 
     return {
       success: false,
       data: null
     };
   }
+
+  return {
+    success: true,
+    data: await response.json()
+  };
 };
 
 export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variables?: V): Promise<Response<D>> => {
-  try {
-    const response = await axios(getStringEnv("API_LINK"), {
-      method: "post",
-      headers: {
-        "authorization": getStringEnv("API_TOKEN"),
-        "content-type": "application/json"
-      },
-      data: {
-        query: print(document),
-        variables
-      }
-    });
+  const response = await fetch(getStringEnv("API_LINK"), {
+    method: "post",
+    headers: {
+      "authorization": getStringEnv("API_TOKEN"),
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      query: print(document),
+      variables
+    })
+  });
 
-    return {
-      success: true,
-      data: response.data.data
-    };
-  } catch (error) {
+  if (!response.ok) {
     Logger.error("GraphQL request failed :");
-    console.log(error instanceof AxiosError ? error.response?.data.errors ?? error : error);
+    console.log(await response.json());
 
     return {
       success: false,
       data: null
     };
   }
+
+  return {
+    success: true,
+    data: (await response.json()).data
+  };
 };

@@ -1,14 +1,15 @@
-import { BaseGuildTextChannel, ChannelType, ForumChannel, Message as Msg, TextBasedChannel } from "discord.js";
+import { ChannelType, ForumChannel, GuildTextBasedChannel, Message as Msg, Snowflake, TextBasedChannel } from "discord.js";
 import { getChannels } from "$core/api/requests/MainChannel";
 import { incChannelMessage } from "$core/api/requests/Member";
 import { generalChannel } from "$resources/config/information.json";
-import Event, { EventName } from "$core/events/Event";
-import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import { numberFormat } from "$core/utils/Function";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/request";
 import { isDevEnvironment } from "$core/utils/Environment";
+import Logger from "$core/utils/Logger";
+import Client from "$core/Client";
+import Event, { EventName } from "$core/events/Event";
 
 export default class MessageCreate extends Event {
 
@@ -18,54 +19,53 @@ export default class MessageCreate extends Event {
     if (isDevEnvironment) return;
     if (message.author.bot) return;
 
-    // Get channel or parent channel (if is a thread channel) :
-    let channel: TextBasedChannel | ForumChannel | null = message.channel;
+    // Get channel where the message is sent :
+    let channel: GuildTextBasedChannel | TextBasedChannel | ForumChannel = message.channel;
 
-    if (
-      channel.type === ChannelType.PublicThread
-            || channel.type === ChannelType.PrivateThread
-            || channel.type === ChannelType.AnnouncementThread
-    ) {
-      channel = channel.parent;
+    // If the channel is a thread, get the parent channel :
+    if (channel.type === ChannelType.PublicThread && channel.parent) channel = channel.parent;
+
+    // If the channel is a forum, set the dev channel (HACK) :
+    if (channel.type === ChannelType.GuildForum) {
+      const devChannel = await (await Client.instance.getGuild()).channels.fetch("732392873667854372");
+
+      if (devChannel && devChannel.type === ChannelType.GuildText) channel = devChannel;
     }
 
-    if (channel) {
-      const channels = (await gqlRequest(getChannels)).data?.channels;
+    // Check is the channel exist in mains channels :
+    const channels = await gqlRequest(getChannels);
 
-      if (!channels) return;
+    if (!channels.success || !channels.data.channels.find(c => c.channelId === channel.id)) return;
 
-      if (channels.find(c => c.channelId === channel?.id)) {
-        let channelId: string = channel.id;
+    // Increment channel message count and get current message count :
+    const messageCountResponse = await gqlRequest(incChannelMessage, { id: message.author.id, channelId: channel.id });
 
-        if (channel.type === ChannelType.GuildForum) channelId = "732392873667854372";
-
-        const messageCount = (await gqlRequest(
-          incChannelMessage,
-          { id: message.author.id, channelId: channelId }
-        )).data?.incMemberDiscordActivityChannel;
-
-        if (!messageCount) return;
-
-        // Send an announcement when the member reaches a message count step :
-        let step = false;
-
-        if (messageCount < 10_000) {
-          if (messageCount !== 0 && messageCount % 1_000 === 0) step = true;
-        } else if (messageCount % 10_000 === 0) step = true;
-
-        if (step) {
-          const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
-
-          if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
-
-          generalChannelInstance.send({
-            embeds: [simpleEmbed(
-              msg("event-messagecreate-exec-message-cap-reached", [message.author.id, numberFormat(messageCount)])
-            )]
-          });
-        }
-      }
+    if (!messageCountResponse.success) {
+      Logger.error(`Increment message count does work for member ${message.author.id} in channel ${channel.id}`);
+      return;
     }
+
+    const messageCount = messageCountResponse.data.incMemberDiscordActivityChannel;
+
+    if (messageCount === 0) return;
+
+    // Send an announcement when the member reaches a message count step :
+    if (messageCount < 10_000) if (messageCount % 1_000 === 0) this.sendStepEmbed(message.author.id, messageCount);
+    if (messageCount % 10_000 === 0) this.sendStepEmbed(message.author.id, messageCount);
+  }
+
+  private async sendStepEmbed(memberId: Snowflake, messageCount: number): Promise<void> {
+    const guild = await Client.instance.getGuild();
+    const channel = await guild.channels.fetch(generalChannel);
+
+    if (channel?.type !== ChannelType.GuildText) {
+      Logger.error("Unable to fetch the general channel");
+      return;
+    }
+
+    const embed = simpleEmbed(msg("event-messagecreate-exec-message-cap-reached", [memberId, numberFormat(messageCount)]));
+
+    channel.send({ embeds: [embed] });
   }
 
 }

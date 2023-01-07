@@ -6,6 +6,7 @@ import { createMember, getMemberActivityTier, setAlwaysOnServer } from "$core/ap
 import { gqlRequest } from "$core/utils/request";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
+import Logger from "$core/utils/Logger";
 
 export default class GuildMemberAdd extends Event {
 
@@ -27,7 +28,11 @@ export default class GuildMemberAdd extends Event {
     if (privateMode) {
       const role = await (await Client.instance.getGuild()).roles.fetch(verify.roles.waiting);
 
-      if (role) member.roles.add(role);
+      try {
+        if (role) member.roles.add(role);
+      } catch (e) {
+        Logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
+      }
       return;
     }
 
@@ -55,7 +60,11 @@ export default class GuildMemberAdd extends Event {
     const tiers: Record<string, string> = configTiers;
 
     if (tier.data?.member?.activity.tier) {
-      member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
+      try {
+        member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
+      } catch (e) {
+        Logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
+      }
     }
   }
 

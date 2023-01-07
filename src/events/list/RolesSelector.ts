@@ -3,6 +3,7 @@ import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
 import { selectMenu } from "$resources/config/interaction-ids.json";
 import { msg } from "$core/utils/Message";
+import Logger from "$core/utils/Logger";
 
 export default class RolesSelector extends Event {
 
@@ -29,8 +30,12 @@ export default class RolesSelector extends Event {
     }
 
     // Add and remove selected/unselected roles :
-    await memberRoles.add(selectedRoles);
-    await memberRoles.remove(unselectedRoles);
+    try {
+      await memberRoles.add(selectedRoles);
+      await memberRoles.remove(unselectedRoles);
+    } catch (e) {
+      Logger.error(`Error while updating member ${interaction.member?.user.id} roles : ${e}`);
+    }
 
     // Send confirmation :
     interaction.reply({

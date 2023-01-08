@@ -6,6 +6,7 @@ import { msg } from "$core/utils/Message";
 import Command from "$core/commands/Command";
 import { simpleEmbed } from "$core/utils/Embed";
 import Logger from "$core/utils/Logger";
+import { captureRejectionSymbol } from "events";
 
 export default class Forum extends Command {
 
@@ -78,7 +79,11 @@ export default class Forum extends Command {
 
             const link = command.options.getString(msg("cmd-forum-builder-resolve-link-name"), true);
 
-            await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")] }).then(() => {
+            channel.send({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")] }).then(message => {
+              message.pin();
+            });
+
+            command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")], ephemeral: true }).then(() => {
               channel.setArchived(true);
             });
             return;

@@ -61,7 +61,7 @@ export default class Forum extends Command {
           }
         }
 
-        await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-rename-only-posts"), "error")] });
+        await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-rename-only-posts"), "error")], ephemeral: true });
         return;
       }
 
@@ -89,7 +89,7 @@ export default class Forum extends Command {
           }
         }
 
-        await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-rename-only-posts"), "error")] });
+        await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-only-posts"), "error")], ephemeral: true });
         return;
       }
     }

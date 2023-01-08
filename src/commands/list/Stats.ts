@@ -60,7 +60,7 @@ export default class Stats extends Command {
             type: "line",
             data: {
               labels: serverActivity.map(element => {
-                return dateFormat(DayJS(element.date).tz());
+                return dateFormat(DayJS(element.date)); // TODO .tz()
               }),
               datasets: [{
                 label: type.description,

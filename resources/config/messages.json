@@ -1,6 +1,14 @@
 {
     "message-execution-error-cmd": "Erreur lors de l'exécution de la commande",
 
+    "cmd-ask-builder-name": "ask",
+    "cmd-ask-builder-description": "Pose une question à laquelle je répondrai avec ma super intéligence !",
+    "cmd-ask-builder-args-question-name": "question",
+    "cmd-ask-builder-args-question-description": "Quel est le 3 ème président de la France?",
+    "cmd-ask-exec-loading": "Je n'ai pas compris votre question",
+    "cmd-ask-exec-embed-title": "ChatGPT",
+    "cmd-ask-exec-embed-line": "Question: **{question}** {rep}",
+
     "cmd-birthday-builder-name": "anniversaire",
     "cmd-birthday-builder-description": "Définir votre date d'anniversaire",
     "cmd-birthday-builder-subcmd-set-name": "set",
@@ -54,8 +62,22 @@
 
     "cmd-inactive-builder-name": "inactive",
     "cmd-inactive-builder-description": "Voir les membres inactifs ce mois-ci",
+    "cmd-inactive-builder-page-name": "page",
+    "cmd-inactive-builder-page-description": "Numéro de la page de membre à afficher",
     "cmd-inactive-exec-inactives": "Liste des membres inactif",
     "cmd-inactive-exec-no-inactives": "Aucun membre n'est inactif.",
+    "cmd-inactive-exec-pages-first-first": "Vous ne pouvez pas aller plus bas, c'est le premier membre de la liste d'inactifs",
+    "cmd-inactive-exec-pages-next-last": "Vous ne pouvez pas aller plus loin, c'est le dernier membre de la liste d'inactifs",
+    "cmd-inactive-exec-kick-permission": "Vous n'avez pas la permission de kick des membres",
+    "cmd-inactive-exec-kick-permission-bot": "Une erreur est survenue lors de l'expulsion du membre, je n'ai surement pas assez de permissions",
+    "cmd-inactive-exec-kicked": "Vous avez expulser {user} avec succès pour inactivité.",
+    "cmd-inactive-embed-content": [
+        "Le membre <@{memberId}> a envoyé un total de **{messages} messages**",
+        "Il a passé un total de **{voiceTime} en vocal**",
+        "\nCompte créé le **{createdAt}**, il a rejoint le serveur le **{joinedAt}**",
+        "Son rang d'activité est **<@&{rankId}>**"
+    ],
+    "cmd-inactive-exec-embed-footer": "Membre inactif n°{inactiveNumber}/{inactivesCount}",
 
     "cmd-interaction-builder-name": "interaction",
     "cmd-interaction-builder-description": "Permet d'envoyer une interaction dans le salon",
@@ -211,13 +233,16 @@
         "• Cela permet de garder un maximum de clarté car vous ne vous mélanger pas avec la discussion générale.\n",
         "• Garder une trace des questions et des réponses, il est plus facile pour les membres de retrouver la réponse dont ils pourraient avoir besoin dans les salons forums.\n",
         "• Il est plus motivant pour la personne qui vous aide à pouvoir le faire de manière isolée avec une trace dans le temps plus forte.\n",
-        "• Que votre question soit très simple ou complexe les forums seront mieux, une aide sur plusieurs jours dans un salon isolé permet un meilleur suivi et les meilleures questions du célèbre forum d'aide Stack overflow sont les plus simples."
+        "• Que votre question soit très simple ou complexe les forums seront mieux, une aide sur plusieurs jours dans un salon isolé permet un meilleur suivi et les meilleures questions du célèbre forum d'aide Stack overflow sont les plus simples.\n",
+        "• Avant de créer votre propre post avec une question similaire ou identique, pensez à vérifier si un post sur ce sujet n'a pas déjà été créé."
     ],
-    "cmd-forum-exec-rename-only-posts": "Vous ne pouvez renommer posts dans un salon forum.",
+    "cmd-forum-exec-rename-only-posts": "Vous ne pouvez renommer que des posts dans un salon forum.",
     "cmd-forum-exec-rename-success": "Vous avez bien renommé ce post en **{name}**.",
+    "cmd-forum-exec-resolve-only-posts": "Vous ne pouvez résoudre que des posts dans un salon forum.",
     "cmd-forum-exec-resolve-success": "Le message qui a été désigné comme réponse est [celui-ci]({url}).",
-    "cmd-forum-exec-resolve-missing-link": "Vous avez oublié de mettre le lien du message qui a été désigné comme réponse.",
+    "cmd-forum-exec-resolve-missing-link": "Vous avez oublié de mettre le lien du message à désigné comme réponse.",
     "cmd-forum-exec-rename-error": "Une erreur est survenue lors du renommage de ce post.",
+    "cmd-forum-exec-resolve-error": "Une erreur est survenue lors du renommage de ce post.",
 
     "cmd-topmessages-builder-name": "top-message",
     "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",

@@ -1,5 +1,5 @@
 # Royaume Discord Bot
-It is the bot of our Discord community, it offers various utility features. It is written in TypeScript and uses the DiscordJS package to interact with the Discord API.
+It is the bot of our Discord community, it offers various utility features. It is written in TypeScript and uses the DiscordJS package to interact with the Discord API. 
 
 ## Invite link (only work for Royaume server)
 - [INVITE LINK](https://discord.com/api/oauth2/authorize?client_id=831542935014867014&permissions=0&scope=applications.commands%20bot)  
@@ -24,6 +24,9 @@ GITHUB_TOKEN="your GitHub PAT (personal access token)"
 # Royaume API :
 API_LINK=https://dev-api.royaume.world
 API_TOKEN="get the API token in our Discord"
+
+# Open API:
+OPEN_API="Your API_KEY from https://beta.openai.com/account/api-keys"
 ```
 
 ### Recommended VSCode extensions

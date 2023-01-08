@@ -6,7 +6,6 @@ import { msg } from "$core/utils/Message";
 import Command from "$core/commands/Command";
 import { simpleEmbed } from "$core/utils/Embed";
 import Logger from "$core/utils/Logger";
-import { captureRejectionSymbol } from "events";
 
 export default class Forum extends Command {
 

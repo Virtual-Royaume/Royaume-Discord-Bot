@@ -229,6 +229,7 @@
     "cmd-forum-builder-resolve-link-description": "Lien du message de résolution",
     "cmd-forum-exec-why-embed-title": "Pourquoi utiliser les salons forum ?",
     "cmd-forum-exec-why-embed-description": [
+        "• Y ajouter un titre correct permet de vérifier rapidement si votre problème est déjà résolu ou non.\n",
         "• Les salons forum sont là pour vous permettre de poser des questions et de trouver des réponses.\n",
         "• Cela permet de garder un maximum de clarté car vous ne vous mélanger pas avec la discussion générale.\n",
         "• Garder une trace des questions et des réponses, il est plus facile pour les membres de retrouver la réponse dont ils pourraient avoir besoin dans les salons forums.\n",

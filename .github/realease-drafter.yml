@@ -37,4 +37,4 @@ version-resolver:
 template: |
   ## What's Changed
   $CHANGES
-  **Full Changelog**: https://github.com/wavenet-be/wavenet-devops-templates/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+  **Full Changelog**: https://github.com/Virtual-Royaume/Royaume-Discord-Bot/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION

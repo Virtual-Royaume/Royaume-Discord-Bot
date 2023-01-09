@@ -1,0 +1,40 @@
+name-template: 'v$RESOLVED_VERSION 🌈'
+tag-template: 'v$RESOLVED_VERSION'
+categories:
+  - title: '👍 Improved Features'
+    labels:
+      - 'update'
+  - title: '✨ New Features'
+    labels:
+      - 'enhancement'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'bug'
+  - title: '⚒️ Refactoring'
+    label: 'refactor'
+  - title: '🧰 Maintenance'
+    labels:
+      - 'documentation'
+      - 'dependencies'
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+version-resolver:
+  major:
+    labels:
+      - 'major'
+      - 'breaking'
+  minor:
+    labels:
+      - 'minor'
+      - 'feature'
+      - 'enhancement'
+      - 'documentation'
+  patch:
+    labels:
+      - 'refactor'
+      - 'bug'
+  default: patch
+template: |
+  ## What's Changed
+  $CHANGES
+  **Full Changelog**: https://github.com/wavenet-be/wavenet-devops-templates/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION

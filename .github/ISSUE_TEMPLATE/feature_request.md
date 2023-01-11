@@ -7,8 +7,8 @@ assignees: ''
 
 ---
 
-**Description of your idea**
-Ex: It would increase the [...]
+**Description de votre idée**
+Ex : Cela augmenterait les [...]
 
-**How or why it would be a good addition**
-Ex: Because having this kind of functionality is [...]
+**Comment ou pourquoi ce serait un bon ajout**
+Ex : Parce qu'avoir ce genre de fonctionnalité est [...]

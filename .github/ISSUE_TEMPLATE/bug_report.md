@@ -7,20 +7,20 @@ assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**Décrire le bug**
+Une description claire et concise de ce qu'est le bug.
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**Décrivez le bug**
+Une description claire et concise de ce qu'est le bogue.
 
-**How to reproduce it (if necessary)**
-Ex: Use the `/example` command to [...]
+**Comment le reproduire (si nécessaire)**.
+Ex : Utilisez la commande `/example` pour [...]
 
-**What is the error? or problem**
-Put in your error, or the function that doesn't work properly
+**Quelle est l'erreur ? ou le problème ?**
+Mettez votre erreur, ou la fonction qui ne fonctionne pas correctement.
 
-**What should have happened**
-Ex: The command should have displayed the number of messages that [...]
+**Que se serait-il passé ?**
+Ex : La commande aurait dû afficher le nombre de messages que [...]
 
-**Screenshots**
-If applicable, add screenshots to explain your problem.
+**Captures d'écran**
+Le cas échéant, ajoutez des captures d'écran pour expliquer votre problème.

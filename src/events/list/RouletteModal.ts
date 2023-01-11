@@ -9,6 +9,8 @@ import { msg } from "$core/utils/Message";
 
 export default class RouletteModal extends Event {
 
+  public readonly enabledInDev = true;
+
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {

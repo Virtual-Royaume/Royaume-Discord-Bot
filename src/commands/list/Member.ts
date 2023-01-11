@@ -12,6 +12,8 @@ import { TierUpdate } from "$core/utils/request/graphql/graphql";
 
 export default class Member extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-member-builder-name"))
     .setDescription(msg("cmd-member-builder-description"))

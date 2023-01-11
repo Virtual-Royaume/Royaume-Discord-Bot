@@ -7,6 +7,8 @@ import Logger from "$core/utils/Logger";
 
 export default class RolesSelector extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {

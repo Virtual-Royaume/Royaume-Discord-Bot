@@ -20,6 +20,8 @@ const emojiForTier: Record<GuildPremiumTier, number> = {
 
 export default class Emoji extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-emoji-builder-name"))
     .setDescription(msg("cmd-emoji-builder-description"))

@@ -12,6 +12,8 @@ import Event, { EventName } from "$core/events/Event";
 
 export default class MessageCreate extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "messageCreate";
 
   public async execute(message: Msg): Promise<void> {

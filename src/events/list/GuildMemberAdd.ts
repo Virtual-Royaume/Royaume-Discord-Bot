@@ -10,6 +10,8 @@ import Logger from "$core/utils/Logger";
 
 export default class GuildMemberAdd extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "guildMemberAdd";
 
   public async execute(member: GuildMember): Promise<void> {

@@ -13,6 +13,8 @@ import { msg } from "$core/utils/Message";
 
 export default class VerifModal extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {

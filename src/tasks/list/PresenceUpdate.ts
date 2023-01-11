@@ -13,6 +13,8 @@ const activityType: Record<string, ActivityType> = {
 
 export default class PresenceUpdate extends Task {
 
+  public readonly enabledInDev = true;
+
   constructor() {
     super(10_000);
   }

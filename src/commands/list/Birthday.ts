@@ -13,6 +13,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class Birthday extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-birthday-builder-name"))
     .setDescription(msg("cmd-birthday-builder-description"))

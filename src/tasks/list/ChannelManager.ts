@@ -9,10 +9,12 @@ type ChannelVisibility = "public" | "private";
 
 export default class ChannelManager extends Task {
 
+  public readonly enabledInDev = false;
+
   constructor() {
     super(5_000);
 
-    if (isProdEnvironment) this.createDefaultChannels();
+    this.createDefaultChannels();
   }
 
   private async createDefaultChannels() : Promise<void> {
@@ -24,8 +26,6 @@ export default class ChannelManager extends Task {
   }
 
   public async run() : Promise<void> {
-    if (isDevEnvironment) return;
-
     // Creation of new voice channels if they are all full :
     if (!(await this.getEmptyChannels(voiceChannels.public.nameList)).size) {
       const channelToCreate = await this.getAvailablePublicChannel();

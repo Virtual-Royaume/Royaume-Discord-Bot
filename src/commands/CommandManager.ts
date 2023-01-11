@@ -3,6 +3,7 @@ import Client from "$core/Client";
 import Command from "$core/commands/Command";
 import { readdirSync } from "fs";
 import Logger from "$core/utils/Logger";
+import { isDevEnvironment } from "$core/utils/Environment";
 
 export default class CommandManager {
 
@@ -15,14 +16,17 @@ export default class CommandManager {
   private async load() : Promise<void> {
     const files = readdirSync(`${__dirname}/list`).filter(file => file.endsWith(".ts") || file.endsWith(".js"));
 
+    let i = 0;
     for (const file of files) {
       const dynamicImport = await import(`./list/${file}`);
       const command: Command = new dynamicImport.default();
 
+      if (!command.enabledInDev && isDevEnvironment) continue;
       this.commands.set(command.name, command);
+      i++;
     }
 
-    Logger.info(`${files.length} commands loaded`);
+    Logger.info(`${i} commands loaded`);
   }
 
   private async listener() : Promise<void> {

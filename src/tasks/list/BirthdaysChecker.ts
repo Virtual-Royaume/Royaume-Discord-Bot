@@ -10,6 +10,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class ServerActivityUpdate extends Task {
 
+  public readonly enabledInDev = false;
+
   private readonly messages = [
     {
       title: "SURPRISE !!",

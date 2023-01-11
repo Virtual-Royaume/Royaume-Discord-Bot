@@ -8,6 +8,8 @@ import Logger from "$core/utils/Logger";
 
 export default class VerifMessageReactionAdd extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "messageReactionAdd";
 
   public async execute(messageReaction: MessageReaction): Promise<void> {

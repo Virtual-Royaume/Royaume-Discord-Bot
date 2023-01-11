@@ -16,11 +16,14 @@ type RoleUpdate = {
 
 export default class PresenceUpdate extends Task {
 
+  public readonly enabledInDev = false;
+
   constructor() {
     super(60_000);
   }
 
   public async run(): Promise<void> {
+
     const guild = await Client.instance.getGuild();
 
     const tiers: Record<string, string> = configTiers;

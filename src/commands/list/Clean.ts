@@ -6,6 +6,8 @@ import Logger from "$core/utils/Logger";
 
 export default class Clean extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-clean-builder-name"))
     .setDescription(msg("cmd-clean-builder-description"))

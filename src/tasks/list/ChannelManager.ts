@@ -1,5 +1,7 @@
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
+import { isDevEnvironment, isProdEnvironment } from "$core/utils/Environment";
+import Logger from "$core/utils/Logger";
 import { voiceChannels } from "$resources/config/information.json";
 import { ChannelType, Collection, VoiceChannel } from "discord.js";
 
@@ -62,13 +64,17 @@ export default class ChannelManager extends Task {
   private async createChannel(name: string, type: ChannelVisibility) : Promise<void> {
     const channelPosition = await this.getChannelCount("public") - 1;
 
-    await (await Client.instance.getGuild()).channels.create({
-      name: name,
-      type: ChannelType.GuildVoice,
-      parent: voiceChannels.category,
-      position: type === "public" ? channelPosition : channelPosition + await this.getChannelCount("private"),
-      userLimit: type === "private" ? 2 : undefined
-    });
+    try {
+      await (await Client.instance.getGuild()).channels.create({
+        name: name,
+        type: ChannelType.GuildVoice,
+        parent: voiceChannels.category,
+        position: type === "public" ? channelPosition : channelPosition + await this.getChannelCount("private"),
+        userLimit: type === "private" ? 2 : undefined
+      });
+    } catch (e) {
+      Logger.error(`Error while creating voice channel ${name} : ${e}`);
+    }
   }
 
   /**

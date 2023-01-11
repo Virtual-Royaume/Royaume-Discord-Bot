@@ -1,6 +1,6 @@
 import {
   ChatInputCommandInteraction, AttachmentBuilder,
-  EmbedBuilder, SlashCommandBuilder, SlashCommandNumberOption
+  EmbedBuilder, SlashCommandBuilder, SlashCommandNumberOption, SlashCommandBooleanOption
 } from "discord.js";
 import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
@@ -25,7 +25,11 @@ export default class Stats extends Command {
     .addNumberOption(new SlashCommandNumberOption()
       .setName(msg("cmd-stats-builder-history-name"))
       .setDescription(msg("cmd-stats-builder-history-description"))
-      .setMinValue(5));
+      .setMinValue(5))
+    .addBooleanOption(new SlashCommandBooleanOption()
+      .setName(msg("cmd-stats-builder-dark-name"))
+      .setDescription(msg("cmd-stats-builder-dark-description"))
+      .setRequired(false));
 
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     // Get server activity :
@@ -66,8 +70,8 @@ export default class Stats extends Command {
               }),
               datasets: [{
                 label: type.description,
-                backgroundColor: colors.primary,
-                borderColor: colors.primary,
+                backgroundColor: command.options.getBoolean("dark") ? "#5555ff" : colors.primary,
+                borderColor: command.options.getBoolean("dark") ? "#5555ff" : colors.primary,
                 tension: 0.3,
                 data: serverActivity.map(element => element[type.columnName]),
                 pointRadius: serverActivity.length > 100 ? 0 : 3
@@ -82,7 +86,7 @@ export default class Stats extends Command {
                   ctx.save();
 
                   ctx.globalCompositeOperation = "destination-over";
-                  ctx.fillStyle = "white";
+                  ctx.fillStyle = command.options.getBoolean("dark") ? "#2f3136" : "white";
 
                   ctx.fillRect(0, 0, chart.width, chart.height);
                   ctx.restore();

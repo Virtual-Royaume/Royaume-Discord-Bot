@@ -9,6 +9,7 @@ import { generalChannel } from "$resources/config/information.json";
 import { emojiProposal } from "$resources/config/proposal.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import Client from "$core/Client";
+import Logger from "$core/utils/Logger";
 
 const emojiForTier: Record<GuildPremiumTier, number> = {
   "0": 50,
@@ -102,9 +103,13 @@ export default class Emoji extends Command {
         reaction.emoji.name === emojiProposal.emoji.upVote
                 && reaction.count >= emojiProposal.reactionNeededCount.upVote
       ) {
-        voteMessage.reply({ embeds: [simpleEmbed(msg("cmd-emoji-exec-embed-accepted-poll-text"))] });
+        try {
+          addEmojiRequest();
+          voteMessage.reply({ embeds: [simpleEmbed(msg("cmd-emoji-exec-embed-accepted-poll-text"))] });
+        } catch (e) {
+          Logger.error(`Error while adding emoji : ${e}`);
+        }
 
-        addEmojiRequest();
         removeReactions();
       }
 

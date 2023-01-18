@@ -7,6 +7,8 @@ import { modal as modalIds } from "$resources/config/interaction-ids.json";
 
 export default class Roulette extends Command {
 
+  public readonly enabledInDev = true;
+
   public static titleInputId = "title";
 
   public static choicesInputId = "choices";

@@ -6,6 +6,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class VerifyMembers extends Task {
 
+  public readonly enabledInDev = false;
+
   constructor() {
     super(1000 * 60 * 3);
   }

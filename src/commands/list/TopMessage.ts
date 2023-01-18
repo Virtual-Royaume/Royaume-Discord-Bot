@@ -12,6 +12,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class TopMessage extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-topmessages-builder-name"))
     .setDescription(msg("cmd-topmessages-builder-description"))

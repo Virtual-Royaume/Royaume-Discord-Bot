@@ -5,6 +5,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class ChannelDelete extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "channelDelete";
 
   public async execute(channel: DMChannel | GuildChannel): Promise<void> {

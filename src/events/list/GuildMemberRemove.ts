@@ -5,6 +5,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class GuildMemberRemove extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "guildMemberRemove";
 
   public async execute(member: GuildMember): Promise<void> {

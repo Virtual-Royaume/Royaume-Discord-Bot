@@ -7,6 +7,8 @@ const githubRaw = "https://raw.githubusercontent.com/";
 
 export default class GithubLinkReaction extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "messageCreate";
 
   public async execute(message: Message): Promise<void> {

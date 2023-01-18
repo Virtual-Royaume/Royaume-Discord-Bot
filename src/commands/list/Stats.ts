@@ -1,6 +1,6 @@
 import {
   ChatInputCommandInteraction, AttachmentBuilder,
-  EmbedBuilder, SlashCommandBuilder, SlashCommandNumberOption
+  EmbedBuilder, SlashCommandBuilder, SlashCommandNumberOption, SlashCommandBooleanOption
 } from "discord.js";
 import Command from "$core/commands/Command";
 import { ChartConfiguration } from "chart.js";
@@ -17,13 +17,19 @@ import { isHexColor } from "$core/utils/validator";
 
 export default class Stats extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-stats-builder-name"))
     .setDescription(msg("cmd-stats-builder-description"))
     .addNumberOption(new SlashCommandNumberOption()
       .setName(msg("cmd-stats-builder-history-name"))
       .setDescription(msg("cmd-stats-builder-history-description"))
-      .setMinValue(5));
+      .setMinValue(5))
+    .addBooleanOption(new SlashCommandBooleanOption()
+      .setName(msg("cmd-stats-builder-dark-name"))
+      .setDescription(msg("cmd-stats-builder-dark-description"))
+      .setRequired(false));
 
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     // Get server activity :
@@ -60,12 +66,12 @@ export default class Stats extends Command {
             type: "line",
             data: {
               labels: serverActivity.map(element => {
-                return dateFormat(DayJS(element.date).tz());
+                return dateFormat(DayJS(element.date)); // TODO .tz()
               }),
               datasets: [{
                 label: type.description,
-                backgroundColor: colors.primary,
-                borderColor: colors.primary,
+                backgroundColor: command.options.getBoolean("dark") ? "#5555ff" : colors.primary,
+                borderColor: command.options.getBoolean("dark") ? "#5555ff" : colors.primary,
                 tension: 0.3,
                 data: serverActivity.map(element => element[type.columnName]),
                 pointRadius: serverActivity.length > 100 ? 0 : 3
@@ -80,7 +86,7 @@ export default class Stats extends Command {
                   ctx.save();
 
                   ctx.globalCompositeOperation = "destination-over";
-                  ctx.fillStyle = "white";
+                  ctx.fillStyle = command.options.getBoolean("dark") ? "#2f3136" : "white";
 
                   ctx.fillRect(0, 0, chart.width, chart.height);
                   ctx.restore();

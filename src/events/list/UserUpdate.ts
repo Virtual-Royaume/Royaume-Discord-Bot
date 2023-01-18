@@ -7,6 +7,8 @@ export default class UserUpdate extends Event {
 
   public name: EventName = "userUpdate";
 
+  public readonly enabledInDev = false;
+
   public async execute(_: User, newUser: User): Promise<void> {
     gqlRequest(setUsernameAndProfilePicture, {
       id: newUser.id,

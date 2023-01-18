@@ -12,6 +12,8 @@ import { TierUpdate } from "$core/utils/request/graphql/graphql";
 
 export default class Member extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-member-builder-name"))
     .setDescription(msg("cmd-member-builder-description"))
@@ -53,7 +55,7 @@ export default class Member extends Command {
     let message = "";
 
     if (memberInfo.birthday) {
-      const birthday = DayJS(memberInfo.birthday).tz();
+      const birthday = DayJS(memberInfo.birthday); // TODO : .tz()
 
       message += msg("cmd-member-exec-member-birth", [dateFormat(birthday, "/"), getAge(birthday)]);
     }
@@ -94,6 +96,9 @@ export default class Member extends Command {
         }).join("\n")
       }]);
     }
+
+    const banner = (await member.user.fetch()).bannerURL();
+    if (banner) embed.setImage(banner + "?size=512");
 
     command.reply({
       embeds: [embed]

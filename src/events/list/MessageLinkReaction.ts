@@ -6,6 +6,8 @@ import { msg } from "$core/utils/Message";
 
 export default class MessageLinkReaction extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "messageCreate";
 
   public async execute(message: Message): Promise<void> {

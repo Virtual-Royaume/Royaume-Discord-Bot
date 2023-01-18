@@ -11,6 +11,8 @@ import Client from "$core/Client";
 
 export default class Role extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-role-builder-name"))
     .setDescription(msg("cmd-role-builder-description"));

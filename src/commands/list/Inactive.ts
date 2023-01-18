@@ -1,6 +1,8 @@
 import { msg } from "$core/utils/Message";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction,
-  EmbedBuilder, PermissionsBitField, SlashCommandBuilder, SlashCommandNumberOption } from "discord.js";
+import {
+  ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction,
+  EmbedBuilder, PermissionsBitField, SlashCommandBuilder, SlashCommandNumberOption
+} from "discord.js";
 import { verify } from "$resources/config/information.json";
 import { getMember, getMonthActivity } from "$core/api/requests/Member";
 import { simpleEmbed } from "$core/utils/Embed";

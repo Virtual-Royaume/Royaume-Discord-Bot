@@ -1,40 +1,32 @@
-name-template: 'v$RESOLVED_VERSION 🌈'
-tag-template: 'v$RESOLVED_VERSION'
+name-template: "V$RESOLVED_VERSION"
+tag-template: "$RESOLVED_VERSION"
 categories:
-  - title: '👍 Improved Features'
-    labels:
-      - 'update'
-  - title: '✨ New Features'
-    labels:
-      - 'enhancement'
-  - title: '🐛 Bug Fixes'
-    labels:
-      - 'bug'
-  - title: '⚒️ Refactoring'
-    label: 'refactor'
-  - title: '🧰 Maintenance'
-    labels:
-      - 'documentation'
-      - 'dependencies'
-change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
-change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+  - title: "NOUVEAUTÉS"
+    label: "enhancement"
+  - title: "CHANGEMENTS"
+    label: "update"
+  - title: "BUGS"
+    label: "bug"
+  - title: "REFACTOR"
+    label: "refactor"
+  - title: "DOCUMENTATION"
+    label: "documentation"
+change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+change-title-escapes: "\<*_&" # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
   major:
     labels:
-      - 'major'
-      - 'breaking'
+      - "enhancement"
+      - "update"
   minor:
     labels:
-      - 'minor'
-      - 'feature'
-      - 'enhancement'
-      - 'documentation'
+      - "bugs"
   patch:
     labels:
-      - 'refactor'
-      - 'bug'
+      - "refactor"
+      - "documentation"
   default: patch
 template: |
-  ## What's Changed
   $CHANGES
-  **Full Changelog**: https://github.com/Virtual-Royaume/Royaume-Discord-Bot/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+  ## FULL CHANGELOG
+  https://github.com/Virtual-Royaume/Royaume-Discord-Bot/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION

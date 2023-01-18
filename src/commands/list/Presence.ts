@@ -4,7 +4,7 @@ import {
   SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
 import { addPresenceMessage, getPresenceMessages, removePresenceMessage } from "$core/api/requests/PresenceMessage";
-import { generalChannel } from "$resources/config/information.json";
+import { generalChannel, adminRole } from "$resources/config/information.json";
 import { activityProposal } from "$resources/config/proposal.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
@@ -94,7 +94,7 @@ export default class Role extends Command {
     const addPresenceRequest = async() => await gqlRequest(addPresenceMessage, { type: presence, text: message });
 
     // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
-    if (command.member.permissions.has("Administrator")) {
+    if (command.member.roles.cache.has(adminRole)) {
       await addPresenceRequest();
 
       command.reply({
@@ -207,7 +207,7 @@ export default class Role extends Command {
       return;
     }
 
-    if (!command.member.permissions.has("Administrator")) {
+    if (!command.member.roles.cache.has(adminRole)) {
       command.reply({
         embeds: [simpleEmbed("Vous n'avez pas la permission de supprimer une activité.", "error")],
         ephemeral: true

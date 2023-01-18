@@ -11,7 +11,9 @@ categories:
     label: "refactor"
   - title: "DOCUMENTATION"
     label: "documentation"
-change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+  - title: "DIVERS"
+    label: "miscellaneous"
+change-template: "- $TITLE (@$AUTHOR #$NUMBER)"
 change-title-escapes: '\<*_&'
 version-resolver:
   major:
@@ -25,6 +27,7 @@ version-resolver:
     labels:
       - "refactor"
       - "documentation"
+      - "miscellaneous"
   default: patch
 template: |
   $CHANGES

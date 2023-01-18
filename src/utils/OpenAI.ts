@@ -25,7 +25,7 @@ export async function chatWithAI(prompt: string): Promise<string> {
     "post", "https://api.openai.com/v1/completions", {
       headers: {
         authorization: `Bearer ${getStringEnv("OPEN_AI")}`,
-        "content-type": "application/json"
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         model: "text-davinci-003",

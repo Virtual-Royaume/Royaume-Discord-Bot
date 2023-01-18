@@ -15,11 +15,11 @@ change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
 change-title-escapes: '\<*_&'
 version-resolver:
   major:
+    labels: []
+  minor:
     labels:
       - "enhancement"
       - "update"
-  minor:
-    labels:
       - "bugs"
   patch:
     labels:

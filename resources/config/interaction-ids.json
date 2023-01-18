@@ -3,7 +3,14 @@
         "rolesSelector": "sm0"
     },
     "button": {
-        "verify": "b0"
+        "verify": "b0",
+        "inactive": {
+            "inactive-first": "b1",
+            "inactive-previous": "b2",
+            "inactive-kick": "b3",
+            "inactive-next": "b4",
+            "inactive-last": "b5"
+        }
     },
     "modal": {
         "verify": "m0",

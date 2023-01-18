@@ -210,6 +210,8 @@
     "cmd-stats-builder-description": "Voir les statistiques du serveurs",
     "cmd-stats-builder-history-name": "historique",
     "cmd-stats-builder-history-description": "Nombre de jour d'historique",
+    "cmd-stats-builder-dark-name": "dark",
+    "cmd-stats-builder-dark-description": "Mode sombre sur les graphiques (par défaut : Non)",
     "cmd-stats-exec-embed-title": "**Statistiques sur {days} jours**",
     "cmd-stats-exec-embed-voices": "Temps de vocal des utilisateurs en minutes",
     "cmd-stats-exec-embed-messages": "Nombre de messages envoyés",
@@ -274,17 +276,6 @@
         "**{position}. {username} :** {minutes}",
         ""
     ],
-
-    "cmd-together-builder-name": "watch-together",
-    "cmd-together-builder-description": "Permet de générer une invitation pour l'intégration vocal \"Youtube Together\"",
-    "cmd-together-exec-voice-needed": "Vous devez être dans un salon vocal pour lancer une activité Youtube Together.",
-    "cmd-together-exec": "Votre activité (**Youtube Together**) a bien été lancée, vous pouvez la rejoindre via cette invitation : https://discord.gg/{code}",
-    "cmd-together-exec-general": [
-        "<@{id}> a lancé une activité **Youtube Together** !",
-        "",
-        "[Rejoindre l'activité](https://discord.gg/{code})"
-    ],
-
 
     "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
 

@@ -5,6 +5,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class RoleDelete extends Event {
 
+  public readonly enabledInDev = false;
+
   public name: EventName = "roleDelete";
 
   public async execute(role: Role): Promise<void> {

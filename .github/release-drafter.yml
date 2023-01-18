@@ -1,0 +1,35 @@
+name-template: "V$RESOLVED_VERSION"
+tag-template: "$RESOLVED_VERSION"
+categories:
+  - title: "NOUVEAUTÉS"
+    label: "enhancement"
+  - title: "CHANGEMENTS"
+    label: "update"
+  - title: "BUGS"
+    label: "bug"
+  - title: "REFACTOR"
+    label: "refactor"
+  - title: "DOCUMENTATION"
+    label: "documentation"
+  - title: "DIVERS"
+    label: "miscellaneous"
+change-template: "- $TITLE (@$AUTHOR #$NUMBER)"
+change-title-escapes: '\<*_&'
+version-resolver:
+  major:
+    labels: []
+  minor:
+    labels:
+      - "enhancement"
+      - "update"
+      - "bugs"
+  patch:
+    labels:
+      - "refactor"
+      - "documentation"
+      - "miscellaneous"
+  default: patch
+template: |
+  $CHANGES
+  ## FULL CHANGELOG
+  https://github.com/Virtual-Royaume/Royaume-Discord-Bot/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION

@@ -8,6 +8,8 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class TopVoice extends Command {
 
+  public readonly enabledInDev = true;
+
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-topvoice-builder-name"))
     .setDescription(msg("cmd-topvoice-builder-description"))

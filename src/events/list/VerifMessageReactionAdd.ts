@@ -4,8 +4,11 @@ import Event, { EventName } from "$core/events/Event";
 import { verify } from "$resources/config/information.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
+import Logger from "$core/utils/Logger";
 
 export default class VerifMessageReactionAdd extends Event {
+
+  public readonly enabledInDev = false;
 
   public name: EventName = "messageReactionAdd";
 
@@ -33,8 +36,12 @@ export default class VerifMessageReactionAdd extends Event {
       messageReaction.emoji.name === verify.emoji.upVote
             && messageReaction.count - 1 >= verify.reactionNeededCount.upVote
     ) {
-      await member.roles.add(verify.roles.verified);
-      await member.roles.remove(verify.roles.waiting);
+      try {
+        await member.roles.add(verify.roles.verified);
+        await member.roles.remove(verify.roles.waiting);
+      } catch (e) {
+        Logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
+      }
 
       const embed = simpleEmbed(msg("event-verifmessagereactionadd-exec-embed-member-accepted", []));
 

@@ -2,8 +2,11 @@ import { msg } from "$core/utils/Message";
 import { ChannelType, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
+import Logger from "$core/utils/Logger";
 
 export default class Clean extends Command {
+
+  public readonly enabledInDev = true;
 
   public readonly slashCommand = new SlashCommandBuilder()
     .setName(msg("cmd-clean-builder-name"))
@@ -23,9 +26,12 @@ export default class Clean extends Command {
       return;
     }
 
-    await command.channel.bulkDelete(number);
-
-    command.reply({ embeds: [simpleEmbed(msg("cmd-clean-exec-cleaned", [number]))], ephemeral: true });
+    try {
+      await command.channel.bulkDelete(number);
+      command.reply({ embeds: [simpleEmbed(msg("cmd-clean-exec-cleaned", [number]))], ephemeral: true });
+    } catch (e) {
+      Logger.error(`Error while bulk deleting in a channel : ${e}`);
+    }
   }
 
 }

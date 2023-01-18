@@ -6,11 +6,14 @@ import { gqlRequest } from "$core/utils/request";
 
 export default class ServerActivityUpdate extends Task {
 
+  public readonly enabledInDev = false;
+
   constructor() {
     super(60_000);
   }
 
   public async run(): Promise<void> {
+
     // Update daily member count :
     const memberCount = (await Client.instance.getGuild()).memberCount;
 

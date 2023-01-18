@@ -15,6 +15,8 @@ import { PresenceType } from "$core/utils/request/graphql/graphql";
 
 export default class Role extends Command {
 
+  public readonly enabledInDev = true;
+
   private presenceTypes = Object.values(PresenceType).map(presence => ({ name: presence, value: presence }));
 
   private messagePerPage = 20;

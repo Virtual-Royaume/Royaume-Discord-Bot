@@ -8,6 +8,8 @@ export default abstract class Event {
 
     public readonly once: boolean = false;
 
+    public abstract readonly enabledInDev: boolean;
+
     public abstract execute(...args: any[]) : void; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 }

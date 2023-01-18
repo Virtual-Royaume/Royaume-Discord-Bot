@@ -1,6 +1,5 @@
 import Client from "$core/Client";
 import Task from "$core/tasks/Task";
-import { isDevEnvironment, isProdEnvironment } from "$core/utils/Environment";
 import Logger from "$core/utils/Logger";
 import { voiceChannels } from "$resources/config/information.json";
 import { ChannelType, Collection, VoiceChannel } from "discord.js";

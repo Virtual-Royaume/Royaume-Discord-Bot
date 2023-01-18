@@ -1,14 +1,13 @@
 import messages from "$resources/config/messages.json";
 
 /*
-    Format du fichier JSON :
-    SlashCommandBuilder: "command-{Nom de la commande}-builder-{variable}"
-    Execute: "command-{Nom de la commande}-exec-{variable}"
-    Exemple: "command-together-builder-name": "watch-together"
-    Exemple: "command-together-exec-voice-needed": "Vous devez êtr[...]"
+  Format du fichier JSON :
+  SlashCommandBuilder: "command-{Nom de la commande}-builder-{variable}"
+  Execute: "command-{Nom de la commande}-exec-{variable}"
+  Exemple: "command-together-builder-name": "watch-together"
+  Exemple: "command-together-exec-voice-needed": "Vous devez êtr[...]"
 */
-
-export function msg(key: string, params: (string | number)[] = []): string {
+export function msg(key: keyof typeof messages, params: (string | number)[] = []): string {
   const messageList: Record<string, string | string[]> = messages;
   let message = messageList[key];
 

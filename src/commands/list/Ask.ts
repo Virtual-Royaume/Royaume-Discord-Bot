@@ -2,7 +2,7 @@ import { msg } from "$core/utils/Message";
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
 import { simpleEmbed } from "$core/utils/Embed";
 import Command from "$core/commands/Command";
-import { chatWithAI } from "$core/utils/OpenAPI";
+import { chatWithAI } from "$core/utils/OpenAI";
 
 export default class Ask extends Command {
 

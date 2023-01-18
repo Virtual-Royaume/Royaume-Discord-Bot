@@ -24,9 +24,10 @@ export async function chatWithAI(prompt: string): Promise<string> {
   const response = await restRequest<ChatGPTResponse>(
     "post", "https://api.openai.com/v1/completions", {
       headers: {
-        authorization: `Bearer ${getStringEnv("OPEN_API")}`
+        authorization: `Bearer ${getStringEnv("OPEN_AI")}`,
+        "content-type": "application/json"
       },
-      data: {
+      body: JSON.stringify({
         model: "text-davinci-003",
         prompt: prompt,
         temperature: 0.9,
@@ -34,7 +35,7 @@ export async function chatWithAI(prompt: string): Promise<string> {
         top_p: 1,
         frequency_penalty: 0.0,
         presence_penalty: 0.6
-      }
+      })
     }
   );
 

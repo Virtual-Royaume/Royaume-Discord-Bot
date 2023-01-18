@@ -80,14 +80,13 @@ export default class Forum extends Command {
 
             const link = command.options.getString(msg("cmd-forum-builder-resolve-link-name"), true);
 
-            await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")] }).then(() => {
-              try {
-                channel.setArchived(true);
-              } catch (e) {
-                command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-error"), "error")], ephemeral: true });
-              }
-              channel.setArchived(true);
-            });
+            const resolveMessage = await channel.send({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")] });
+            
+            await resolveMessage.pin();
+
+            await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")], ephemeral: true });
+            
+            channel.setArchived(true);
             return;
           }
         }

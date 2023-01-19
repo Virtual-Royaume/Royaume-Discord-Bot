@@ -10,7 +10,7 @@
     "gqlgen:watch": "graphql-codegen --watch --config gql-codegen.ts"
   },
   "engines": {
-    "node": "18.13.x"
+    "node": "19.x"
   },
   "dependencies": {
     "axios": "^1.2.2",

@@ -33,7 +33,7 @@ export default class ServerActivityUpdate extends Task {
 
   public async run(): Promise<void> {
     // Check if time (00:00) :
-    const currentDate = DayJS(); // TODO : .tz()
+    const currentDate = DayJS().tz();
 
     if (currentDate.hour() !== 0 || currentDate.minute() !== 0) return;
 
@@ -41,10 +41,10 @@ export default class ServerActivityUpdate extends Task {
     const birthdays = (await gqlRequest(getBirthdays)).data?.members.filter(member => {
       if (!member.birthday) return false;
 
-      const birthday = DayJS(member.birthday); // TODO : .tz()
+      const birthday = DayJS(member.birthday).tz();
 
       return birthday.date() === currentDate.date()
-                && birthday.month() === currentDate.month();
+        && birthday.month() === currentDate.month();
     });
 
     if (!birthdays) return;
@@ -59,7 +59,7 @@ export default class ServerActivityUpdate extends Task {
         if (!member.birthday) continue;
 
         const message = this.messages[Math.floor(Math.random() * this.messages.length)];
-        const birthday = DayJS(member.birthday); // TODO : .tz()
+        const birthday = DayJS(member.birthday).tz();
 
         const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
           .setThumbnail(member.profilePicture)

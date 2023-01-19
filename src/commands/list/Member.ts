@@ -55,7 +55,7 @@ export default class Member extends Command {
     let message = "";
 
     if (memberInfo.birthday) {
-      const birthday = DayJS(memberInfo.birthday); // TODO : .tz()
+      const birthday = DayJS(memberInfo.birthday).tz();
 
       message += msg("cmd-member-exec-member-birth", [dateFormat(birthday, "/"), getAge(birthday)]);
     }

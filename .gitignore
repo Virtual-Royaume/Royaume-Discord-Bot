@@ -107,9 +107,6 @@ dist
 package-lock.json
 pnpm-lock.yaml
 
-# Sensible access
-secret.json
-
 # Ignore TS compiled
 build/
 

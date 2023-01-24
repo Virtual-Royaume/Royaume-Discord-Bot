@@ -17,11 +17,12 @@
     "discord.js": "^14.7.1"
   },
   "devDependencies": {
-    "@bluzzi/eslint-config": "^0.8.3",
-    "@graphql-codegen/cli": "2.16.2",
-    "@graphql-codegen/client-preset": "1.2.4",
-    "@swc-node/register": "^1.5.5",
-    "@swc/core": "^1.3.27",
+    "@bluzzi/eslint-config": "^0.8.2",
+    "@graphql-codegen/cli": "2.16.4",
+    "@graphql-codegen/client-preset": "1.2.6",
+    "@graphql-typed-document-node/core": "^3.1.1",
+    "@swc-node/register": "^1.5.4",
+    "@swc/core": "^1.3.24",
     "@types/node": "^18.11.18",
     "dotenv": "^16.0.3",
     "eslint": "^8.32.0",

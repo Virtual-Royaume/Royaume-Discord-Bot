@@ -10,7 +10,7 @@ const config: CodegenConfig = {
   ],
   documents: "./src/**/*.ts",
   generates: {
-    "./src/utils/request/graphql": {
+    "./src/utils/request/graphql/": {
       preset: "client",
       plugins: []
     }

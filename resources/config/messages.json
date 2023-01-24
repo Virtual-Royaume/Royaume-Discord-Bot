@@ -66,8 +66,6 @@
     "cmd-inactive-builder-page-description": "Numéro de la page de membre à afficher",
     "cmd-inactive-exec-inactives": "Liste des membres inactif",
     "cmd-inactive-exec-no-inactives": "Aucun membre n'est inactif.",
-    "cmd-inactive-exec-pages-first-first": "Vous ne pouvez pas aller plus bas, c'est le premier membre de la liste d'inactifs",
-    "cmd-inactive-exec-pages-next-last": "Vous ne pouvez pas aller plus loin, c'est le dernier membre de la liste d'inactifs",
     "cmd-inactive-exec-kick-permission": "Vous n'avez pas la permission de kick des membres",
     "cmd-inactive-exec-kick-permission-bot": "Une erreur est survenue lors de l'expulsion du membre, je n'ai surement pas assez de permissions",
     "cmd-inactive-exec-kicked": "Vous avez expulser {user} avec succès pour inactivité.",

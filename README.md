@@ -25,7 +25,7 @@ GITHUB_TOKEN="your GitHub PAT (personal access token)"
 API_LINK=https://dev-api.royaume.world
 API_TOKEN="get the API token in our Discord"
 
-# Open API:
+# Open AI:
 OPEN_API="Your API_KEY from https://beta.openai.com/account/api-keys"
 ```
 

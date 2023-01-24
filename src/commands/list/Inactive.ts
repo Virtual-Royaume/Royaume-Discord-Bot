@@ -4,7 +4,7 @@ import { msg } from "$core/utils/Message";
 import {
   ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChatInputCommandInteraction,
   ComponentType, EmbedBuilder, SlashCommandBuilder, SlashCommandNumberOption, MessageActionRowComponentBuilder,
-  APIActionRowComponent, APIMessageActionRowComponent, Collection, Snowflake
+  APIActionRowComponent, APIMessageActionRowComponent, Collection, Snowflake, GuildMember, PermissionsBitField
 } from "discord.js";
 import { verify } from "$resources/config/information.json";
 import { button } from "$resources/config/interaction-ids.json";
@@ -39,6 +39,42 @@ export default class Inactive extends Command {
     // Parse page command param:
     this.setPage(memberId, (command.options.getNumber("page") || 1) - 1);
 
+    // Find inactive members:
+    const inactiveMembers = await this.getInactiveMembers();
+
+    if (!inactiveMembers) {
+      command.reply({ embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")], ephemeral: true });
+      return;
+    }
+
+    if (!inactiveMembers.length) {
+      command.reply({ embeds: [simpleEmbed(msg("cmd-inactive-exec-no-inactives"), "error")], ephemeral: true });
+      return;
+    }
+
+    // Create message button collector and handle it:
+    const collector = command.channel.createMessageComponentCollector<ComponentType.Button>({
+      filter: interaction => Object.values(button.inactive).includes(interaction.customId) && interaction.member.id === memberId,
+      time: 1000 * 60 * 30 // 30 minutes
+    });
+
+    collector.on("collect", interaction => this.handleButtonClick(interaction));
+
+    collector.on("end", () => {
+      command.editReply({ components: [] });
+    });
+
+    // Send default embed:
+    await command.reply(
+      {
+        embeds: [await this.generateEmbed(memberId, inactiveMembers[this.getPage(memberId)]._id)],
+        components: [await this.getButtonsComponents(memberId)],
+        ephemeral: true
+      }
+    );
+  }
+
+  private async getInactiveMembers() {
     // Get guild instance:
     const guild = await Client.instance.getGuild();
 
@@ -46,13 +82,10 @@ export default class Inactive extends Command {
     const guildMembers = await guild.members.fetch();
     const verifMembers = guildMembers.filter(member => member.roles.cache.has(verify.roles.waiting));
 
-    // Find inactive members:
+    // Get inactives members:
     const response = await gqlRequest(getMonthActivity);
 
-    if (!response.success) {
-      command.reply({ embeds: [simpleEmbed(msg("message-execution-error-cmd"), "error")], ephemeral: true });
-      return;
-    }
+    if (!response.success) return null;
 
     const inactiveMembers = response.data.members.filter(member => {
       const isInVerif = verifMembers.has(member._id);
@@ -62,129 +95,124 @@ export default class Inactive extends Command {
       return !monthMessage && !monthVoice && !isInVerif;
     });
 
-    if (!inactiveMembers.length) {
-      command.reply({ embeds: [simpleEmbed(msg("cmd-inactive-exec-no-inactives"), "error")], ephemeral: true });
-      return;
-    }
-
-    // Create message button collector and handle it:
-    const collector = command.channel.createMessageComponentCollector<ComponentType.Button>({
-      filter: interaction => Object.values(button.inactive).includes(interaction.customId),
-      time: 1000 * 60 * 30 // 30 minutes
-    });
-
-    collector.on("collect", this.handleButtonClick);
-
-    collector.on("end", () => {
-      command.editReply({ components: [] });
-    });
-
-    // Send default embed:
-    await command.reply(
-      {
-        embeds: [await this.generateEmbed(inactiveMembers[this.getPage(memberId)]._id, this.getPage(memberId), inactiveMembers.length)],
-        components: [this.getButtonsComponents(this.getPage(memberId), inactiveMembers.map(member => member.username))],
-        ephemeral: true
-      }
-    );
+    return inactiveMembers;
   }
 
   private async handleButtonClick(interaction: ButtonInteraction): Promise<void> {
+    // Get interaction member:
+    const member = interaction.member;
+
+    if (!(member instanceof GuildMember)) return;
+
+    // Get inactives members:
+    const inactiveMembers = await this.getInactiveMembers();
+
+    if (!inactiveMembers) return;
+
+    // Get actions and interaction ID:
     const id = interaction.customId;
     const actions = button.inactive;
 
-    if (id === actions.inactiveFirst) {
-      // page = 0;
-      // await interaction.update({ embeds: [
-      //   await this.embedPage(members[page]._id, page, members.length)
-      // ], components: [
-      //   await this.getButtons(members, hasKickPermission, members.length)
-      // ] });
+    // Get current page:
+    const currentPage = this.getPage(member.id);
 
-      return;
-    }
-
-    if (id === actions.inactivePrevious) {
-      // page--;
-      // await interaction.update({ embeds: [
-      //   await this.embedPage(members[page]._id, page, members.length)
-      // ], components: [
-      //   await this.getButtons(members, hasKickPermission, members.length)
-      // ] });
-
-      return;
-    }
+    // Handle actions:
+    if (id === actions.inactiveFirst) this.setPage(member.id, 0);
+    if (id === actions.inactivePrevious) this.setPage(member.id, currentPage - 1);
 
     if (id === actions.inactiveKick) {
-      // TODO: check no perm
-      // const hasKickPermission: boolean = command.memberPermissions.has(PermissionsBitField.Flags.KickMembers);
-      // interaction.reply({ embeds: [simpleEmbed(msg("cmd-inactive-exec-kick-permission"), "error")], ephemeral: true });
+      // Check permission:
+      const hasPermission = member.permissions.has(PermissionsBitField.Flags.KickMembers);
 
-      // const member = await (await Client.instance.getGuild()).members.fetch(members[page]._id);
-      // try {
-      //   await member.kick("Inactif");
-      //   interaction.reply({ embeds: [simpleEmbed(msg("cmd-inactive-exec-kicked", [member.user.username]), "normal")], ephemeral: true });
-      // } catch (e) {
-      //   interaction.reply({
-      //     embeds: [
-      //       simpleEmbed(msg("cmd-inactive-exec-kick-permission-bot"), "error")
-      //     ], ephemeral: true
-      //   });
-      // }
+      if (!hasPermission) {
+        interaction.reply({ embeds: [simpleEmbed(msg("cmd-inactive-exec-kick-permission"), "error")], ephemeral: true });
+        return;
+      }
 
-      return;
+      // Get inactive member:
+      const guild = await Client.instance.getGuild();
+      const inactiveMember = await guild.members.fetch(inactiveMembers[currentPage]._id);
+
+      // Try to kick inactive member:
+      try {
+        await inactiveMember.kick();
+        interaction.reply({ embeds: [simpleEmbed(msg("cmd-inactive-exec-kicked", [member.user.username]), "normal")], ephemeral: true });
+      } catch (_) {
+        interaction.reply({
+          embeds: [simpleEmbed(msg("cmd-inactive-exec-kick-permission-bot"), "error")],
+          ephemeral: true
+        });
+      }
     }
 
-    if (id === actions.inactiveNext) {
-      // page++;
-      // await interaction.update({ embeds: [
-      //   await this.embedPage(members[page]._id, page, members.length)
-      // ], components: [
-      //   await this.getButtons(members, hasKickPermission, members.length)
-      // ] });
+    if (id === actions.inactiveNext) this.setPage(member.id, currentPage + 1);
+    if (id === actions.inactiveLast) this.setPage(member.id, inactiveMembers.length - 1);
 
-      return;
-    }
-
-    if (id === actions.inactiveLast) {
-      // page = members.length - 1;
-      // await interaction.update({ embeds: [
-      //   await this.embedPage(members[page]._id, page, members.length)
-      // ], components: [
-      //   await this.getButtons(members, hasKickPermission, members.length)
-      // ] });
-
-      return;
-    }
+    // Update embed and buttons:
+    await interaction.update({
+      embeds: [await this.generateEmbed(member.id, inactiveMembers[this.getPage(member.id)]._id)],
+      components: [await this.getButtonsComponents(member.id)]
+    });
   }
 
-  public async generateEmbed(memberId: Snowflake, inactiveNumber: number, inactivesCount: number) : Promise<EmbedBuilder> {
-    const memberInfo = (await gqlRequest(getMember, { id: memberId })).data?.member;
-    if (!memberInfo) throw new Error("Member not found");
+  public async generateEmbed(memberId: Snowflake, inactiveId: Snowflake): Promise<EmbedBuilder> {
+    // Get inactive members:
+    const inactiveMembers = await this.getInactiveMembers();
 
-    const messages = memberInfo.activity?.messages.totalCount ?? "Aucun messages";
-    const voice = memberInfo.activity?.voiceMinute;
+    if (!inactiveMembers) return simpleEmbed(msg("message-execution-error-cmd"), "error");
 
-    const member = await (await Client.instance.getGuild()).members.fetch(memberId);
-    const banner = (await member.user.fetch()).bannerURL();
+    // Get current page:
+    const page = this.getPage(memberId);
+
+    // Get member info:
+    const response = await gqlRequest(getMember, { id: inactiveId });
+
+    if (!response.success || !response.data.member) return simpleEmbed(msg("message-execution-error-cmd"), "error");
+
+    const memberInfo = response.data.member;
+
+    // Get member instance:
+    const guild = await Client.instance.getGuild();
+    const memberInstance = await guild.members.fetch(inactiveId);
+
+    // Format data:
+    const messageCount = memberInfo.activity.messages.totalCount;
+    const voiceMinute = memberInfo.activity.voiceMinute;
+
+    const avatar = memberInstance.user.displayAvatarURL();
+    const banner = (await memberInstance.user.fetch()).bannerURL();
+
+    // Get tiers:
     const tiers: Record<string, string> = configTiers;
 
+    // Build embed:
     const embed = new EmbedBuilder()
-      .setTitle(memberInfo?.username)
-      .setDescription(msg("cmd-inactive-embed-content", [
-        memberInfo._id, messages, formatMinutes(voice ?? 0), member.user.createdAt.toLocaleDateString(),
-        member.joinedAt?.toLocaleDateString() ?? "0 minutes", tiers[memberInfo.activity.tier]]))
+      .setTitle(memberInfo.username)
+      .setDescription(msg(
+        "cmd-inactive-embed-content",
+        [
+          inactiveId, messageCount, formatMinutes(voiceMinute), memberInstance.user.createdAt.toLocaleDateString(),
+          memberInstance.joinedAt?.toLocaleDateString() ?? "0 minutes", tiers[memberInfo.activity.tier]
+        ]
+      ))
       .setColor("#5339DD")
-      .setThumbnail(member.user.displayAvatarURL())
+      .setThumbnail(avatar)
       .setFooter({
-        text: msg("cmd-inactive-exec-embed-footer", [inactiveNumber + 1, inactivesCount])
+        text: msg("cmd-inactive-exec-embed-footer", [page + 1, inactiveMembers.length])
       });
-    if (banner !== null) embed.setImage(banner + "?size=512");
+
+    if (banner !== null) embed.setImage(`${banner}?size=512`);
+
     return embed;
   }
 
-  public getButtonsComponents(currentPage: number, membersUsernames: string[]): APIActionRowComponent<APIMessageActionRowComponent> {
-    const maxPage: number = membersUsernames.length;
+  public async getButtonsComponents(memberId: Snowflake): Promise<APIActionRowComponent<APIMessageActionRowComponent>> {
+    const inactiveMembers = await this.getInactiveMembers();
+
+    if (!inactiveMembers) return new ActionRowBuilder<MessageActionRowComponentBuilder>().toJSON();
+
+    const currentPage = this.getPage(memberId);
+    const maxPage: number = inactiveMembers.length - 1;
     const actions = button.inactive;
 
     return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -198,7 +226,7 @@ export default class Inactive extends Command {
       // Previous:
       new ButtonBuilder()
         .setCustomId(actions.inactivePrevious)
-        .setLabel(!currentPage ? "◀️" : `◀️ (${membersUsernames[currentPage - 1]})`)
+        .setLabel(!currentPage ? "◀️" : `◀️ (${inactiveMembers[currentPage].username})`)
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(!currentPage),
 
@@ -211,7 +239,7 @@ export default class Inactive extends Command {
       // Next:
       new ButtonBuilder()
         .setCustomId(actions.inactiveNext)
-        .setLabel(currentPage === maxPage ? "▶️" : `▶️ (${membersUsernames[currentPage + 1]})`)
+        .setLabel(currentPage === maxPage ? "▶️" : `▶️ (${inactiveMembers[currentPage].username})`)
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(maxPage === currentPage),
 

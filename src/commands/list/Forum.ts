@@ -81,11 +81,11 @@ export default class Forum extends Command {
             const link = command.options.getString(msg("cmd-forum-builder-resolve-link-name"), true);
 
             const resolveMessage = await channel.send({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")] });
-            
+
             await resolveMessage.pin();
 
             await command.reply({ embeds: [simpleEmbed(msg("cmd-forum-exec-resolve-success", [link]), "normal")], ephemeral: true });
-            
+
             channel.setArchived(true);
             return;
           }

@@ -61,9 +61,9 @@ export default class GithubLinkReaction extends Event {
           // Request for get the code :
           const response = await restRequest<string>("get", githubRaw + filePath.join("/"), {
             headers: {
-              authorization: `token ${getStringEnv("GITHUB_TOKEN")}`
-            },
-            responseType: "text"
+              authorization: `token ${getStringEnv("GITHUB_TOKEN")}`,
+              "Content-Type": "application/json"
+            }
           });
 
           if (!response.success) return;

@@ -1,5 +1,5 @@
 import { getStringEnv } from "./EnvVariable";
-import { restRequest } from "./request";
+import { restJsonRequest } from "./request";
 
 /* eslint-disable camelcase */
 type ChatGPTResponse = {
@@ -21,7 +21,7 @@ type ChatGPTResponse = {
 }
 
 export async function chatWithAI(prompt: string): Promise<string> {
-  const response = await restRequest<ChatGPTResponse>(
+  const response = await restJsonRequest<ChatGPTResponse>(
     "post", "https://api.openai.com/v1/completions", {
       headers: {
         authorization: `Bearer ${getStringEnv("OPEN_AI")}`,

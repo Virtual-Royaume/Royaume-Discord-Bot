@@ -1,1 +1,1 @@
-export { restRequest, gqlRequest } from "./request";
+export { restJsonRequest, restTextRequest, gqlRequest } from "./request";

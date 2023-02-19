@@ -11,12 +11,13 @@ interface RequestParams extends Omit<RequestInit, "method"> {
   query?: Record<string, string | string[]>
 }
 
-export const restRequest = async<T>(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<T>> => {
+export const restJsonRequest = async<T extends object>(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<T>> => {
   if (config.query) {
     const urlParams = new URLSearchParams(config.query);
     endpoint = `${endpoint}?${urlParams.toString()}`;
   }
 
+  config.headers = { ...config.headers, "Content-Type": "application/json" };
   const response = await fetch(endpoint, { ...config, method: method });
 
   if (!response.ok) {
@@ -32,6 +33,31 @@ export const restRequest = async<T>(method: Method, endpoint: string, config: Re
   return {
     success: true,
     data: await response.json()
+  };
+};
+
+export const restTextRequest = async(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<string>> => {
+  if (config.query) {
+    const urlParams = new URLSearchParams(config.query);
+    endpoint = `${endpoint}?${urlParams.toString()}`;
+  }
+
+  config.headers = { ...config.headers, "Content-Type": "text/plain" };
+  const response = await fetch(endpoint, { ...config, method: method });
+
+  if (!response.ok) {
+    Logger.error("Rest request failed :");
+    console.log(method, endpoint, config);
+
+    return {
+      success: false,
+      data: null
+    };
+  }
+
+  return {
+    success: true,
+    data: await response.text()
   };
 };
 

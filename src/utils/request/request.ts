@@ -11,13 +11,12 @@ interface RequestParams extends Omit<RequestInit, "method"> {
   query?: Record<string, string | string[]>
 }
 
-export const restJsonRequest = async<T extends object>(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<T>> => {
+export const restRequest = async(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<globalThis.Response>> => {
   if (config.query) {
     const urlParams = new URLSearchParams(config.query);
     endpoint = `${endpoint}?${urlParams.toString()}`;
   }
 
-  config.headers = { ...config.headers, "Content-Type": "application/json" };
   const response = await fetch(endpoint, { ...config, method: method });
 
   if (!response.ok) {
@@ -32,32 +31,31 @@ export const restJsonRequest = async<T extends object>(method: Method, endpoint:
 
   return {
     success: true,
-    data: await response.json()
+    data: response
+  };
+};
+
+export const restJsonRequest = async<T extends object>(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<T>> => {
+  config.headers = { ...config.headers, "Content-Type": "application/json" };
+  const response = await restRequest(method, endpoint, config);
+
+  if (!response.success) return response;
+
+  return {
+    success: response.success,
+    data: await response.data.json()
   };
 };
 
 export const restTextRequest = async(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<string>> => {
-  if (config.query) {
-    const urlParams = new URLSearchParams(config.query);
-    endpoint = `${endpoint}?${urlParams.toString()}`;
-  }
-
   config.headers = { ...config.headers, "Content-Type": "text/plain" };
-  const response = await fetch(endpoint, { ...config, method: method });
+  const response = await restRequest(method, endpoint, config);
 
-  if (!response.ok) {
-    Logger.error("Rest request failed :");
-    console.log(method, endpoint, config);
-
-    return {
-      success: false,
-      data: null
-    };
-  }
+  if (!response.success) return response;
 
   return {
-    success: true,
-    data: await response.text()
+    success: response.success,
+    data: await response.data.text()
   };
 };
 

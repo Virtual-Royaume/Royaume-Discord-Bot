@@ -46,6 +46,20 @@ const documents = {
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ *
+ *
+ * @example
+ * ```ts
+ * const query = gql(`query GetUser($id: ID!) { user(id: $id) { name } }`);
+ * ```
+ *
+ * The query argument is unknown!
+ * Please regenerate the types.
+ */
+export function graphql(source: string): unknown;
+
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation addChannel($channelId: ID!, $category: String!){\n        addChannel(channelId: $channelId, category: $category)\n    }\n"): (typeof documents)["\n    mutation addChannel($channelId: ID!, $category: String!){\n        addChannel(channelId: $channelId, category: $category)\n    }\n"];
 /**
@@ -160,20 +174,6 @@ export function graphql(source: "\n    query getServerActivityHistory($historyCo
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation setMemberCount($count: Int!) {\n        setServerActivityMemberCount(count: $count)\n    }\n"): (typeof documents)["\n    mutation setMemberCount($count: Int!) {\n        setServerActivityMemberCount(count: $count)\n    }\n"];
-
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- *
- *
- * @example
- * ```ts
- * const query = gql(`query GetUser($id: ID!) { user(id: $id) { name } }`);
- * ```
- *
- * The query argument is unknown!
- * Please regenerate the types.
-**/
-export function graphql(source: string): unknown;
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

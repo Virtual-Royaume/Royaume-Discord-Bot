@@ -49,88 +49,127 @@ export default class TopMessage extends Command {
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     let page = command.options.getNumber(msg("cmd-topmessages-builder-page-name")) ?? 1;
 
-        // Get data and sort it :
-        type Data = {
-            username: string;
-            messageCount: number;
+    // Get data and sort it :
+    type Data = {
+        username: string;
+        messageCount: number;
+    }
+
+    let members: Data[] = [];
+
+    switch (command.options.getSubcommand()) {
+      case msg("cmd-topmessages-builder-month-name"): {
+        const membersMessagesCountQuery = await gqlRequest(getMonthMessageCount);
+
+        if (!membersMessagesCountQuery.success) {
+          command.reply({
+            embeds: [
+              simpleEmbed(msg("cmd-topmessages-exec-fetch-data-fail"), "error")
+            ],
+            ephemeral: true
+          });
+          return;
         }
 
-        let members: Data[] = [];
+        members = membersMessagesCountQuery.data.members.sort((a, b) => {
+          return (b?.activity.messages.monthCount ?? 0) - (a?.activity.messages.monthCount ?? 0);
+        }).map(member => {
+          return {
+            username: member.username,
+            messageCount: member.activity.messages.monthCount
+          };
+        }) ?? [];
 
-        switch (command.options.getSubcommand()) {
-          case msg("cmd-topmessages-builder-month-name"): {
-            members = (await gqlRequest(getMonthMessageCount)).data?.members.sort((a, b) => {
-              return (b?.activity.messages.monthCount ?? 0) - (a?.activity.messages.monthCount ?? 0);
-            }).map(member => {
-              return {
-                username: member.username,
-                messageCount: member.activity.messages.monthCount
-              };
-            }) ?? [];
-            break;
-          }
+        break;
+      }
 
-          case msg("cmd-topmessages-builder-total-name"): {
-            members = (await gqlRequest(getTotalMessageCount)).data?.members.sort((a, b) => {
-              return (b?.activity.messages.totalCount ?? 0) - (a?.activity.messages.totalCount ?? 0);
-            }).map(member => {
-              return {
-                username: member.username,
-                messageCount: member.activity.messages.totalCount
-              };
-            }) ?? [];
-            break;
-          }
+      case msg("cmd-topmessages-builder-total-name"): {
+        const membersMessagesCountQuery = await gqlRequest(getTotalMessageCount);
 
-          case msg("cmd-topmessages-builder-channel-name"): {
-            const channel = command.options.getChannel(msg("cmd-topmessages-builder-channel-name"), true);
-
-            if (!channel) {
-              command.reply({ embeds: [simpleEmbed(msg("cmd-topmessage-exec-error-need-mention"), "error")], ephemeral: true });
-              return;
-            }
-
-            members = (await gqlRequest(getChannelMessageCount)).data?.members.sort((a, b) => {
-              const aChannel = a.activity.messages.perChannel.find(c => channel.id === c?.channelId);
-              const bChannel = b.activity.messages.perChannel.find(c => channel.id === c?.channelId);
-
-              return (bChannel?.messageCount ?? 0) - (aChannel?.messageCount ?? 0);
-            }).map(member => {
-              const selectChannel = member.activity.messages.perChannel.find(c => channel.id === c?.channelId);
-
-              return {
-                username: member.username,
-                messageCount: selectChannel?.messageCount ?? 0
-              };
-            }) ?? [];
-            break;
-          }
+        if (!membersMessagesCountQuery.success) {
+          command.reply({
+            embeds: [
+              simpleEmbed(msg("cmd-topmessages-exec-fetch-data-fail"), "error")
+            ],
+            ephemeral: true
+          });
+          return;
         }
 
-        // Get page and max page :
-        const maxPage = Math.ceil(members.length / this.memberPerPage);
-        page = page > maxPage ? maxPage : page;
+        members = membersMessagesCountQuery.data.members.sort((a, b) => {
+          return (b?.activity.messages.totalCount ?? 0) - (a?.activity.messages.totalCount ?? 0);
+        }).map(member => {
+          return {
+            username: member.username,
+            messageCount: member.activity.messages.totalCount
+          };
+        }) ?? [];
 
-        // Slice the members with page and max page :
-        members = members.slice(page * this.memberPerPage - this.memberPerPage, page * this.memberPerPage);
+        break;
+      }
 
-        // Format leaderboard :
-        let message = "";
+      case msg("cmd-topmessages-builder-channel-name"): {
+        const channel = command.options.getChannel(msg("cmd-topmessages-builder-channel-name"), true);
 
-        for (let i = 0; i < members.length; i++) {
-          const member = members[i];
-
-          message += msg("cmd-topmessages-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
-            numberFormat(member.messageCount)
-          ]);
+        if (!channel) {
+          command.reply({ embeds: [simpleEmbed(msg("cmd-topmessages-exec-error-need-mention"), "error")], ephemeral: true });
+          return;
         }
 
-        // Send leaderboard :
-        command.reply({
-          embeds: [
-            simpleEmbed(message, "normal", msg("cmd-topmessages-exec-embed-title", [command.options.getSubcommand(), page, maxPage]))
-          ]
-        });
+        const membersMessagesCountQuery = await gqlRequest(getChannelMessageCount);
+
+        if (!membersMessagesCountQuery.success) {
+          command.reply({
+            embeds: [
+              simpleEmbed(msg("cmd-topmessages-exec-fetch-data-fail"), "error")
+            ],
+            ephemeral: true
+          });
+          return;
+        }
+
+        members = membersMessagesCountQuery.data.members.sort((a, b) => {
+          const aChannel = a.activity.messages.perChannel.find(c => channel.id === c?.channelId);
+          const bChannel = b.activity.messages.perChannel.find(c => channel.id === c?.channelId);
+
+          return (bChannel?.messageCount ?? 0) - (aChannel?.messageCount ?? 0);
+        }).map(member => {
+          const selectChannel = member.activity.messages.perChannel.find(c => channel.id === c?.channelId);
+
+          return {
+            username: member.username,
+            messageCount: selectChannel?.messageCount ?? 0
+          };
+        }) ?? [];
+
+        break;
+      }
+    }
+
+    // Get page and max page :
+    const maxPage = Math.ceil(members.length / this.memberPerPage);
+    page = page > maxPage ? maxPage : page;
+
+    // Slice the members with page and max page :
+    members = members.slice(page * this.memberPerPage - this.memberPerPage, page * this.memberPerPage);
+
+    // Format leaderboard :
+    let message = "";
+
+    for (let i = 0; i < members.length; i++) {
+      const member = members[i];
+
+      message += msg("cmd-topmessages-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
+        numberFormat(member.messageCount)
+      ]);
+    }
+
+    // Send leaderboard :
+    command.reply({
+      embeds: [
+        simpleEmbed(message, "normal", msg("cmd-topmessages-exec-embed-title", [command.options.getSubcommand(), page, maxPage]))
+      ]
+    });
   }
 
 }

@@ -95,7 +95,16 @@ export default class Role extends Command {
 
     // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
     if (command.member.roles.cache.has(adminRole)) {
-      await addPresenceRequest();
+      const addPresenceResponse = await addPresenceRequest();
+
+      if (!addPresenceResponse.success) {
+        command.reply({
+          embeds: [simpleEmbed(msg("cmd-presence-exec-embed-new-activity-fail"))],
+          ephemeral: true
+        });
+
+        return;
+      }
 
       command.reply({
         embeds: [simpleEmbed(msg("cmd-presence-exec-embed-new-activity-succes"))],
@@ -148,15 +157,24 @@ export default class Role extends Command {
 
       const removeReactions = () => voteMessage.reactions.removeAll();
 
-      reactionCollector.on("collect", (reaction) => {
+      reactionCollector.on("collect", async(reaction) => {
         if (
           reaction.emoji.name === activityProposal.emoji.upVote
                     && reaction.count >= activityProposal.reactionNeededCount.upVote
         ) {
-          voteMessage.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-activity-proposal-accepted"))] });
+          const addPresenceResponse = await addPresenceRequest();
 
-          addPresenceRequest();
+          if (!addPresenceResponse.success) {
+            command.reply({
+              embeds: [simpleEmbed(msg("cmd-presence-exec-embed-new-activity-fail"))],
+              ephemeral: true
+            });
+
+            return;
+          }
+
           removeReactions();
+          voteMessage.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-activity-proposal-accepted"))] });
         }
 
         if (
@@ -215,37 +233,33 @@ export default class Role extends Command {
       return;
     }
 
-    // Try to delete the presence message :
-    try {
-      const response = await gqlRequest(removePresenceMessage, { id });
+    const response = await gqlRequest(removePresenceMessage, { id });
 
-      if (response.success) {
-        command.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-succes"))], ephemeral: true });
-      } else {
-        command.reply({
-          embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-fail"), "error")],
-          ephemeral: true
-        });
-      }
-    } catch {
+    if (!response.success) {
       command.reply({
-        embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-error"), "error")],
+        embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-fail"), "error")],
         ephemeral: true
       });
+
+      return;
     }
+
+    command.reply({ embeds: [simpleEmbed(msg("cmd-presence-exec-embed-delete-activity-succes"))], ephemeral: true });
   }
 
   private async list(command: ChatInputCommandInteraction): Promise<void> {
     // Get data and sort it :
-    let presenceMessages = (await gqlRequest(getPresenceMessages)).data?.presenceMessages;
+    const presenceMessagesQuery = await gqlRequest(getPresenceMessages);
 
-    if (!presenceMessages) {
+    if (!presenceMessagesQuery.success) {
       command.reply({
-        embeds: [simpleEmbed(msg("message-execution-error-cmd"))],
+        embeds: [simpleEmbed(msg("cmd-presence-exec-list-error"), "error")],
         ephemeral: true
       });
       return;
     }
+
+    let presenceMessages = presenceMessagesQuery.data.presenceMessages;
 
     // Get page and max page :
     const maxPage = Math.ceil(presenceMessages.length / this.messagePerPage);

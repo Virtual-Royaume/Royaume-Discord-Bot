@@ -38,7 +38,11 @@ export default class ServerActivityUpdate extends Task {
     if (currentDate.hour() !== 0 || currentDate.minute() !== 0) return;
 
     // Check birthdays of the day :
-    const birthdays = (await gqlRequest(getBirthdays)).data?.members.filter(member => {
+    const birthdaysQuery = await gqlRequest(getBirthdays);
+
+    if (!birthdaysQuery.success) return;
+
+    const birthdays = birthdaysQuery.data.members.filter(member => {
       if (!member.birthday) return false;
 
       const birthday = DayJS(member.birthday).tz();
@@ -47,26 +51,24 @@ export default class ServerActivityUpdate extends Task {
         && birthday.month() === currentDate.month();
     });
 
-    if (!birthdays) return;
-
     // Send birthday message :
-    if (birthdays.length) {
-      const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
+    if (birthdays.length === 0) return;
 
-      if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
+    const generalChannelInstance = await (await Client.instance.getGuild()).channels.fetch(generalChannel);
 
-      for (const member of birthdays) {
-        if (!member.birthday) continue;
+    if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
-        const message = this.messages[Math.floor(Math.random() * this.messages.length)];
-        const birthday = DayJS(member.birthday).tz();
+    for (const member of birthdays) {
+      if (!member.birthday) continue;
 
-        const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
-          .setThumbnail(member.profilePicture)
-          .setFooter({ text: msg("task-birthdayschecker-exec-embed-footer", [currentDate.year() - birthday.year()]) });
+      const message = this.messages[Math.floor(Math.random() * this.messages.length)];
+      const birthday = DayJS(member.birthday).tz();
 
-        generalChannelInstance.send({ embeds: [embed] });
-      }
+      const embed = simpleEmbed(message.text.replace("{MENTION}", `<@${member._id}>`), "normal", message.title)
+        .setThumbnail(member.profilePicture)
+        .setFooter({ text: msg("task-birthdayschecker-exec-embed-footer", [currentDate.year() - birthday.year()]) });
+
+      generalChannelInstance.send({ embeds: [embed] });
     }
   }
 

@@ -20,9 +20,11 @@ export default class PresenceUpdate extends Task {
   }
 
   public async run(): Promise<void> {
-    const presenceMessages = (await gqlRequest(getPresenceMessages)).data?.presenceMessages;
+    const presenceMessagesQuery = await gqlRequest(getPresenceMessages);
 
-    if (!presenceMessages) return;
+    if (!presenceMessagesQuery.success) return;
+
+    const presenceMessages = presenceMessagesQuery.data.presenceMessages;
 
     const message = presenceMessages[Math.floor(Math.random() * presenceMessages.length)];
 

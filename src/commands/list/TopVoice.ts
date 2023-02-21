@@ -55,7 +55,7 @@ export default class TopVoice extends Command {
         }
 
         members = membersMinutesQuery.data.members.sort((a, b) => {
-          return (b?.activity.monthVoiceMinute ?? 0) - (a?.activity.monthVoiceMinute ?? 0);
+          return (b.activity.monthVoiceMinute ?? 0) - (a.activity.monthVoiceMinute ?? 0);
         }).map(member => {
           return {
             username: member.username,

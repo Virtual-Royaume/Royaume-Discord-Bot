@@ -33,17 +33,20 @@ export default class Stats extends Command {
 
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     // Get server activity :
-    const serverActivity = (await gqlRequest(getServerActivityHistory, {
+    const serverActivityQuery = await gqlRequest(getServerActivityHistory, {
       historyCount: command.options.getNumber(msg("cmd-stats-builder-history-name")) ?? 30
-    })).data?.serverActivity.reverse();
+    });
 
-    if (!serverActivity) {
+    if (!serverActivityQuery.success) {
       command.reply({
-        embeds: [simpleEmbed(msg("message-execution-error-cmd"))],
+        embeds: [simpleEmbed(msg("cmd-stats-exec-server-activity-query-fail"), "error")],
         ephemeral: true
       });
+
       return;
     }
+
+    const serverActivity = serverActivityQuery.data.serverActivity.reverse();
 
     // Start defering response
     await command.deferReply();

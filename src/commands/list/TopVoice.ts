@@ -32,64 +32,90 @@ export default class TopVoice extends Command {
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     let page = command.options.getNumber(msg("cmd-topvoice-builder-page-name")) ?? 1;
 
-        // Get data and sort it :
-        type Data = {
-            username: string;
-            voiceMinute: number;
+    // Get data and sort it :
+    type Data = {
+      username: string;
+      voiceMinute: number;
+    }
+
+    let members: Data[] = [];
+
+    switch (command.options.getSubcommand()) {
+      case msg("cmd-topvoice-builder-month-name"): {
+        const membersMinutesQuery = await gqlRequest(getMonthVoiceMinute);
+
+        if (!membersMinutesQuery.success) {
+          command.reply({
+            embeds: [
+              simpleEmbed(msg("cmd-topvoice-exec-fetch-data-fail"), "error")
+            ],
+            ephemeral: true
+          });
+          return;
         }
 
-        let members: Data[] = [];
+        members = membersMinutesQuery.data.members.sort((a, b) => {
+          return (b?.activity.monthVoiceMinute ?? 0) - (a?.activity.monthVoiceMinute ?? 0);
+        }).map(member => {
+          return {
+            username: member.username,
+            voiceMinute: member.activity.monthVoiceMinute
+          };
+        }) ?? [];
 
-        switch (command.options.getSubcommand()) {
-          case msg("cmd-topvoice-builder-month-name"): {
-            members = (await gqlRequest(getMonthVoiceMinute)).data?.members.sort((a, b) => {
-              return (b?.activity.monthVoiceMinute ?? 0) - (a?.activity.monthVoiceMinute ?? 0);
-            }).map(member => {
-              return {
-                username: member.username,
-                voiceMinute: member.activity.monthVoiceMinute
-              };
-            }) ?? [];
-            break;
-          }
+        break;
+      }
 
-          case msg("cmd-topvoice-builder-total-name"): {
-            members = (await gqlRequest(getVoiceTime)).data?.members.sort((a, b) => {
-              return (b?.activity.voiceMinute ?? 0) - (a?.activity.voiceMinute ?? 0);
-            }).map(member => {
-              return {
-                username: member.username,
-                voiceMinute: member.activity.voiceMinute
-              };
-            }) ?? [];
-            break;
-          }
+      case msg("cmd-topvoice-builder-total-name"): {
+        const membersMinutesQuery = await gqlRequest(getVoiceTime);
+
+        if (!membersMinutesQuery.success) {
+          command.reply({
+            embeds: [
+              simpleEmbed(msg("cmd-topvoice-exec-fetch-data-fail"), "error")
+            ],
+            ephemeral: true
+          });
+          return;
         }
 
-        // Get page and max page :
-        const maxPage = Math.ceil(members.length / this.memberPerPage);
-        page = page > maxPage ? maxPage : page;
+        members = membersMinutesQuery.data.members.sort((a, b) => {
+          return (b.activity.voiceMinute ?? 0) - (a.activity.voiceMinute ?? 0);
+        }).map(member => {
+          return {
+            username: member.username,
+            voiceMinute: member.activity.voiceMinute
+          };
+        }) ?? [];
 
-        // Slice the members with page and max page :
-        members = members.slice(page * this.memberPerPage - this.memberPerPage, page * this.memberPerPage);
+        break;
+      }
+    }
 
-        // Format leaderboard :
-        let message = "";
+    // Get page and max page :
+    const maxPage = Math.ceil(members.length / this.memberPerPage);
+    page = page > maxPage ? maxPage : page;
 
-        for (let i = 0; i < members.length; i++) {
-          const member = members[i];
+    // Slice the members with page and max page :
+    members = members.slice(page * this.memberPerPage - this.memberPerPage, page * this.memberPerPage);
 
-          message += msg("cmd-topvoice-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
-            formatMinutes(member.voiceMinute)
-          ]);
-        }
+    // Format leaderboard :
+    let message = "";
 
-        // Send leaderboard :
-        command.reply({
-          embeds: [
-            simpleEmbed(message, "normal", msg("cmd-topvoice-exec-embed-title", [command.options.getSubcommand(), page, maxPage]))
-          ]
-        });
+    for (let i = 0; i < members.length; i++) {
+      const member = members[i];
+
+      message += msg("cmd-topvoice-exec-embed-line", [i + 1 + (page - 1) * this.memberPerPage, member.username,
+        formatMinutes(member.voiceMinute)
+      ]);
+    }
+
+    // Send leaderboard :
+    command.reply({
+      embeds: [
+        simpleEmbed(message, "normal", msg("cmd-topvoice-exec-embed-title", [command.options.getSubcommand(), page, maxPage]))
+      ]
+    });
   }
 
 }

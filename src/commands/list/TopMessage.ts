@@ -128,18 +128,15 @@ export default class TopMessage extends Command {
           return;
         }
 
-        members = membersMessagesCountQuery.data.members.sort((a, b) => {
-          const aChannel = a.activity.messages.perChannel.find(c => channel.id === c?.channelId);
-          const bChannel = b.activity.messages.perChannel.find(c => channel.id === c?.channelId);
-
-          return (bChannel?.messageCount ?? 0) - (aChannel?.messageCount ?? 0);
-        }).map(member => {
-          const selectChannel = member.activity.messages.perChannel.find(c => channel.id === c?.channelId);
+        members = membersMessagesCountQuery.data.members.map(member => {
+          const selectChannel = member.activity.messages.perChannel.find(c => channel.id === c.channelId);
 
           return {
             username: member.username,
             messageCount: selectChannel?.messageCount ?? 0
           };
+        }).sort((a, b) => {
+          return (b.messageCount) - (a.messageCount);
         }) ?? [];
 
         break;

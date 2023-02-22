@@ -1,0 +1,38 @@
+name: Remanier le code
+description: Créer une issue pour remanier le code
+labels: [refactor]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description de l'issue
+      description: |
+        Quel est le problème que vous souhaitez résoudre ?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Quelle solution proposez-vous ?
+      description: |
+        Quelle solution ou amélioration proposez-vous pour résoudre le problème ?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Quelles alternatives avez-vous envisagées ?
+      description: |
+        Quelles autres solutions ou améliorations avez-vous envisagées pour résoudre le problème ?
+    validations:
+      required: false
+  - type: textarea
+    id: differences
+    attributes:
+      label: Que changera votre solution par rapport à la solution actuelle ?
+      description: |
+        Expliquez les différences entre votre solution que vous proposez et le code actuel.
+
+        Vous pouvez également expliquer pourquoi votre solution est meilleure que la solution actuelle, ou inclure des références à des articles ou des discussions sur le sujet. Ainsi que des captures d'écran ou des vidéos.
+    validations:
+      required: false

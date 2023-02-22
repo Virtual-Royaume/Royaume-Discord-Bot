@@ -1,0 +1,74 @@
+name: Signaler un bug
+description: Créer un rapport de bug pour nous aider à améliorer le bot
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description de l'issue
+      description: |
+        Décrivez le problème de la manière la plus détaillée possible.
+
+        Conseil : vous pouvez joindre des images ou des fichiers journaux en cliquant sur cette zone pour la mettre en évidence, puis en y faisant glisser des fichiers.
+      placeholder: |
+        Étapes pour reproduire le bug :
+          1. faire la chose
+          2. faire la chose
+          3. faire la chose
+          4. Voila le bug
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Dans quel environnement avez-vous rencontré le bug ?
+      description: |
+        Production
+        Development
+      options:
+        - Production
+        - Development
+      multiple: true
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité du bug
+      description: Veuillez être réaliste. Si vous avez besoin de développer votre raisonnement, veuillez utiliser le champ Description du problème ci-dessus.
+      options:
+        - Faible (légèrement gênant)
+        - Moyenne (gênant)
+        - Haute (gênant pour l'ensemble des utilisateurs)
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: Version de l'OS
+      placeholder: Windows 10, Ubuntu 20.04, etc.
+      description: |
+        Veuillez indiquer la version de votre OS.
+  - type: input
+    id: nodejs-version
+    attributes:
+      label: Version de Node.js
+      placeholder: 18.0.0
+      description: |
+        Veuillez indiquer la version de NodeJS que vous utilisez.
+  - type: input
+    id: npm-version
+    attributes:
+      label: Version de NPM
+      placeholder: 7.0.0
+      description: |
+        Veuillez indiquer la version de NPM que vous utilisez.
+  # Message d'erreur (textarea)
+  - type: textarea
+    id: error
+    attributes:
+      label: Message d'erreur
+      description: |
+        Veuillez indiquer le message d'erreur que vous avez reçu.
+    validations:
+      required: true

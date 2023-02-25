@@ -1,4 +1,4 @@
-import Client from "$core/Client";
+import Client from "$core/client";
 import Logger from "$core/utils/Logger";
 import Event, { EventName } from "$core/events/Event";
 

@@ -1,5 +1,5 @@
 import { createMember, getMembersOnServerStatus, setAlwaysOnServer } from "$core/api/requests/Member";
-import Client from "$core/Client";
+import Client from "$core/client";
 import Logger from "$core/utils/Logger";
 import Task from "$core/tasks/Task";
 import { gqlRequest } from "$core/utils/request";

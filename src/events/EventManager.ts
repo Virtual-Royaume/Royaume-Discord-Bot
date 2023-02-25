@@ -1,4 +1,4 @@
-import Client from "$core/Client";
+import Client from "$core/client";
 import { readdirSync } from "node:fs";
 import Event from "$core/events/Event";
 import Logger from "$core/utils/Logger";

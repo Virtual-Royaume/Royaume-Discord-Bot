@@ -1,62 +1,42 @@
 import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, Team, User } from "discord.js";
-import EventManager from "$core/events/EventManager";
-import CommandManager from "$core/commands/CommandManager";
-import TaskManager from "$core/tasks/TaskManager";
 import Logger, { logCrown } from "$core/utils/Logger";
-import { guildId } from "$resources/config/information.json";
-import { version } from "../package.json";
+import { version, displayName } from "../package.json";
 import { getStringEnv } from "./utils/EnvVariable";
+import { guildId } from "$resources/config/information.json";
+import { listener, load, register } from "$core/utils/command";
 
-export default class Client extends DiscordClient {
+export const client = new DiscordClient({
+  intents: [
+    GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildModeration, GatewayIntentBits.GuildMessages
+  ],
+  partials: [Partials.Message, Partials.Channel, Partials.Reaction]
+});
 
-  public static instance: Client;
+export const getGuild = async(): Promise<Guild> => {
+  return await client.guilds.fetch(guildId);
+};
 
-  // Events and commands managers :
-  public readonly eventManager: EventManager;
+export const getDevTeam = (): User[] | null => {
+  const owner = client.application?.owner;
 
-  public readonly commandManager: CommandManager;
-
-  public readonly taskManager: TaskManager;
-
-  constructor() {
-    super({
-      intents: [
-        GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildBans
-      ],
-      partials: [Partials.Message, Partials.Channel, Partials.Reaction]
-    });
-
-    // Create bot instance and login it :
-    Client.instance = this;
-    this.login(getStringEnv("BOT_TOKEN"));
-
-    // Load events, commands and tasks managers :
-    this.eventManager = new EventManager();
-    this.commandManager = new CommandManager();
-    this.taskManager = new TaskManager();
+  if (owner instanceof User) {
+    return [owner];
+  } else if (owner instanceof Team) {
+    return owner.members.map(teamMember => teamMember.user);
+  } else {
+    return null;
   }
+};
 
-  public async getGuild() : Promise<Guild> {
-    return await this.guilds.fetch(guildId);
-  }
+(async() => {
+  logCrown();
+  Logger.info(`Sarting ${displayName} v${version}...`);
+  await client.login(getStringEnv("BOT_TOKEN"));
 
-  public getDevTeam() : User[] | null {
-    const owner = this.application?.owner;
-
-    if (owner instanceof User) {
-      return [owner];
-    } else if (owner instanceof Team) {
-      return owner.members.map(teamMember => teamMember.user);
-    } else {
-      return null;
-    }
-  }
-
-}
-
-logCrown();
-Logger.info(`Sarting Royaume-Discord-Bot V${version}...`);
-new Client();
+  await load(`${__dirname}\\commands`);
+  listener(client);
+  await register(client);
+})();

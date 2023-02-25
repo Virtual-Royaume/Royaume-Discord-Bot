@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { button, modal as modalIds } from "$resources/config/interaction-ids.json";
 import { generalChannel } from "$resources/config/information.json";
-import Client from "$core/Client";
+import Client from "$core/client";
 import { simpleEmbed } from "$core/utils/Embed";
 import { verify } from "$resources/config/information.json";
 import { msg } from "$core/utils/Message";

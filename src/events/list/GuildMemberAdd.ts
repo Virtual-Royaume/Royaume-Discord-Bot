@@ -1,5 +1,5 @@
 import { ChannelType, GuildMember } from "discord.js";
-import Client from "$core/Client";
+import Client from "$core/client";
 import Event, { EventName } from "$core/events/Event";
 import { verify, privateMode, generalChannel, tiers as configTiers } from "$resources/config/information.json";
 import { createMember, getMemberActivityTier, setAlwaysOnServer } from "$core/api/requests/Member";

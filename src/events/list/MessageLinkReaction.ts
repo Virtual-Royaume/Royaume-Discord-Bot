@@ -1,5 +1,5 @@
 import { BaseGuildTextChannel, Message, EmbedBuilder, TextBasedChannel } from "discord.js";
-import Client from "$core/Client";
+import Client from "$core/client";
 import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
 import { msg } from "$core/utils/Message";

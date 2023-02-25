@@ -1,6 +1,6 @@
 import { incVoiceMinute } from "$core/api/requests/Member";
 import { setMemberCount } from "$core/api/requests/ServerActivity";
-import Client from "$core/Client";
+import Client from "$core/client";
 import Task from "$core/tasks/Task";
 import { gqlRequest } from "$core/utils/request";
 

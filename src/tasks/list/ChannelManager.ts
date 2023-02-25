@@ -1,4 +1,4 @@
-import Client from "$core/Client";
+import Client from "$core/client";
 import Task from "$core/tasks/Task";
 import Logger from "$core/utils/Logger";
 import { voiceChannels } from "$resources/config/information.json";

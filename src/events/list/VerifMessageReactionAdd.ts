@@ -1,5 +1,5 @@
 import { GuildMember, MessageReaction } from "discord.js";
-import Client from "$core/Client";
+import Client from "$core/client";
 import Event, { EventName } from "$core/events/Event";
 import { verify } from "$resources/config/information.json";
 import { simpleEmbed } from "$core/utils/Embed";

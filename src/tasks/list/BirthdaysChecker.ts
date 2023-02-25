@@ -2,7 +2,7 @@ import { getBirthdays } from "$core/api/requests/Member";
 import Task from "$core/tasks/Task";
 import { generalChannel } from "$resources/config/information.json";
 import { BaseGuildTextChannel } from "discord.js";
-import Client from "$core/Client";
+import Client from "$core/client";
 import { simpleEmbed } from "$core/utils/Embed";
 import DayJS from "$core/utils/DayJS";
 import { msg } from "$core/utils/Message";

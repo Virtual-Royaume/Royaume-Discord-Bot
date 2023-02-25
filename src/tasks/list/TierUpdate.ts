@@ -1,6 +1,6 @@
 import Task from "$core/tasks/Task";
 import { tiers as configTiers, verify, generalChannel } from "$resources/config/information.json";
-import Client from "$core/Client";
+import Client from "$core/client";
 import { getMembersTier } from "$core/api/requests/Member";
 import Logger from "$core/utils/Logger";
 import { BaseGuildTextChannel } from "discord.js";

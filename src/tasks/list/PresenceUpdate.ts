@@ -1,4 +1,4 @@
-import Client from "$core/Client";
+import Client from "$core/client";
 import Task from "$core/tasks/Task";
 import { getPresenceMessages } from "$core/api/requests/PresenceMessage";
 import { ActivityType } from "discord.js";

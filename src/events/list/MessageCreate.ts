@@ -7,7 +7,7 @@ import { numberFormat } from "$core/utils/Function";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/request";
 import Logger from "$core/utils/Logger";
-import Client from "$core/Client";
+import Client from "$core/client";
 import Event, { EventName } from "$core/events/Event";
 
 export default class MessageCreate extends Event {

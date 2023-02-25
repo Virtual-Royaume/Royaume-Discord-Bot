@@ -1,7 +1,9 @@
 import {
   ChatInputCommandInteraction, AttachmentBuilder, BaseGuildTextChannel,
   GuildPremiumTier, SlashCommandAttachmentOption, SlashCommandBuilder,
-  SlashCommandStringOption
+  SlashCommandStringOption,
+  Message,
+  GuildEmoji
 } from "discord.js";
 import { msg } from "$core/utils/Message";
 import Command from "$core/commands/Command";
@@ -95,8 +97,10 @@ export default class Emoji extends Command {
       time: 60_000 * 20
     });
 
-    const removeReactions = () => voteMessage.reactions.removeAll();
-    const addEmojiRequest = () => command.guild?.emojis.create({ attachment: attachment?.url, name: emojiIdentifier });
+    const removeReactions = (): Promise<Message<boolean>> => voteMessage.reactions.removeAll();
+    const addEmojiRequest = (): Promise<GuildEmoji> | undefined => {
+      return command.guild?.emojis.create({ attachment: attachment?.url, name: emojiIdentifier });
+    };
 
     reactionCollector.on("collect", (reaction) => {
       if (

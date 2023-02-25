@@ -1,6 +1,6 @@
 import {
   BaseGuildTextChannel, ChatInputCommandInteraction,
-  GuildMember, SlashCommandBuilder, SlashCommandNumberOption,
+  GuildMember, Message, SlashCommandBuilder, SlashCommandNumberOption,
   SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
 import { addPresenceMessage, getPresenceMessages, removePresenceMessage } from "$core/api/requests/PresenceMessage";
@@ -11,7 +11,8 @@ import Command from "$core/commands/Command";
 import Client from "$core/Client";
 import { msg } from "$core/utils/Message";
 import { gqlRequest } from "$core/utils/request";
-import { PresenceType } from "$core/utils/request/graphql/graphql";
+import { AddPresenceMessageMutation, PresenceType } from "$core/utils/request/graphql/graphql";
+import { Response } from "$core/utils/request/request.type";
 
 export default class Role extends Command {
 
@@ -91,7 +92,9 @@ export default class Role extends Command {
     }
 
     // Create function for the request for add presence message :
-    const addPresenceRequest = async() => await gqlRequest(addPresenceMessage, { type: presence, text: message });
+    const addPresenceRequest = async(): Promise<Response<AddPresenceMessageMutation>> => {
+      return await gqlRequest(addPresenceMessage, { type: presence, text: message });
+    };
 
     // Add the new presence message if command author is admin, if he is not admin send a proposal in general channel :
     if (command.member.roles.cache.has(adminRole)) {
@@ -155,7 +158,7 @@ export default class Role extends Command {
         time: 60_000 * 20
       });
 
-      const removeReactions = () => voteMessage.reactions.removeAll();
+      const removeReactions = (): Promise<Message<boolean>> => voteMessage.reactions.removeAll();
 
       reactionCollector.on("collect", async(reaction) => {
         if (

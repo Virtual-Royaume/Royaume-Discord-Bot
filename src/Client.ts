@@ -36,7 +36,10 @@ export const getDevTeam = (): User[] | null => {
   Logger.info(`Sarting ${displayName} v${version}...`);
   await client.login(getStringEnv("BOT_TOKEN"));
 
-  await load(`${__dirname}\\commands`);
-  listener(client);
-  await register(client);
+  const loadedCommands = await load(`${__dirname}\\commands`);
+
+  Logger.info(`${loadedCommands.builders.size} commands loaded`);
+  listener(client, loadedCommands.commands);
+  await register(client, loadedCommands.builders);
+  Logger.info("Successfully registered application (/) commands");
 })();

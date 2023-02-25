@@ -1,17 +1,16 @@
 import { Client, Collection, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
-import Logger from "$core/utils/Logger";
 import { isDevEnvironment } from "$core/utils/Environment";
-import { CommandEnabledInDev, CommandExecute, SlashCommandDefition } from "./command.type";
+import { CommandsCollection, CommandEnabledInDev, CommandExecute,
+  SlashCommandDefition, CommandsBuilderCollection, LoadedCommands } from "./command.type";
 import { haveSubcommands, isFolderExist, serializeCommandName } from "./command.util";
 
 const subCommandDirName = "[sub-commands]";
 const subCommandGroupDirNamePrefix = "group-";
 
-const commands: Collection<string, CommandExecute> = new Collection();
-const commandsBuilders: Collection<string, SlashCommandDefition> = new Collection();
-
-export const load = async(commandsFolder: string): Promise<void> => {
+export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
+  const commands: CommandsCollection = new Collection();
+  const commandsBuilders: CommandsBuilderCollection = new Collection();
   const folders = readdirSync(commandsFolder);
 
   for (const folder of folders) {
@@ -51,12 +50,13 @@ export const load = async(commandsFolder: string): Promise<void> => {
     if (!isFolderExist(`${path}${subCommandDirName}`)) throw new Error(`${subCommandDirName} doesn't exist`);
 
     for (const commandOption of builder.options) {
-      // Load SubCommandsGroup
+      // SubCommandsGroup loading
       if (commandOption instanceof SlashCommandSubcommandGroupBuilder) {
         const subCommandGroupFolder = `${subCommandDirName}\\${subCommandGroupDirNamePrefix}${commandOption.name}\\`;
 
         if (!isFolderExist(`${path}${subCommandGroupFolder}`)) throw new Error(`"${commandOption.name}" SubCommandGroup folder doesn't exist`);
 
+        // SubCommandGroup-SubCommands loading
         for (const subCommandGroupOption of commandOption.options) {
           const subCommandFileName = `${commandOption.name}-${subCommandGroupOption.name}.cmd.ts`;
 
@@ -71,7 +71,7 @@ export const load = async(commandsFolder: string): Promise<void> => {
           continue;
         }
 
-      // Load SubCommands
+      // SubCommands loading
       } else if (commandOption instanceof SlashCommandSubcommandBuilder) {
         const subCommandFileName = `${commandOption.name}.cmd.ts`;
 
@@ -87,10 +87,13 @@ export const load = async(commandsFolder: string): Promise<void> => {
     }
   }
 
-  Logger.info(`${commandsBuilders.size} commands loaded`);
+  return {
+    commands,
+    builders: commandsBuilders
+  };
 };
 
-export const listener = (client: Client): void => {
+export const listener = (client: Client, commands: CommandsCollection): void => {
   client.on("interactionCreate", async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
@@ -104,12 +107,10 @@ export const listener = (client: Client): void => {
   });
 };
 
-export const register = async(client: Client): Promise<void> => {
+export const register = async(client: Client, commandsBuilders: CommandsBuilderCollection): Promise<void> => {
   await client.application?.commands.set(
     commandsBuilders.map(command => {
       return command.toJSON();
     })
   );
-
-  Logger.info("Successfully registered application (/) commands");
 };

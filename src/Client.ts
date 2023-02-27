@@ -3,7 +3,7 @@ import Logger, { logCrown } from "$core/utils/Logger";
 import { version, displayName } from "../package.json";
 import { getStringEnv } from "./utils/EnvVariable";
 import { guildId } from "$resources/config/information.json";
-import { listener, load, register } from "$core/utils/command";
+import { listener, load, register } from "$core/utils/handler/command";
 
 export const client = new DiscordClient({
   intents: [
@@ -19,7 +19,7 @@ export const getGuild = async(): Promise<Guild> => {
   return await client.guilds.fetch(guildId);
 };
 
-export const getDevTeam = (): User[] | null => {
+export const getDevTeam = (client: DiscordClient): User[] | null => {
   const owner = client.application?.owner;
 
   if (owner instanceof User) {
@@ -35,6 +35,7 @@ export const getDevTeam = (): User[] | null => {
   logCrown();
   Logger.info(`Sarting ${displayName} v${version}...`);
   await client.login(getStringEnv("BOT_TOKEN"));
+  Logger.info("Client has been started");
 
   const loadedCommands = await load(`${__dirname}\\commands`);
 

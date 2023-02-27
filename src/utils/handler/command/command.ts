@@ -50,6 +50,8 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
     if (!isFolderExist(`${path}${subCommandDirName}`)) throw new Error(`${subCommandDirName} doesn't exist`);
 
     for (const commandOption of builder.options) {
+
+
       // SubCommandsGroup loading
       if (commandOption instanceof SlashCommandSubcommandGroupBuilder) {
         const subCommandGroupFolder = `${subCommandDirName}\\${subCommandGroupDirNamePrefix}${commandOption.name}\\`;

@@ -1,8 +1,9 @@
 import { msg } from "$core/utils/Message";
-import { CommandEnabledInDev, SlashCommandDefition } from "$core/utils/handler/command";
+import { EnableInDev } from "$core/utils/handler";
+import { SlashCommandDefition } from "$core/utils/handler/command";
 import { ChannelType, SlashCommandBuilder } from "discord.js";
 
-export const enableInDev: CommandEnabledInDev = true;
+export const enableInDev: EnableInDev = true;
 
 export const slashCommand: SlashCommandDefition = new SlashCommandBuilder()
   .setName(msg("cmd-main-builder-name"))

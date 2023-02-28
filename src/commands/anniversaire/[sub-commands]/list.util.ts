@@ -1,0 +1,1 @@
+export const memberPerPage = 10;

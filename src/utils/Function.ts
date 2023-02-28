@@ -1,6 +1,7 @@
 import { Dayjs } from "dayjs";
 import { localFormat } from "$resources/config/information.json";
 import DayJS from "$core/utils/DayJS";
+import { existsSync, statSync } from "fs";
 
 export function numberFormat(number: number): string {
   return number.toLocaleString(localFormat);
@@ -33,3 +34,7 @@ export function getAge(birth: Dayjs): number {
 export function firstLetterToUppercase(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export const isFolderExist = (path: string): boolean => {
+  return existsSync(path) && statSync(path).isDirectory();
+};

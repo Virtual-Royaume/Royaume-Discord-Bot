@@ -1,2 +1,2 @@
 export { load, listener, register } from "./command";
-export { SlashCommandDefition, CommandExecute, CommandEnabledInDev } from "./command.type";
+export { SlashCommandDefition, CommandExecute } from "./command.type";

@@ -1,9 +1,11 @@
 import { Client, Collection, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
 import { isDevEnvironment } from "$core/utils/Environment";
-import { CommandsCollection, CommandEnabledInDev, CommandExecute,
+import { CommandsCollection, CommandExecute,
   SlashCommandDefition, CommandsBuilderCollection, LoadedCommands } from "./command.type";
-import { haveSubcommands, isFolderExist, serializeCommandName } from "./command.util";
+import { haveSubcommands, serializeCommandName } from "./command.util";
+import { EnableInDev } from "$core/utils/handler/handler.type";
+import { isFolderExist } from "$core/utils/Function";
 
 const subCommandDirName = "[sub-commands]";
 const subCommandGroupDirNamePrefix = "group-";
@@ -23,7 +25,7 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
     if (!existsSync(`${path}${builderFileName}`)) throw new Error(`"${builderFileName}" file can't be found in \`${path}\``);
 
     const dynamicBuilderImport = await import(`${path}${builderFileName}`);
-    const enableInDev: CommandEnabledInDev = dynamicBuilderImport.enableInDev;
+    const enableInDev: EnableInDev = dynamicBuilderImport.enableInDev ?? false;
 
     if (!enableInDev && isDevEnvironment) continue;
 

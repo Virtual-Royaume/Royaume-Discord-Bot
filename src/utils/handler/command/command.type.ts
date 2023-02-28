@@ -1,6 +1,5 @@
 import { ChatInputCommandInteraction, Collection, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
-export type CommandEnabledInDev = boolean;
 
 export type SlashCommandDefition = SlashCommandSubcommandsOnlyBuilder |
   Omit<SlashCommandBuilder, "addSubcommandGroup" | "addSubcommand">;

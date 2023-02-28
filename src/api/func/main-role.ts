@@ -1,4 +1,4 @@
-import { getRoles } from "$core/api/requests/MainRole";
+import { getRoles } from "$core/api/requests/main-role";
 import { gqlRequest } from "$core/utils/request";
 
 type RolesByCategory = {

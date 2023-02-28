@@ -1,4 +1,4 @@
-import { msg } from "$core/utils/Message";
+import { msg } from "$core/utils/message";
 import { EnableInDev } from "$core/utils/handler";
 import { SlashCommandDefition } from "$core/utils/handler/command";
 import { ChannelType, SlashCommandBuilder } from "discord.js";

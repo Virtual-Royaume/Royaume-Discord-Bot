@@ -1,4 +1,4 @@
-import { getChannels } from "$core/api/requests/MainChannel";
+import { getChannels } from "$core/api/requests/main-channel";
 import { gqlRequest } from "$core/utils/request";
 
 type ChannelsByCategory = {

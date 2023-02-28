@@ -1,7 +1,7 @@
-import { getChannelsByCategory } from "$core/api/func/MainChannel";
-import { getRolesByCategory } from "$core/api/func/MainRole";
-import { simpleEmbed } from "$core/utils/Embed";
-import { msg } from "$core/utils/Message";
+import { getChannelsByCategory } from "$core/api/func/main-channel";
+import { getRolesByCategory } from "$core/api/func/main-role";
+import { simpleEmbed } from "$core/utils/embed";
+import { msg } from "$core/utils/message";
 import { CommandExecute } from "$core/utils/handler/command";
 
 export const execute: CommandExecute = async(command) => {

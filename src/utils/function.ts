@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs";
 import { localFormat } from "$resources/config/information.json";
-import DayJS from "$core/utils/DayJS";
+import DayJS from "$core/utils/day-js";
 import { existsSync, statSync } from "fs";
 
 export function numberFormat(number: number): string {

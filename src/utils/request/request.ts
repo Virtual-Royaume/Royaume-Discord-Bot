@@ -1,8 +1,8 @@
 import { Response } from "./request.type";
-import { getStringEnv } from "$core/utils/EnvVariable";
+import { getStringEnv } from "$core/utils/env-variable";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
-import Logger from "../Logger";
+import Logger from "../logger";
 import { URLSearchParams } from "url";
 
 type Method = "get" | "delete" | "post"| "put";

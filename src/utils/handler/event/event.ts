@@ -1,5 +1,5 @@
 import { EventName, EventExecute, EventOnce } from "$core/utils/handler/event";
-import { isDevEnvironment } from "$core/utils/Environment";
+import { isDevEnvironment } from "$core/utils/environment";
 import { EnableInDev } from "$core/utils/handler/handler.type";
 import { Client } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
@@ -33,6 +33,7 @@ export const load = async(client: Client, eventsFolder: string): Promise<number>
     const isOnce: EventOnce = dynamicEventImport.once ?? false;
 
     client[isOnce ? "once" : "on"](eventName, (...args) => execute(...args));
+
     eventsLoaded++;
   }
 

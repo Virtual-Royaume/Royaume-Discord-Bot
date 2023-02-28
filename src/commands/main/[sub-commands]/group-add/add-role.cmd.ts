@@ -1,6 +1,6 @@
-import { addRole } from "$core/api/requests/MainRole";
-import { simpleEmbed } from "$core/utils/Embed";
-import { msg } from "$core/utils/Message";
+import { addRole } from "$core/api/requests/main-role";
+import { simpleEmbed } from "$core/utils/embed";
+import { msg } from "$core/utils/message";
 import { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
 

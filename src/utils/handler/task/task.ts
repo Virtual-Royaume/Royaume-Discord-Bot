@@ -1,4 +1,4 @@
-import { isDevEnvironment } from "$core/utils/Environment";
+import { isDevEnvironment } from "$core/utils/environment";
 import { EnableInDev } from "$core/utils/handler/handler.type";
 import { existsSync, readdirSync, statSync } from "fs";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task/task.type";

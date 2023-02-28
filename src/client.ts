@@ -1,9 +1,11 @@
 import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, Team, User } from "discord.js";
-import Logger, { logCrown } from "$core/utils/Logger";
+import Logger, { logCrown } from "$core/utils/logger";
 import { version, displayName } from "../package.json";
-import { getStringEnv } from "./utils/EnvVariable";
+import { getStringEnv } from "./utils/env-variable";
 import { guildId } from "$resources/config/information.json";
-import { listener, load, register } from "$core/utils/handler/command";
+import { listener, load as loadCommands, register } from "$core/utils/handler/command";
+import { load as loadEvents } from "$core/utils/handler/event";
+import { load as loadTasks } from "$core/utils/handler/task";
 
 export const client = new DiscordClient({
   intents: [
@@ -31,13 +33,22 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
   }
 };
 
+// Temporary
 (async() => {
   logCrown();
   Logger.info(`Sarting ${displayName} v${version}...`);
-  await client.login(getStringEnv("BOT_TOKEN"));
-  Logger.info("Client has been started");
 
-  const loadedCommands = await load(`${__dirname}\\commands`);
+  const eventsLoaded = await loadEvents(client, `${__dirname}\\events`);
+
+  Logger.info(`${eventsLoaded} events loaded`);
+
+  const tasksLoaded = await loadTasks(`${__dirname}\\tasks`);
+
+  Logger.info(`${tasksLoaded} tasks loaded`);
+
+  client.login(getStringEnv("BOT_TOKEN"));
+
+  const loadedCommands = await loadCommands(`${__dirname}\\commands`);
 
   Logger.info(`${loadedCommands.builders.size} commands loaded`);
   listener(client, loadedCommands.commands);

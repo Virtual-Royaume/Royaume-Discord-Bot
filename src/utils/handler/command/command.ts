@@ -1,11 +1,11 @@
 import { Client, Collection, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
-import { isDevEnvironment } from "$core/utils/Environment";
+import { isDevEnvironment } from "$core/utils/environment";
 import { CommandsCollection, CommandExecute,
   SlashCommandDefition, CommandsBuilderCollection, LoadedCommands } from "./command.type";
 import { haveSubcommands, serializeCommandName } from "./command.util";
 import { EnableInDev } from "$core/utils/handler/handler.type";
-import { isFolderExist } from "$core/utils/Function";
+import { isFolderExist } from "$core/utils/function";
 
 const subCommandDirName = "[sub-commands]";
 const subCommandGroupDirNamePrefix = "group-";

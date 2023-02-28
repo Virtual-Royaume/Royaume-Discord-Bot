@@ -1,6 +1,6 @@
-import { removeChannel } from "$core/api/requests/MainChannel";
-import { simpleEmbed } from "$core/utils/Embed";
-import { msg } from "$core/utils/Message";
+import { removeChannel } from "$core/api/requests/main-channel";
+import { simpleEmbed } from "$core/utils/embed";
+import { msg } from "$core/utils/message";
 import { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
 

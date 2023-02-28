@@ -32,7 +32,7 @@ const colors = {
   }
 };
 
-export default {
+export const logger = {
   info: (message: string) => {
     console.log(`${colors.fg.yellow}- ${colors.bold}${colors.fg.white}Info${colors.reset}    ${colors.fg.gray}» ${colors.reset}${message}`);
   },

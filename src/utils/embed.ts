@@ -4,7 +4,7 @@ import { isHexColor } from "./validator";
 
 type EmbedType = "normal" | "error";
 
-export function simpleEmbed(message: string, type: EmbedType = "normal", title?: string): EmbedBuilder {
+export const simpleEmbed = (message: string, type: EmbedType = "normal", title?: string): EmbedBuilder => {
   const color = type === "normal" ? colors.primary : colors.error;
 
   if (!isHexColor(color)) throw new Error("Invalid config: \"colors\" field in information.json need to be a valid hex color code");
@@ -15,4 +15,4 @@ export function simpleEmbed(message: string, type: EmbedType = "normal", title?:
   if (title) embed.setTitle(title);
 
   return embed;
-}
+};

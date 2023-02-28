@@ -5,7 +5,7 @@ type RolesByCategory = {
     [category: string]: string[]
 }
 
-export async function getRolesByCategory(): Promise<RolesByCategory> {
+export const getRolesByCategory = async(): Promise<RolesByCategory> => {
   // Get mains roles :
   const response = await gqlRequest(getRoles);
 
@@ -25,4 +25,4 @@ export async function getRolesByCategory(): Promise<RolesByCategory> {
   }
 
   return rolesIdsByCategory;
-}
+};

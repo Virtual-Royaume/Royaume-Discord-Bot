@@ -7,7 +7,7 @@ import messages from "$resources/config/messages.json";
   Exemple: "command-together-builder-name": "watch-together"
   Exemple: "command-together-exec-voice-needed": "Vous devez êtr[...]"
 */
-export function msg(key: keyof typeof messages, params: (string | number)[] = []): string {
+export const msg = (key: keyof typeof messages, params: (string | number)[] = []): string => {
   const messageList: Record<string, string | string[]> = messages;
   let message = messageList[key];
 
@@ -20,4 +20,4 @@ export function msg(key: keyof typeof messages, params: (string | number)[] = []
   if (words) for (let i = 0; i < words.length; i++) message = message.replace(words[i], String(params[i]));
 
   return message;
-}
+};

@@ -46,9 +46,9 @@ export default {
   }
 };
 
-export function logCrown() : void {
+export const logCrown = () : void => {
   console.log(readFileSync(`${__dirname}/../../resources/art/crown.txt`, { encoding: "utf-8" }).replace(
     /(_|\||\*|\+)/g,
     input => ["_", "|"].includes(input) ? `${colors.fg.yellow}${input}` : `${colors.fg.red}${input === "*" ? "_" : "|"}`
   ));
-}
+};

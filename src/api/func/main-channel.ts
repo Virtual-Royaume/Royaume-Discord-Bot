@@ -5,7 +5,7 @@ type ChannelsByCategory = {
     [category: string]: string[]
 }
 
-export async function getChannelsByCategory(): Promise<ChannelsByCategory> {
+export const getChannelsByCategory = async(): Promise<ChannelsByCategory> => {
   // Get mains channels :
   const response = await gqlRequest(getChannels);
 
@@ -25,4 +25,4 @@ export async function getChannelsByCategory(): Promise<ChannelsByCategory> {
   }
 
   return channelsIdsByCategory;
-}
+};

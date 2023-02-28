@@ -64,8 +64,8 @@ export default class Inactive extends Command {
 
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     // Get action, channel/role and category :
-    const channel = command.options.getChannel(msg("cmd-main-builder-channel-name"));
-    const forum = command.options.getChannel(msg("cmd-main-builder-forum-name"));
+    const channel = command.options.getChannel(msg("cmd-main-builder-channel-name"))
+      ?? command.options.getChannel(msg("cmd-main-builder-forum-name"));
     const role = command.options.getRole(msg("cmd-main-builder-role-name"));
 
     const category = command.options.getString(msg("cmd-main-builder-category-name"));
@@ -97,48 +97,88 @@ export default class Inactive extends Command {
       return;
     }
 
-        // Add and remove actions :
-        type Result = {
-            success?: boolean;
-            action?: string;
-            type?: "role" | "channel";
-        }
+    // Add and remove actions :
+    type Result = {
+      success?: boolean;
+      action?: string;
+      type?: "role" | "channel";
+    }
 
-        if (command.options.getSubcommand() === "add" && !category) {
-          command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-category"), "error")], ephemeral: true });
+    if (command.options.getSubcommand() === "add" && !category) {
+      command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-category"), "error")], ephemeral: true });
+      return;
+    }
+
+    if (!channel && !role) {
+      command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-mention"), "error")], ephemeral: true });
+      return;
+    }
+
+    const result: Result = { action: command.options.getSubcommand() };
+
+    if (channel) {
+      result.type = "channel";
+
+      if (command.options.getSubcommand() === "add" && category) {
+        const addChannelQuery = await gqlRequest(addChannel, { channelId: channel.id, category: category });
+
+        if (!addChannelQuery.success) {
+          command.reply({
+            embeds: [simpleEmbed(msg("cmd-main-exec-channel-add-error"), "error")],
+            ephemeral: true
+          });
+
           return;
         }
 
-        if (!channel && !role && !forum) {
-          command.reply({ embeds: [simpleEmbed(msg("cmd-main-exec-need-mention"), "error")], ephemeral: true });
+      } else {
+        const removeChannelQuery = await gqlRequest(removeChannel, { channelId: channel.id });
+
+        if (!removeChannelQuery.success) {
+          command.reply({
+            embeds: [simpleEmbed(msg("cmd-main-exec-channel-remove-error"), "error")],
+            ephemeral: true
+          });
+
+          return;
+        }
+      }
+
+    } else if (role) {
+      result.type = "role";
+
+      if (command.options.getSubcommand() === "add" && category) {
+        const addRoleQuery = await gqlRequest(addRole, { roleId: role.id, category: category });
+
+        if (!addRoleQuery.success) {
+          command.reply({
+            embeds: [simpleEmbed(msg("cmd-main-exec-role-add-error"), "error")],
+            ephemeral: true
+          });
+
           return;
         }
 
-        const result: Result = { action: command.options.getSubcommand() };
+      } else {
+        const removeRoleQuery = await gqlRequest(removeRole, { roleId: role.id });
 
-        if (channel) {
-          result.type = "channel";
-          result.success = command.options.getSubcommand() === "add" && category
-            ? (await gqlRequest(addChannel, { channelId: channel.id, category: category })).data?.addChannel
-            : (await gqlRequest(removeChannel, { channelId: channel.id })).data?.removeChannel;
-        } else if (forum) {
-          result.type = "channel";
-          result.success = command.options.getSubcommand() === "add" && category
-            ? (await gqlRequest(addChannel, { channelId: forum.id, category: category })).data?.addChannel
-            : (await gqlRequest(removeChannel, { channelId: forum.id })).data?.removeChannel;
-        } else if (role) {
-          result.type = "role";
-          result.success = command.options.getSubcommand() === "add" && category
-            ? (await gqlRequest(addRole, { roleId: role.id, category: category })).data?.addRole
-            : (await gqlRequest(removeRole, { roleId: role.id })).data?.removeRole;
+        if (!removeRoleQuery.success) {
+          command.reply({
+            embeds: [simpleEmbed(msg("cmd-main-exec-role-remove-error"), "error")],
+            ephemeral: true
+          });
+
+          return;
         }
+      }
+    }
 
-        const type = result.type === "role" ? "rôle" : "salon";
-        const message = result.success
-          ? msg("cmd-main-exec-success-add", [result.action === "add" ? "ajouté" : "supprimé", type])
-          : msg("cmd-main-exec-success-error", [result.action === "add" ? "l'ajout" : "la suppression", type]);
+    const type = result.type === "role" ? "rôle" : "salon";
 
-        command.reply({ embeds: [simpleEmbed(message, result.success ? "normal" : "error")], ephemeral: true });
+    command.reply({
+      embeds: [simpleEmbed(msg("cmd-main-exec-success-add", [result.action === "add" ? "ajouté" : "supprimé", type]))],
+      ephemeral: true
+    });
   }
 
 }

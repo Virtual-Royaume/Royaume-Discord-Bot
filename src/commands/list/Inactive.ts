@@ -13,6 +13,7 @@ import { simpleEmbed } from "$core/utils/Embed";
 import { gqlRequest } from "$core/utils/request";
 import { formatMinutes } from "$core/utils/Function";
 import { tiers as configTiers } from "$resources/config/information.json";
+import { GetMonthActivityQuery } from "$core/utils/request/graphql/graphql";
 
 export default class Inactive extends Command {
 
@@ -52,9 +53,18 @@ export default class Inactive extends Command {
       return;
     }
 
+    // Send default embed:
+    const reply = await command.reply(
+      {
+        embeds: [await this.generateEmbed(memberId, inactiveMembers[this.getPage(memberId)]._id)],
+        components: [await this.getButtonsComponents(memberId)],
+        ephemeral: true
+      }
+    );
+
     // Create message button collector and handle it:
-    const collector = command.channel.createMessageComponentCollector<ComponentType.Button>({
-      filter: interaction => Object.values(button.inactive).includes(interaction.customId) && interaction.member.id === memberId,
+    const collector = reply.createMessageComponentCollector<ComponentType.Button>({
+      filter: interaction => Object.values(button.inactive).includes(interaction.customId) && interaction.user.id === memberId,
       time: 1000 * 60 * 30 // 30 minutes
     });
 
@@ -63,18 +73,9 @@ export default class Inactive extends Command {
     collector.on("end", () => {
       command.editReply({ components: [] });
     });
-
-    // Send default embed:
-    await command.reply(
-      {
-        embeds: [await this.generateEmbed(memberId, inactiveMembers[this.getPage(memberId)]._id)],
-        components: [await this.getButtonsComponents(memberId)],
-        ephemeral: true
-      }
-    );
   }
 
-  private async getInactiveMembers() {
+  private async getInactiveMembers(): Promise<GetMonthActivityQuery["members"] | null> {
     // Get guild instance:
     const guild = await Client.instance.getGuild();
 

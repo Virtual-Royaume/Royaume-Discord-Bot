@@ -10,11 +10,11 @@ export default class ChannelDelete extends Event {
   public name: EventName = "channelDelete";
 
   public async execute(channel: DMChannel | GuildChannel): Promise<void> {
-    const channels = (await gqlRequest(getChannels)).data?.channels;
+    const channelsQuery = await gqlRequest(getChannels);
 
-    if (!channels) return;
+    if (!channelsQuery.success) return;
 
-    if (channels.find(c => c.channelId === channel.id)) gqlRequest(removeChannel, { channelId: channel.id });
+    if (channelsQuery.data.channels.find(c => c.channelId === channel.id)) gqlRequest(removeChannel, { channelId: channel.id });
   }
 
 }

@@ -1,4 +1,4 @@
-import { GuildMember, MessageReaction } from "discord.js";
+import { GuildMember, Message, MessageReaction } from "discord.js";
 import Client from "$core/Client";
 import Event, { EventName } from "$core/events/Event";
 import { verify } from "$resources/config/information.json";
@@ -30,7 +30,7 @@ export default class VerifMessageReactionAdd extends Event {
     if (!(member instanceof GuildMember)) return;
 
     // Check if the member is accepted :
-    const removeReactions = () => messageReaction.message.reactions.removeAll();
+    const removeReactions = (): Promise<Message<boolean>> => messageReaction.message.reactions.removeAll();
 
     if (
       messageReaction.emoji.name === verify.emoji.upVote

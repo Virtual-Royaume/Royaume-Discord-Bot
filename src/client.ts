@@ -1,5 +1,5 @@
 import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, Team, User } from "discord.js";
-import Logger, { logCrown } from "$core/utils/logger";
+import { logger, logCrown } from "$core/utils/logger";
 import { version, displayName } from "../package.json";
 import { getStringEnv } from "./utils/env-variable";
 import { guildId } from "$resources/config/information.json";
@@ -36,22 +36,22 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
 // Temporary
 (async() => {
   logCrown();
-  Logger.info(`Sarting ${displayName} v${version}...`);
+  logger.info(`Sarting ${displayName} v${version}...`);
 
   const eventsLoaded = await loadEvents(client, `${__dirname}\\events`);
 
-  Logger.info(`${eventsLoaded} events loaded`);
+  logger.info(`${eventsLoaded} events loaded`);
 
   const tasksLoaded = await loadTasks(`${__dirname}\\tasks`);
 
-  Logger.info(`${tasksLoaded} tasks loaded`);
+  logger.info(`${tasksLoaded} tasks loaded`);
 
   client.login(getStringEnv("BOT_TOKEN"));
 
   const loadedCommands = await loadCommands(`${__dirname}\\commands`);
 
-  Logger.info(`${loadedCommands.builders.size} commands loaded`);
+  logger.info(`${loadedCommands.builders.size} commands loaded`);
   listener(client, loadedCommands.commands);
   await register(client, loadedCommands.builders);
-  Logger.info("Successfully registered application (/) commands");
+  logger.info("Successfully registered application (/) commands");
 })();

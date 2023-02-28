@@ -1,23 +1,14 @@
-import messages from "$resources/config/messages.json";
-
 /*
-  Format du fichier JSON :
-  SlashCommandBuilder: "command-{Nom de la commande}-builder-{variable}"
-  Execute: "command-{Nom de la commande}-exec-{variable}"
-  Exemple: "command-together-builder-name": "watch-together"
-  Exemple: "command-together-exec-voice-needed": "Vous devez êtr[...]"
+  Replace "{a word}" by value passed in `params` array
 */
-export const msg = (key: keyof typeof messages, params: (string | number)[] = []): string => {
-  const messageList: Record<string, string | string[]> = messages;
-  let message = messageList[key];
-
-  if (!message) return "Aucun message trouvé (" + key + ")";
-
-  if (Array.isArray(message)) message = message.join("\n");
-
+export const msgParams = (message: string, params: (string | number)[]): string => {
   const words = message.match(/\{[^}]+\}/g);
 
   if (words) for (let i = 0; i < words.length; i++) message = message.replace(words[i], String(params[i]));
 
   return message;
+};
+
+export const multiLineMsg = (message: string[]): string => {
+  return message.join("\n");
 };

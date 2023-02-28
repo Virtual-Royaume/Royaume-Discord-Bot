@@ -1,368 +1,156 @@
 {
-    "message-execution-error-cmd": "Erreur lors de l'exécution de la commande",
+  "commands": {
+    "main": {
+      "name": "main",
+      "description": "Ajouter, supprimer ou afficher les salons/rôles principaux",
+      "groups": {
+        "add": {
+          "name": "add",
+          "description": "Ajouter des salons/rôles principaux",
+          "subcmds": {
+            "channel": {
+              "name": "channel",
+              "description": "Ajoute un salon à la liste des salons principaux",
+              "options": {
+                "channel": {
+                  "name": "channel",
+                  "description": "Salon a ajouter"
+                },
+                "category": {
+                  "name": "category",
+                  "description": "Categorie du salon"
+                }
+              }
+            },
+            "role": {
+              "name": "role",
+              "description": "Ajoute un rôle à la liste des rôles principaux",
+              "options": {
+                "role": {
+                  "name": "role",
+                  "description": "Rôle a ajouter"
+                },
+                "category": {
+                  "name": "category",
+                  "description": "Categorie du rôle"
+                }
+              }
+            }
+          }
+        },
+        "remove": {
+          "name": "remove",
+          "description": "Supprimer des salons/rôles principaux",
+          "subcmds": {
+            "channel": {
+              "name": "channel",
+              "description": "Supprimer un salon à la liste des salons principaux",
+              "options": {
+                "channel": {
+                  "name": "channel",
+                  "description": "Salon a supprimer"
+                }
+              }
+            },
+            "role": {
+              "name": "role",
+              "description": "Supprimer un rôle des rôles principaux",
+              "options": {
+                "role": {
+                  "name": "role",
+                  "description": "Rôle a supprimer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "subcmds": {
+        "list": {
+          "name": "list",
+          "description": "Affiche la liste des rôles ou salons principaux"
+        }
+      },
+      "exec": {
+        "add": {
+          "channel": {
+            "error": "Erreur lors de l'ajout du salon",
+            "succes": "<#{channelId}> a bien été ajouté a `{category}` !"
+          },
+          "role": {
+            "error": "Erreur lors de l'ajout du rôle",
+            "succes": "<@&{roleId}> a bien été ajouté a `{category}` !"
+          }
+        },
+        "remove": {
+          "channel": {
+            "error": "Erreur lors de la suppression du salon",
+            "succes": "<#{channelId}> a bien été supprimé !"
+          },
+          "role": {
+            "error": "Erreur lors de la suppression du rôle",
+            "succes": "<@&{roleId}> a bien été supprimé !"
+          }
+        },
+        "list": {
+          "channels": {
+            "title": "Salons principaux",
+            "channel": "**{category} :** {members}"
+          },
+          "role": {
+            "title": "Rôles principaux",
+            "channel": "**{category} :** {members}"
+          }
+        }
+      }
+    },
 
-    "cmd-ask-builder-name": "ask",
-    "cmd-ask-builder-description": "Pose une question à laquelle je répondrai avec ma super intéligence !",
-    "cmd-ask-builder-args-question-name": "question",
-    "cmd-ask-builder-args-question-description": "Quel est le 3 ème président de la France?",
-    "cmd-ask-exec-loading": "Je n'ai pas compris votre question",
-    "cmd-ask-exec-embed-title": "ChatGPT",
-    "cmd-ask-exec-embed-line": "Question: **{question}** {rep}",
-
-    "cmd-birthday-builder-name": "anniversaire",
-    "cmd-birthday-builder-description": "Définir votre date d'anniversaire",
-    "cmd-birthday-builder-subcmd-set-name": "set",
-    "cmd-birthday-builder-subcmd-set-description": "Définir votre date d'anniversaire",
-    "cmd-birthday-builder-subcmd-set-date-name": "date",
-    "cmd-birthday-builder-subcmd-set-date-description": "Votre date de naissance avec ce format : DD/MM/YYYY (jour/mois/année de naissance)",
-    "cmd-birthday-builder-subcmd-list-name": "list",
-    "cmd-birthday-builder-subcmd-list-description": "Afficher la liste des anniversaires",
-    "cmd-birthday-builder-subcmd-list-number-name": "page",
-    "cmd-birthday-builder-subcmd-list-number-description": "Numéro de la page à afficher",
-    "cmd-birthday-exec-embed-title": "Anniversaires des membres (page {page}/{maxPage})",
-    "cmd-birthday-exec-embed-line": [
-        "**{position}. {username} :** {age} ans ({date})",
-        ""
-    ],
-    "cmd-birthday-exec-badformat": "Le format de votre date n'est pas bon.",
-    "cmd-birthday-exec-date-invalid": "Cette date est invalide.",
-    "cmd-birthday-exec-date-incomplete": "La date est incomplète.",
-    "cmd-birthday-exec-date-too-young": "L'age minimum requis est de {minimumAge} ans.",
-    "cmd-birthday-exec-date-saved": "Votre date d'anniversaire a bien été enregistrée.",
-    "cmd-birthday-exec-empty-birthday-list": "Il n'y a aucun anniversaire enregistré...",
-    "cmd-birthday-exec-next-birthday": "Le prochain anniversaire est celui de **{username}** le **{date}**, il aura **{age}** ans ! 🎉",
-
-    "cmd-clean-builder-name": "clean",
-    "cmd-clean-builder-description": "Permet de supprimer plusieurs messages en même temps",
-    "cmd-clean-builder-number-name": "nombre",
-    "cmd-clean-builder-number-description": "Nombre de message a supprimer",
-    "cmd-clean-exec-need-textchannel": "Vous devez utilisé cette commande dans un salon textuel",
-    "cmd-clean-exec-cleaned": "Vous avez supprimé {number} messages !",
-
-    "cmd-emoji-builder-name": "emoji",
-    "cmd-emoji-builder-description": "Permet d'ajouter un nouvel émoji sur le serveur",
-    "cmd-emoji-builder-attachment-name": "attachments",
-    "cmd-emoji-builder-attachment-description": "Envoyer le fichier du quel tu souhaites créer un emoji",
-    "cmd-emoji-builder-name-name": "nom",
-    "cmd-emoji-builder-name-description": "Choisir le nom de l'émoji",
-    "cmd-emoji-exec-error": "Erreur lors de l'exécution de la commande",
-    "cmd-emoji-exec-emojies-full": "Le serveur a atteint ça limite d'émojis, supprimez-en ou améliorer votre niveau à l'aide des boosts de serveur",
-    "cmd-emoji-exec-emoji-already-exists": "Cet identifiant d'émoji `{emojiIdentifier}` existe déjà, choisissez en un autre",
-    "cmd-emoji-exec-embed-poll-title": "Proposition d'émoji",
-    "cmd-emoji-exec-embed-poll-text": [
-        "Proposition d'un nouveau émoji sur le serveur :",
-        "\"`{emojiIdentifier}`\"",
-        "",
-        "Proposé par <@{userId}>"
-    ],
-    "cmd-emoji-exec-embed-poll-sent": "Votre proposition pour un nouvel émoji a bien été envoyé dans le salon <#{generalChannelId}>.",
-    "cmd-emoji-exec-embed-accepted-poll-text": "Proposition accepté.",
-    "cmd-emoji-exec-embed-refused-poll-text": "Proposition rejeté.",
-    "cmd-emoji-exec-poll-timeout": "Le temps de vote pour cette proposition est écoulé.",
-
-    "cmd-inactive-builder-name": "inactive",
-    "cmd-inactive-builder-description": "Voir les membres inactifs ce mois-ci",
-    "cmd-inactive-builder-page-name": "page",
-    "cmd-inactive-builder-page-description": "Numéro de la page de membre à afficher",
-    "cmd-inactive-exec-inactives": "Liste des membres inactif",
-    "cmd-inactive-exec-no-inactives": "Aucun membre n'est inactif.",
-    "cmd-inactive-exec-kick-permission": "Vous n'avez pas la permission de kick des membres",
-    "cmd-inactive-exec-kick-permission-bot": "Une erreur est survenue lors de l'expulsion du membre, je n'ai surement pas assez de permissions",
-    "cmd-inactive-exec-kicked": "Vous avez expulser {user} avec succès pour inactivité.",
-    "cmd-inactive-embed-content": [
-        "Le membre <@{memberId}> a envoyé un total de **{messages} messages**",
-        "Il a passé un total de **{voiceTime} en vocal**",
-        "\nCompte créé le **{createdAt}**, il a rejoint le serveur le **{joinedAt}**",
-        "Son rang d'activité est **<@&{rankId}>**"
-    ],
-    "cmd-inactive-exec-embed-footer": "Membre inactif n°{inactiveNumber}/{inactivesCount}",
-
-    "cmd-interaction-builder-name": "interaction",
-    "cmd-interaction-builder-description": "Permet d'envoyer une interaction dans le salon",
-    "cmd-interaction-builder-name-name": "name",
-    "cmd-interaction-builder-name-description": "Choisir l'interaction à envoyer.",
-    "cmd-interaction-exec-verif-embed-title": "Vérification pour entrer dans le Royaume",
-    "cmd-interaction-exec-verif-embed-content": [
-        "Bienvenue, tu es dans le salon de vérification des nouveaux membres.",
-        "",
-        "**Le Royaume** est un serveur privé où la bonne ambiance est donc obligatoire. Ici on parle principalement de **programmation**, **trading**, **graphisme** et d'autres choses encore. Parfois on joue, ou on regarde des films ensemble aussi... 🍿",
-        "",
-        "Si les domaines cités ci-dessus te correspondent et que tu as envie de faire parti de cette communauté privée et d'évoluer avec nous, il faudra que tu fasses une petite présentation de toi, tes ambitions, tes projets, tes centres d'intérêt... Donne nous envie quoi !"
-    ],
-    "cmd-interaction-exec-verif-button-label": "Faire sa présentation",
-    "cmd-interaction-exec-verif-button-emoji": "📝",
-    "cmd-interaction-exec-verif-succes-embed": "Votre interaction a bien était créé.",
-
-    "cmd-main-builder-name": "main",
-    "cmd-main-builder-description": "Ajouter, supprimer ou voir la liste des salons/rôles principaux",
-    
-    "cmd-main-builder-group-add-name": "add",
-    "cmd-main-builder-group-add-description": "Ajoouter des salons/rôles principaux",
-    "cmd-main-builder-group-add-channel-name": "channel",
-    "cmd-main-builder-group-add-channel-description": "Ajoute un salon à la liste des salons principaux",
-    "cmd-main-builder-group-add-channel-channel-name": "channel",
-    "cmd-main-builder-group-add-channel-channel-description": "Ajoute ce salon",
-    "cmd-main-builder-group-add-channel-category-name": "category",
-    "cmd-main-builder-group-add-channel-category-description": "Categorie du salon",
-    "cmd-main-builder-group-add-role-name": "role",
-    "cmd-main-builder-group-add-role-description": "Ajoute un rôle à la liste des salons principaux",
-    "cmd-main-builder-group-add-role-role-name": "role",
-    "cmd-main-builder-group-add-role-role-description": "Ajoute ce rôle",
-    "cmd-main-builder-group-add-role-category-name": "category",
-    "cmd-main-builder-group-add-role-category-description": "Categorie du salon",
-
-    "cmd-main-builder-group-remove-name": "remove",
-    "cmd-main-builder-group-remove-description": "Supprimer des salons/rôles principaux",
-    "cmd-main-builder-group-remove-channel-name": "channel",
-    "cmd-main-builder-group-remove-channel-description": "Supprime un salon à la liste des salons principaux",
-    "cmd-main-builder-group-remove-channel-channel-name": "channel",
-    "cmd-main-builder-group-remove-channel-channel-description": "Supprimer ce salon",
-    "cmd-main-builder-group-remove-role-name": "role",
-    "cmd-main-builder-group-remove-role-description": "Supprimer un rôle à la liste des salons principaux",
-    "cmd-main-builder-group-remove-role-role-name": "role",
-    "cmd-main-builder-group-remove-role-role-description": "Supprimer ce rôle",
-
-    "cmd-main-builder-add-name": "add",
-    "cmd-main-builder-add-description": "Ajoute un rôle ou un salon à la liste des rôles ou salons principaux",
-    "cmd-main-builder-channel-name": "channel",
-    "cmd-main-builder-channel-description": "Ajout ou supression de ce salon",
-    "cmd-main-builder-forum-name": "forum",
-    "cmd-main-builder-forum-description": "Ajout ou supression de ce salon",
-
-
-    "cmd-main-builder-remove-name": "remove",
-    "cmd-main-builder-remove-description": "Supprime un rôle ou un salon de la liste des rôles ou salons principaux",
-    "cmd-main-builder-role-name": "role",
-    "cmd-main-builder-role-description": "Ajout ou supression de ce rôle",
-    "cmd-main-builder-category-name": "category",
-    "cmd-main-builder-category-description": "Catégorie du salon ou rôle",
-    "cmd-main-builder-list-name": "list",
-    "cmd-main-builder-list-description": "Affiche la liste des rôles ou salons principaux",
-
-    "cmd-main-exec-channels-title": "Salons principaux",
-    "cmd-main-exec-roles-title": "Rôles principaux",
-    "cmd-main-exec-channel-message": "**{category} :** {members}",
-    "cmd-main-exec-roles-message": "**{category} :** {members}",
-    "cmd-main-exec-need-category": "Vous devez choisir une catégorie",
-    "cmd-main-exec-need-mention": "Vous devez mentionner un salon ou un rôle",
-    "cmd-main-exec-success-add": "Vous avez bien {action} le {type}",
-    "cmd-main-exec-success-error": "Erreur lors de {action} du {type}",
-
-    "cmd-main-exec-add-channel-error": "Erreur lors de l'ajout du salon",
-    "cmd-main-exec-add-channel-succes": "<#{channelId}> a bien été ajouté a `{category}` !",
-    "cmd-main-exec-add-role-error": "Erreur lors de l'ajout du rôle",
-    "cmd-main-exec-add-role-succes": "<@&{roleId}> a bien été ajouté a `{category}` !",
-    "cmd-main-exec-remove-channel-error": "Erreur lors de la suppression du salon",
-    "cmd-main-exec-remove-channel-succes": "<#{channelId}> a bien été supprimé !",
-    "cmd-main-exec-remove-role-error": "Erreur lors de la suppression du rôle",
-    "cmd-main-exec-remove-role-succes": "<@&{roleId}> a bien été supprimé !",
-
-    "cmd-member-builder-name": "member",
-    "cmd-member-builder-description": "Voir les statistiques et information d'un utilisateur",
-    "cmd-member-builder-member-name": "member",
-    "cmd-member-builder-member-description": "Membre ciblé",
-    "cmd-member-exec-member-info-error": "Aucune donnée trouvée.",
-    "cmd-member-exec-embed-title": "Activité de {displayName}",
-    "cmd-member-exec-member-birth": [
-        "**👶 Né le {date} ({yearsOld} ans)**",
-        "\n"
-    ],
-    "cmd-member-exec-member-progress-up": [
-        "📈 **Rôle d'activité :** {role} *(rôle en augmentation)*",
-        "\n"
-    ],
-    "cmd-member-exec-member-progress-neutral": [
-        "📊 **Rôle d'activité :** {role} *(rôle en stagnation)*",
-        "\n"
-    ],
-    "cmd-member-exec-member-progress-down": [
-        "📉 **Rôle d'activité :** {role} *(rôle en diminution)*",
-        "\n"
-    ],
-    "cmd-member-exec-member-activity": [
-        "**🔊 Temps de vocal :** {time}",
-        "**🔉 Temps de vocal ce mois :** {time}",
-        "",
-        "**📜 Nombre de message :** {messagesCount}",
-        "**📝 Nombre de message ce mois :** {messagesCount}",
-        "",
-        "**📺 Nombre de message par salon :**"
-    ],
-    "cmd-member-exec-member-channel-activity": "{messageCount} dans <#{channelId}>",
-
-    "cmd-presence-builder-name": "presence",
-    "cmd-presence-builder-description": "Gérer l'activité du bot Discord",
-    "cmd-presence-builder-list-name": "list",
-    "cmd-presence-builder-list-description": "Liste des activités",
-    "cmd-presence-builder-page-name": "page",
-    "cmd-presence-builder-page-description": "Page de la liste",
-    "cmd-presence-builder-add-name": "add",
-    "cmd-presence-builder-add-description": "Ajouter une activité",
-    "cmd-presence-builder-remove-name": "remove",
-    "cmd-presence-builder-remove-description": "Supprimer une activité",
-    "cmd-presence-builder-presence-name": "presence",
-    "cmd-presence-builder-presence-description": "Type de l'activité à ajouter",
-    "cmd-presence-builder-message-name": "message",
-    "cmd-presence-builder-message-description": "Message de l'activité à ajouter",
-    "cmd-presence-builder-id-name": "id",
-    "cmd-presence-builder-id-description": "Id de l'activité à supprimer",
-    "cmd-presence-exec-embed-missing-parameters": "Vous devez définir les paramètres `presence` et `message`.",
-    "cmd-presence-exec-embed-new-activity-succes": "Cette nouvelle activité a bien été sauvegardé.",
-    "cmd-presence-exec-embed-new-activity-proposal": [
-        "**Proposition d'une nouvelle activité aléatoire sur le bot :**",
-        "\"`{presence}` {message}\"",
-        "",
-        "Proposé par <@{userId}>"
-    ],
-    "cmd-presence-exec-embed-new-activity-proposal-succes": "Votre proposition de nouvelle activité a était envoyé dans le salon <#{channelId}>.",
-    "cmd-presence-exec-embed-activity-proposal-accepted": "Proposition accepté.",
-    "cmd-presence-exec-embed-activity-proposal-refused": "Proposition refusé.",
-    "cmd-presence-exec-embed-activity-proposal-time-limit": "Le temps de vote pour cette proposition est écoulé.",
-    "cmd-presence-exec-embed-activity-delete-missing-id": "Vous devez définir le paramètre ``id`` de l'activité que vous voulez supprimer.",
-    "cmd-presence-exec-embed-missing-delete-activity-permission": "Vous n'avez pas la permission de supprimer une activité.",
-    "cmd-presence-exec-embed-delete-activity-succes": "Vous avez bien supprimé cette activité.",
-    "cmd-presence-exec-embed-delete-activity-fail": "Cette ID n'est relié à aucune activité.",
-    "cmd-presence-exec-embed-delete-activity-error": "Votre ID est invalide.",
-    "cmd-presence-exec-embed-activity-list-title": "Liste des messages d'activité du bot (page : {page}/{maxPage})",
-    "cmd-presence-exec-embed-activity-list-activity": [
-        "{id} : `{type}` ${text}",
-        "\n"
-    ],
-
-    "cmd-role-builder-name": "role",
-    "cmd-role-builder-description": "Permet de choisir ses rôles",
-    "cmd-role-exec-choose-role": "Veuillez choisir vos roles",
-
-    "cmd-roulette-builder-name": "roulette",
-    "cmd-roulette-builder-description": "Choisir une valeur aléatoire parmis une liste d'éléments",
-    "cmd-roulette-exec-modal-title": "Différents choix",
-    "cmd-roulette-exec-modal-input-title-label": "Titre",
-    "cmd-roulette-exec-modal-input-title-placeholder": "facultatif",
-    "cmd-roulette-exec-modal-input-choices-label": "Différents valeurs",
-    "cmd-roulette-exec-modal-input-choices-placeholder": "Les valeurs doivent être séparées par des retours a la ligne",
-
-    "cmd-stats-builder-name": "stats",
-    "cmd-stats-builder-description": "Voir les statistiques du serveurs",
-    "cmd-stats-builder-history-name": "historique",
-    "cmd-stats-builder-history-description": "Nombre de jour d'historique",
-    "cmd-stats-builder-dark-name": "dark",
-    "cmd-stats-builder-dark-description": "Mode sombre sur les graphiques (par défaut : Non)",
-    "cmd-stats-exec-embed-title": "**Statistiques sur {days} jours**",
-    "cmd-stats-exec-embed-voices": "Temps de vocal des utilisateurs en minutes",
-    "cmd-stats-exec-embed-messages": "Nombre de messages envoyés",
-    "cmd-stats-exec-embed-members": "Nombre de membres présents sur le serveur",
-
-    "cmd-forum-builder-name": "forum",
-    "cmd-forum-builder-description": "Commande pour accompagner l'utilisation des salons forum",
-    "cmd-forum-builder-why-name": "why",
-    "cmd-forum-builder-why-description": "Pourquoi utiliser les salons forum ?",
-    "cmd-forum-builder-rename-name": "rename",
-    "cmd-forum-builder-rename-description": "Renommer un salon post", 
-    "cmd-forum-builder-rename-new-name": "new",
-    "cmd-forum-builder-rename-new-description": "Nouveau titre pour ce post",
-    "cmd-forum-builder-resolve-name": "resolve",
-    "cmd-forum-builder-resolve-description": "Indiquer que le problème est résolu avec le lien du message de résolution",
-    "cmd-forum-builder-resolve-link-name": "link",
-    "cmd-forum-builder-resolve-link-description": "Lien du message de résolution",
-    "cmd-forum-exec-why-embed-title": "Pourquoi utiliser les salons forum ?",
-    "cmd-forum-exec-why-embed-description": [
-        "• Y ajouter un titre correct permet de vérifier rapidement si votre problème est déjà résolu ou non.\n",
-        "• Les salons forum sont là pour vous permettre de poser des questions et de trouver des réponses.\n",
-        "• Cela permet de garder un maximum de clarté car vous ne vous mélanger pas avec la discussion générale.\n",
-        "• Garder une trace des questions et des réponses, il est plus facile pour les membres de retrouver la réponse dont ils pourraient avoir besoin dans les salons forums.\n",
-        "• Il est plus motivant pour la personne qui vous aide à pouvoir le faire de manière isolée avec une trace dans le temps plus forte.\n",
-        "• Que votre question soit très simple ou complexe les forums seront mieux, une aide sur plusieurs jours dans un salon isolé permet un meilleur suivi et les meilleures questions du célèbre forum d'aide Stack overflow sont les plus simples.\n",
-        "• Avant de créer votre propre post avec une question similaire ou identique, pensez à vérifier si un post sur ce sujet n'a pas déjà été créé."
-    ],
-    "cmd-forum-exec-rename-only-posts": "Vous ne pouvez renommer que des posts dans un salon forum.",
-    "cmd-forum-exec-rename-success": "Vous avez bien renommé ce post en **{name}**.",
-    "cmd-forum-exec-resolve-only-posts": "Vous ne pouvez résoudre que des posts dans un salon forum.",
-    "cmd-forum-exec-resolve-success": "Le message qui a été désigné comme réponse est [celui-ci]({url}).",
-    "cmd-forum-exec-resolve-missing-link": "Vous avez oublié de mettre le lien du message à désigné comme réponse.",
-    "cmd-forum-exec-rename-error": "Une erreur est survenue lors du renommage de ce post.",
-    "cmd-forum-exec-resolve-error": "Une erreur est survenue lors du renommage de ce post.",
-
-    "cmd-topmessages-builder-name": "top-message",
-    "cmd-topmessages-builder-description": "Voir le classement des membres les plus actifs en terme de nombre de message",
-    "cmd-topmessages-builder-page-name": "page",
-    "cmd-topmessages-builder-page-description": "Page du classement",
-    "cmd-topmessages-builder-channel-name": "salon",
-    "cmd-topmessages-builder-channel-description": "Affiche le classement des membres par nombre de messages dans un salon",
-    "cmd-topmessages-builder-month-name": "mois",
-    "cmd-topmessages-builder-month-description": "Affiche le classement des membres par nombre de messages du mois",
-    "cmd-topmessages-builder-total-name": "total",
-    "cmd-topmessages-builder-total-description": "Affiche le classement des membres par nombre de messages total",
-    "cmd-topmessages-exec-error-need-mention": "Vous devez mentionner un salon",
-    "cmd-topmessages-exec-embed-title": "Classements des membres les plus actifs ({source}) (page : {page}/{maxPage})",
-    "cmd-topmessages-exec-embed-line": [
-        "**{position}. {username} :** {nbrMessages}",
-        ""
-    ],
-
-    "cmd-topvoice-builder-name": "top-voice",
-    "cmd-topvoice-builder-description": "Voir le classement des membres les plus actifs en vocal",
-    "cmd-topvoice-builder-month-name": "mois",
-    "cmd-topvoice-builder-month-description": "Affiche le classement du mois des membres les plus actifs en vocal",
-    "cmd-topvoice-builder-total-name": "total",
-    "cmd-topvoice-builder-total-description": "Affiche le classement global des membres les plus actifs en vocal",
-    "cmd-topvoice-builder-page-name": "page",
-    "cmd-topvoice-builder-page-description": "Page du classement",
-    "cmd-topvoice-exec-embed-title": "Classements des membres les plus actifs en vocal (en minute) ({source}) (page : {page}/{maxPage})",
-    "cmd-topvoice-exec-embed-line": [
-        "**{position}. {username} :** {minutes}",
-        ""
-    ],
-
-    "event-messagecreate-exec-message-cap-reached": "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉",
-
-    "event-messagelinkreaction-exec-attachments": "🗂️ {attachmentsCount} fichiers joint(s)",
-    "event-messagelinkreaction-exec-replyed-embed": [
-        "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**",
-        "",
-        "{content}"
-    ],
-
-    "event-rolesselector-exec-roles-fetch-error": "Une erreur s'est produite lors de l'acquisition des roles.",
-    "event-rolesselector-exec-roles-edited": "Modifications de vos rôles effectuées dans la categorie **{category}**.",
-
-    "event-roulettemodal-exec-embed": [
-        "Parmis {choices}",
-        "",
-        "Le destin a choisi `{choice}`"
-    ],
-
-    "event-verifmessagereactionadd-exec-welcome-message": "Bienvenue parmis nous <@{userId}> !",
-    "event-verifmessagereactionadd-exec-embed-member-accepted": [
-        "Les rôles que vous voyez sur votre droite sont définis selon votre activité au sein du Royaume !",
-        "",
-        "Pour peut choisir les rôles qui convient à vos centres d'intérêt avec la commande `/role`"
-    ],
-    "event-verifmessagereactionadd-exec-embed-member-rejected": "La présentation de {userName} a été refusé.",
-    "event-verifmessagereactionadd-exec-embed-member-rejected-mp": "Votre présentation n'a pas convaincu les membres du Royaume.",
-
-    "event-verifmodal-exec-embed-open-error": "Erreur lors de l'ouverture du formulaire, contactez un membre du serveur.",
-    "event-verifmodal-exec-embed-already-member-error": "Les membres du serveur ne peuvent pas utiliser cette interaction.",
-    "event-verifmodal-exec-modal-title": "Formulaire de présentation",
-    "event-verifmodal-exec-modal-label": "Présentation :",
-    "event-verifmodal-exec-embed-modal-send-error": "Erreur lors de l'envoie de votre présentation, contactez un membre du serveur.",
-    "event-verifmodal-exec-embed-title": "Présentation de {userName}",
-    "event-verifmodal-exec-modal-sent-successfully-mp": "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps.",
-
-
-    "task-birthdayschecker-exec-embed-footer": "{userYearsOld} années de vie sur terre",
-
-    "task-tierupdate-exec-embed-member-no-old-rank-update": "<@{userId}> ➜ <@&{newRoleId}>",
-    "task-tierupdate-exec-embed-member-rank-update": "<@{userId}> <@&{oldRoleId}> ➜ <@&{newRoleId}>",
-    "task-tierupdate-exec-embed-title": "Changement des rôles d'activités",
-
-    "event-guildmemberadd-welcome": "Bienvenue parmis nous <@{userId}> !",
-    "event-guildmemberadd-welcome-message": [ "Le Royaume est une communauté de développeurs passionnés regroupée dans l'objectif de progresser, échanger ou même travailler ensemble. Nous sommes ouverts à tout profile donc que tu sois débutant ou déjà sénior dans le domaine, tu trouveras ta place parmi nous !",
-        "",
-        "Tu peux choisir les rôles qui correspondent à ton profil via la commande `/rôle` de notre bot <@{userId}>, ceci permet de montrer aux membres ton domaine précis dans la programmation ou encore d'être mentionné une fois de temps en temps pour un sujet qui pourrait te plaire.",
-        "",
-        "Il y a aussi des rôles colorés que tu vois sur la droite, ils changent automatiquement chaque mois selon ton activité sur le serveur, c'est un peu gadget, mais ça permet de voir d'un coup d'œil les membres les plus investi dans notre communauté.",
-        "",
-        "Si ce n'est pas déjà fait, je te recommande de jeter un coup d'œil au [GitHub de notre communauté](https://github.com/Virtual-Royaume), tu trouveras dessus différents projets communs sur lesquels nos membres sont libres d'apporter leur aide."
-
-    ]
+    "birthday": {
+      "name": "anniversaire",
+      "description": "Définir et afficher les anniversaires",
+      "subcmds": {
+        "set": {
+          "name": "set",
+          "description": "Définir votre anniversaire",
+          "options": {
+            "date": {
+              "name": "date",
+              "description": "format : DD/MM/YYYY (jour/mois/année de naissance)"
+            }
+          }
+        },
+        "list": {
+          "name": "list",
+          "description": "Afficher la liste des anniversaires",
+          "options": {
+            "page": {
+              "name": "page",
+              "description": "Numéro de la page à afficher"
+            }
+          }
+        },
+        "next": {
+          "name": "next",
+          "description": "Afficher le prochain anniversaire"
+        }
+      },
+      "exec": {
+        "set": {
+          "badFormat": "Le format de votre date est invalide.",
+          "invalid": "Cette date est invalide.",
+          "tooYoung": "L'age minimum requis est de {minimumAge} ans.",
+          "success": "Votre date d'anniversaire a bien été enregistrée ! *(`{date}`)*"
+        },
+        "list": {
+          "birthdayTitle": "Anniversaires des membres (page {page}/{maxPage})",
+          "birthdayLine": "**{position}. {username} :** {age} ans ({date})\n"
+        },
+        "next": {
+          "succes": "Le prochain anniversaire est celui de **{username}** le **{date}**, il aura **{age}** ans ! 🎉"
+        },
+        "apiError": "Erreur lors de la récupération des dates d'anniversaires",
+        "noBirthdays": "Il n'y a aucun anniversaire enregistré"
+      }
+    }
+  }
 }

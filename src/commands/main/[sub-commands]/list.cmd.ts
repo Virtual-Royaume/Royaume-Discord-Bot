@@ -1,8 +1,9 @@
 import { getChannelsByCategory } from "$core/api/func/main-channel";
 import { getRolesByCategory } from "$core/api/func/main-role";
 import { simpleEmbed } from "$core/utils/embed";
-import { msg } from "$core/utils/message";
+import { commands } from "$resources/config/messages.json";
 import { CommandExecute } from "$core/utils/handler/command";
+import { msgParams } from "$core/utils/message";
 
 export const execute: CommandExecute = async(command) => {
   // Get mains channels and roles :
@@ -14,17 +15,17 @@ export const execute: CommandExecute = async(command) => {
   let roleMessage = "";
 
   for (const [category, ids] of Object.entries(channels)) {
-    channelMessage += msg("cmd-main-exec-channel-message", [category, ids.map(id => "<#" + id + ">").join(", ")]) + "\n\n";
+    channelMessage += msgParams(commands.main.exec.list.channels.channel, [category, ids.map(id => "<#" + id + ">").join(", ")]) + "\n\n";
   }
 
   for (const [category, ids] of Object.entries(roles)) {
-    roleMessage += msg("cmd-main-exec-channel-message", [category, ids.map(id => "<@&" + id + ">").join(", ")]) + "\n\n";
+    roleMessage += msgParams(commands.main.exec.list.roles.role, [category, ids.map(id => "<@&" + id + ">").join(", ")]) + "\n\n";
   }
 
   command.reply({
     embeds: [
-      simpleEmbed(channelMessage, "normal", msg("cmd-main-exec-channels-title")),
-      simpleEmbed(roleMessage, "normal", msg("cmd-main-exec-roles-title"))
+      simpleEmbed(channelMessage, "normal", commands.main.exec.list.channels.title),
+      simpleEmbed(roleMessage, "normal", commands.main.exec.list.roles.title)
     ], ephemeral: true
   });
   return;

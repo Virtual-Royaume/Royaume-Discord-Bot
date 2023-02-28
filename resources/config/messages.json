@@ -97,9 +97,9 @@
             "title": "Salons principaux",
             "channel": "**{category} :** {members}"
           },
-          "role": {
+          "roles": {
             "title": "Rôles principaux",
-            "channel": "**{category} :** {members}"
+            "role": "**{category} :** {members}"
           }
         }
       }

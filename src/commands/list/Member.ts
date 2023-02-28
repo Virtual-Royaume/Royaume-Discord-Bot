@@ -34,15 +34,29 @@ export default class Member extends Command {
     }
 
     // Get member info :
-    const memberInfo = (await gqlRequest(getMember, { id: member.id })).data?.member;
-    // Get main channels en sort it :
-    const channels = (await gqlRequest(getChannels)).data?.channels;
+    const memberQuery = await gqlRequest(getMember, { id: member.id });
 
-    if (!memberInfo || !channels) {
-      command.reply({ embeds: [simpleEmbed(msg("cmd-member-exec-member-info-error"), "error")], ephemeral: true });
+    if (!memberQuery.success) {
+      command.reply({ embeds: [simpleEmbed(msg("cmd-member-exec-member-info-member-error"), "error")], ephemeral: true });
       return;
     }
 
+    const memberInfo = memberQuery.data.member;
+
+    if (!memberInfo) {
+      command.reply({ embeds: [simpleEmbed(msg("cmd-member-exec-member-info-unknown-member-error"), "error")], ephemeral: true });
+      return;
+    }
+
+    // Get main channels en sort it :
+    const channelsQuery = await gqlRequest(getChannels);
+
+    if (!channelsQuery.success) {
+      command.reply({ embeds: [simpleEmbed(msg("cmd-member-exec-member-info-channels-error"), "error")], ephemeral: true });
+      return;
+    }
+
+    const channels = channelsQuery.data.channels;
     const channelsIdsByCategory: Record<string, string[]> = {};
 
     for (const channel of channels) {

@@ -14,11 +14,11 @@ export default class VerifyMembers extends Task {
 
   public async run(): Promise<void> {
     const realMembers = await (await Client.instance.getGuild()).members.fetch();
-    const apiMembers = (await gqlRequest(getMembersOnServerStatus)).data?.members;
+    const apiMembersQuery = await gqlRequest(getMembersOnServerStatus);
 
-    if (!apiMembers) return;
+    if (!apiMembersQuery.success) return;
 
-    for (const apiMember of apiMembers) {
+    for (const apiMember of apiMembersQuery.data.members) {
       const realMember = realMembers.get(apiMember._id);
 
       if (realMember && !realMember.user.bot) {
@@ -41,8 +41,10 @@ export default class VerifyMembers extends Task {
         setAlwaysOnServer, { id: realMember.id, value: true }
       );
 
+      if (response.success) return;
+
       // Create member if he does not exist :
-      if (!response.data?.updateMember) await gqlRequest(createMember, {
+      await gqlRequest(createMember, {
         id: realMember.id,
         username: realMember.displayName,
         profilePicture: realMember.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"

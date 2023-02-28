@@ -33,99 +33,105 @@ export default class Stats extends Command {
 
   public async execute(command: ChatInputCommandInteraction): Promise<void> {
     // Get server activity :
-    const serverActivity = (await gqlRequest(getServerActivityHistory, {
+    const serverActivityQuery = await gqlRequest(getServerActivityHistory, {
       historyCount: command.options.getNumber(msg("cmd-stats-builder-history-name")) ?? 30
-    })).data?.serverActivity.reverse();
+    });
 
-    if (!serverActivity) {
+    if (!serverActivityQuery.success) {
       command.reply({
-        embeds: [simpleEmbed(msg("message-execution-error-cmd"))],
+        embeds: [simpleEmbed(msg("cmd-stats-exec-server-activity-query-fail"), "error")],
         ephemeral: true
       });
+
       return;
     }
 
-        // Data types :
-        type Type = {
-            columnName: keyof Omit<ServerActivity, "date" | "__typename">;
-            description: string;
-        }
+    const serverActivity = serverActivityQuery.data.serverActivity.reverse();
 
-        const types: Type[] = [
-          { columnName: "voiceMinute", description: msg("cmd-stats-exec-embed-voices") },
-          { columnName: "messageCount", description: msg("cmd-stats-exec-embed-messages") },
-          { columnName: "memberCount", description: msg("cmd-stats-exec-embed-members") }
-        ];
+    // Start defering response
+    await command.deferReply();
 
-        // Generate and send charts :
-        const embeds: EmbedBuilder[] = [];
-        const files: AttachmentBuilder[] = [];
+    // Data types :
+    type Type = {
+        columnName: keyof Omit<ServerActivity, "date" | "__typename">;
+        description: string;
+    }
 
-        for (const type of types) {
-          const config: ChartConfiguration = {
-            type: "line",
-            data: {
-              labels: serverActivity.map(element => {
-                return dateFormat(DayJS(element.date).tz());
-              }),
-              datasets: [{
-                label: type.description,
-                backgroundColor: command.options.getBoolean("dark") ? "#5555ff" : colors.primary,
-                borderColor: command.options.getBoolean("dark") ? "#5555ff" : colors.primary,
-                tension: 0.3,
-                data: serverActivity.map(element => element[type.columnName]),
-                pointRadius: serverActivity.length > 100 ? 0 : 3
-              }]
-            },
-            plugins: [{
-              id: "background-color",
-              beforeDraw: chart => {
-                const ctx = chart.canvas.getContext("2d");
+    const types: Type[] = [
+      { columnName: "voiceMinute", description: msg("cmd-stats-exec-embed-voices") },
+      { columnName: "messageCount", description: msg("cmd-stats-exec-embed-messages") },
+      { columnName: "memberCount", description: msg("cmd-stats-exec-embed-members") }
+    ];
 
-                if (ctx) {
-                  ctx.save();
+    // Generate and send charts :
+    const embeds: EmbedBuilder[] = [];
+    const files: AttachmentBuilder[] = [];
 
-                  ctx.globalCompositeOperation = "destination-over";
-                  ctx.fillStyle = command.options.getBoolean("dark") ? "#2f3136" : "white";
+    for (const type of types) {
+      const config: ChartConfiguration = {
+        type: "line",
+        data: {
+          labels: serverActivity.map(element => {
+            return dateFormat(DayJS(element.date).tz());
+          }),
+          datasets: [{
+            label: type.description,
+            backgroundColor: command.options.getBoolean("dark") ? "#5555ff" : colors.primary,
+            borderColor: command.options.getBoolean("dark") ? "#5555ff" : colors.primary,
+            tension: 0.3,
+            data: serverActivity.map(element => element[type.columnName]),
+            pointRadius: serverActivity.length > 100 ? 0 : 3
+          }]
+        },
+        plugins: [{
+          id: "background-color",
+          beforeDraw: chart => {
+            const ctx = chart.canvas.getContext("2d");
 
-                  ctx.fillRect(0, 0, chart.width, chart.height);
-                  ctx.restore();
-                }
-              }
-            }],
-            options: {
-              plugins: {
-                legend: { labels: { font: { family: "Poppins" } } },
-                title: { font: { family: "Poppins" } },
-                tooltip: { bodyFont: { family: "Poppins" } }
-              },
-              scales: {
-                x: { ticks: { font: { family: "Poppins" } } },
-                y: { ticks: { font: { family: "Poppins" } } }
-              }
+            if (ctx) {
+              ctx.save();
+
+              ctx.globalCompositeOperation = "destination-over";
+              ctx.fillStyle = command.options.getBoolean("dark") ? "#2f3136" : "white";
+
+              ctx.fillRect(0, 0, chart.width, chart.height);
+              ctx.restore();
             }
-          };
-
-          // Embed :
-          if (!isHexColor(colors.primary)) throw new Error("Invalid config: \"colors\" field in information.json need to be a valid hex color code");
-
-          embeds.push(new EmbedBuilder()
-            .setTitle(type.description)
-            .setColor(colors.primary)
-            .setImage(`attachment://${type.columnName}-chart.png`));
-
-          // Attachment :
-          const chart = new ChartJSNodeCanvas({ height: 500, width: 1100 });
-
-          chart.registerFont(`${__dirname}/../../../resources/font/poppins-regular.ttf`, { family: "Poppins" });
-
-          files.push(new AttachmentBuilder(
-            chart.renderToBufferSync(config),
-            { name: `${type.columnName}-chart.png` }
-          ));
+          }
+        }],
+        options: {
+          plugins: {
+            legend: { labels: { font: { family: "Poppins" } } },
+            title: { font: { family: "Poppins" } },
+            tooltip: { bodyFont: { family: "Poppins" } }
+          },
+          scales: {
+            x: { ticks: { font: { family: "Poppins" } } },
+            y: { ticks: { font: { family: "Poppins" } } }
+          }
         }
+      };
 
-        command.reply({ content: msg("cmd-stats-exec-embed-title", [serverActivity.length]), embeds, files });
+      // Embed :
+      if (!isHexColor(colors.primary)) throw new Error("Invalid config: \"colors\" field in information.json need to be a valid hex color code");
+
+      embeds.push(new EmbedBuilder()
+        .setTitle(type.description)
+        .setColor(colors.primary)
+        .setImage(`attachment://${type.columnName}-chart.png`));
+
+      // Attachment :
+      const chart = new ChartJSNodeCanvas({ height: 500, width: 1100 });
+
+      chart.registerFont(`${__dirname}/../../../resources/font/poppins-regular.ttf`, { family: "Poppins" });
+
+      files.push(new AttachmentBuilder(
+        chart.renderToBufferSync(config),
+        { name: `${type.columnName}-chart.png` }
+      ));
+    }
+
+    command.editReply({ content: msg("cmd-stats-exec-embed-title", [serverActivity.length]), embeds, files });
   }
 
 }

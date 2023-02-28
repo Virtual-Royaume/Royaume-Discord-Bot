@@ -24,8 +24,7 @@ export const restRequest = async(method: Method, endpoint: string, config: Reque
     console.log(method, endpoint, config);
 
     return {
-      success: false,
-      data: null
+      success: false
     };
   }
 
@@ -77,8 +76,7 @@ export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variabl
     console.log(await response.json());
 
     return {
-      success: false,
-      data: null
+      success: false
     };
   }
 

@@ -24,7 +24,7 @@ export default class GuildMemberAdd extends Event {
       profilePicture: member.user.avatarURL() ?? "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg"
     });
 
-    if (response.success && !response.data.createMember?._id) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
+    if (response.success && !response.data.createMember) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
 
     // Add verification role :
     if (privateMode) {
@@ -55,15 +55,17 @@ export default class GuildMemberAdd extends Event {
       (await channel.send({ content: msg("event-guildmemberadd-welcome", [member.id]), embeds })).react("👋");
     }
 
-    const tier = await gqlRequest(getMemberActivityTier, {
+    const tierQuery = await gqlRequest(getMemberActivityTier, {
       memberId: member.id
     });
 
+    if (!tierQuery.success || !tierQuery.data.member) return;
+
     const tiers: Record<string, string> = configTiers;
 
-    if (tier.data?.member?.activity.tier) {
+    if (tierQuery.data.member.activity.tier) {
       try {
-        member.roles.add(tiers[tier.data?.member.activity.tier.toString()]);
+        member.roles.add(tiers[tierQuery.data.member.activity.tier.toString()]);
       } catch (e) {
         Logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
       }

@@ -29,9 +29,9 @@ export default class PresenceUpdate extends Task {
     const tiers: Record<string, string> = configTiers;
 
     const discordMembers = await guild.members.fetch();
-    const apiMembers = (await gqlRequest(getMembersTier)).data?.members;
+    const apiMembersQuery = await gqlRequest(getMembersTier);
 
-    if (!apiMembers) return;
+    if (!apiMembersQuery.success) return;
 
     const updates: RoleUpdate[] = [];
 
@@ -39,7 +39,7 @@ export default class PresenceUpdate extends Task {
     for (const [id, member] of discordMembers) {
       if (member.user.bot || member.roles.cache.has(verify.roles.waiting)) continue;
 
-      const tierRole = tiers[apiMembers.find(element => element._id === id)?.activity.tier.toString() ?? ""];
+      const tierRole = tiers[apiMembersQuery.data.members.find(element => element._id === id)?.activity.tier.toString() ?? ""];
 
       if (!tierRole) return Logger.error(`Undefined role tier for member ${member.id}`);
 

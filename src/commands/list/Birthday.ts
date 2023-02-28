@@ -1,6 +1,6 @@
 import { msg } from "$core/utils/Message";
 import {
-  ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandNumberOption,
+  ChatInputCommandInteraction, InteractionResponse, SlashCommandBuilder, SlashCommandNumberOption,
   SlashCommandStringOption, SlashCommandSubcommandBuilder
 } from "discord.js";
 import { getBirthdays, setBirthday } from "$core/api/requests/Member";
@@ -42,8 +42,8 @@ export default class Birthday extends Command {
     switch (command.options.getSubcommand()) {
       case "set": {
         // Check parameter :
-        const badFormat = (error: string) => {
-          command.reply({ embeds: [simpleEmbed(error, "error")], ephemeral: true });
+        const badFormat = (error: string): Promise<InteractionResponse<boolean>> => {
+          return command.reply({ embeds: [simpleEmbed(error, "error")], ephemeral: true });
         };
 
         let dateParams: number[];
@@ -138,7 +138,7 @@ export default class Birthday extends Command {
 
         // Checking the success of the request to the API :
         if (!response.success || !response.data.members.length) {
-          command.reply({ embeds: [simpleEmbed(msg("Erreur lors de l'obtention de la liste des anniversaires."), "error")] });
+          command.reply({ embeds: [simpleEmbed(msg("cmd-birthday-exec-next-birthday-error"), "error")] });
           return;
         }
 

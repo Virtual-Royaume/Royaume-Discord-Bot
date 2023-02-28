@@ -4,7 +4,7 @@ import { getPresenceMessages } from "$core/api/requests/PresenceMessage";
 import { ActivityType } from "discord.js";
 import { gqlRequest } from "$core/utils/request";
 
-const activityType: Record<string, ActivityType> = {
+const activityType: Record<string, Exclude<ActivityType, ActivityType.Custom>> = {
   "COMPETING": ActivityType.Competing,
   "LISTENING": ActivityType.Listening,
   "PLAYING": ActivityType.Playing,
@@ -20,14 +20,13 @@ export default class PresenceUpdate extends Task {
   }
 
   public async run(): Promise<void> {
-    const presenceMessages = (await gqlRequest(getPresenceMessages)).data?.presenceMessages;
+    const presenceMessagesQuery = await gqlRequest(getPresenceMessages);
 
-    if (!presenceMessages) return;
+    if (!presenceMessagesQuery.success) return;
 
+    const presenceMessages = presenceMessagesQuery.data.presenceMessages;
     const message = presenceMessages[Math.floor(Math.random() * presenceMessages.length)];
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     Client.instance.user?.setActivity({ name: message.text, type: activityType[message.type] });
   }
 

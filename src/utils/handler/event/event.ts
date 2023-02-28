@@ -26,7 +26,7 @@ export const load = async(client: Client, eventsFolder: string): Promise<number>
 
     if (!eventName) throw new Error(`"event" isn't defined in ${path}${eventFileName}`);
 
-    const execute: EventExecute = dynamicEventImport.execute;
+    const execute: EventExecute<EventName> = dynamicEventImport.execute;
 
     if (!execute) throw new Error(`"execute" isn't defined in ${path}${eventFileName}`);
 

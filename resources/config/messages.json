@@ -104,7 +104,6 @@
         }
       }
     },
-
     "birthday": {
       "name": "anniversaire",
       "description": "Définir et afficher les anniversaires",
@@ -152,7 +151,6 @@
         "noBirthdays": "Il n'y a aucun anniversaire enregistré"
       }
     },
-
     "clean": {
       "name": "clean",
       "description": "Supprimer plusieurs messages en même temps",
@@ -165,6 +163,39 @@
       "exec": {
         "needTextChannel": "Vous devez utiliser cette commande dans un salon textuel",
         "succes": "Vous avez supprimé {number} messages !"
+      }
+    },
+    "emoji": {
+      "name": "emoji",
+      "description": "Ajouter un nouvel emoji au serveur",
+      "options": {
+        "emoji": {
+          "name": "emoji",
+          "description": "Emoji que tu souhaites ajouter"
+        },
+        "name": {
+          "name": "name",
+          "description": "Nom de l'emoji"
+        }
+      },
+      "exec": {
+        "generalChannelDoesntExist": "Le salon général n'a pas été trouvé...",
+        "generalChannelIsntText": "Le salon général n'est pas un salon textuel...",
+        "emojiLimit": "Le nombre maximum d'emoji sur le serveur a été atteint. Supprimez des emojis ou boostez le serveur pour pouvoir en ajouter un nouveau !",
+        "emojiAlreadyExist": "`{emojiId}` existe deja... Choisissez un autre nom !",
+        "pollSent": "Votre proposition pour un nouvel émoji a bien été envoyée dans le salon <#{generalChannelId}>.",
+        "pollEmbed": {
+          "title": "Proposition d'émoji",
+          "content": [
+            "Proposition d'un nouveau émoji sur le serveur :",
+            "\"`{emojiIdentifier}`\"",
+            "",
+            "Proposé par <@{userId}>"
+          ]
+        },
+        "pollAccepted": "Proposition acceptée !",
+        "pollRefused": "Proposition rejetée.",
+        "pollTimeout": "Le temps de vote pour cette proposition est écoulé."
       }
     }
   }

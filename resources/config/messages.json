@@ -151,6 +151,21 @@
         "apiError": "Erreur lors de la récupération des dates d'anniversaires",
         "noBirthdays": "Il n'y a aucun anniversaire enregistré"
       }
+    },
+
+    "clean": {
+      "name": "clean",
+      "description": "Supprimer plusieurs messages en même temps",
+      "options": {
+        "count": {
+          "name": "count",
+          "description": "Nombre de messages a supprimer"
+        }
+      },
+      "exec": {
+        "needTextChannel": "Vous devez utiliser cette commande dans un salon textuel",
+        "succes": "Vous avez supprimé {number} messages !"
+      }
     }
   }
 }

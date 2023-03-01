@@ -57,9 +57,7 @@ export const execute: CommandExecute = async(command) => {
 
   await message.pin();
   await command.reply({
-    embeds: [simpleEmbed(msgParams(commands.forum.exec.resolve.succes, [answerLink]))],
-    ephemeral: true
+    embeds: [simpleEmbed(msgParams(commands.forum.exec.resolve.succes, [answerLink]))]
   });
-
   channel.setArchived(true, "resolved");
 };

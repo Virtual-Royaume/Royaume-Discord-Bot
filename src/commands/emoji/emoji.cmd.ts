@@ -15,8 +15,6 @@ export const execute: CommandExecute = async(command) => {
 
   const generalChannel = await guild.channels.fetch(generalChannelId);
 
-  command.deferReply();
-
   if (!generalChannel) {
     command.reply({
       embeds: [simpleEmbed(commands.emoji.exec.generalChannelDoesntExist, "error")],
@@ -66,7 +64,7 @@ export const execute: CommandExecute = async(command) => {
   await voteMessage.react(emojiProposal.emoji.upVote);
   await voteMessage.react(emojiProposal.emoji.downVote);
 
-  command.followUp({
+  command.reply({
     embeds: [simpleEmbed(msgParams(commands.emoji.exec.pollSent, [generalChannelId]))],
     ephemeral: true
   });

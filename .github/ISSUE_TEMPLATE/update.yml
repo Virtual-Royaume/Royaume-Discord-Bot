@@ -1,0 +1,17 @@
+name: Mise à jour
+description: Créer une issue pour proposer une mise à jour
+labels: [update]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Fonctionnalité à mettre à jour
+      description: |
+        Quelle fonctionnalité souhaitez-vous mettre à jour ?
+      placeholder: Mise à jour du système de [...]
+  - type: textarea
+    id: new
+    attributes:
+      label: Que souhaitez-vous faire sur cette fonctionnalité ?
+    validations:
+      required: true

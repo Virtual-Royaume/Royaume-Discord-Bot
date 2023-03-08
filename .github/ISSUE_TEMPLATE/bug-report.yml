@@ -19,16 +19,25 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: environment
+    id: manager-used
     attributes:
-      label: Dans quel environnement avez-vous rencontré le bug ?
+      label: Quel gestionnaire de paquets utilisez-vous ?
       description: |
-        Production
-        Development
+        Veuillez indiquer le gestionnaire de paquets que vous utilisez.
       options:
-        - Production
-        - Development
+        - NPM
+        - PNPM
+        - Yarn
       multiple: true
+    validations:
+      required: true
+  - type: input
+    id: manager-version
+    attributes:
+      label: Version du gestionnaire de paquets utilisé
+      placeholder: 1.0.0
+      description: |
+        Veuillez indiquer la version du gestionnaire de paquets que vous utilisez. (Exemple : 4.1.6)
     validations:
       required: true
   - type: dropdown
@@ -56,13 +65,6 @@ body:
       placeholder: 18.0.0
       description: |
         Veuillez indiquer la version de NodeJS que vous utilisez.
-  - type: input
-    id: npm-version
-    attributes:
-      label: Version de NPM
-      placeholder: 7.0.0
-      description: |
-        Veuillez indiquer la version de NPM que vous utilisez.
   # Message d'erreur (textarea)
   - type: textarea
     id: error

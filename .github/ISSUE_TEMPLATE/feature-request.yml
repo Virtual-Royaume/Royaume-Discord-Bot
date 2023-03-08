@@ -7,7 +7,7 @@ body:
     attributes:
       label: Description de l'issue
       description: |
-        Quel est le problème que vous souhaitez résoudre en proposant cette nouvelle fonctionnalité ?
+        Description générale de la fonctionnalité que vous souhaitez voir ajoutée.
       placeholder: |
         Je voudrais que le bot fasse ceci et cela.
         Je pense que cela serait utile car ...

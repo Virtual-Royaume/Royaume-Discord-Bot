@@ -19,20 +19,10 @@ body:
     validations:
       required: true
   - type: textarea
-    id: alternatives
+    id: advantages
     attributes:
-      label: Quelles alternatives avez-vous envisagées ?
+      label: Avantages et inconvénients
       description: |
-        Quelles autres solutions ou améliorations avez-vous envisagées pour résoudre le problème ?
-    validations:
-      required: false
-  - type: textarea
-    id: differences
-    attributes:
-      label: Que changera votre solution par rapport à la solution actuelle ?
-      description: |
-        Expliquez les différences entre votre solution que vous proposez et le code actuel.
-
-        Vous pouvez également expliquer pourquoi votre solution est meilleure que la solution actuelle, ou inclure des références à des articles ou des discussions sur le sujet. Ainsi que des captures d'écran ou des vidéos.
+        Quels sont les avantages et inconvenients de ce changement ?
     validations:
       required: false

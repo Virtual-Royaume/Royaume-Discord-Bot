@@ -6,8 +6,8 @@
     "start": "node -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "gqlgen": "graphql-codegen --config gql-codegen.ts",
-    "gqlgen:watch": "graphql-codegen --watch --config gql-codegen.ts"
+    "gen:gql": "graphql-codegen --config gql-codegen.ts",
+    "gen:gql:watch": "graphql-codegen --watch --config gql-codegen.ts"
   },
   "dependencies": {
     "chart.js": "^3.9.1",

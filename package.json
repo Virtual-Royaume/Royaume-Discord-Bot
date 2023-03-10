@@ -37,7 +37,11 @@
   },
   "pnpm": {
     "peerDependencyRules": {
-      "ignoreMissing": ["@babel/*"]
+      "ignoreMissing": [
+        "@babel/*", 
+        "cosmiconfig-toml-loader", 
+        "ts-node"
+      ]
     }
   }
 }

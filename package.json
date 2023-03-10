@@ -34,5 +34,10 @@
     "ignorePatterns": [
       "src/utils/request/graphql"
     ]
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": ["@babel/*"]
+    }
   }
 }

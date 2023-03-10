@@ -4,6 +4,8 @@ import { channelLink, Collection, ThreadChannel } from "discord.js";
 
 export default class ForumSearch extends Event {
 
+  public enabledInDev = false;
+
   public name: EventName = "threadCreate";
 
   public async execute(thread: ThreadChannel): Promise<void> {

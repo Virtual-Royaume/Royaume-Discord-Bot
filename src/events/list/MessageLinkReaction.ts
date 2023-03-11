@@ -3,6 +3,7 @@ import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import Event, { EventName } from "$core/events/Event";
 import { msg } from "$core/utils/Message";
+import { gameGuildId } from "$resources/config/information.json";
 
 export default class MessageLinkReaction extends Event {
 
@@ -11,6 +12,8 @@ export default class MessageLinkReaction extends Event {
   public name: EventName = "messageCreate";
 
   public async execute(message: Message): Promise<void> {
+    if (message.guildId === gameGuildId) return;
+
     // Checks :
     if (message.author.bot && !(message.channel instanceof BaseGuildTextChannel)) return;
 

@@ -9,6 +9,7 @@ import { gqlRequest } from "$core/utils/request";
 import Logger from "$core/utils/Logger";
 import Client from "$core/Client";
 import Event, { EventName } from "$core/events/Event";
+import { gameGuildId } from "$resources/config/information.json";
 
 export default class MessageCreate extends Event {
 
@@ -17,6 +18,7 @@ export default class MessageCreate extends Event {
   public name: EventName = "messageCreate";
 
   public async execute(message: Msg): Promise<void> {
+    if (message.guildId === gameGuildId) return;
     if (message.author.bot) return;
 
     // Get channel where the message is sent :

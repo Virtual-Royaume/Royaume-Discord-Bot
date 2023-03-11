@@ -6,6 +6,7 @@ import { modal as modalIds } from "$resources/config/interaction-ids.json";
 import Roulette from "$core/commands/list/Roulette";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
+import { gameGuildId } from "$resources/config/information.json";
 
 export default class RouletteModal extends Event {
 
@@ -14,6 +15,7 @@ export default class RouletteModal extends Event {
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {
+    if (interaction.guildId === gameGuildId) return;
     if (!interaction.isModalSubmit() || interaction.customId !== modalIds.roulette) return;
 
     const title = interaction.fields.getTextInputValue(Roulette.titleInputId);

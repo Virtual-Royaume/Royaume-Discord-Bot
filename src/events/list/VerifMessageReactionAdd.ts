@@ -2,6 +2,7 @@ import { GuildMember, Message, MessageReaction } from "discord.js";
 import Client from "$core/Client";
 import Event, { EventName } from "$core/events/Event";
 import { verify } from "$resources/config/information.json";
+import { gameGuildId } from "$resources/config/information.json";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
 import Logger from "$core/utils/Logger";
@@ -13,6 +14,8 @@ export default class VerifMessageReactionAdd extends Event {
   public name: EventName = "messageReactionAdd";
 
   public async execute(messageReaction: MessageReaction): Promise<void> {
+    if (messageReaction.message.guildId === gameGuildId) return;
+
     // Check if the embed are a "presentation" message :
     const embed = (await messageReaction.fetch()).message.embeds[0];
 

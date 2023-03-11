@@ -1,6 +1,7 @@
 import Event, { EventName } from "$core/events/Event";
 import { simpleEmbed } from "$core/utils/Embed";
 import { channelLink, Collection, ThreadChannel } from "discord.js";
+import { gameGuildId } from "$resources/config/information.json";
 
 export default class ForumSearch extends Event {
 
@@ -9,6 +10,8 @@ export default class ForumSearch extends Event {
   public name: EventName = "threadCreate";
 
   public async execute(thread: ThreadChannel): Promise<void> {
+    if (thread.guildId === gameGuildId) return;
+
     const parent = thread.parent;
     const threadTitle = thread.name;
 

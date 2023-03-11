@@ -3,7 +3,7 @@ import EventManager from "$core/events/EventManager";
 import CommandManager from "$core/commands/CommandManager";
 import TaskManager from "$core/tasks/TaskManager";
 import Logger, { logCrown } from "$core/utils/Logger";
-import { guildId } from "$resources/config/information.json";
+import { guildId, gameGuildId } from "$resources/config/information.json";
 import { version } from "../package.json";
 import { getStringEnv } from "./utils/EnvVariable";
 
@@ -39,11 +39,15 @@ export default class Client extends DiscordClient {
     this.taskManager = new TaskManager();
   }
 
-  public async getGuild() : Promise<Guild> {
+  public async getGuild(): Promise<Guild> {
     return await this.guilds.fetch(guildId);
   }
 
-  public getDevTeam() : User[] | null {
+  public async getGamesGuild(): Promise<Guild> {
+    return await this.guilds.fetch(gameGuildId);
+  }
+
+  public getDevTeam(): User[] | null {
     const owner = this.application?.owner;
 
     if (owner instanceof User) {

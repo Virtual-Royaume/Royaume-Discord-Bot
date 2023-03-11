@@ -4,6 +4,7 @@ import Event, { EventName } from "$core/events/Event";
 import { selectMenu } from "$resources/config/interaction-ids.json";
 import { msg } from "$core/utils/Message";
 import Logger from "$core/utils/Logger";
+import { gameGuildId } from "$resources/config/information.json";
 
 export default class RolesSelector extends Event {
 
@@ -12,6 +13,7 @@ export default class RolesSelector extends Event {
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {
+    if (interaction.guildId === gameGuildId) return;
     if (!interaction.isStringSelectMenu() || !interaction.customId.startsWith(selectMenu.rolesSelector)) return;
 
     // Get category :

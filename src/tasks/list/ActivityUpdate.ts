@@ -13,17 +13,33 @@ export default class ServerActivityUpdate extends Task {
   }
 
   public async run(): Promise<void> {
+    // Guilds instances:
+    const proGuild = await Client.instance.getGuild();
+    const gameGuild = await Client.instance.getGamesGuild();
 
-    // Update daily member count :
-    const memberCount = (await Client.instance.getGuild()).memberCount;
+    // Update daily member count:
+    const memberCount = proGuild.memberCount;
 
     if (memberCount) gqlRequest(setMemberCount, { count: memberCount });
 
-    // Update voice time of members :
-    for (const voiceState of (await Client.instance.getGuild()).voiceStates.cache.values()) {
+    // Update voice time of members:
+    for (const voiceState of proGuild.voiceStates.cache.values()) {
       if (
-        voiceState.member && !voiceState.member.user.bot && voiceState.channel
-                && (!voiceState.selfMute || !voiceState.mute)
+        voiceState.member
+        && !voiceState.member.user.bot
+        && voiceState.channel
+        && (!voiceState.selfMute || !voiceState.mute)
+      ) {
+        gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
+      }
+    }
+
+    for (const voiceState of gameGuild.voiceStates.cache.values()) {
+      if (
+        voiceState.member
+        && !voiceState.member.user.bot
+        && voiceState.channel
+        && (!voiceState.selfMute || !voiceState.mute)
       ) {
         gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
       }

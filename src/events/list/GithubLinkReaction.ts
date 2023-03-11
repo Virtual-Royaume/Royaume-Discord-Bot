@@ -2,6 +2,7 @@ import { Message } from "discord.js";
 import Event, { EventName } from "$core/events/Event";
 import { getStringEnv } from "$core/utils/EnvVariable";
 import { restTextRequest } from "$core/utils/request";
+import { gameGuildId } from "$resources/config/information.json";
 
 const githubRaw = "https://raw.githubusercontent.com/";
 
@@ -12,6 +13,8 @@ export default class GithubLinkReaction extends Event {
   public name: EventName = "messageCreate";
 
   public async execute(message: Message): Promise<void> {
+    if (message.guildId === gameGuildId) return;
+
     // Get urls :
     const urls = message.content.match(/http(s?):\/\/(www\.)?github.com\/([^\s]+)blob([^\s]+)#L\d+(-L\d+)?/gi);
 

@@ -10,6 +10,7 @@ import Client from "$core/Client";
 import { simpleEmbed } from "$core/utils/Embed";
 import { verify } from "$resources/config/information.json";
 import { msg } from "$core/utils/Message";
+import { gameGuildId } from "$resources/config/information.json";
 
 export default class VerifModal extends Event {
 
@@ -18,6 +19,8 @@ export default class VerifModal extends Event {
   public name: EventName = "interactionCreate";
 
   public async execute(interaction: Interaction): Promise<void> {
+    if (interaction.guildId === gameGuildId) return;
+
     if (interaction.isButton() && interaction.customId === button.verify) this.openModal(interaction);
     if (interaction.isModalSubmit() && interaction.customId === modalIds.verify) this.submitModal(interaction);
   }

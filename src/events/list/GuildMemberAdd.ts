@@ -7,6 +7,7 @@ import { gqlRequest } from "$core/utils/request";
 import { simpleEmbed } from "$core/utils/Embed";
 import { msg } from "$core/utils/Message";
 import Logger from "$core/utils/Logger";
+import { gameGuildId } from "$resources/config/information.json";
 
 export default class GuildMemberAdd extends Event {
 
@@ -25,6 +26,9 @@ export default class GuildMemberAdd extends Event {
     });
 
     if (response.success && !response.data.createMember) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
+
+    // Stop here if is game server:
+    if (member.guild.id === gameGuildId) return;
 
     // Add verification role :
     if (privateMode) {

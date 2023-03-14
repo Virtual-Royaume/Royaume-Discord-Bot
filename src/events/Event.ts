@@ -10,6 +10,6 @@ export default abstract class Event {
 
     public abstract readonly enabledInDev: boolean;
 
-    public abstract execute(...args: any[]) : void; // eslint-disable-line @typescript-eslint/no-explicit-any
+    public abstract execute(...args: unknown[]) : void;
 
 }

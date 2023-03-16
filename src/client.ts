@@ -5,7 +5,6 @@ import { getStringEnv } from "./utils/env-variable";
 import { listener, load as loadCommands, register } from "$core/utils/handler/command";
 import { load as loadEvents } from "$core/utils/handler/event";
 import { load as loadTasks } from "$core/utils/handler/task";
-import { getGuild } from "$core/configs/guild";
 
 export const client = new DiscordClient({
   intents: [
@@ -40,10 +39,7 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
   const tasksLoaded = await loadTasks(`${__dirname}\\tasks`);
 
   logger.info(`${tasksLoaded} tasks loaded`);
-
   await client.login(getStringEnv("BOT_TOKEN"));
-
-  console.log(await getGuild(client, "pro"));
 
   const loadedCommands = await loadCommands(`${__dirname}\\commands`);
 

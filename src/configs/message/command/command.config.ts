@@ -1,6 +1,6 @@
 import { Command } from "$core/configs/message/command/command.type";
 
-export const commands: Record<string, Command> = {
+export const commands = {
   birthday: {
     name: "anniversaire",
     description: "Définir et afficher les anniversaires",
@@ -312,4 +312,4 @@ export const commands: Record<string, Command> = {
       }
     }
   }
-};
+} satisfies Record<string, Command>;

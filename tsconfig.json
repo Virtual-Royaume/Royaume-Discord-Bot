@@ -6,14 +6,13 @@
     "outDir": "./build/",
 
     "strict": true,
-    
+
     "resolveJsonModule": true,
     "esModuleInterop": true,
 
     "baseUrl": ".",
     "paths": {
-      "$core/*": ["./src/*"],
-      "$resources/*": ["./resources/*"]
+      "$core/*": ["./src/*"]
     }
   }
 }

@@ -1,11 +1,11 @@
-import { Client as DiscordClient, GatewayIntentBits, Guild, Partials, Team, User } from "discord.js";
-import { logger, logCrown } from "$core/utils/logger";
+import { Client as DiscordClient, GatewayIntentBits, Partials, Team, User } from "discord.js";
+import { logger } from "$core/utils/logger";
 import { version, displayName } from "../package.json";
 import { getStringEnv } from "./utils/env-variable";
-import { guildId } from "$resources/config/information.json";
 import { listener, load as loadCommands, register } from "$core/utils/handler/command";
 import { load as loadEvents } from "$core/utils/handler/event";
 import { load as loadTasks } from "$core/utils/handler/task";
+import { getGuild } from "$core/configs/guild";
 
 export const client = new DiscordClient({
   intents: [
@@ -16,10 +16,6 @@ export const client = new DiscordClient({
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction]
 });
-
-export const getGuild = async(): Promise<Guild> => {
-  return await client.guilds.fetch(guildId);
-};
 
 export const getDevTeam = (client: DiscordClient): User[] | null => {
   const owner = client.application?.owner;
@@ -35,7 +31,6 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
 
 // Temporary
 (async() => {
-  logCrown();
   logger.info(`Sarting ${displayName} v${version}...`);
 
   const eventsLoaded = await loadEvents(client, `${__dirname}\\events`);
@@ -46,12 +41,14 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
 
   logger.info(`${tasksLoaded} tasks loaded`);
 
-  client.login(getStringEnv("BOT_TOKEN"));
+  await client.login(getStringEnv("BOT_TOKEN"));
+
+  console.log(await getGuild(client, "pro"));
 
   const loadedCommands = await loadCommands(`${__dirname}\\commands`);
 
   logger.info(`${loadedCommands.builders.size} commands loaded`);
   listener(client, loadedCommands.commands);
-  await register(client, loadedCommands.builders);
+  await register(client, loadedCommands.builders, loadedCommands.guildCommands);
   logger.info("Successfully registered application (/) commands");
 })();

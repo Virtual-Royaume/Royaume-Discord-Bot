@@ -10,21 +10,10 @@ export type Tier = {
   5: Snowflake;
 }
 
-export type Proposal = {
-  upVote: ProposalSection;
-  downVote: ProposalSection;
-}
-
-export type ProposalSection = {
-  emoji: string;
-  count: number;
-}
-
 export type Guild = {
   isPrivate: boolean;
   guildId: Snowflake;
   channels: Record<string, Snowflake>;
   roles: Record<string, Snowflake>;
   tiers: Tier;
-  proposals: Record<string, Proposal>
 }

@@ -1,3 +1,5 @@
+import { Proposal } from "./global.type";
+
 export const global = {
   localFormat: "fr-FR",
   minimumAge: 14,
@@ -24,5 +26,28 @@ export const interactionId = {
   modal: {
     verify: "m0",
     roulette: "m1"
+  }
+};
+
+export const proposals: Record<string, Proposal> = {
+  verify: {
+    upVote: {
+      emoji: "👍",
+      count: 5
+    },
+    downVote: {
+      emoji: "👎",
+      count: 7
+    }
+  },
+  emoji: {
+    upVote: {
+      emoji: "👍",
+      count: 5
+    },
+    downVote: {
+      emoji: "👎",
+      count: 6
+    }
   }
 };

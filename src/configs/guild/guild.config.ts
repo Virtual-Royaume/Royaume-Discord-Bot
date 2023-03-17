@@ -18,28 +18,6 @@ export const guilds: Record<GuildType, Guild> = {
       3: "985979974500614224",
       4: "985980034810519572",
       5: "985980071410024488"
-    },
-    proposals: {
-      verify: {
-        upVote: {
-          emoji: "👍",
-          count: 5
-        },
-        downVote: {
-          emoji: "👎",
-          count: 7
-        }
-      },
-      emoji: {
-        upVote: {
-          emoji: "👍",
-          count: 5
-        },
-        downVote: {
-          emoji: "👎",
-          count: 6
-        }
-      }
     }
   },
   "game": {
@@ -55,18 +33,6 @@ export const guilds: Record<GuildType, Guild> = {
       3: "1083408004638068746",
       4: "1083408006055739443",
       5: "1083408485489844265"
-    },
-    proposals: {
-      emoji: {
-        upVote: {
-          emoji: "👍",
-          count: 5
-        },
-        downVote: {
-          emoji: "👎",
-          count: 6
-        }
-      }
     }
   }
 };

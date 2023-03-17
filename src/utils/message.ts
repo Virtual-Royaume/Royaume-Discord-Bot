@@ -8,7 +8,3 @@ export const msgParams = (message: string, params: (string | number)[]): string 
 
   return message;
 };
-
-export const multiLineMsg = (message: string[]): string => {
-  return message.join("\n");
-};

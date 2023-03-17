@@ -1,10 +1,10 @@
 import { Dayjs } from "dayjs";
-import { localFormat } from "$resources/config/information.json";
+import { global } from "$core/configs/global.config";
 import DayJS from "$core/utils/day-js";
 import { existsSync, statSync } from "fs";
 
 export const numberFormat = (number: number): string => {
-  return number.toLocaleString(localFormat);
+  return number.toLocaleString(global.localFormat);
 };
 
 export const dateFormat = (date: Dayjs, separator = "-"): string => {

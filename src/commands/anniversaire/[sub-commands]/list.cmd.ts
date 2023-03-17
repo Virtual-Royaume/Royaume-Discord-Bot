@@ -6,7 +6,7 @@ import { dateFormat, getAge } from "$core/utils/function";
 import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
-import { commands } from "$resources/config/messages.json";
+import { commands } from "$core/configs/message/command";
 
 export const execute: CommandExecute = async(command) => {
   let page = command.options.getNumber(commands.birthday.subcmds.list.options.page.name) ?? 1;

@@ -1,7 +1,7 @@
 import DayJS from "$core/utils/day-js";
 import { CommandExecute } from "$core/utils/handler/command";
-import { commands } from "$resources/config/messages.json";
-import { minimumAge } from "$resources/config/information.json";
+import { commands } from "$core/configs/message/command";
+import { global } from "$core/configs/global.config";
 import { getAge } from "$core/utils/function";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
@@ -29,9 +29,9 @@ export const execute: CommandExecute = (command) => {
     return;
   }
 
-  if (getAge(date) < minimumAge) {
+  if (getAge(date) < global.minimumAge) {
     command.reply({
-      embeds: [simpleEmbed(msgParams(commands.birthday.exec.set.tooYoung, [minimumAge]), "error")],
+      embeds: [simpleEmbed(msgParams(commands.birthday.exec.set.tooYoung, [global.minimumAge]), "error")],
       ephemeral: true
     });
     return;

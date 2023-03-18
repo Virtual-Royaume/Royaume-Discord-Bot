@@ -1,0 +1,1 @@
+export { global, interactionId, proposals } from "./global.config";

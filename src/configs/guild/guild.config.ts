@@ -5,8 +5,7 @@ export const guilds: Record<GuildType, Guild> = {
     isPrivate: true,
     guildId: "732251741999071303",
     channels: {
-      "general": "786216771723198514",
-      "voiceCategory": "853314658789490709"
+      "general": "786216771723198514"
     },
     roles: {
       waiting: "837679269098422314",

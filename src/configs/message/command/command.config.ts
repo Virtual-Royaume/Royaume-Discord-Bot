@@ -92,6 +92,7 @@ export const commands = {
     description: "Ajouter un nouvel emoji au serveur",
     exec: {
       isntInGuild: "Cette commande doit être éxecuté sur un serveur",
+      isntInOfficialGuild: "Cette commande doit être éxecuté sur un des serveurs du Royaume",
       emojiAlreadyExist: "`{emojiId}` existe deja... Choisissez un autre nom !",
       emojiLimit: [
         "Le nombre maximum d'emoji sur le serveur a été atteint.",

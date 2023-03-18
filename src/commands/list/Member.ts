@@ -114,6 +114,9 @@ export default class Member extends Command {
     const banner = (await member.user.fetch()).bannerURL();
     if (banner) embed.setImage(banner + "?size=512");
 
+    const avatar = (await member.user.fetch()).displayAvatarURL();
+    if (avatar) embed.setThumbnail(avatar);
+
     command.reply({
       embeds: [embed]
     });

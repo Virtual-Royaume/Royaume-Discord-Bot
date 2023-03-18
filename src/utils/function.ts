@@ -38,3 +38,7 @@ export const firstLetterToUppercase = (string: string): string => {
 export const isFolderExist = (path: string): boolean => {
   return existsSync(path) && statSync(path).isDirectory();
 };
+
+export const objectKeys = <T extends object>(obj: T): (keyof T)[] => {
+  return Object.keys(obj) as (keyof T)[];
+};

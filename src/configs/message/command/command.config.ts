@@ -80,7 +80,7 @@ export const commands = {
           " et d'autres choses encore.\n\n",
           "Si les domaines cités ci-dessus te correspondent et que tu as envie de faire parti de cette communauté privée et d'évoluer avec nous",
           ", il faudra que tu fasses une petite présentation de toi, tes ambitions, tes projets, tes centres d'intérêt... Donne nous envie quoi !"
-        ].join()
+        ].join("")
       },
       button: {
         label: "Faire sa présentation",
@@ -97,16 +97,16 @@ export const commands = {
       emojiLimit: [
         "Le nombre maximum d'emoji sur le serveur a été atteint.",
         " Supprimez des emojis ou boostez le serveur pour pouvoir en ajouter un nouveau !"
-      ].join(),
+      ].join(""),
       generalChannelDoesntExist: "Le salon général n'a pas été trouvé...",
       generalChannelIsntText: "Le salon général n'est pas un salon textuel...",
       pollAccepted: "Proposition acceptée !",
       pollEmbed: {
         content: [
-          "Proposition d'un nouveau émoji sur le serveur :\n",
-          "\"`{emojiIdentifier}`\"\n\n",
+          "Proposition d'un nouveau émoji sur le serveur :",
+          "\"`{emojiIdentifier}`\"\n",
           "Proposé par <@{userId}>"
-        ].join(),
+        ].join("\n"),
         title: "Proposition d'émoji"
       },
       pollRefused: "Proposition rejetée.",
@@ -152,7 +152,7 @@ export const commands = {
           "un meilleur suivi et les meilleures questions du célèbre forum d'aide Stack overflow sont les plus simples.\n\n",
           "• Avant de créer votre propre post avec une question similaire ou identique",
           ", pensez à vérifier si un post sur ce sujet n'a pas déjà été créé."
-        ].join()
+        ].join("")
       }
     },
     name: "forum",
@@ -304,11 +304,11 @@ export const commands = {
       noMember: "Ce membre n'éxiste pas",
       embed: {
         content: [
-          "Le membre <@{memberId}> a envoyé un total de **{messages} messages**\n",
-          "Il a passé un total de **{voiceTime} en vocal**\n\n",
-          "Compte créé le **{createdAt}**, il a rejoint le serveur le **{joinedAt}**\n",
+          "Le membre <@{memberId}> a envoyé un total de **{messages} messages**",
+          "Il a passé un total de **{voiceTime} en vocal**\n",
+          "Compte créé le **{createdAt}**, il a rejoint le serveur le **{joinedAt}**",
           "Son rang d'activité est **<@&{rankId}>**"
-        ].join(),
+        ].join("\n"),
         footer: "Membre inactif n°{inactiveNumber}/{inactivesCount}"
       }
     }

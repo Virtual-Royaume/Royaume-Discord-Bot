@@ -1,4 +1,4 @@
-import { Proposal } from "./global.type";
+import { ProposalType, Proposal } from "./global.type";
 
 export const global = {
   localFormat: "fr-FR",
@@ -29,7 +29,7 @@ export const interactionId = {
   }
 };
 
-export const proposals: Record<string, Proposal> = {
+export const proposals: Record<ProposalType, Proposal> = {
   verify: {
     upVote: {
       emoji: "👍",

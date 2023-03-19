@@ -1,3 +1,5 @@
+export type ProposalType = "verify" | "emoji";
+
 export type Proposal = {
   upVote: ProposalSection;
   downVote: ProposalSection;

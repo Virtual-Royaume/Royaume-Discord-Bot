@@ -1,7 +1,7 @@
 import { getChannelsByCategory } from "$core/api/func/main-channel";
 import { getRolesByCategory } from "$core/api/func/main-role";
 import { simpleEmbed } from "$core/utils/embed";
-import { commands } from "$resources/config/messages.json";
+import { commands } from "$core/configs/message/command";
 import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 

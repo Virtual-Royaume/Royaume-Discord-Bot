@@ -3,7 +3,7 @@ import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
-import { commands } from "$resources/config/messages.json";
+import { commands } from "$core/configs/message/command";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.options.getChannel(commands.main.groups.add.subcmds.channel.options.channel.name, true);

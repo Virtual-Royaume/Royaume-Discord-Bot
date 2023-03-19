@@ -3,7 +3,7 @@ import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
 import { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
-import { commands } from "$resources/config/messages.json";
+import { commands } from "$core/configs/message/command";
 
 export const execute: CommandExecute = async(command) => {
   const role = command.options.getRole(commands.main.groups.remove.subcmds.role.options.role.name, true);

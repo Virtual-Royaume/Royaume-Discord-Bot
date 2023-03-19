@@ -4,6 +4,6 @@ import { commands } from "$core/configs/message/command";
 
 export const candidatBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder()
   .setCustomId(interactionId.button.verify)
-  .setLabel(commands.interaction.exec.button.label)
+  .setLabel(commands.interaction.exec.verif.button.label)
   .setStyle(ButtonStyle.Primary)
-  .setEmoji(commands.interaction.exec.button.emoji));
+  .setEmoji(commands.interaction.exec.verif.button.emoji));

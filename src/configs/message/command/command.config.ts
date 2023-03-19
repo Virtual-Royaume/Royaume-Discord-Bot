@@ -87,7 +87,8 @@ export const commands = {
         button: {
           label: "Faire sa présentation",
           emoji: "📝"
-        }
+        },
+        succes: "Votre interaction a bien était créé."
       }
     }
   },

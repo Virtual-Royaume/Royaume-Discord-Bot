@@ -23,4 +23,9 @@ export const execute: CommandExecute = async(command) => {
     )],
     components: [candidatBtn]
   });
+
+  await command.reply({
+    embeds: [simpleEmbed(commands.interaction.exec.verif.succes)],
+    ephemeral: true
+  });
 };

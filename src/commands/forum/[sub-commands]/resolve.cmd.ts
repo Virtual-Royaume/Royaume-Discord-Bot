@@ -1,7 +1,7 @@
 import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
-import { commands } from "$resources/config/messages.json";
+import { commands } from "$core/configs/message/command";
 import { ChannelType, ForumChannel, Message } from "discord.js";
 
 export const execute: CommandExecute = async(command) => {

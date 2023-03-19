@@ -72,19 +72,22 @@ export const commands = {
       }
     },
     exec: {
-      embed: {
-        title: "Vérification pour entrer dans le Royaume",
-        content: [
-          "Bienvenue, tu es dans le salon de vérification des nouveaux membres.\n",
-          "**Le Royaume** est un serveur privé où la bonne ambiance est donc obligatoire. Ici on parle principalement de **programmation**",
-          " et d'autres choses encore.\n\n",
-          "Si les domaines cités ci-dessus te correspondent et que tu as envie de faire parti de cette communauté privée et d'évoluer avec nous",
-          ", il faudra que tu fasses une petite présentation de toi, tes ambitions, tes projets, tes centres d'intérêt... Donne nous envie quoi !"
-        ].join("")
-      },
-      button: {
-        label: "Faire sa présentation",
-        emoji: "📝"
+      verif: {
+        notGuildText: "Cette commande doit être éxecuté dans un salon textuel de serveur",
+        embed: {
+          title: "Vérification pour entrer dans le Royaume",
+          content: [
+            "Bienvenue, tu es dans le salon de vérification des nouveaux membres.\n",
+            "**Le Royaume** est un serveur privé où la bonne ambiance est donc obligatoire. Ici on parle principalement de **programmation**",
+            " et d'autres choses encore.\n\n",
+            "Si les domaines cités ci-dessus te correspondent et que tu as envie de faire parti de cette communauté privée et d'évoluer avec nous",
+            ", il faudra que tu fasses une petite présentation de toi, tes ambitions, tes projets, tes centres d'intérêt... Donne nous envie quoi !"
+          ].join("")
+        },
+        button: {
+          label: "Faire sa présentation",
+          emoji: "📝"
+        }
       }
     }
   },

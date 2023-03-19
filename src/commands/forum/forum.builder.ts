@@ -1,10 +1,7 @@
 import { SlashCommandDefition } from "$core/utils/handler/command";
 import { SlashCommandBuilder } from "discord.js";
 import { commands } from "$core/configs/message/command";
-import { EnableInDev } from "$core/utils/handler";
 import { GuildType } from "$core/configs/guild";
-
-export const enableInDev: EnableInDev = true;
 
 export const guild: GuildType = "pro";
 

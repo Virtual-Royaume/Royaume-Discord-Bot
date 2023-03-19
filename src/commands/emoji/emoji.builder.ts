@@ -1,9 +1,6 @@
 import { SlashCommandDefition } from "$core/utils/handler/command";
 import { SlashCommandBuilder } from "discord.js";
 import { commands } from "$core/configs/message/command";
-import { EnableInDev } from "$core/utils/handler";
-
-export const enableInDev: EnableInDev = true;
 
 export const slashCommand: SlashCommandDefition = new SlashCommandBuilder()
   .setName(commands.emoji.name)

@@ -1,7 +1,7 @@
-import { EnableInDev } from "$core/utils/handler";
 import { SlashCommandDefition } from "$core/utils/handler/command";
 import { SlashCommandBuilder } from "discord.js";
-import { commands } from "$resources/config/messages.json";
+import { commands } from "$core/configs/message/command";
+import { EnableInDev } from "$core/utils/handler";
 
 export const enableInDev: EnableInDev = true;
 

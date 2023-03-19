@@ -1,19 +1,45 @@
-import { getGuild } from "$core/client";
 import { StopReason, maxEmojiByGuildTier } from "$core/commands/emoji/emoji.util";
 import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
-import { msgParams, multiLineMsg } from "$core/utils/message";
-import { generalChannel as generalChannelId } from "$resources/config/information.json";
-import { commands } from "$resources/config/messages.json";
+import { msgParams } from "$core/utils/message";
+import { commands } from "$core/configs/message/command";
 import { AttachmentBuilder, BaseGuildTextChannel } from "discord.js";
-import { emojiProposal } from "$resources/config/proposal.json";
+import { proposals } from "$core/configs";
 import { logger } from "$core/utils/logger";
+import { getGuildTypeById, guilds } from "$core/configs/guild";
 
 export const execute: CommandExecute = async(command) => {
-  const guild = await getGuild();
+  const guild = command.guild;
+
+  if (!guild) {
+    command.reply({
+      embeds: [simpleEmbed(commands.emoji.exec.isntInGuild, "error")],
+      ephemeral: true
+    });
+    return;
+  }
+
+  const guildType = getGuildTypeById(guild.id);
+
+  if (!guildType) {
+    command.reply({
+      embeds: [simpleEmbed(commands.emoji.exec.isntInOfficialGuild, "error")],
+      ephemeral: true
+    });
+    return;
+  }
+
   const maxEmoji = maxEmojiByGuildTier[guild.premiumTier];
 
-  const generalChannel = await guild.channels.fetch(generalChannelId);
+  if (guild.emojis.cache.size >= maxEmoji) {
+    command.reply({
+      embeds: [simpleEmbed(commands.emoji.exec.emojiLimit, "error")],
+      ephemeral: true
+    });
+    return;
+  }
+
+  const generalChannel = await guild.channels.fetch(guilds[guildType].channels.general);
 
   if (!generalChannel) {
     command.reply({
@@ -26,14 +52,6 @@ export const execute: CommandExecute = async(command) => {
   if (!(generalChannel instanceof BaseGuildTextChannel)) {
     command.reply({
       embeds: [simpleEmbed(commands.emoji.exec.generalChannelIsntText, "error")],
-      ephemeral: true
-    });
-    return;
-  }
-
-  if (guild.emojis.cache.size >= maxEmoji) {
-    command.reply({
-      embeds: [simpleEmbed(commands.emoji.exec.emojiLimit, "error")],
       ephemeral: true
     });
     return;
@@ -55,40 +73,40 @@ export const execute: CommandExecute = async(command) => {
   const voteMessage = await generalChannel.send({
     files: [new AttachmentBuilder(attachment.url, { name: "image.png" })],
     embeds: [simpleEmbed(
-      msgParams(multiLineMsg(commands.emoji.exec.pollEmbed.content), [emojiId, command.user.id]),
+      msgParams(commands.emoji.exec.pollEmbed.content, [emojiId, command.user.id]),
       "normal",
       commands.emoji.exec.pollEmbed.title
     )]
   });
 
-  await voteMessage.react(emojiProposal.emoji.upVote);
-  await voteMessage.react(emojiProposal.emoji.downVote);
+  await voteMessage.react(proposals.emoji.upVote.emoji);
+  await voteMessage.react(proposals.emoji.downVote.emoji);
 
   command.reply({
-    embeds: [simpleEmbed(msgParams(commands.emoji.exec.pollSent, [generalChannelId]))],
+    embeds: [simpleEmbed(msgParams(commands.emoji.exec.pollSent, [generalChannel.id]))],
     ephemeral: true
   });
 
   const reactionCollector = voteMessage.createReactionCollector({
     filter: (reaction, user) => {
       return (
-        reaction.emoji.name === emojiProposal.emoji.upVote || reaction.emoji.name === emojiProposal.emoji.downVote
+        reaction.emoji.name === proposals.emoji.upVote.emoji || reaction.emoji.name === proposals.emoji.downVote.emoji
       ) && user.id !== command.user.id;
     },
     time: 1000 * 60 * 20
   });
 
   reactionCollector.on("collect", (reaction) => {
-    if (reaction.emoji.name === emojiProposal.emoji.upVote && reaction.count >= emojiProposal.reactionNeededCount.upVote) {
+    if (reaction.emoji.name === proposals.emoji.upVote.emoji && reaction.count >= proposals.emoji.upVote.count) {
       return reactionCollector.stop(StopReason.ACCEPTED);
     }
 
-    if (reaction.count >= emojiProposal.reactionNeededCount.downVote) {
+    if (reaction.count >= proposals.emoji.downVote.count) {
       return reactionCollector.stop(StopReason.REFUSED);
     }
   });
 
-  reactionCollector.on("end", (collected, reason) => {
+  reactionCollector.on("end", (_, reason) => {
     if (reason === StopReason.MESSAGE_DELETED) return;
 
     switch (reason) {

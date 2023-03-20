@@ -358,5 +358,27 @@ export const commands = {
       notInGuild: "Veuillez éxecuter cette commande sur un serveur",
       selectRole: "Veuillez choisir vos rôles"
     }
+  },
+  roulette: {
+    name: "roulette",
+    description: "Choisir une valeur aléatoire parmis une liste d'éléments",
+    exec: {
+      modal: {
+        name: "Roulette",
+        title: {
+          label: "Titre",
+          placeholder: "facultatif"
+        },
+        choices: {
+          label: "Différents choix",
+          placeholder: [
+            "choix 1",
+            "choix 2",
+            "choix 3",
+            "..."
+          ].join("\n")
+        }
+      }
+    }
   }
 } satisfies Record<string, Command>;

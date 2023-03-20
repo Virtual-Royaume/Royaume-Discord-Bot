@@ -380,5 +380,26 @@ export const commands = {
         }
       }
     }
+  },
+  stats: {
+    name: "stats",
+    description: "Voir les statistiques du serveurs",
+    options: {
+      history: {
+        name: "history",
+        description: "Taille de l'historique en jours"
+      },
+      darkMode: {
+        name: "dark",
+        description: "Graphique mode sombre"
+      }
+    },
+    exec: {
+      historyQueryError: "Erreur lors de la récupération de l'historique",
+      title: "**Statistiques sur {days} jours**",
+      voices: "Temps de vocal des utilisateurs en minutes",
+      messages: "Nombre de messages envoyés",
+      members: "Nombre de membres présents sur le serveur"
+    }
   }
 } satisfies Record<string, Command>;

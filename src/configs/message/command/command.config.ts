@@ -350,5 +350,13 @@ export const commands = {
         channelActivityRow: "{messageCount} dans <#{channelId}>"
       }
     }
+  },
+  role: {
+    name: "role",
+    description: "Choisir ses rôles",
+    exec: {
+      notInGuild: "Veuillez éxecuter cette commande sur un serveur",
+      selectRole: "Veuillez choisir vos rôles"
+    }
   }
 } satisfies Record<string, Command>;

@@ -1,8 +1,10 @@
+import { BaseMessage } from "../message.type";
+
 export type Command = Base & {
   groups?: Record<string, SubCommandGroup>;
   subcmds?: Record<string, SubCommand>;
   options?: Record<string, Base>;
-  exec?: Record<string, Exec>
+  exec?: Record<string, BaseMessage>
 };
 
 export type SubCommandGroup = Base & {
@@ -17,5 +19,3 @@ export type Base = {
   name: string;
   description: string;
 }
-
-export type Exec = string | {[key: string]: Exec};

@@ -1,0 +1,1 @@
+export type BaseMessage = string | {[key: string]: BaseMessage}

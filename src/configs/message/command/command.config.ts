@@ -316,5 +316,39 @@ export const commands = {
         footer: "Membre inactif n°{inactiveNumber}/{inactivesCount}"
       }
     }
+  },
+  member: {
+    name: "member",
+    description: "Statistiques et information d'un utilisateur",
+    options: {
+      member: {
+        name: "member",
+        description: "Membre ciblé"
+      }
+    },
+    exec: {
+      isntInGuild: "Vous devez être sur un serveur discord pour faire cette commande",
+      isntInOfficialGuild: "Cette commande doit être éxecuté sur un des serveurs du Royaume",
+      memberQueryError: "Erreur lors de la récupération du membre",
+      memberDoesntExist: "Ce membre n'éxiste pas",
+      channelsQueryError: "Erreur lors de la récupération des salons",
+      embed: {
+        title: "Activité de {displayName}",
+        birth: "**👶 Né le {date} ({yearsOld} ans)**\n\n",
+        progress: {
+          up: "📈 **Rôle d'activité :** {role} *(rôle en augmentation)*\n\n",
+          neutral: "📊 **Rôle d'activité :** {role} *(rôle en stagnation)*\n\n",
+          down: "📉 **Rôle d'activité :** {role} *(rôle en diminution)*\n\n"
+        },
+        activity: [
+          "**🔊 Temps de vocal :** {time}\n",
+          "**🔉 Temps de vocal ce mois :** {time}\n\n",
+          "**📜 Nombre de message :** {messagesCount}\n",
+          "**📝 Nombre de message ce mois :** {messagesCount}\n\n",
+          "**📺 Nombre de message par salon :**"
+        ].join(""),
+        channelActivityRow: "{messageCount} dans <#{channelId}>"
+      }
+    }
   }
 } satisfies Record<string, Command>;

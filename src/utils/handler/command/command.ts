@@ -55,6 +55,8 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
       const dynamicCommandImport = await import(`${path}${commandFileName}`);
       const execute: CommandExecute = dynamicCommandImport.execute;
 
+      if (!execute) throw new Error(`${commandFileName} doesn't have "execute" function`);
+
       commands.set(serializeCommandName(builder.name), execute);
       continue;
     }
@@ -81,6 +83,8 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
           const dynamicCommandImport = await import(`${path}${subCommandGroupFolder}${subCommandFileName}`);
           const execute: CommandExecute = dynamicCommandImport.execute;
 
+          if (!execute) throw new Error(`${subCommandFileName} doesn't have "execute" function`);
+
           commands.set(serializeCommandName(builder.name, subCommandGroupOption.name, commandOption.name), execute);
           continue;
         }
@@ -95,6 +99,8 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
 
         const dynamicCommandImport = await import(`${path}${subCommandDirName}\\${subCommandFileName}`);
         const execute: CommandExecute = dynamicCommandImport.execute;
+
+        if (!execute) throw new Error(`${subCommandFileName} doesn't have "execute" function`);
 
         commands.set(serializeCommandName(builder.name, commandOption.name), execute);
       }

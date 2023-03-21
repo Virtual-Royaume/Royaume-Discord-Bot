@@ -449,5 +449,39 @@ export const commands = {
         footer: "Page: {page}/{maxPage}"
       }
     }
+  },
+  topVoice: {
+    name: "top-voice",
+    description: "Classement des membres les plus actifs vocalement",
+    subcmds: {
+      total: {
+        name: "total",
+        description: "Classement du nombre total de minutes",
+        options: {
+          page: {
+            name: "page",
+            description: "Page du classement"
+          }
+        }
+      },
+      month: {
+        name: "month",
+        description: "Classement du nombre mensuel de minutes",
+        options: {
+          page: {
+            name: "page",
+            description: "Page du classement"
+          }
+        }
+      }
+    },
+    exec: {
+      activityQueryError: "Erreur lors de la récupération des statistiques",
+      embed: {
+        title: "Classements des membres les plus actifs *(source: {source})*",
+        format: "**{position}. {username} :** {nbrMessages}\n",
+        footer: "Page: {page}/{maxPage}"
+      }
+    }
   }
 } satisfies Record<string, Command>;

@@ -401,5 +401,53 @@ export const commands = {
       messages: "Nombre de messages envoyés",
       members: "Nombre de membres présents sur le serveur"
     }
+  },
+  topMessage: {
+    name: "top-message",
+    description: "Classement des membres les plus actifs textuellement",
+    subcmds: {
+      total: {
+        name: "total",
+        description: "Classement du nombre total de messages",
+        options: {
+          page: {
+            name: "page",
+            description: "Page du classement"
+          }
+        }
+      },
+      month: {
+        name: "month",
+        description: "Classement du nombre mensuel de messages",
+        options: {
+          page: {
+            name: "page",
+            description: "Page du classement"
+          }
+        }
+      },
+      channel: {
+        name: "channel",
+        description: "Classement du nombre de messages par salon",
+        options: {
+          page: {
+            name: "page",
+            description: "Page du classement"
+          },
+          channel: {
+            name: "channel",
+            description: "Classement du salon"
+          }
+        }
+      }
+    },
+    exec: {
+      activityQueryError: "Erreur lors de la récupération des statistiques",
+      embed: {
+        title: "Classements des membres les plus actifs *(source: {source})*",
+        format: "**{position}. {username} :** {nbrMessages}\n",
+        footer: "Page: {page}/{maxPage}"
+      }
+    }
   }
 } satisfies Record<string, Command>;

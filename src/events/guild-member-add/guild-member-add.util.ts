@@ -1,0 +1,1 @@
+export const defaultAvatar = "https://i.ytimg.com/vi/Ug9Xh-xNecM/maxresdefault.jpg";

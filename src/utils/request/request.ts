@@ -2,7 +2,7 @@ import { Response } from "./request.type";
 import { getStringEnv } from "$core/utils/env-variable";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
-import Logger from "../logger";
+import { logger } from "../logger";
 import { URLSearchParams } from "url";
 
 type Method = "get" | "delete" | "post"| "put";
@@ -11,7 +11,7 @@ interface RequestParams extends Omit<RequestInit, "method"> {
   query?: Record<string, string | string[]>
 }
 
-export const restRequest = async<T>(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<T>> => {
+export const restRequest = async(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<globalThis.Response>> => {
   if (config.query) {
     const urlParams = new URLSearchParams(config.query);
     endpoint = `${endpoint}?${urlParams.toString()}`;
@@ -20,18 +20,41 @@ export const restRequest = async<T>(method: Method, endpoint: string, config: Re
   const response = await fetch(endpoint, { ...config, method: method });
 
   if (!response.ok) {
-    Logger.error("Rest request failed :");
+    logger.error("Rest request failed :");
     console.log(method, endpoint, config);
 
     return {
-      success: false,
-      data: null
+      success: false
     };
   }
 
   return {
     success: true,
-    data: await response.json()
+    data: response
+  };
+};
+
+export const restJsonRequest = async<T extends object>(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<T>> => {
+  config.headers = { ...config.headers, "Content-Type": "application/json" };
+  const response = await restRequest(method, endpoint, config);
+
+  if (!response.success) return response;
+
+  return {
+    success: response.success,
+    data: await response.data.json()
+  };
+};
+
+export const restTextRequest = async(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<string>> => {
+  config.headers = { ...config.headers, "Content-Type": "text/plain" };
+  const response = await restRequest(method, endpoint, config);
+
+  if (!response.success) return response;
+
+  return {
+    success: response.success,
+    data: await response.data.text()
   };
 };
 
@@ -49,12 +72,11 @@ export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variabl
   });
 
   if (!response.ok) {
-    Logger.error("GraphQL request failed :");
+    logger.error("GraphQL request failed :");
     console.log(await response.json());
 
     return {
-      success: false,
-      data: null
+      success: false
     };
   }
 

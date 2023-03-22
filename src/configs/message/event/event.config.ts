@@ -21,5 +21,8 @@ export const events = {
       "Si ce n'est pas déjà fait, je te recommande de jeter un coup d'œil au [GitHub de notre communauté](https://github.com/Virtual-Royaume), ",
       "tu trouveras dessus différents projets communs sur lesquels nos membres sont libres d'apporter leur aide."
     ].join("")
+  },
+  "messageCreate": {
+    stepMessage: "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉"
   }
 } satisfies Record<string, BaseMessage>;

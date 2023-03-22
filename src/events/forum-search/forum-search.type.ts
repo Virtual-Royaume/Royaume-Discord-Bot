@@ -1,0 +1,1 @@
+export type Titles = Record<string, string>

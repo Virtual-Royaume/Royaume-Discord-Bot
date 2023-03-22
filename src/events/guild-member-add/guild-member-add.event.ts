@@ -3,14 +3,11 @@ import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { defaultAvatar } from "$core/events/guild-member-add/guild-member-add.util";
 import { simpleEmbed } from "$core/utils/embed";
-import { EnableInDev } from "$core/utils/handler";
 import { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { ChannelType } from "discord.js";
-
-export const enableInDev: EnableInDev = true;
 
 export const event: EventName = "guildMemberAdd";
 

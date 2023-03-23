@@ -2,13 +2,10 @@ import { client } from "$core/client";
 import { events } from "$core/configs/message/event";
 import { messageUrlRegex } from "$core/events/message-link-reaction/message-link-reaction.util";
 import { simpleEmbed } from "$core/utils/embed";
-import { EnableInDev } from "$core/utils/handler";
 import { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { BaseGuildTextChannel, EmbedBuilder, Message } from "discord.js";
-
-export const enableInDev: EnableInDev = true;
 
 export const event: EventName = "messageCreate";
 

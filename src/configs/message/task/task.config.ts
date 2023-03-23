@@ -17,6 +17,10 @@ export const tasks = {
         text: "Bon anniversaire <@{userId}> !! 🎁🎉"
       }
     }
+  },
+  tierUpdate: {
+    noOldRank: "<@{userId}> ➜ <@&{newRoleId}>",
+    rankUpdate: "<@{userId}> <@&{oldRoleId}> ➜ <@&{newRoleId}>",
+    title: "Changement des rôles d'activités"
   }
-
 } satisfies Record<string, BaseMessage>;

@@ -1,14 +1,14 @@
 import { BaseMessage } from "../message.type";
 
 export const events = {
-  "rolesSelector": {
+  rolesSelector: {
     fetchError: "Erreur lors de l'acquisition des roles.",
     succes: "Modifications de vos rôles effectuées dans la categorie **{category}**."
   },
-  "roulette": {
+  roulette: {
     succes: "Parmis {choices}\n\nLe destin a choisi `{choice}`"
   },
-  "guildMemberAdd": {
+  guildMemberAdd: {
     welcome: "Bienvenue parmis nous <@{userId}> !",
     welcomePresentation: [
       "Le Royaume est une communauté de développeurs passionnés regroupée dans l'objectif de progresser, échanger ou même travailler ensemble. ",
@@ -22,13 +22,22 @@ export const events = {
       "tu trouveras dessus différents projets communs sur lesquels nos membres sont libres d'apporter leur aide."
     ].join("")
   },
-  "messageCreate": {
+  messageCreate: {
     stepMessage: "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉"
   },
-  "messageLinkReaction": {
+  messageLinkReaction: {
     attachment: "🗂️ {attachmentsCount} fichiers joint(s)",
     embed: {
       content: "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**\n\n{content}"
     }
+  },
+  verifMessageReactionAdd: {
+    welcome: "Bienvenue parmis nous <@{userId}> !",
+    accepted: [
+      "Les rôles que vous voyez sur votre droite sont définis selon votre activité au sein du Royaume !\n\n",
+      "Pour peut choisir les rôles qui convient à vos centres d'intérêt avec la commande `/role`"
+    ].join(""),
+    rejected: "La présentation de {userName} a été refusé.",
+    rejectedMp: "Votre présentation n'a pas convaincu les membres du Royaume."
   }
 } satisfies Record<string, BaseMessage>;

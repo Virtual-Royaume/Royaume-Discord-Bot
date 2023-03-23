@@ -1,5 +1,3 @@
-import { readFileSync } from "fs";
-
 const colors = {
   reset: "\x1b[0m",
   bold: "\x1b[1m",

@@ -2,7 +2,6 @@ import { Client as DiscordClient, GatewayIntentBits, Partials, Team, User } from
 import { logger } from "$core/utils/logger";
 import { version, displayName } from "../package.json";
 import { getStringEnv } from "./utils/env-variable";
-
 import { listener, load as loadCommands, register } from "$core/utils/handler/command";
 import { load as loadEvents } from "$core/utils/handler/event";
 import { load as loadTasks } from "$core/utils/handler/task";
@@ -35,6 +34,7 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
     return null;
   }
 };
+
 
 logger.info(`Sarting ${displayName} v${version}...`);
 client.login(getStringEnv("BOT_TOKEN"));

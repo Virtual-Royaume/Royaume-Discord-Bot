@@ -2,6 +2,7 @@ import { isDevEnvironment } from "$core/utils/environment";
 import { EnableInDev } from "$core/utils/handler/handler.type";
 import { existsSync, readdirSync, statSync } from "fs";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task/task.type";
+import { startCronJob } from "$core/utils/cron";
 
 export const load = async(tasksFolder: string): Promise<number> => {
   const folders = readdirSync(tasksFolder);
@@ -28,7 +29,8 @@ export const load = async(tasksFolder: string): Promise<number> => {
     const execute: TaskExecute = dynamicTaskImport.execute;
 
     if (!execute) throw new Error(`"execute" isn't defined in ${path}${taskFileName}`);
-    setInterval(() => execute(), taskInterval);
+
+    startCronJob(taskInterval, execute);
 
     tasksLoaded++;
   }

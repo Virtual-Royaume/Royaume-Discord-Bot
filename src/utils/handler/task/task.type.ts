@@ -1,3 +1,3 @@
-export type TaskInterval = number;
+export type TaskInterval = string;
 
 export type TaskExecute = () => void;

@@ -2,16 +2,24 @@ import { Client as DiscordClient, GatewayIntentBits, Partials, Team, User } from
 import { logger } from "$core/utils/logger";
 import { version, displayName } from "../package.json";
 import { getStringEnv } from "./utils/env-variable";
+
 import { listener, load as loadCommands, register } from "$core/utils/handler/command";
 import { load as loadEvents } from "$core/utils/handler/event";
 import { load as loadTasks } from "$core/utils/handler/task";
 
+export const rootDirectory = __dirname;
+
 export const client = new DiscordClient({
   intents: [
-    GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.GuildModeration, GatewayIntentBits.GuildMessages
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildIntegrations,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildModeration,
+    GatewayIntentBits.GuildMessages
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction]
 });
@@ -28,23 +36,25 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
   }
 };
 
-// Temporary
 (async() => {
   logger.info(`Sarting ${displayName} v${version}...`);
 
-  const eventsLoaded = await loadEvents(client, `${__dirname}\\events`);
+  const eventsLoaded = await loadEvents(client, `${rootDirectory}\\events`);
 
   logger.info(`${eventsLoaded} events loaded`);
 
-  const tasksLoaded = await loadTasks(`${__dirname}\\tasks`);
+  const tasksLoaded = await loadTasks(`${rootDirectory}\\tasks`);
 
   logger.info(`${tasksLoaded} tasks loaded`);
-  await client.login(getStringEnv("BOT_TOKEN"));
 
-  const loadedCommands = await loadCommands(`${__dirname}\\commands`);
+  const loadedCommands = await loadCommands(`${rootDirectory}\\commands`);
 
   logger.info(`${loadedCommands.builders.size} commands loaded`);
+
+  await client.login(getStringEnv("BOT_TOKEN"));
   listener(client, loadedCommands.commands);
   await register(client, loadedCommands.builders, loadedCommands.guildCommands);
+
   logger.info("Successfully registered application (/) commands");
+  logger.success("Client has been started");
 })();

@@ -44,6 +44,9 @@ API_TOKEN="get the API token in our Discord"
 <details>
   <summary>Commands</summary>
 
+⚠ All commands files, sub-commands files, groups folders and sub-command-group files should have the same name as defined in your `command-name.builder.ts`
+
+---
 #### `command-name.builder.ts`
 Builder of our command
 | export         | type                     | required                     | description                                              |

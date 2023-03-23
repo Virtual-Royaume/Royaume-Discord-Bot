@@ -60,7 +60,8 @@ Execution of our command
 | export    | type             | required | description                                 |
 | :-------- | :--------------- | :------- | :------------------------------------------ |
 | `execute` | `CommandExecute` | `true`   | Will be executed when the command is called |
----
+
+\--------------------------------------------------------------------------------------------------
 <details>
   <summary>SubCommands</summary>
 
@@ -79,7 +80,7 @@ Execution of our sub-command
 | `execute` | `CommandExecute` | `true`   | Will be executed when the sub command is called |
 </details>
 
----
+\--------------------------------------------------------------------------------------------------
 #### `command-name.util.ts`
 All utilities functions our command need
 

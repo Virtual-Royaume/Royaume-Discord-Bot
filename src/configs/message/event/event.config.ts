@@ -39,5 +39,20 @@ export const events = {
     ].join(""),
     rejected: "La présentation de {userName} a été refusé.",
     rejectedMp: "Votre présentation n'a pas convaincu les membres du Royaume."
+  },
+  verifModal: {
+    modal: {
+      title: "Formulaire de présentation",
+      label: "Présentation :"
+    },
+    submit: {
+      title: "Présentation de {userName}",
+      succes: "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps."
+    },
+    error: {
+      guildMember: "Erreur lors de l'envoie de votre présentation, vous devez être sur le serveur discord pour faire votre présentation",
+      alreadyMember: "Vous êtes déjà membre de ce serveur",
+      notTextChannel: "Erreur lors de l'envoi du message, le salon général n'est pas un salon textuel"
+    }
   }
 } satisfies Record<string, BaseMessage>;

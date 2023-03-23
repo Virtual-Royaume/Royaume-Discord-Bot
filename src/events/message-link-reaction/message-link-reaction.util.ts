@@ -1,0 +1,1 @@
+export const messageUrlRegex = /http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}/gi;

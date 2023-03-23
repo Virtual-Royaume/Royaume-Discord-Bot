@@ -24,5 +24,11 @@ export const events = {
   },
   "messageCreate": {
     stepMessage: "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉"
+  },
+  "messageLinkReaction": {
+    attachment: "🗂️ {attachmentsCount} fichiers joint(s)",
+    embed: {
+      content: "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**\n\n{content}"
+    }
   }
 } satisfies Record<string, BaseMessage>;

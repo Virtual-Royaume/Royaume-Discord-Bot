@@ -36,9 +36,9 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
   }
 };
 
-(async() => {
-  logger.info(`Sarting ${displayName} v${version}...`);
-
+logger.info(`Sarting ${displayName} v${version}...`);
+client.login(getStringEnv("BOT_TOKEN"));
+client.on("ready", async client => {
   const eventsLoaded = await loadEvents(client, `${rootDirectory}\\events`);
 
   logger.info(`${eventsLoaded} events loaded`);
@@ -51,10 +51,9 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
 
   logger.info(`${loadedCommands.builders.size} commands loaded`);
 
-  await client.login(getStringEnv("BOT_TOKEN"));
   listener(client, loadedCommands.commands);
   await register(client, loadedCommands.builders, loadedCommands.guildCommands);
 
   logger.info("Successfully registered application (/) commands");
   logger.success("Client has been started");
-})();
+});

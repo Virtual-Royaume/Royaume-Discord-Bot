@@ -17,24 +17,33 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
   const commandsBuilders: CommandsBuilderCollection = new Collection();
   const folders = readdirSync(commandsFolder);
 
+  // Browse folders in `commandsFolder`
   for (const folder of folders) {
     const path = `${commandsFolder}\\${folder}\\`;
 
-    if (!statSync(path).isDirectory()) continue;
+    if (!statSync(path).isDirectory()) {
+      continue;
+    }
 
     // Get command builder
     const builderFileName = `${folder}.builder.ts`;
 
-    if (!existsSync(`${path}${builderFileName}`)) throw new Error(`"${builderFileName}" file can't be found in \`${path}\``);
+    if (!existsSync(`${path}${builderFileName}`)) {
+      throw new Error(`"${builderFileName}" file can't be found in \`${path}\``);
+    }
 
     const dynamicBuilderImport = await import(`${path}${builderFileName}`);
     const enableInDev: EnableInDev = dynamicBuilderImport.enableInDev ?? false;
 
-    if (!enableInDev && isDevEnvironment) continue;
+    if (!enableInDev && isDevEnvironment) {
+      continue;
+    }
 
     const builder: SlashCommandDefition = dynamicBuilderImport.slashCommand;
 
-    if (folder !== builder.name) throw new Error("Folder name and command name are different");
+    if (folder !== builder.name) {
+      throw new Error("Folder name and command name are different");
+    }
 
     commandsBuilders.set(builder.name, builder);
 

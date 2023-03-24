@@ -1,6 +1,9 @@
 import { SlashCommandDefition } from "$core/utils/handler/command";
 import { ChannelType, SlashCommandBuilder } from "discord.js";
 import { commands } from "$core/configs/message/command";
+import { GuildType } from "$core/configs/guild";
+
+export const guild: GuildType = "pro";
 
 export const slashCommand: SlashCommandDefition = new SlashCommandBuilder()
   .setName(commands.main.name)

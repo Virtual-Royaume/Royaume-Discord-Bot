@@ -6,8 +6,6 @@ import { listener, load as loadCommands, register } from "$core/utils/handler/co
 import { load as loadEvents } from "$core/utils/handler/event";
 import { load as loadTasks } from "$core/utils/handler/task";
 
-export const rootDirectory = __dirname;
-
 export const client = new DiscordClient({
   intents: [
     GatewayIntentBits.Guilds,
@@ -39,15 +37,15 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
 logger.info(`Sarting ${displayName} v${version}...`);
 client.login(getStringEnv("BOT_TOKEN"));
 client.on("ready", async client => {
-  const eventsLoaded = await loadEvents(client, `${rootDirectory}\\events`);
+  const eventsLoaded = await loadEvents(client, `${__dirname}\\events`);
 
   logger.info(`${eventsLoaded} events loaded`);
 
-  const tasksLoaded = await loadTasks(`${rootDirectory}\\tasks`);
+  const tasksLoaded = await loadTasks(`${__dirname}\\tasks`);
 
   logger.info(`${tasksLoaded} tasks loaded`);
 
-  const loadedCommands = await loadCommands(`${rootDirectory}\\commands`);
+  const loadedCommands = await loadCommands(`${__dirname}\\commands`);
 
   logger.info(`${loadedCommands.builders.size} commands loaded`);
 

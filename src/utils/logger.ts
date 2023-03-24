@@ -1,45 +1,60 @@
-const colors = {
-  reset: "\x1b[0m",
-  bold: "\x1b[1m",
-  thin: "\x1b[2m",
-  underscore: "\x1b[4m",
-  blink: "\x1b[5m",
-  reverse: "\x1b[7m",
-  hidden: "\x1b[8m",
+import DayJS from "$core/utils/day-js";
 
-  fg: {
-    gray: "\x1b[30m",
-    red: "\x1b[31m",
-    green: "\x1b[32m",
-    yellow: "\x1b[33m",
-    blue: "\x1b[34m",
-    magenta: "\x1b[35m",
-    cyan: "\x1b[36m",
-    white: "\x1b[37m"
-  },
+export enum ConsoleEffect {
+  Reset = "\x1b[0m",
+  Bold = "\x1b[1m",
+  Thin = "\x1b[2m",
+  Underscore = "\x1b[4m",
+  Blink = "\x1b[5m",
+  Reverse = "\x1b[7m",
+  Hidden = "\x1b[8m"
+}
 
-  bg: {
-    gray: "\x1b[40m",
-    red: "\x1b[41m",
-    green: "\x1b[42m",
-    yellow: "\x1b[43m",
-    blue: "\x1b[44m",
-    magenta: "\x1b[45m",
-    cyan: "\x1b[46m",
-    white: "\x1b[47m"
-  }
-};
+export enum ConsoleForground {
+  Gray = "\x1b[30m",
+  Red = "\x1b[31m",
+  Green = "\x1b[32m",
+  Yellow = "\x1b[33m",
+  Blue = "\x1b[34m",
+  Magenta = "\x1b[35m",
+  Cyan = "\x1b[36m",
+  White = "\x1b[37m"
+}
+
+export enum ConsoleBackground {
+  Gray = "\x1b[40m",
+  Red = "\x1b[41m",
+  Green = "\x1b[42m",
+  Yellow = "\x1b[43m",
+  Blue = "\x1b[44m",
+  Magenta = "\x1b[45m",
+  Cyan = "\x1b[46m",
+  White = "\x1b[47m"
+}
 
 export const logger = {
   info: (message: string) => {
-    console.log(`${colors.fg.yellow}- ${colors.bold}${colors.fg.white}Info${colors.reset}    ${colors.fg.gray}» ${colors.reset}${message}`);
+    console.log(formatLog(ConsoleForground.Yellow, "info", message));
   },
 
   success: (message: string) => {
-    console.log(`${colors.fg.green}√ ${colors.bold}${colors.fg.white}Success${colors.reset} ${colors.fg.gray}» ${colors.reset}${message}`);
+    console.log(formatLog(ConsoleForground.Green, "success", message));
   },
 
   error: (message: string) => {
-    console.log(`${colors.fg.red}x ${colors.bold}${colors.fg.white}Error  ${colors.reset} ${colors.fg.gray}» ${colors.reset}${message}`);
+    console.log(formatLog(ConsoleForground.Red, "error", message));
   }
+};
+
+export const formatLog = (color: ConsoleForground, type: string, message: string): string => {
+  const maxSpace = 8;
+  const spaceSize = maxSpace - type.length;
+
+  const datetime = DayJS().format("YYYY-MM-DD HH:mm:ss");
+
+  const prefix = `${ConsoleForground.White}[${datetime}] ${ConsoleEffect.Bold}${color}${type.toUpperCase()}`;
+  const separator = `${ConsoleEffect.Reset} ${ConsoleForground.Gray}${"-".repeat(spaceSize)}» `;
+  const content = `${ConsoleEffect.Reset}${message}`;
+
+  return `${prefix}${separator}${content}`;
 };

@@ -1,6 +1,9 @@
 import { SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 import { SlashCommandDefition } from "./command.type";
 
+export const subCommandDirName = "[sub-commands]";
+export const subCommandGroupDirNamePrefix = "group-";
+
 export const haveSubcommands = (slashCommandBuilder: SlashCommandDefition): slashCommandBuilder is SlashCommandSubcommandsOnlyBuilder => {
   const subCommand =  slashCommandBuilder.options.find(option => {
     return option instanceof SlashCommandSubcommandBuilder || option instanceof SlashCommandSubcommandGroupBuilder;

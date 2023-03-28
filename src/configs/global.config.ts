@@ -25,7 +25,8 @@ export const interactionId = {
   },
   modal: {
     verify: "m0",
-    roulette: "m1"
+    roulette: "m1",
+    inactive: "m2"
   }
 };
 

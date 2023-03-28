@@ -1,71 +1,164 @@
-import { getGuild } from "$core/client";
-import { Collection, EmbedBuilder, Snowflake } from "discord.js";
-import { verify } from "$resources/config/information.json";
-import { gqlRequest } from "$core/utils/request";
 import { getMember } from "$core/api/requests/member";
-import { GetMonthActivityQuery } from "$core/utils/request/graphql/graphql";
-import { MemberPage } from "$core/commands/inactive/inactive.type";
-import { simpleEmbed } from "$core/utils/embed";
-import { commands } from "$resources/config/messages.json";
-import { getInactiveMembers } from "$core/api/func/member";
-import { formatMinutes } from "$core/utils/function";
-import { tiers as configTiers } from "$resources/config/information.json";
+import { Page, formatedPage } from "$core/commands/inactive/inactive.type";
+import { interactionId } from "$core/configs";
+import { guilds } from "$core/configs/guild";
+import { commands } from "$core/configs/message/command";
+import { objectKeys } from "$core/utils/function";
+import { msgParams } from "$core/utils/message";
+import { gqlRequest } from "$core/utils/request";
+import {
+  GuildMember,
+  Snowflake, Collection,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle
+} from "discord.js";
 
-export const memberPage: MemberPage = new Collection();
+export const pageNumberByMember: Collection<Snowflake, number> = new Collection();
 
-export const getInactiveGuildMembers = async(): Promise<GetMonthActivityQuery["members"] | null> => {
-  const guild = await getGuild();
-  const members = (await guild.members.fetch()).filter(member => member.roles.cache.has(verify.roles.waiting));
-  const inactiveMembersQuery = await getInactiveMembers();
+export const getPage = async(members: GuildMember[], page: number): Promise<Page | null> => {
+  const maxPage = members.length;
+  page = page > maxPage ? maxPage : page;
+  page = page < 0 ? 1 : page;
+  const guildMember = members[page - 1];
+  const memberQuery = await gqlRequest(getMember, { id: guildMember.id });
 
-  if (!inactiveMembersQuery) return null;
+  if (!memberQuery.success || !memberQuery.data.member) {
+    return null;
+  }
 
-  const inactiveMembers = inactiveMembersQuery.filter(member => !members.has(member._id));
+  const member = memberQuery.data.member;
+  const user = await guildMember.user.fetch();
 
-  return inactiveMembers;
+  return {
+    maxPage,
+    page,
+    data: {
+      previousMember: members[page - 2] ? members[page - 2].user.username : undefined,
+      nextMember: members[page] ? members[page].user.username : undefined,
+      memberId: member._id,
+      username: user.tag,
+      messages: member.activity.messages.totalCount,
+      minutes: member.activity.voiceMinute,
+      joinServerAt: guildMember.joinedAt,
+      avatar: user.avatarURL(),
+      banner: user.bannerURL() ?? null,
+      tier: objectKeys(guilds.pro.tiers)[member.activity.tier]
+    }
+  };
 };
 
-export const getValidPageNumber = (inactiveMembers: GetMonthActivityQuery["members"], page: number): number => {
-  if (page < 0) return 0;
-  if (page >= inactiveMembers.length) return inactiveMembers.length - 1;
-  return page;
+export const formatPage = (page: Page, canKick = false): formatedPage => {
+  return {
+    embed: getEmbed(page),
+    components: getActionRow(page, canKick)
+  };
 };
 
-export const generateEmbed = async(member: Snowflake, page: number): Promise<EmbedBuilder> => {
-  const inactiveGuildMembers = await getInactiveGuildMembers();
+export const getEmbed = (page: Page): EmbedBuilder => {
 
-  if (!inactiveGuildMembers) return simpleEmbed(commands.inactive.exec.activityQueryError, "error");
-
-  page = getValidPageNumber(inactiveGuildMembers, page);
-  const inactiveId = inactiveGuildMembers[page]._id;
-  const memberQuery = await gqlRequest(getMember, { id: inactiveId });
-
-  if (!memberQuery.success) return simpleEmbed(commands.inactive.exec.memberQueryError, "error");
-
-  const memberInfo = memberQuery.data.member;
-  const guildMember = await (await getGuild()).members.fetch(inactiveId);
-
-  // Format data:
-  const tiers: Record<string, string> = configTiers;
-  const messageCount = memberInfo.activity.messages.totalCount;
-  const voiceMinute = memberInfo.activity.voiceMinute;
-  const avatar = guildMember.user.displayAvatarURL();
-  const banner = (await guildMember.user.fetch()).bannerURL();
+  const fields = commands.inactive.exec.embed.fields;
   const embed = new EmbedBuilder()
-    .setTitle(memberInfo.username)
-    .setDescription(msg(
-      "cmd-inactive-embed-content",
-      [
-        inactiveId, messageCount, formatMinutes(voiceMinute), memberInstance.user.createdAt.toLocaleDateString(),
-        memberInstance.joinedAt?.toLocaleDateString() ?? "0 minutes", tiers[memberInfo.activity.tier]
-      ]
-    ))
+    .setTitle(page.data.username)
+    .addFields([
+      {
+        name: fields.member.name,
+        value: msgParams(fields.member.value, [page.data.memberId]),
+        inline: true
+      },
+      {
+        name: fields.joinAt.name,
+        value: msgParams(fields.joinAt.value, [page.data.joinServerAt?.toLocaleDateString() ?? fields.joinAt.defaultValue]),
+        inline: true
+      },
+      {
+        name: fields.messages.name,
+        value: msgParams(fields.messages.value, [page.data.messages]),
+        inline: true
+      },
+      {
+        name: fields.minutes.name,
+        value: msgParams(fields.minutes.value, [page.data.minutes]),
+        inline: true
+      },
+      {
+        name: fields.activityTier.name,
+        value: msgParams(fields.activityTier.value, [guilds.pro.tiers[page.data.tier]]),
+        inline: true
+      }
+    ])
     .setColor("#5339DD")
-    .setThumbnail(avatar)
     .setFooter({
-      text: msg("cmd-inactive-exec-embed-footer", [page + 1, inactiveMembers.length])
+      text: msgParams(commands.inactive.exec.embed.footer, [page.page, page.maxPage])
     });
 
-  if (banner) embed.setImage(`${banner}?size=512`);
+  if (page.data.avatar) {
+    embed.setThumbnail(page.data.avatar);
+  }
+
+  if (page.data.banner) {
+    embed.setImage(page.data.banner + "?size=512");
+  }
+
   return embed;
 };
+
+export const getActionRow = (page: Page, canKick = false): ActionRowBuilder<ButtonBuilder> => {
+  const actions = interactionId.button.inactive;
+
+  return new ActionRowBuilder<ButtonBuilder>().addComponents(
+    // Beginning page
+    new ButtonBuilder()
+      .setCustomId(actions.inactiveFirst)
+      .setLabel("⏪")
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(page.page === 1),
+
+    // Previous
+    new ButtonBuilder()
+      .setCustomId(actions.inactivePrevious)
+      .setLabel(!page.data.previousMember ? "◀️" : `◀️ (${page.data.previousMember})`)
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(!page.data.previousMember),
+
+    // Kick
+    new ButtonBuilder()
+      .setCustomId(actions.inactiveKick)
+      .setLabel("Expulser")
+      .setStyle(ButtonStyle.Danger)
+      .setDisabled(!canKick),
+
+    // Next
+    new ButtonBuilder()
+      .setCustomId(actions.inactiveNext)
+      .setLabel(!page.data.nextMember ? "▶️" : `▶️ (${page.data.nextMember})`)
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(!page.data.nextMember),
+
+    // Last page
+    new ButtonBuilder()
+      .setCustomId(actions.inactiveLast)
+      .setLabel("⏩")
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(!page.data.nextMember)
+  );
+};
+
+export const reasonId = "reason";
+
+export const confirmationModal = new ModalBuilder()
+  .setCustomId(interactionId.modal.inactive)
+  .setTitle(commands.inactive.exec.modal.title)
+  .addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(
+    new TextInputBuilder()
+      .setCustomId(reasonId)
+      .setLabel(commands.inactive.exec.modal.label)
+      .setStyle(TextInputStyle.Short)
+      .setMaxLength(100)
+      .setPlaceholder(commands.inactive.exec.kick.kickDefaultReason)
+      .setRequired(false)
+  ));

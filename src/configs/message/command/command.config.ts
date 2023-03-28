@@ -307,13 +307,39 @@ export const commands = {
       memberQueryError: "Erreur lors de la récupération du membre",
       noMember: "Ce membre n'éxiste pas",
       embed: {
-        content: [
-          "Le membre <@{memberId}> a envoyé un total de **{messages} messages**",
-          "Il a passé un total de **{voiceTime} en vocal**\n",
-          "Compte créé le **{createdAt}**, il a rejoint le serveur le **{joinedAt}**",
-          "Son rang d'activité est **<@&{rankId}>**"
-        ].join("\n"),
-        footer: "Membre inactif n°{inactiveNumber}/{inactivesCount}"
+        fields: {
+          member: {
+            name: "Member",
+            value: "<@{userId}>"
+          },
+          joinAt: {
+            name: "Join server at",
+            value: "{date}",
+            defaultValue: "??/??/????"
+          },
+          messages: {
+            name: "Total messages",
+            value: "{messagesCount}"
+          },
+          minutes: {
+            name: "Total minutes",
+            value: "{minutes} minutes"
+          },
+          activityTier: {
+            name: "Activity Tier",
+            value: "<@&{roleId}>"
+          }
+        },
+        footer: "Membre inactif n°{page}/{maxPage}"
+      },
+      modal: {
+        title: "Expultion de {username}",
+        label: "Raison"
+      },
+      kick: {
+        kickMessage: "Vous avez été exclu du Royaume pour: {reason}",
+        kickReason: "{username}: {reason}",
+        kickDefaultReason: "Inactivité"
       }
     }
   },

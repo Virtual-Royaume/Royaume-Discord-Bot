@@ -12,7 +12,6 @@
     "gqlgen:watch": "graphql-codegen --watch --config gql-codegen.ts"
   },
   "dependencies": {
-    "axios": "^1.2.3",
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
     "cron": "^2.3.0",
@@ -40,5 +39,12 @@
     "ignorePatterns": [
       "src/utils/request/graphql"
     ]
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@babel/*"
+      ]
+    }
   }
 }

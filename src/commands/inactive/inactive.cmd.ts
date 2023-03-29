@@ -55,6 +55,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
+  // Get inactives from guild & generate the page data
   const guildMembers = await command.guild.members.fetch();
   const inactiveMembersOnServer = Array.from(
     guildMembers.filter(member => inactiveMembers.find(inactiveMember => inactiveMember._id === member.id)),
@@ -70,6 +71,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
+  // Send the inactive member page
   pageNumberByMember.set(member.id, page.page);
 
   const replyMessage = await command.reply({
@@ -77,6 +79,8 @@ export const execute: CommandExecute = async(command) => {
     components: [getActionRow(page, member.permissions.has(PermissionFlagsBits.KickMembers))],
     ephemeral: true
   });
+
+  // Create collector form buttons
   const collector = replyMessage.createMessageComponentCollector<ComponentType.Button>({
     idle: 1000 * 60 * 30
   });
@@ -87,7 +91,9 @@ export const execute: CommandExecute = async(command) => {
     const currentPage = pageNumberByMember.get(member.id) ?? 1;
     let newPageNum = currentPage;
 
+    // Kick interaction
     if (id === ids.inactiveKick) {
+      // Member has permission to kick
       if (!member.permissions.has(PermissionFlagsBits.KickMembers)) {
         interaction.reply({
           embeds: [simpleEmbed(commands.inactive.exec.kick.noPermission, "error")],
@@ -98,6 +104,7 @@ export const execute: CommandExecute = async(command) => {
 
       const inactiveMember = inactiveMembersOnServer[currentPage - 1];
 
+      // Is inactivveMember kickable by bot
       if (!inactiveMember.kickable) {
         interaction.reply({
           embeds: [simpleEmbed(commands.inactive.exec.kick.botCantKick, "error")],
@@ -107,9 +114,11 @@ export const execute: CommandExecute = async(command) => {
       }
 
       try {
+        // Confirmation modal
         await interaction.showModal(confirmationModal(inactiveMember.user.username));
         let modalSubmit: ModalSubmitInteraction<CacheType>;
 
+        // Wait the modal response
         try {
           modalSubmit = await interaction.awaitModalSubmit({
             filter: (interaction) => interaction.customId === interactionId.modal.inactive && interaction.user.id === member.id,
@@ -125,6 +134,7 @@ export const execute: CommandExecute = async(command) => {
           return;
         }
 
+        // Kick the user
         const modalReason = modalSubmit.fields.getTextInputValue(reasonId);
         const reason = modalReason.length < 1 ? commands.inactive.exec.kick.kickDefaultReason : modalReason;
 
@@ -133,14 +143,12 @@ export const execute: CommandExecute = async(command) => {
         });
         await inactiveMember.kick(msgParams(commands.inactive.exec.kick.kickReason, [member.user.username, reason]));
         inactiveMembersOnServer.splice(currentPage - 1, 1); // Remove kicked user from inactive members
-        inactiveMembersOnServer.splice(0, inactiveMembersOnServer.length);
-
         await modalSubmit.reply({
           embeds: [simpleEmbed(msgParams(commands.inactive.exec.kick.memberKicked, [inactiveMember.id]))],
           ephemeral: true
         });
 
-        // No more inactive
+        // No more inactive members
         if (inactiveMembersOnServer.length < 1) {
           command.editReply({
             embeds: [simpleEmbed(commands.inactive.exec.noInactiveMembers)],
@@ -159,6 +167,7 @@ export const execute: CommandExecute = async(command) => {
       }
     }
 
+    // Set the new page number by the button pressed
     if (id === ids.inactiveFirst) newPageNum = 1;
     if (id === ids.inactivePrevious) newPageNum = currentPage - 1;
     if (id === ids.inactiveNext) newPageNum = currentPage + 1;

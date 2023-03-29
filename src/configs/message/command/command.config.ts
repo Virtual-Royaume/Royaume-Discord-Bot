@@ -301,19 +301,55 @@ export const commands = {
       }
     },
     exec: {
+      notInGuild: "Exécutez cette commande sur le serveur \"pro\" du Royaume",
+      noChannel: "Exécutez cette commande dans un salon textuel",
       notGuildMember: "Exécutez cette commande sur le serveur discord",
       activityQueryError: "Erreur lors de la récupération de l'activité des membres",
       noInactiveMembers: "Il n'y a pas de membres inactifs",
       memberQueryError: "Erreur lors de la récupération du membre",
-      noMember: "Ce membre n'éxiste pas",
       embed: {
-        content: [
-          "Le membre <@{memberId}> a envoyé un total de **{messages} messages**",
-          "Il a passé un total de **{voiceTime} en vocal**\n",
-          "Compte créé le **{createdAt}**, il a rejoint le serveur le **{joinedAt}**",
-          "Son rang d'activité est **<@&{rankId}>**"
-        ].join("\n"),
-        footer: "Membre inactif n°{inactiveNumber}/{inactivesCount}"
+        fields: {
+          member: {
+            name: "Member",
+            value: "<@{userId}>"
+          },
+          createAt: {
+            name: "Create at",
+            value: "{date}"
+          },
+          joinAt: {
+            name: "Join server at",
+            value: "{date}",
+            defaultValue: "??/??/????"
+          },
+          messages: {
+            name: "Total messages",
+            value: "{messagesCount}"
+          },
+          minutes: {
+            name: "Total minutes",
+            value: "{minutes} minutes"
+          },
+          activityTier: {
+            name: "Activity Tier",
+            value: "<@&{roleId}>"
+          }
+        },
+        footer: "Membre inactif n°{page}/{maxPage}"
+      },
+      modal: {
+        title: "Expultion de {username}",
+        label: "Raison"
+      },
+      kick: {
+        noPermission: "Vous n'avez pas la permission d'expulser se membre",
+        botCantKick: "Le bot ne peut pas expulser cet utilisateur",
+        kickTimeExpired: "Vous avez mis trop de temps pour choisir une raison, le kick a été annulé",
+        memberKicked: "<@{userId}>) a été kick",
+        errorWhileKicking: "Erreur lors de l'expulsion du membre",
+        kickMessage: "Vous avez été exclu du Royaume pour : **{reason}**",
+        kickReason: "{username} : {reason}",
+        kickDefaultReason: "Inactivité"
       }
     }
   },

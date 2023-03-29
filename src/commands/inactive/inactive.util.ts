@@ -1,5 +1,5 @@
 import { getMember } from "$core/api/requests/member";
-import { Page, formatedPage } from "$core/commands/inactive/inactive.type";
+import { Page } from "$core/commands/inactive/inactive.type";
 import { interactionId } from "$core/configs";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
@@ -44,18 +44,12 @@ export const getPage = async(members: GuildMember[], page: number): Promise<Page
       username: user.tag,
       messages: member.activity.messages.totalCount,
       minutes: member.activity.voiceMinute,
+      createAt: user.createdAt,
       joinServerAt: guildMember.joinedAt,
       avatar: user.avatarURL(),
       banner: user.bannerURL() ?? null,
       tier: objectKeys(guilds.pro.tiers)[member.activity.tier]
     }
-  };
-};
-
-export const formatPage = (page: Page, canKick = false): formatedPage => {
-  return {
-    embed: getEmbed(page),
-    components: getActionRow(page, canKick)
   };
 };
 
@@ -68,6 +62,11 @@ export const getEmbed = (page: Page): EmbedBuilder => {
       {
         name: fields.member.name,
         value: msgParams(fields.member.value, [page.data.memberId]),
+        inline: true
+      },
+      {
+        name: fields.createAt.name,
+        value: msgParams(fields.createAt.value, [page.data.createAt.toLocaleDateString()]),
         inline: true
       },
       {
@@ -150,15 +149,17 @@ export const getActionRow = (page: Page, canKick = false): ActionRowBuilder<Butt
 
 export const reasonId = "reason";
 
-export const confirmationModal = new ModalBuilder()
-  .setCustomId(interactionId.modal.inactive)
-  .setTitle(commands.inactive.exec.modal.title)
-  .addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(
-    new TextInputBuilder()
-      .setCustomId(reasonId)
-      .setLabel(commands.inactive.exec.modal.label)
-      .setStyle(TextInputStyle.Short)
-      .setMaxLength(100)
-      .setPlaceholder(commands.inactive.exec.kick.kickDefaultReason)
-      .setRequired(false)
-  ));
+export const confirmationModal = (username: string): ModalBuilder => {
+  return new ModalBuilder()
+    .setCustomId(interactionId.modal.inactive)
+    .setTitle(msgParams(commands.inactive.exec.modal.title, [username]))
+    .addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(
+      new TextInputBuilder()
+        .setCustomId(reasonId)
+        .setLabel(commands.inactive.exec.modal.label)
+        .setStyle(TextInputStyle.Short)
+        .setMaxLength(100)
+        .setPlaceholder(commands.inactive.exec.kick.kickDefaultReason)
+        .setRequired(false)
+    ));
+};

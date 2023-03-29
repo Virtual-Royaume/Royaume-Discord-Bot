@@ -15,6 +15,7 @@ export type PageData = {
   messages: number,
   minutes: number,
   tier: keyof Tier,
+  createAt: Date,
   joinServerAt: Date | null,
   avatar: string | null,
   banner: string | null

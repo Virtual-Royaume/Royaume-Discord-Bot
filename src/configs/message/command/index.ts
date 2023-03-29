@@ -1,2 +1,2 @@
 export { commands } from "./command.config";
-export { Command, SubCommandGroup, SubCommand, Base, Exec } from "./command.type";
+export { Command, SubCommandGroup, SubCommand, Base } from "./command.type";

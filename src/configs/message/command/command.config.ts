@@ -301,16 +301,21 @@ export const commands = {
       }
     },
     exec: {
+      notInGuild: "Exécutez cette commande sur le serveur \"pro\" du Royaume",
+      noChannel: "Exécutez cette commande dans un salon textuel",
       notGuildMember: "Exécutez cette commande sur le serveur discord",
       activityQueryError: "Erreur lors de la récupération de l'activité des membres",
       noInactiveMembers: "Il n'y a pas de membres inactifs",
       memberQueryError: "Erreur lors de la récupération du membre",
-      noMember: "Ce membre n'éxiste pas",
       embed: {
         fields: {
           member: {
             name: "Member",
             value: "<@{userId}>"
+          },
+          createAt: {
+            name: "Create at",
+            value: "{date}"
           },
           joinAt: {
             name: "Join server at",
@@ -337,8 +342,13 @@ export const commands = {
         label: "Raison"
       },
       kick: {
-        kickMessage: "Vous avez été exclu du Royaume pour: {reason}",
-        kickReason: "{username}: {reason}",
+        noPermission: "Vous n'avez pas la permission d'expulser se membre",
+        botCantKick: "Le bot ne peut pas expulser cet utilisateur",
+        kickTimeExpired: "Vous avez mis trop de temps pour choisir une raison, le kick a été annulé",
+        memberKicked: "<@{userId}>) a été kick",
+        errorWhileKicking: "Erreur lors de l'expulsion du membre",
+        kickMessage: "Vous avez été exclu du Royaume pour : **{reason}**",
+        kickReason: "{username} : {reason}",
         kickDefaultReason: "Inactivité"
       }
     }

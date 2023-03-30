@@ -345,7 +345,7 @@ export const commands = {
         noPermission: "Vous n'avez pas la permission d'expulser se membre",
         botCantKick: "Le bot ne peut pas expulser cet utilisateur",
         kickTimeExpired: "Vous avez mis trop de temps pour choisir une raison, le kick a été annulé",
-        memberKicked: "<@{userId}>) a été kick",
+        memberKicked: "<@{userId}> a été kick",
         errorWhileKicking: "Erreur lors de l'expulsion du membre",
         kickMessage: "Vous avez été exclu du Royaume pour : **{reason}**",
         kickReason: "{username} : {reason}",

@@ -2,7 +2,7 @@ import { getMembersTier } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { getGuild, guilds } from "$core/configs/guild";
 import { tasks } from "$core/configs/message/task/task.config";
-import { RoleUpdate } from "$core/tasks/tier-update/tier-update.type";
+import { RoleUpdate } from "./tier-update.type";
 import { simpleEmbed } from "$core/utils/embed";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";

@@ -1,5 +1,6 @@
 import { getMember } from "$core/api/requests/member";
-import { Page } from "$core/commands/inactive/inactive.type";
+import { reasonId } from "./inactive.const";
+import { Page } from "./inactive.type";
 import { interactionId } from "$core/configs";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
@@ -146,8 +147,6 @@ export const getActionRow = (page: Page, canKick = false): ActionRowBuilder<Butt
       .setDisabled(!page.data.nextMember)
   );
 };
-
-export const reasonId = "reason";
 
 export const confirmationModal = (username: string): ModalBuilder => {
   return new ModalBuilder()

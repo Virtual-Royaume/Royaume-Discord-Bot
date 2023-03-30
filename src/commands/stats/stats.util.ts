@@ -1,4 +1,4 @@
-import { GraphType } from "$core/commands/stats/stats.type";
+import { GraphType } from "./stats.type";
 import { global } from "$core/configs";
 import DayJS from "$core/utils/day-js";
 import { dateFormat } from "$core/utils/function";

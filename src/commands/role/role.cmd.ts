@@ -1,4 +1,4 @@
-import { generateActionRow } from "$core/commands/role/role.util";
+import { generateActionRow } from "./role.util";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";

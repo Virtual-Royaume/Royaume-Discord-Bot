@@ -1,11 +1,12 @@
 import { getVoiceTime } from "$core/api/requests/member";
-import { formatPage, getPage, memberPerPage } from "$core/commands/top-voice/top-voice.util";
-import { MembersData } from "$core/commands/top-voice/top-voice.type";
+import { formatPage, getPage } from "../top-voice.util";
+import { MembersData } from "../top-voice.type";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
+import { memberPerPage } from "../top-voice.const";
 
 export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];

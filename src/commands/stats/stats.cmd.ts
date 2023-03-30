@@ -1,6 +1,6 @@
 import { getServerActivityHistory } from "$core/api/requests/server-activity";
-import { GraphType } from "$core/commands/stats/stats.type";
-import { generateChartConfig } from "$core/commands/stats/stats.util";
+import { GraphType } from "./stats.type";
+import { generateChartConfig } from "./stats.util";
 import { global } from "$core/configs";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";

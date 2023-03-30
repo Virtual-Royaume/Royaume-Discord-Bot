@@ -1,4 +1,4 @@
-import { candidatBtn } from "$core/commands/interaction/[sub-commands]/verif.util";
+import { candidatBtn } from "./verif.util";
 import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
 import { commands } from "$core/configs/message/command";

@@ -1,6 +1,7 @@
 import { getTotalMessageCount } from "$core/api/requests/member";
-import { MembersData } from "$core/commands/top-message/top-message.type";
-import { formatPage, getPage, memberPerPage } from "$core/commands/top-message/top-message.util";
+import { memberPerPage } from "../top-message.const";
+import { MembersData } from "../top-message.type";
+import { formatPage, getPage } from "../top-message.util";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";

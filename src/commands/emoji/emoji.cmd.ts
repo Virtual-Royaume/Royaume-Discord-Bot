@@ -1,4 +1,4 @@
-import { StopReason, maxEmojiByGuildTier } from "$core/commands/emoji/emoji.util";
+import { StopReason, maxEmojiByGuildTier } from "./emoji.const";
 import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";

@@ -1,5 +1,5 @@
 import { getInactiveMembers } from "$core/api/func/member";
-import { confirmationModal, getActionRow, getEmbed, getPage, pageNumberByMember, reasonId } from "$core/commands/inactive/inactive.util";
+import { confirmationModal, getActionRow, getEmbed, getPage, pageNumberByMember } from "./inactive.util";
 import { interactionId } from "$core/configs";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
@@ -7,6 +7,7 @@ import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { CacheType, ComponentType, GuildMember, ModalSubmitInteraction, PermissionFlagsBits } from "discord.js";
+import { reasonId } from "./inactive.const";
 
 export const execute: CommandExecute = async(command) => {
   if (command.guild?.id !== guilds.pro.guildId) {

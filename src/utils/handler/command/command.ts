@@ -3,9 +3,10 @@ import { existsSync, readdirSync, statSync } from "fs";
 import { isDevEnvironment } from "$core/utils/environment";
 import { CommandsCollection, CommandExecute,
   CommandsBuilderCollection, LoadedCommands, GuildCommandsCollection } from "./command.type";
-import { haveSubcommands, serializeCommandName, subCommandDirName, subCommandGroupDirNamePrefix } from "./command.util";
+import { haveSubcommands, serializeCommandName } from "./command.util";
 import { isFolderExist } from "$core/utils/function";
 import { GuildType, getGuild } from "$core/configs/guild";
+import { subCommandDirName, subCommandGroupDirNamePrefix } from "./command.const";
 
 // Some of tests in this function can be removed when this issue https://github.com/microsoft/TypeScript/issues/38511 will be solved
 export const load = async(commandsFolder: string): Promise<LoadedCommands> => {

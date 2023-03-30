@@ -1,4 +1,4 @@
-import { choicesInputId, titleInputId } from "$core/commands/roulette/roulette.util";
+import { choicesInputId, titleInputId } from "$core/commands/roulette/roulette.const";
 import { interactionId } from "$core/configs";
 import { events } from "$core/configs/message/event";
 import { simpleEmbed } from "$core/utils/embed";

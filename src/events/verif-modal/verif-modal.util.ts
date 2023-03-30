@@ -1,8 +1,7 @@
 import { interactionId } from "$core/configs";
 import { events } from "$core/configs/message/event";
+import { presentationId } from "./verif-modal.const";
 import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
-
-export const presentationId = "presentation";
 
 export const modal = new ModalBuilder()
   .setCustomId(interactionId.modal.verify)

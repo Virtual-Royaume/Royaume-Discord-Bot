@@ -1,6 +1,6 @@
 import { client } from "$core/client";
 import { events } from "$core/configs/message/event";
-import { messageUrlRegex } from "$core/events/message-link-reaction/message-link-reaction.util";
+import { messageUrlRegex } from "./message-link-reaction.const";
 import { simpleEmbed } from "$core/utils/embed";
 import { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";

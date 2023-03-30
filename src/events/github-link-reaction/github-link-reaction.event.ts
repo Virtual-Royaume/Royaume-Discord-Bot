@@ -1,5 +1,5 @@
-import { CodeElement } from "$core/events/github-link-reaction/github-link-reaction.type";
-import { githubPermalinkRegex, githubRawUrl } from "$core/events/github-link-reaction/github-link-reaction.util";
+import { CodeElement } from "./github-link-reaction.type";
+import { githubPermalinkRegex, githubRawUrl } from "./github-link-reaction.const";
 import { getStringEnv } from "$core/utils/env-variable";
 import { EventExecute, EventName } from "$core/utils/handler/event";
 import { restTextRequest } from "$core/utils/request/request";

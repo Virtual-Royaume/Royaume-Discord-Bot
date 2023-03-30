@@ -1,7 +1,7 @@
 import { createMember, getMemberActivityTier, setAlwaysOnServer } from "$core/api/requests/member";
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
-import { defaultAvatar } from "$core/events/guild-member-add/guild-member-add.util";
+import { defaultAvatar } from "./guild-member-add.const";
 import { simpleEmbed } from "$core/utils/embed";
 import { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";

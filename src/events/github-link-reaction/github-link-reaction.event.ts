@@ -9,12 +9,7 @@ export const event: EventName = "messageCreate";
 export const execute: EventExecute<"messageCreate"> = async(message) => {
   const urls = message.content.match(githubPermalinkRegex);
 
-  console.log(urls);
-
-  console.count("hey ?");
-
   if (!urls) return;
-  console.count("hey ?");
 
   const codeElements: CodeElement[] = [];
 
@@ -44,7 +39,7 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
     filePath.splice(2, 1);
 
     // Get file extension for code highlight :
-    const fileExtension = filePath[filePath.length - 1].match(/(?<=[.])\w*/gm)?.shift() ?? "";
+    const fileExtension = filePath[filePath.length - 1].match(/(?<=[.])\w*/gm)?.pop() ?? "";
 
     // Request for get the code :
     const response = await restTextRequest("get", githubRawUrl + filePath.join("/"), {

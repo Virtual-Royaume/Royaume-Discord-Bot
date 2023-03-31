@@ -2,10 +2,10 @@ import { Client, Collection, SlashCommandSubcommandBuilder, SlashCommandSubcomma
 import { existsSync, readdirSync, statSync } from "fs";
 import { isDevEnvironment } from "$core/utils/environment";
 import { CommandsCollection, CommandExecute,
-  CommandsBuilderCollection, LoadedCommands, GuildCommandsCollection } from "./command.type";
+  CommandsBuilderCollection, LoadedCommands, GuildCommandsCollection, GuildsCommand } from "./command.type";
 import { haveSubcommands, serializeCommandName } from "./command.util";
 import { isFolderExist } from "$core/utils/function";
-import { GuildType, getGuild } from "$core/configs/guild";
+import { getGuild } from "$core/configs/guild";
 import { subCommandDirName, subCommandGroupDirNamePrefix } from "./command.const";
 
 // Some of tests in this function can be removed when this issue https://github.com/microsoft/TypeScript/issues/38511 will be solved
@@ -50,11 +50,13 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
     commandsBuilders.set(builder.name, builder);
 
     // Is a command guild
-    const guild: GuildType | undefined = dynamicBuilderImport.guild;
+    const guilds: GuildsCommand | undefined = dynamicBuilderImport.guild;
 
-    if (guild) {
-      const commands = guildCommands.get(guild) ?? [];
-      guildCommands.set(guild, [...commands, builder.name]);
+    if (guilds) {
+      for (const guild of guilds) {
+        const commands = guildCommands.get(guild) ?? [];
+        guildCommands.set(guild, [...commands, builder.name]);
+      }
     }
 
     // Load simple command

@@ -1,9 +1,9 @@
 import { SlashCommandDefition } from "$core/utils/handler/command";
 import { SlashCommandBuilder } from "discord.js";
 import { commands } from "$core/configs/message/command";
-import { GuildType } from "$core/configs/guild";
+import { GuildsCommand } from "$core/utils/handler/command/command.type";
 
-export const guild: GuildType = "pro";
+export const guilds: GuildsCommand = ["pro"];
 
 export const slashCommand: SlashCommandDefition = new SlashCommandBuilder()
   .setName(commands.inactive.name)

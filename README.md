@@ -49,11 +49,11 @@ API_TOKEN="get the API token in our Discord"
 ---
 #### `command-name.builder.ts`
 Builder of our command
-| export         | type                     | required                     | description                                              |
-| :------------- | :----------------------- | :--------------------------- | :------------------------------------------------------- |
-| `slashCommand` | `SlashCommandDefinition` | `true`                       | SlashCommandBuilder of our command                       |
-| `guild`        | `GuildType`              | `false`                      | If this is defined, command will only be on this server  |
-| `enableInDev`  | `EnableInDev`            | `false` *(default: `false`)* | If bot is launch in dev-mode, command will not be loaded |
+| export         | type                     | required                     | description                                               |
+| :------------- | :----------------------- | :--------------------------- | :-------------------------------------------------------- |
+| `slashCommand` | `SlashCommandDefinition` | `true`                       | SlashCommandBuilder of our command                        |
+| `guilds`       | `GuildsCommand`          | `false`                      | If this is defined, command will only be on these servers |
+| `enableInDev`  | `EnableInDev`            | `false` *(default: `false`)* | If bot is launch in dev-mode, command will not be loaded  |
 
 ---
 #### `command-name.cmd.ts`

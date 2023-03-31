@@ -1,6 +1,8 @@
 import { GuildType } from "$core/configs/guild";
 import { ChatInputCommandInteraction, Collection, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
+export type GuildsCommand = GuildType[];
+
 export type SlashCommandDefition = SlashCommandSubcommandsOnlyBuilder |
   Omit<SlashCommandBuilder, "addSubcommandGroup" | "addSubcommand">;
 

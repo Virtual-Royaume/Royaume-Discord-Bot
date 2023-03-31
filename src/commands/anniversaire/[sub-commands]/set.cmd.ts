@@ -5,8 +5,10 @@ import { global } from "$core/configs/global.config";
 import { getAge } from "$core/utils/function";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
+import { gqlRequest } from "$core/utils/request";
+import { setBirthday } from "$core/api/requests/member";
 
-export const execute: CommandExecute = (command) => {
+export const execute: CommandExecute = async(command) => {
   const dateString = command.options.getString(commands.birthday.subcmds.set.options.date.name, true);
 
   // Check if string is of type: 99/99/9999 or 9/9/9999
@@ -32,6 +34,16 @@ export const execute: CommandExecute = (command) => {
   if (getAge(date) < global.minimumAge) {
     command.reply({
       embeds: [simpleEmbed(msgParams(commands.birthday.exec.set.tooYoung, [global.minimumAge]), "error")],
+      ephemeral: true
+    });
+    return;
+  }
+
+  const setBirthdayQuery = await gqlRequest(setBirthday, { id: command.user.id, date });
+
+  if (!setBirthdayQuery.success) {
+    command.reply({
+      embeds: [simpleEmbed(commands.birthday.exec.set.queryError, "error")],
       ephemeral: true
     });
     return;

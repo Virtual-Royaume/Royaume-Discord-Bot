@@ -18,7 +18,8 @@ export const commands = {
         badFormat: "Le format de votre date est invalide.",
         invalid: "Cette date est invalide.",
         success: "Votre date d'anniversaire a bien été enregistrée ! *(`{date}`)*",
-        tooYoung: "L'age minimum requis est de {minimumAge} ans."
+        tooYoung: "L'age minimum requis est de {minimumAge} ans.",
+        queryError: "Erreur lors de la sauvegarde de votre anniversaire"
       }
     },
     subcmds: {

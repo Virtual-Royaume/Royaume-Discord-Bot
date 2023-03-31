@@ -30,8 +30,9 @@ export const execute: CommandExecute = async(command) => {
   }
 
   const maxEmoji = maxEmojiByGuildTier[guild.premiumTier];
+  const emojis = await guild.emojis.fetch(undefined, { cache: true });
 
-  if (guild.emojis.cache.size >= maxEmoji) {
+  if (emojis.filter(emoji => !emoji.animated).size >= maxEmoji) {
     command.reply({
       embeds: [simpleEmbed(commands.emoji.exec.emojiLimit, "error")],
       ephemeral: true

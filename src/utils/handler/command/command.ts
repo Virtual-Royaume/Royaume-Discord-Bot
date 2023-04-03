@@ -7,6 +7,7 @@ import { haveSubcommands, serializeCommandName } from "./command.util";
 import { isFolderExist } from "$core/utils/function";
 import { getGuild } from "$core/configs/guild";
 import { subCommandDirName, subCommandGroupDirNamePrefix } from "./command.const";
+import { sep } from "path";
 
 // Some of tests in this function can be removed when this issue https://github.com/microsoft/TypeScript/issues/38511 will be solved
 export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
@@ -17,7 +18,7 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
 
   // Browse folders in `commandsFolder`
   for (const folder of folders) {
-    const path = `${commandsFolder}\\${folder}\\`;
+    const path = `${commandsFolder}${sep}${folder}${sep}`;
 
     if (!statSync(path).isDirectory()) {
       continue;
@@ -87,7 +88,7 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
 
       // SubCommandsGroup loading
       if (commandOption instanceof SlashCommandSubcommandGroupBuilder) {
-        const subCommandGroupFolder = `${subCommandDirName}\\${subCommandGroupDirNamePrefix}${commandOption.name}\\`;
+        const subCommandGroupFolder = `${subCommandDirName}${sep}${subCommandGroupDirNamePrefix}${commandOption.name}${sep}`;
 
         if (!isFolderExist(`${path}${subCommandGroupFolder}`)) {
           throw new Error(`"${commandOption.name}" SubCommandGroup folder doesn't exist`);
@@ -116,11 +117,11 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
       } else if (commandOption instanceof SlashCommandSubcommandBuilder) {
         const subCommandFileName = `${commandOption.name}.cmd.ts`;
 
-        if (!existsSync(`${path}${subCommandDirName}\\${subCommandFileName}`)) {
+        if (!existsSync(`${path}${subCommandDirName}${sep}${subCommandFileName}`)) {
           throw new Error(`"${subCommandFileName}" file can't be found in \`${subCommandDirName}\``);
         }
 
-        const dynamicCommandImport = await import(`${path}${subCommandDirName}\\${subCommandFileName}`);
+        const dynamicCommandImport = await import(`${path}${subCommandDirName}${sep}${subCommandFileName}`);
         const execute: CommandExecute = dynamicCommandImport.execute;
 
         if (!execute) {

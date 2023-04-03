@@ -5,6 +5,7 @@ import { getStringEnv } from "./utils/env-variable";
 import { listener, load as loadCommands, register } from "$core/utils/handler/command";
 import { load as loadEvents } from "$core/utils/handler/event";
 import { load as loadTasks } from "$core/utils/handler/task";
+import { sep } from "path";
 
 export const client = new DiscordClient({
   intents: [
@@ -37,15 +38,15 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
 logger.info(`Sarting ${displayName} v${version}...`);
 client.login(getStringEnv("BOT_TOKEN"));
 client.on("ready", async client => {
-  const eventsLoaded = await loadEvents(client, `${__dirname}\\events`);
+  const eventsLoaded = await loadEvents(client, `${__dirname}${sep}events`);
 
   logger.info(`${eventsLoaded} events loaded`);
 
-  const tasksLoaded = await loadTasks(`${__dirname}\\tasks`);
+  const tasksLoaded = await loadTasks(`${__dirname}${sep}tasks`);
 
   logger.info(`${tasksLoaded} tasks loaded`);
 
-  const loadedCommands = await loadCommands(`${__dirname}\\commands`);
+  const loadedCommands = await loadCommands(`${__dirname}${sep}commands`);
 
   logger.info(`${loadedCommands.builders.size} commands loaded`);
 

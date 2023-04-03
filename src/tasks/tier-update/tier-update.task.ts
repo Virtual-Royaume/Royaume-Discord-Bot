@@ -10,7 +10,7 @@ import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
 
-export const interval: TaskInterval = "0 0 0 1 * *";
+export const interval: TaskInterval = "0 * * * * *";
 
 export const execute: TaskExecute = async() => {
   const guild = await getGuild(client, "pro");

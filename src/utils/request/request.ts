@@ -1,8 +1,8 @@
 import { Response } from "./request.type";
-import { getStringEnv } from "$core/utils/EnvVariable";
+import { getStringEnv } from "$core/utils/env-variable";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
-import Logger from "../Logger";
+import { logger } from "../logger";
 import { URLSearchParams } from "url";
 
 type Method = "get" | "delete" | "post"| "put";
@@ -20,7 +20,7 @@ export const restRequest = async(method: Method, endpoint: string, config: Reque
   const response = await fetch(endpoint, { ...config, method: method });
 
   if (!response.ok) {
-    Logger.error("Rest request failed :");
+    logger.error("Rest request failed :");
     console.log(method, endpoint, config);
 
     return {
@@ -72,7 +72,7 @@ export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variabl
   });
 
   if (!response.ok) {
-    Logger.error("GraphQL request failed :");
+    logger.error("GraphQL request failed :");
     console.log(await response.json());
 
     return {

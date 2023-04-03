@@ -1,9 +1,11 @@
 {
-  "version": "2.7.0",
-  "main": "build/src/Client.js",
+  "name": "royaume-discord-bot",
+  "displayName": "Royaume-Discord-Bot",
+  "version": "3.0.0",
+  "main": "build/src/client.js",
   "scripts": {
-    "dev": "nodemon --exec node -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts dev",
-    "start": "node -r @swc-node/register -r tsconfig-paths/register ./src/Client.ts",
+    "dev": "npx nodemon --exec node -r @swc-node/register -r tsconfig-paths/register ./src/client.ts dev",
+    "start": "node -r @swc-node/register -r tsconfig-paths/register ./src/client.ts",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "gen:gql": "graphql-codegen --config gql-codegen.ts",
@@ -12,8 +14,9 @@
   "dependencies": {
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
+    "cron": "^2.3.0",
     "dayjs": "^1.11.7",
-    "discord.js": "^14.7.1"
+    "discord.js": "^14.8.0"
   },
   "devDependencies": {
     "@bluzzi/eslint-config": "^0.8.2",
@@ -21,7 +24,8 @@
     "@graphql-codegen/client-preset": "2.1.1",
     "@graphql-typed-document-node/core": "^3.1.1",
     "@swc-node/register": "^1.5.4",
-    "@swc/core": "^1.3.39",
+    "@swc/core": "^1.3.24",
+    "@types/cron": "^2.0.1",
     "@types/node": "^18.11.18",
     "dotenv": "^16.0.3",
     "eslint": "^8.36.0",

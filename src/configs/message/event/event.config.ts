@@ -1,0 +1,58 @@
+import { BaseMessage } from "../message.type";
+
+export const events = {
+  rolesSelector: {
+    fetchError: "Erreur lors de l'acquisition des roles.",
+    succes: "Modifications de vos rôles effectuées dans la categorie **{category}**."
+  },
+  roulette: {
+    succes: "Parmis {choices}\n\nLe destin a choisi `{choice}`"
+  },
+  guildMemberAdd: {
+    welcome: "Bienvenue parmis nous <@{userId}> !",
+    welcomePresentation: [
+      "Le Royaume est une communauté de développeurs passionnés regroupée dans l'objectif de progresser, échanger ou même travailler ensemble. ",
+      "Nous sommes ouverts à tout profile donc que tu sois débutant ou déjà sénior dans le domaine, tu trouveras ta place parmi nous !\n\n",
+      "Tu peux choisir les rôles qui correspondent à ton profil via la commande `/rôle` de notre bot <@{userId}>, ceci permet de montrer aux ",
+      "membres ton domaine précis dans la programmation ou encore d'être mentionné une fois de temps en temps pour un sujet ",
+      "qui pourrait te plaire.\n\n",
+      "Il y a aussi des rôles colorés que tu vois sur la droite, ils changent automatiquement chaque mois selon ton activité sur le serveur, ",
+      "c'est un peu gadget, mais ça permet de voir d'un coup d'œil les membres les plus investi dans notre communauté.\n\n",
+      "Si ce n'est pas déjà fait, je te recommande de jeter un coup d'œil au [GitHub de notre communauté](https://github.com/Virtual-Royaume), ",
+      "tu trouveras dessus différents projets communs sur lesquels nos membres sont libres d'apporter leur aide."
+    ].join("")
+  },
+  messageCreate: {
+    stepMessage: "<@{userId}> vient de passer le cap des {messageCount} messages envoyés ! 🎉"
+  },
+  messageLinkReaction: {
+    attachment: "🗂️ {attachmentsCount} fichiers joint(s)",
+    embed: {
+      content: "**Message mentionné [#{index}]({messageUrl}) dans <#{channelId}>**\n\n{content}"
+    }
+  },
+  verifMessageReactionAdd: {
+    welcome: "Bienvenue parmis nous <@{userId}> !",
+    accepted: [
+      "Les rôles que vous voyez sur votre droite sont définis selon votre activité au sein du Royaume !\n\n",
+      "Pour peut choisir les rôles qui convient à vos centres d'intérêt avec la commande `/role`"
+    ].join(""),
+    rejected: "La présentation de {userName} a été refusé.",
+    rejectedMp: "Votre présentation n'a pas convaincu les membres du Royaume."
+  },
+  verifModal: {
+    modal: {
+      title: "Formulaire de présentation",
+      label: "Présentation :"
+    },
+    submit: {
+      title: "Présentation de {userName}",
+      succes: "Votre présentation a été envoyé aux membres du Royaume, vous aurez une réponse d'ici peu de temps."
+    },
+    error: {
+      guildMember: "Erreur lors de l'envoie de votre présentation, vous devez être sur le serveur discord pour faire votre présentation",
+      alreadyMember: "Vous êtes déjà membre de ce serveur",
+      notTextChannel: "Erreur lors de l'envoi du message, le salon général n'est pas un salon textuel"
+    }
+  }
+} satisfies Record<string, BaseMessage>;

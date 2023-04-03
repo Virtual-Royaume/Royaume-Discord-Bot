@@ -1,5 +1,5 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import { getStringEnv } from "./src/utils/EnvVariable";
+import { getStringEnv } from "./src/utils/env-variable";
 
 const apiLink = getStringEnv("API_LINK");
 const apiToken = getStringEnv("API_TOKEN");

@@ -83,7 +83,7 @@ export const execute: CommandExecute = async(command) => {
 
   // Create collector form buttons
   const collector = replyMessage.createMessageComponentCollector<ComponentType.Button>({
-    idle: 1000 * 60 * 30
+    time: 1000 * 60 * 12
   });
 
   collector.on("collect", async interaction => {
@@ -123,7 +123,7 @@ export const execute: CommandExecute = async(command) => {
         try {
           modalSubmit = await interaction.awaitModalSubmit({
             filter: (interaction) => interaction.customId === interactionId.modal.inactive && interaction.user.id === member.id,
-            time: 1000 * 60 * 5
+            time: 1000 * 60 * 2
           });
 
           // Modal time expires

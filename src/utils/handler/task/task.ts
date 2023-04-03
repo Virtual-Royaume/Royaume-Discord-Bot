@@ -3,13 +3,14 @@ import { EnableInDev } from "$core/utils/handler/handler.type";
 import { existsSync, readdirSync, statSync } from "fs";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task/task.type";
 import { startCronJob } from "$core/utils/cron";
+import { sep } from "path";
 
 export const load = async(tasksFolder: string): Promise<number> => {
   const folders = readdirSync(tasksFolder);
   let tasksLoaded = 0;
 
   for (const folder of folders) {
-    const path = `${tasksFolder}\\${folder}\\`;
+    const path = `${tasksFolder}${sep}${folder}${sep}`;
 
     if (!statSync(path).isDirectory()) continue;
 

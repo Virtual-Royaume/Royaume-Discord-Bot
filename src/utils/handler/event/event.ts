@@ -3,13 +3,14 @@ import { isDevEnvironment } from "$core/utils/environment";
 import { EnableInDev } from "$core/utils/handler/handler.type";
 import { Client } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
+import { sep } from "path";
 
 export const load = async(client: Client, eventsFolder: string): Promise<number> => {
   const folders = readdirSync(eventsFolder);
   let eventsLoaded = 0;
 
   for (const folder of folders) {
-    const path = `${eventsFolder}\\${folder}\\`;
+    const path = `${eventsFolder}${sep}${folder}${sep}`;
 
     if (!statSync(path).isDirectory()) continue;
 

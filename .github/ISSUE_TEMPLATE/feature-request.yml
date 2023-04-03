@@ -1,0 +1,15 @@
+name: Proposer une nouvelle fonctionnalité
+description: Créer une issue pour proposer une nouvelle fonctionnalité
+labels: [enhancement]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description de l'issue
+      description: |
+        Description générale de la fonctionnalité que vous souhaitez voir ajoutée.
+      placeholder: |
+        Je voudrais que le bot fasse ceci et cela.
+        Je pense que cela serait utile car ...
+    validations:
+      required: false

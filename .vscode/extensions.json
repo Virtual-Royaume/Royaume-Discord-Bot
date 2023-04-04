@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "GraphQL.vscode-graphql-syntax"
+    "GraphQL.vscode-graphql-syntax",
+    "ZixuanChen.vitest-explorer"
   ]
 }

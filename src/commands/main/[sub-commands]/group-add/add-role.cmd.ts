@@ -4,6 +4,8 @@ import { commands } from "$core/configs/message/command";
 import { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
 import { msgParams } from "$core/utils/message";
+import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const execute: CommandExecute = async(command) => {
   const role = command.options.getRole(commands.main.groups.add.subcmds.role.options.role.name, true);
@@ -23,4 +25,6 @@ export const execute: CommandExecute = async(command) => {
     embeds: [simpleEmbed(msgParams(commands.main.exec.add.role.succes, [role.id, category]))],
     ephemeral: true
   });
+
+  logger.info(`Role ${role.id} added to category ${category} by ${userWithId(command.user)}`);
 };

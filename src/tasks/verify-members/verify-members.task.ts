@@ -1,12 +1,9 @@
 import { createMember, getMember, getMembersOnServerStatus, setAlwaysOnServer } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { getGuild } from "$core/configs/guild";
-import { EnableInDev } from "$core/utils/handler";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
-
-export const enableInDev: EnableInDev = true;
 
 export const interval: TaskInterval = "0 */3 * * * *";
 

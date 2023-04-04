@@ -35,7 +35,7 @@ export const firstLetterToUppercase = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export const isFolderExist = (path: string): boolean => {
+export const doesFolderExist = (path: string): boolean => {
   return existsSync(path) && statSync(path).isDirectory();
 };
 

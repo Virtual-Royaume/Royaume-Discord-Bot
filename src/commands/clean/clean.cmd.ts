@@ -22,6 +22,8 @@ export const execute: CommandExecute = async(command) => {
       embeds: [simpleEmbed(msgParams(commands.clean.exec.succes, [number]))],
       ephemeral: true
     });
+
+    logger.info(`${command.user.username} bulk deleted ${number} messages in ${command.channel.name}`);
   } catch (e) {
     logger.error(`Error while bulk deleting in a channel : ${e}`);
   }

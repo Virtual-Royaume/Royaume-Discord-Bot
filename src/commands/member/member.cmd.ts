@@ -2,7 +2,7 @@ import { getChannels } from "$core/api/requests/main-channel";
 import { getMember } from "$core/api/requests/member";
 import { getGuildTypeById, guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
-import DayJS from "$core/utils/day-js";
+import { DayJS } from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, firstLetterToUppercase, formatMinutes, getAge, numberFormat } from "$core/utils/function";
 import { CommandExecute } from "$core/utils/handler/command";

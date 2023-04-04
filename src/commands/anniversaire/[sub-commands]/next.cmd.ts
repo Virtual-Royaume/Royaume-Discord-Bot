@@ -3,7 +3,7 @@ import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
 import { commands } from "$core/configs/message/command";
 import { gqlRequest } from "$core/utils/request";
-import DayJS from "$core/utils/day-js";
+import { DayJS } from "$core/utils/day-js";
 import { msgParams } from "$core/utils/message";
 import { getAge } from "$core/utils/function";
 

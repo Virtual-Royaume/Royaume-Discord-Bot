@@ -80,6 +80,8 @@ export const execute: CommandExecute = async(command) => {
     )]
   });
 
+  logger.info(`Emoji ${emojiId} proposed by ${command.user.username}`);
+
   await voteMessage.react(proposals.emoji.upVote.emoji);
   await voteMessage.react(proposals.emoji.downVote.emoji);
 
@@ -124,6 +126,8 @@ export const execute: CommandExecute = async(command) => {
           voteMessage.reply({
             embeds: [simpleEmbed(commands.emoji.exec.pollAccepted)]
           });
+
+          logger.info(`Emoji ${emojiId} proposed by ${command.user.username} is accepted`);
         } catch (e) {
           logger.error(`Error while adding emoji : ${e}`);
         }
@@ -134,6 +138,8 @@ export const execute: CommandExecute = async(command) => {
         voteMessage.reply({
           embeds: [simpleEmbed(commands.emoji.exec.pollRefused)]
         });
+
+        logger.info(`Emoji ${emojiId} proposed by ${command.user.username} is refused`);
         break;
       }
     }

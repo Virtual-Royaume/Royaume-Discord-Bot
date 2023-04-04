@@ -34,6 +34,12 @@ export const execute: EventExecute<"interactionCreate"> = async(interaction) => 
   try {
     await memberRoles.add(selectedRoles);
     await memberRoles.remove(unselectedRoles);
+
+    let msg = `Member ${interaction.member?.user.username} roles updated :`;
+    if (selectedRoles.length > 0) msg += ` ${selectedRoles.length} added`;
+    if (unselectedRoles.length > 0) msg += ` ${unselectedRoles.length} removed`;
+
+    logger.info(msg);
   } catch (e) {
     logger.error(`Error while updating member ${interaction.member?.user.id} roles : ${e}`);
   }

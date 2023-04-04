@@ -112,6 +112,3 @@ build/
 
 # Ignore idea directory Jetbrain
 .idea/
-
-# Ignore vscode directory VisualStudioCode
-.vscode/

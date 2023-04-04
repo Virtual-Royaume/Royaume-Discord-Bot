@@ -1,12 +1,5 @@
 # Royaume Discord Bot
-It is the bot of our Discord community, it offers various utility features. It is written in TypeScript and uses the DiscordJS package to interact with the Discord API. 
-
-## Setup
-### Node & NPM
-You must have NodeJS and NPM installed on your PC with this versions :
-| NodeJS | NPM |
-| ------ | --- |
-| 18.X   | 8.X |
+It is the bot of our Discord community, it offers various utility features. It is written in TypeScript and uses DiscordJS to interact with the Discord API. 
 
 ### Environment variables
 You must set this environment variables in your .env file :
@@ -18,13 +11,9 @@ BOT_TOKEN="your token"
 GITHUB_TOKEN="your GitHub PAT (personal access token)"
 
 # Royaume API :
-API_LINK=https://dev-api.royaume.world
+API_LINK="https://dev-api.royaume.world"
 API_TOKEN="get the API token in our Discord"
 ```
-
-### Recommended VSCode extensions
-- [GraphQL](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql-syntax)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
 ## Usage
 ### File strucure for auto-loading

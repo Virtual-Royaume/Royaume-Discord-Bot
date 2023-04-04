@@ -24,6 +24,8 @@ export const execute: CommandExecute = async(command) => {
       embeds: [simpleEmbed(msgParams(commands.forum.exec.rename.succes, [name]))],
       ephemeral: true
     });
+
+    logger.info(`Post channel "${channel.name}" renamed to "${name}"`);
   } catch (e) {
     logger.error(`Error while renaming post channel "${channel.name}" to "${name}" : ${e}`);
     command.reply({

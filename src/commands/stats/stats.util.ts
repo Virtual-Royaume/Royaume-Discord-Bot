@@ -14,6 +14,7 @@ export const generateChartConfig = (
     type: "line",
     data: {
       labels: serverActivity.map(element => {
+        if (element.date === 0) return null;
         return dateFormat(DayJS(element.date).tz());
       }),
       datasets: [{
@@ -21,7 +22,10 @@ export const generateChartConfig = (
         backgroundColor: darkMode ? "#5555ff" : global.colors.primary,
         borderColor: darkMode ? "#5555ff" : global.colors.primary,
         tension: 0.3,
-        data: serverActivity.map(element => element[type.columnName]),
+        data: serverActivity.map(element => {
+          if (element.date === 0) return null;
+          return element[type.columnName];
+        }),
         pointRadius: serverActivity.length > 100 ? 0 : 3
       }]
     },

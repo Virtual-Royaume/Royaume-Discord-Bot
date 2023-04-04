@@ -32,7 +32,8 @@
     "graphql": "^16.6.0",
     "nodemon": "^2.0.22",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.3",
+    "vitest": "^0.29.8"
   },
   "eslintConfig": {
     "extends": "@bluzzi",

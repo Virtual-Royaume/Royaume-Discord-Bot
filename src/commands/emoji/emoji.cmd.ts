@@ -7,6 +7,7 @@ import { AttachmentBuilder, BaseGuildTextChannel } from "discord.js";
 import { proposals } from "$core/configs";
 import { logger } from "$core/utils/logger";
 import { getGuildTypeById, guilds } from "$core/configs/guild";
+import { userWithId } from "$core/utils/user";
 
 export const execute: CommandExecute = async(command) => {
   const guild = command.guild;
@@ -80,7 +81,7 @@ export const execute: CommandExecute = async(command) => {
     )]
   });
 
-  logger.info(`Emoji ${emojiId} proposed by ${command.user.username}`);
+  logger.info(`Emoji ${emojiId} proposed by ${command.user.username} (${command.user.id})`);
 
   await voteMessage.react(proposals.emoji.upVote.emoji);
   await voteMessage.react(proposals.emoji.downVote.emoji);
@@ -127,7 +128,7 @@ export const execute: CommandExecute = async(command) => {
             embeds: [simpleEmbed(commands.emoji.exec.pollAccepted)]
           });
 
-          logger.info(`Emoji ${emojiId} proposed by ${command.user.username} is accepted`);
+          logger.info(`Emoji ${emojiId} proposed by ${command.user.username} (${command.user.id}) is accepted`);
         } catch (e) {
           logger.error(`Error while adding emoji : ${e}`);
         }
@@ -139,7 +140,7 @@ export const execute: CommandExecute = async(command) => {
           embeds: [simpleEmbed(commands.emoji.exec.pollRefused)]
         });
 
-        logger.info(`Emoji ${emojiId} proposed by ${command.user.username} is refused`);
+        logger.info(`Emoji ${emojiId} proposed by ${userWithId(command.user)} is refused`);
         break;
       }
     }

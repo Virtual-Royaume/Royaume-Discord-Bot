@@ -4,6 +4,7 @@ import { msgParams } from "$core/utils/message";
 import { commands } from "$core/configs/message/command";
 import { ChannelType, ForumChannel, Message } from "discord.js";
 import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.channel;
@@ -61,6 +62,6 @@ export const execute: CommandExecute = async(command) => {
     embeds: [simpleEmbed(msgParams(commands.forum.exec.resolve.succes, [answerLink]))]
   });
 
-  logger.info(`Forum: ${command.user.tag} resolved ${channel.name} with ${answerLink}`);
+  logger.info(`Forum: ${userWithId(command.user)} resolved ${channel.name} with ${answerLink}`);
   channel.setArchived(true, "resolved");
 };

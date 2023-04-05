@@ -9,6 +9,7 @@ import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
+import { userWithId } from "$core/utils/user";
 
 export const interval: TaskInterval = "0 * * * * *";
 
@@ -38,6 +39,8 @@ export const execute: TaskExecute = async() => {
       try {
         await member.roles.remove(Object.values(tiers));
         member.roles.add(tierRole);
+
+        logger.info(`Member ${userWithId(member.user)} tier updated`);
       } catch (e) {
         logger.error(`Error while updating member ${member.id} tier : ${e}`);
       }

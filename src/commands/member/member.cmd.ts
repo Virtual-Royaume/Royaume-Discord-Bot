@@ -6,9 +6,11 @@ import DayJS from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, firstLetterToUppercase, formatMinutes, getAge, numberFormat } from "$core/utils/function";
 import { CommandExecute } from "$core/utils/handler/command";
+import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { TierUpdate } from "$core/utils/request/graphql/graphql";
+import { userWithId } from "$core/utils/user";
 import { GuildMember } from "discord.js";
 
 export const execute: CommandExecute = async(command) => {
@@ -127,4 +129,6 @@ export const execute: CommandExecute = async(command) => {
   command.reply({
     embeds: [embed]
   });
+
+  logger.info(`${userWithId(command.user)} used the command ${command.commandName} on ${userWithId(member.user)}`);
 };

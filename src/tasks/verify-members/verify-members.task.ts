@@ -4,6 +4,7 @@ import { getGuild } from "$core/configs/guild";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
+import { userWithId } from "$core/utils/user";
 
 export const interval: TaskInterval = "0 */3 * * * *";
 
@@ -29,7 +30,7 @@ export const execute: TaskExecute = async() => {
     }
 
     // Remove members :
-    logger.info(`Fix ${apiMember._id} isOnServer value to false (${apiMember.username})`);
+    logger.info(`Change ${apiMember.username} (${apiMember._id}) value of "isOnServer" API field to false`);
     gqlRequest(setAlwaysOnServer, { id: apiMember._id, value: false });
   }
 
@@ -53,6 +54,7 @@ export const execute: TaskExecute = async() => {
 
     // Add member :
     logger.info(`Fix ${realMember.id} isOnServer value to true (${realMember.displayName})`);
+    logger.info(`Change ${userWithId(realMember.user)} value of "isOnServer" API field to true`);
 
     await gqlRequest(
       setAlwaysOnServer, { id: realMember.id, value: true }

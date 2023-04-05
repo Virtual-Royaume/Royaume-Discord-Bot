@@ -4,6 +4,8 @@ import { msgParams } from "$core/utils/message";
 import { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
 import { commands } from "$core/configs/message/command";
+import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.options.getChannel(commands.main.groups.remove.subcmds.channel.options.channel.name, true);
@@ -22,4 +24,6 @@ export const execute: CommandExecute = async(command) => {
     embeds: [simpleEmbed(msgParams(commands.main.exec.remove.channel.succes, [channel.id]))],
     ephemeral: true
   });
+
+  logger.info(`Channel ${channel.id} removed by ${userWithId(command.user)}`);
 };

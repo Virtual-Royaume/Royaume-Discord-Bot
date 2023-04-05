@@ -3,6 +3,7 @@ import { interactionId } from "$core/configs";
 import { events } from "$core/configs/message/event";
 import { simpleEmbed } from "$core/utils/embed";
 import { EventExecute, EventName } from "$core/utils/handler/event";
+import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 
 export const event: EventName = "interactionCreate";
@@ -24,4 +25,6 @@ export const execute: EventExecute<"interactionCreate"> = (interaction) => {
       title.length < 1 ? undefined : title
     )]
   });
+
+  logger.info(`${interaction.user.username} rolled a roulette with ${choices.length} choices (${choices.map(c => `\`${c}\``).join(", ")})`);
 };

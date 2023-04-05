@@ -2,7 +2,9 @@ import { setAlwaysOnServer } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { guilds } from "$core/configs/guild";
 import { EventExecute, EventName } from "$core/utils/handler/event";
+import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
+import { userWithId } from "$core/utils/user";
 
 export const event: EventName = "guildMemberRemove";
 
@@ -18,4 +20,6 @@ export const execute: EventExecute<"guildMemberRemove"> = async(member) => {
     id: member.id,
     value: false
   });
+
+  logger.info(`Member ${userWithId(member.user)} removed from always on server (left the server)`);
 };

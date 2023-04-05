@@ -6,6 +6,7 @@ import { DayJS } from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { getAge } from "$core/utils/function";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
+import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
@@ -47,6 +48,7 @@ export const execute: TaskExecute = async() => {
       .setThumbnail(member.profilePicture)
       .setFooter({ text: msgParams(tasks.birthdayChecker.footer, [getAge(birthday)]) });
 
+    logger.info(`Sending birthday message to ${member._id} (${member.username})`);
     generalChannelInstance.send({ embeds: [embed] });
   }
 };

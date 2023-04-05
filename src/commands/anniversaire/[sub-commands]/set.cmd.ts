@@ -7,6 +7,8 @@ import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { setBirthday } from "$core/api/requests/member";
+import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const execute: CommandExecute = async(command) => {
   const dateString = command.options.getString(commands.birthday.subcmds.set.options.date.name, true);
@@ -53,4 +55,6 @@ export const execute: CommandExecute = async(command) => {
     embeds: [simpleEmbed(msgParams(commands.birthday.exec.set.success, [dateString]))],
     ephemeral: true
   });
+
+  logger.info(`${userWithId(command.user)} has set its anniversary date: ${dateString}`);
 };

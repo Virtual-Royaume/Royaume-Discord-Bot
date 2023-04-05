@@ -67,4 +67,5 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
   }
 
   message.reply({ embeds, allowedMentions: { repliedUser: false } });
+  logger.info(`Message link reaction sent for message ${message.id}`);
 };

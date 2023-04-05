@@ -8,6 +8,8 @@ import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { CacheType, ComponentType, GuildMember, ModalSubmitInteraction, PermissionFlagsBits } from "discord.js";
 import { reasonId } from "./inactive.const";
+import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const execute: CommandExecute = async(command) => {
   if (command.guild?.id !== guilds.pro.guildId) {
@@ -143,6 +145,8 @@ export const execute: CommandExecute = async(command) => {
           embeds: [simpleEmbed(msgParams(commands.inactive.exec.kick.kickMessage, [reason]), "error")]
         });
         await inactiveMember.kick(msgParams(commands.inactive.exec.kick.kickReason, [member.user.username, reason]));
+
+        logger.info(`User ${userWithId(inactiveMember.user)} was kicked by ${userWithId(member.user)} for ${reason}`);
         inactiveMembersOnServer.splice(currentPage - 1, 1); // Remove kicked user from inactive members
         await modalSubmit.reply({
           embeds: [simpleEmbed(msgParams(commands.inactive.exec.kick.memberKicked, [inactiveMember.id]))],
@@ -164,6 +168,8 @@ export const execute: CommandExecute = async(command) => {
           embeds: [simpleEmbed(commands.inactive.exec.kick.errorWhileKicking, "error")],
           ephemeral: true
         });
+
+        logger.error(`Error while kicking user ${inactiveMember.user.username} by ${member.user.username}: ${error}`);
         return;
       }
     }

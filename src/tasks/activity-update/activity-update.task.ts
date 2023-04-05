@@ -3,7 +3,9 @@ import { setMemberCount } from "$core/api/requests/server-activity";
 import { client } from "$core/client";
 import { getGuild } from "$core/configs/guild";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
+import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
+import { userWithId } from "$core/utils/user";
 
 export const interval: TaskInterval = "0 * * * * *";
 
@@ -36,6 +38,7 @@ export const execute: TaskExecute = async() => {
     && (!voiceState.selfMute || !voiceState.mute)
     ) {
       gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
+      logger.info(`Voice time of ${userWithId(voiceState.member.user)} updated`);
     }
   }
 };

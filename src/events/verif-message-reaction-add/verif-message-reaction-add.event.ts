@@ -36,6 +36,8 @@ export const execute: EventExecute<"messageReactionAdd"> = async(messageReaction
     try {
       await member.roles.add(guilds.pro.roles.verified);
       await member.roles.remove(guilds.pro.roles.waiting);
+
+      logger.info(`Member ${member?.user.id} has been accepted in the guild.`);
     } catch (e) {
       logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
     }
@@ -66,6 +68,7 @@ export const execute: EventExecute<"messageReactionAdd"> = async(messageReaction
 
     member.kick();
 
+    logger.info(`Member ${member?.user.id} has been rejected from the guild.`);
     removeReactions();
   }
 };

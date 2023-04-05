@@ -7,6 +7,8 @@ import { simpleEmbed } from "$core/utils/embed";
 import { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
+import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];
@@ -42,4 +44,6 @@ export const execute: CommandExecute = async(command) => {
         .setFooter({ text: msgParams(commands.topMessage.exec.embed.footer, [page.page, page.maxPage]) })
     ]
   });
+
+  logger.info(`${userWithId(command.user)} used the top-message total command`);
 };

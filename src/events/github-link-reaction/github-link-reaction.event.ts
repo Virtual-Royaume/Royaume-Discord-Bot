@@ -3,6 +3,8 @@ import { githubPermalinkRegex, githubRawUrl } from "./github-link-reaction.const
 import { getStringEnv } from "$core/utils/env-variable";
 import { EventExecute, EventName } from "$core/utils/handler/event";
 import { restTextRequest } from "$core/utils/request/request";
+import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const event: EventName = "messageCreate";
 
@@ -95,4 +97,6 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
       });
     }
   }
+
+  logger.info(`We replied to a GitHub link sent by ${userWithId(message.author)}`);
 };

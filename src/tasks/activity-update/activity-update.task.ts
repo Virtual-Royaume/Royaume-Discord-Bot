@@ -6,6 +6,7 @@ import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
 import { userWithId } from "$core/utils/user";
+import { GuildMember } from "discord.js";
 
 export const interval: TaskInterval = "0 * * * * *";
 
@@ -19,26 +20,31 @@ export const execute: TaskExecute = async() => {
   if (memberCount) gqlRequest(setMemberCount, { count: memberCount });
 
   // Update voice time of members:
+  const updatedMembers: GuildMember[] = [];
+
   for (const voiceState of proGuild.voiceStates.cache.values()) {
     if (
-      voiceState.member
-    && !voiceState.member.user.bot
-    && voiceState.channel
-    && (!voiceState.selfMute || !voiceState.mute)
+      voiceState.member && !voiceState.member.user.bot
+      && voiceState.channel && (!voiceState.selfMute || !voiceState.mute)
     ) {
       gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
+      updatedMembers.push(voiceState.member);
     }
   }
 
   for (const voiceState of gameGuild.voiceStates.cache.values()) {
     if (
-      voiceState.member
-    && !voiceState.member.user.bot
-    && voiceState.channel
-    && (!voiceState.selfMute || !voiceState.mute)
+      voiceState.member && !voiceState.member.user.bot
+      && voiceState.channel && (!voiceState.selfMute || !voiceState.mute)
     ) {
       gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
-      logger.info(`Voice time of ${userWithId(voiceState.member.user)} updated`);
+      updatedMembers.push(voiceState.member);
     }
+  }
+
+  if (updatedMembers.length) {
+    logger.info(
+      `Voice time updated for members: ${updatedMembers.map(member => userWithId(member.user)).join(", ")}`
+    );
   }
 };

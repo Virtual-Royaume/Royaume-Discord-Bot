@@ -45,7 +45,7 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
   const channel = await guild.channels.fetch(guilds.pro.channels.general);
 
   if (channel?.type === ChannelType.GuildText) {
-    const embed = simpleEmbed(events.guildMemberAdd.welcomePresentation); // TODO : error if undefined ID
+    const embed = simpleEmbed(events.guildMemberAdd.welcomePresentation);
     const embeds = [];
 
     try {

@@ -7,6 +7,8 @@ import { EventExecute, EventName } from "$core/utils/handler/event";
 import { msgParams } from "$core/utils/message";
 import { BaseGuildTextChannel, GuildMember } from "discord.js";
 import { presentationId } from "./verif-modal.const";
+import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const event: EventName = "interactionCreate";
 
@@ -75,5 +77,7 @@ export const execute: EventExecute<"interactionCreate"> = async(interaction) => 
       embeds: [simpleEmbed(events.verifModal.submit.succes)],
       ephemeral: true
     });
+
+    logger.info(`Member ${userWithId(member.user)} submitted a presentation`);
   }
 };

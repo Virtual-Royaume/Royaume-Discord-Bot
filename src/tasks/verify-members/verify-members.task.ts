@@ -53,7 +53,6 @@ export const execute: TaskExecute = async() => {
     }
 
     // Add member :
-    logger.info(`Fix ${realMember.id} isOnServer value to true (${realMember.displayName})`);
     logger.info(`Change ${userWithId(realMember.user)} value of "isOnServer" API field to true`);
 
     await gqlRequest(

@@ -1,5 +1,7 @@
+import type { GuildMember } from "discord.js";
+
 export type RoleUpdate = {
-  memberId: string;
+  member: GuildMember;
   oldRole?: string;
   newRole: string;
 }

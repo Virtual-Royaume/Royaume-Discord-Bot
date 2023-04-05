@@ -45,7 +45,7 @@ export const execute: TaskExecute = async() => {
         logger.error(`Error while updating member ${member.id} tier : ${e}`);
       }
 
-      updates.push({ memberId: id, newRole: tierRole, oldRole: oldRole });
+      updates.push({ member: member, newRole: tierRole, oldRole: oldRole });
     }
   }
 
@@ -57,15 +57,19 @@ export const execute: TaskExecute = async() => {
   if (!(generalChannelInstance instanceof BaseGuildTextChannel)) return;
 
   let message = "";
+  const consoleMessage: string[] = [];
 
   for (const tierRole of Object.values(tiers)) {
     const tierMembers = updates.filter(element => element.newRole === tierRole);
 
-    if (tierMembers.length) {
-      message += tierMembers.map(element => {
-        if (!element.oldRole) return msgParams(tasks.tierUpdate.noOldRank, [element.memberId, element.newRole]);
-        else return msgParams(tasks.tierUpdate.rankUpdate, [element.memberId, element.oldRole, element.newRole]);
-      }).join("\n");
+    if (tierMembers.length) for (const roleUpdate of tierMembers) {
+      if (!roleUpdate.oldRole) {
+        message += `${msgParams(tasks.tierUpdate.noOldRank, [roleUpdate.member.id, roleUpdate.newRole])}\n\n`;
+        consoleMessage.push(`${userWithId(roleUpdate.member.user)} -> ${roleUpdate.newRole}`);
+      } else {
+        message += `${msgParams(tasks.tierUpdate.rankUpdate, [roleUpdate.member.id, roleUpdate.oldRole, roleUpdate.newRole])}\n`;
+        consoleMessage.push(`${roleUpdate.oldRole} -> ${userWithId(roleUpdate.member.user)} -> ${roleUpdate.newRole}`);
+      }
 
       message += "\n\n";
     }
@@ -74,4 +78,6 @@ export const execute: TaskExecute = async() => {
   generalChannelInstance.send({
     embeds: [simpleEmbed(message, "normal", tasks.tierUpdate.title)]
   });
+
+  logger.info(`Tier role changes: ${consoleMessage.join(", ")}`);
 };

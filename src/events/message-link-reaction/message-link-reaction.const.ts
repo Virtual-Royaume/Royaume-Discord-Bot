@@ -1,1 +1,1 @@
-export const messageUrlRegex = /http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}/gi;
+export const messageUrlRegex = /http(s?):\/\/(www\.)?(canary\.|ptb\.)?discord.com\/channels(\/\d*){3}/gi;

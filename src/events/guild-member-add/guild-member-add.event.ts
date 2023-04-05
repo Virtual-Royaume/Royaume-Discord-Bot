@@ -8,6 +8,7 @@ import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { ChannelType } from "discord.js";
+import { userWithId } from "$core/utils/user";
 
 export const event: EventName = "guildMemberAdd";
 
@@ -34,6 +35,7 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
 
     try {
       if (role) member.roles.add(role);
+      logger.info(`Member ${userWithId(member.user)} added to waiting role`);
     } catch (e) {
       logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
     }
@@ -66,6 +68,7 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
   if (tierQuery.data.member.activity.tier) {
     try {
       member.roles.add(tiers[tierQuery.data.member.activity.tier]);
+      logger.info(`Member ${userWithId(member.user)} added to tier ${tierQuery.data.member.activity.tier}`);
     } catch (e) {
       logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
     }

@@ -4,7 +4,7 @@ import { isDevEnvironment } from "$core/utils/environment";
 import { CommandsCollection, CommandExecute,
   CommandsBuilderCollection, LoadedCommands, GuildCommandsCollection, GuildsCommand } from "./command.type";
 import { haveSubcommands, serializeCommandName } from "./command.util";
-import { isFolderExist } from "$core/utils/function";
+import { doesFolderExist } from "$core/utils/function";
 import { getGuild } from "$core/configs/guild";
 import { subCommandDirName, subCommandGroupDirNamePrefix } from "./command.const";
 import { sep } from "path";
@@ -82,7 +82,7 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
     }
 
     // Load SubCommandsGroup & SubCommands
-    if (!isFolderExist(`${path}${subCommandDirName}`)) {
+    if (!doesFolderExist(`${path}${subCommandDirName}`)) {
       throw new Error(`${subCommandDirName} doesn't exist`);
     }
 
@@ -92,7 +92,7 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
       if (commandOption instanceof SlashCommandSubcommandGroupBuilder) {
         const subCommandGroupFolder = `${subCommandDirName}${sep}${subCommandGroupDirNamePrefix}${commandOption.name}${sep}`;
 
-        if (!isFolderExist(`${path}${subCommandGroupFolder}`)) {
+        if (!doesFolderExist(`${path}${subCommandGroupFolder}`)) {
           throw new Error(`"${commandOption.name}" SubCommandGroup folder doesn't exist`);
         }
 

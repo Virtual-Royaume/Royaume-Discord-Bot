@@ -2,7 +2,7 @@ import { getBirthdays } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { getGuild, guilds } from "$core/configs/guild";
 import { tasks } from "$core/configs/message/task/task.config";
-import DayJS from "$core/utils/day-js";
+import { DayJS } from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { getAge } from "$core/utils/function";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task";

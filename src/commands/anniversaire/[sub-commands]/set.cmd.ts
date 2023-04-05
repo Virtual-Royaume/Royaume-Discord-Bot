@@ -1,4 +1,4 @@
-import DayJS from "$core/utils/day-js";
+import { DayJS } from "$core/utils/day-js";
 import { CommandExecute } from "$core/utils/handler/command";
 import { commands } from "$core/configs/message/command";
 import { global } from "$core/configs/global.config";

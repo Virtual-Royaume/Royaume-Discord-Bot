@@ -43,10 +43,9 @@ export const execute: CommandExecute = async(command) => {
   // Send leaderboard :
   command.reply({
     embeds: [
-      simpleEmbed(message, "normal", msgParams(commands.topMessage.exec.embed.title, [commands.topMessage.subcmds.total.name]))
+      simpleEmbed(message, "normal", msgParams(commands.topMessage.exec.embed.title, [commands.topMessage.subcmds.channel.name]))
         .setFooter({ text: msgParams(commands.topMessage.exec.embed.footer, [page.page, page.maxPage]) })
     ]
   });
-
   logger.info(`${userWithId(command.user)} used the top-message channel command`);
 };

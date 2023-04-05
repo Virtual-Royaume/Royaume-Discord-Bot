@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs";
 import { global } from "$core/configs/global.config";
-import DayJS from "$core/utils/day-js";
+import { DayJS } from "$core/utils/day-js";
 import { existsSync, statSync } from "fs";
 
 export const numberFormat = (number: number): string => {
@@ -35,7 +35,7 @@ export const firstLetterToUppercase = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export const isFolderExist = (path: string): boolean => {
+export const doesFolderExist = (path: string): boolean => {
   return existsSync(path) && statSync(path).isDirectory();
 };
 

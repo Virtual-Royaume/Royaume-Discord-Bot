@@ -10,6 +10,8 @@ import { gqlRequest } from "$core/utils/request";
 import { isHexColor } from "$core/utils/validator";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { AttachmentBuilder, EmbedBuilder } from "discord.js";
+import { logger } from "$core/utils/logger";
+import { userWithId } from "$core/utils/user";
 
 export const execute: CommandExecute = async(command) => {
   // Get server activity :
@@ -60,5 +62,6 @@ export const execute: CommandExecute = async(command) => {
     ));
   }
 
+  logger.info(`Stats command executed by ${userWithId(command.user)} with ${serverActivity.length} server activity entries`);
   command.editReply({ content: msgParams(commands.stats.exec.title, [serverActivity.length]), embeds, files });
 };

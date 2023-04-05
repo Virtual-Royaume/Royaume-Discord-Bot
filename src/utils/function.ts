@@ -28,7 +28,7 @@ export const formatMinutes = (minutes: number): string => {
 };
 
 export const getAge = (birth: Dayjs): number => {
-  return DayJS().diff(birth, "year"); // .tz()
+  return DayJS().tz().diff(birth, "year");
 };
 
 export const firstLetterToUppercase = (string: string): string => {

@@ -154,7 +154,7 @@ export const listener = (client: Client, commands: CommandsCollection): void => 
 
     if (!commandExecute) return;
 
-    logger.info(`${userWithId(interaction.user)} uses the command ${interaction.commandName}`);
+    logger.info(`${userWithId(interaction.user)} uses the command "${interaction.commandName}"`);
 
     commandExecute(interaction);
   });

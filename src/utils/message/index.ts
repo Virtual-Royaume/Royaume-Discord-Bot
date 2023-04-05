@@ -1,1 +1,1 @@
-export { msgParams } from "./message";
+export { msgParams } from "./message.util";

@@ -10,16 +10,25 @@ import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
 import { userWithId } from "$core/utils/user";
+import { getGuildMembers } from "$core/utils/discord/guild";
 
 export const interval: TaskInterval = "0 * * * * *";
 
 export const execute: TaskExecute = async() => {
   const guild = await getGuild(client, "game");
   const tiers: Record<string, string> = guilds.game.tiers;
-  const discordMembers = await guild.members.fetch();
+  const discordMembers = await getGuildMembers(guild);
   const apiMembersQuery = await gqlRequest(getMembersTier);
 
-  if (!apiMembersQuery.success) return;
+  if (!discordMembers) {
+    logger.error("Tier update task fail for GAME server, unable to fetch guild members");
+    return;
+  }
+
+  if (!apiMembersQuery.success) {
+    logger.error("Tier update task fail for GAME server, the API does not respond");
+    return;
+  }
 
   const updates: RoleUpdate[] = [];
 

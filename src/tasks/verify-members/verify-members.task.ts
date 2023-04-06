@@ -1,6 +1,7 @@
 import { createMember, getMember, getMembersOnServerStatus, setAlwaysOnServer } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { getGuild } from "$core/configs/guild";
+import { getGuildMembers } from "$core/utils/discord/guild";
 import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
@@ -9,8 +10,17 @@ import { userWithId } from "$core/utils/user";
 export const interval: TaskInterval = "0 */3 * * * *";
 
 export const execute: TaskExecute = async() => {
-  const proMembers = await (await getGuild(client, "pro")).members.fetch();
-  const gameMembers = await (await getGuild(client, "game")).members.fetch();
+  const proGuild = await getGuild(client, "pro");
+  const gameGuild = await getGuild(client, "game");
+
+  const proMembers = await getGuildMembers(proGuild);
+  const gameMembers = await getGuildMembers(gameGuild);
+
+  if (!proMembers || !gameMembers) {
+    logger.error("Verify members task fail, unable to fetch guild members");
+    return;
+  }
+
   const members = proMembers.merge(
     gameMembers,
     proMember => ({ keep: true, value: proMember }),

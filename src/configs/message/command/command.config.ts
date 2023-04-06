@@ -302,6 +302,7 @@ export const commands = {
       }
     },
     exec: {
+      unableFetchGuildMembers: "Impossible de récupérer la liste des membres du serveurs",
       notInGuild: "Exécutez cette commande sur le serveur \"pro\" du Royaume",
       noChannel: "Exécutez cette commande dans un salon textuel",
       notGuildMember: "Exécutez cette commande sur le serveur discord",

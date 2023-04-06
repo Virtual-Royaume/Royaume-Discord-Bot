@@ -10,6 +10,7 @@ import { CacheType, ComponentType, GuildMember, ModalSubmitInteraction, Permissi
 import { reasonId } from "./inactive.const";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
+import { getGuildMembers } from "$core/utils/discord/guild";
 
 export const execute: CommandExecute = async(command) => {
   if (command.guild?.id !== guilds.pro.guildId) {
@@ -59,7 +60,16 @@ export const execute: CommandExecute = async(command) => {
   }
 
   // Get inactives from guild & generate the page data
-  const guildMembers = await command.guild.members.fetch();
+  const guildMembers = await getGuildMembers(command.guild);
+
+  if (!guildMembers) {
+    command.reply({
+      embeds: [simpleEmbed(commands.inactive.exec.unableFetchGuildMembers, "error")],
+      ephemeral: true
+    });
+    return;
+  }
+
   const inactiveMembersOnServer = Array.from(
     guildMembers.filter(member => inactiveMembers.find(inactiveMember => inactiveMember._id === member.id)),
     member => member[1]

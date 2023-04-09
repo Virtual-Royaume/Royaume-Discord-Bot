@@ -8,7 +8,7 @@ import { URLSearchParams } from "url";
 type Method = "get" | "delete" | "post"| "put";
 
 interface RequestParams extends Omit<RequestInit, "method"> {
-  query?: Record<string, string | string[]>
+  query?: Record<string, string | string[]>;
 }
 
 export const restRequest = async(method: Method, endpoint: string, config: RequestParams = {}): Promise<Response<globalThis.Response>> => {

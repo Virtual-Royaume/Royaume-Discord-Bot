@@ -2,7 +2,7 @@ import { getRoles } from "$core/api/requests/main-role";
 import { gqlRequest } from "$core/utils/request";
 
 type RolesByCategory = {
-    [category: string]: string[]
+  [category: string]: string[];
 }
 
 export const getRolesByCategory = async(): Promise<RolesByCategory> => {

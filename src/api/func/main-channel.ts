@@ -2,7 +2,7 @@ import { getChannels } from "$core/api/requests/main-channel";
 import { gqlRequest } from "$core/utils/request";
 
 type ChannelsByCategory = {
-    [category: string]: string[]
+  [category: string]: string[];
 }
 
 export const getChannelsByCategory = async(): Promise<ChannelsByCategory> => {

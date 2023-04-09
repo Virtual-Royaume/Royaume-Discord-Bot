@@ -12,16 +12,16 @@ export type PageData = {
   nextMember?: string;
   memberId: Snowflake;
   username: string;
-  messages: number,
-  minutes: number,
-  tier: keyof Tier,
-  createAt: Date,
-  joinServerAt: Date | null,
-  avatar: string | null,
-  banner: string | null
+  messages: number;
+  minutes: number;
+  tier: keyof Tier;
+  createAt: Date;
+  joinServerAt: Date | null;
+  avatar: string | null;
+  banner: string | null;
 };
 
 export type formatedPage = {
   embed: EmbedBuilder;
-  components: ActionRowBuilder<ButtonBuilder>
+  components: ActionRowBuilder<ButtonBuilder>;
 }

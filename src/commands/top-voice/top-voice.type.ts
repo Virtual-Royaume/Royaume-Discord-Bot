@@ -6,5 +6,5 @@ export type MembersData = {
 export type Page = {
   page: number;
   maxPage: number;
-  data: MembersData[]
+  data: MembersData[];
 }

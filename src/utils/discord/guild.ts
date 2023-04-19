@@ -1,4 +1,4 @@
-import { Collection, Guild, GuildMember } from "discord.js";
+import type { Collection, Guild, GuildMember } from "discord.js";
 
 export const getGuildMembers = async(guild: Guild): Promise<Collection<string, GuildMember> | null> => {
   try {

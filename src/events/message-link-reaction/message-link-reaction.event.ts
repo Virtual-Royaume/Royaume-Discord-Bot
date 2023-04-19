@@ -2,10 +2,11 @@ import { client } from "$core/client";
 import { events } from "$core/configs/message/event";
 import { messageUrlRegex } from "./message-link-reaction.const";
 import { simpleEmbed } from "$core/utils/embed";
-import { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { BaseGuildTextChannel, EmbedBuilder, Message } from "discord.js";
+import type { EmbedBuilder, Message } from "discord.js";
+import { BaseGuildTextChannel } from "discord.js";
 
 export const event: EventName = "messageCreate";
 

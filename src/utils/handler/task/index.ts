@@ -1,2 +1,2 @@
 export { load } from "./task";
-export { TaskInterval, TaskExecute } from "./task.type";
+export type { TaskInterval, TaskExecute } from "./task.type";

@@ -1,4 +1,4 @@
-import { Command } from "$core/configs/message/command/command.type";
+import type { Command } from "$core/configs/message/command/command.type";
 
 export const commands = {
   birthday: {

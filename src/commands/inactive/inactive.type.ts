@@ -1,5 +1,5 @@
-import { Tier } from "$core/configs/guild/guild.type";
-import { ActionRowBuilder, ButtonBuilder, EmbedBuilder, Snowflake } from "discord.js";
+import type { Tier } from "$core/configs/guild/guild.type";
+import type { ActionRowBuilder, ButtonBuilder, EmbedBuilder, Snowflake } from "discord.js";
 
 export type Page = {
   maxPage: number;

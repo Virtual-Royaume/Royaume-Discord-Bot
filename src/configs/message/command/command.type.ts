@@ -1,4 +1,4 @@
-import { BaseMessage } from "../message.type";
+import type { BaseMessage } from "../message.type";
 
 export type Command = Base & {
   groups?: Record<string, SubCommandGroup>;

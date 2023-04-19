@@ -1,4 +1,4 @@
-import { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { gqlRequest } from "$core/utils/request";
 import { setUsernameAndProfilePicture } from "$core/api/requests/member";
 import { logger } from "$core/utils/logger";

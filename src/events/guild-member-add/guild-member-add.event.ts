@@ -3,7 +3,7 @@ import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { defaultAvatar } from "./guild-member-add.const";
 import { simpleEmbed } from "$core/utils/embed";
-import { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";

@@ -5,7 +5,7 @@ import { commands } from "$core/configs/message/command";
 import { DayJS } from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, firstLetterToUppercase, formatMinutes, getAge, numberFormat } from "$core/utils/function";
-import { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "$core/utils/handler/command";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";

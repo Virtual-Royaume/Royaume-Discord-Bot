@@ -1,7 +1,7 @@
-import { EventName, EventExecute, EventOnce } from "$core/utils/handler/event";
+import type { EventName, EventExecute, EventOnce } from "$core/utils/handler/event";
 import { isDevEnvironment } from "$core/utils/environment";
-import { EnableInDev } from "$core/utils/handler/handler.type";
-import { Client } from "discord.js";
+import type { EnableInDev } from "$core/utils/handler/handler.type";
+import type { Client } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
 import { sep } from "path";
 

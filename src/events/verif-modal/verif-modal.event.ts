@@ -3,7 +3,7 @@ import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { modal } from "./verif-modal.util";
 import { simpleEmbed } from "$core/utils/embed";
-import { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { msgParams } from "$core/utils/message";
 import { BaseGuildTextChannel, GuildMember } from "discord.js";
 import { presentationId } from "./verif-modal.const";

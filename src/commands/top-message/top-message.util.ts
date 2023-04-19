@@ -1,4 +1,4 @@
-import { MembersData, Page } from "./top-message.type";
+import type { MembersData, Page } from "./top-message.type";
 import { numberFormat } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";
 

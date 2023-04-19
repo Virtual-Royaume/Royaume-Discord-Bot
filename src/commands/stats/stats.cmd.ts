@@ -1,10 +1,10 @@
 import { getServerActivityHistory } from "$core/api/requests/server-activity";
-import { GraphType } from "./stats.type";
+import type { GraphType } from "./stats.type";
 import { generateChartConfig } from "./stats.util";
 import { global } from "$core/configs";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
-import { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { isHexColor } from "$core/utils/validator";

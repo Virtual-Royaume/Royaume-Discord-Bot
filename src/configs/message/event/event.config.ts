@@ -1,4 +1,4 @@
-import { BaseMessage } from "../message.type";
+import type { BaseMessage } from "../message.type";
 
 export const events = {
   rolesSelector: {

@@ -1,15 +1,16 @@
 import { getMember } from "$core/api/requests/member";
 import { reasonId } from "./inactive.const";
-import { Page } from "./inactive.type";
+import type { Page } from "./inactive.type";
 import { interactionId } from "$core/configs";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
 import { objectKeys } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
-import {
+import type {
   GuildMember,
-  Snowflake, Collection,
+  Snowflake } from "discord.js";
+import { Collection,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,

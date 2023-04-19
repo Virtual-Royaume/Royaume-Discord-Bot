@@ -1,4 +1,4 @@
-import { GuildPremiumTier } from "discord.js";
+import type { GuildPremiumTier } from "discord.js";
 
 export const maxEmojiByGuildTier: Record<GuildPremiumTier, number> = {
   "0": 50,

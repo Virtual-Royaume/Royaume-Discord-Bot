@@ -5,7 +5,7 @@ import { tasks } from "$core/configs/message/task/task.config";
 import { DayJS } from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { getAge } from "$core/utils/function";
-import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
+import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";

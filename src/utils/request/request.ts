@@ -1,6 +1,6 @@
-import { Response } from "./request.type";
+import type { Response } from "./request.type";
 import { getStringEnv } from "$core/utils/env-variable";
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
+import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
 import { logger } from "../logger";
 import { URLSearchParams } from "url";

@@ -1,4 +1,4 @@
-import { MembersData, Page } from "./top-voice.type";
+import type { MembersData, Page } from "./top-voice.type";
 import { formatMinutes } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";
 

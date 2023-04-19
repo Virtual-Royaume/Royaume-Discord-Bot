@@ -1,6 +1,6 @@
 import { candidatBtn } from "./verif.util";
 import { simpleEmbed } from "$core/utils/embed";
-import { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "$core/utils/handler/command";
 import { commands } from "$core/configs/message/command";
 import { ChannelType } from "discord.js";
 import { logger } from "$core/utils/logger";

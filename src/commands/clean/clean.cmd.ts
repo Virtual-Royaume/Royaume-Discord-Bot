@@ -1,5 +1,5 @@
 import { simpleEmbed } from "$core/utils/embed";
-import { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "$core/utils/handler/command";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { commands } from "$core/configs/message/command";

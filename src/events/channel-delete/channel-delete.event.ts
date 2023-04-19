@@ -1,6 +1,6 @@
 import { getChannels, removeChannel } from "$core/api/requests/main-channel";
 import { guilds } from "$core/configs/guild";
-import { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
 import { GuildChannel, TextChannel } from "discord.js";

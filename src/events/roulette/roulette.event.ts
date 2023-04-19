@@ -2,7 +2,7 @@ import { choicesInputId, titleInputId } from "$core/commands/roulette/roulette.c
 import { interactionId } from "$core/configs";
 import { events } from "$core/configs/message/event";
 import { simpleEmbed } from "$core/utils/embed";
-import { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 

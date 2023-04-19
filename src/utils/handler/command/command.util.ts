@@ -1,5 +1,6 @@
-import { SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
-import { SlashCommandDefition } from "./command.type";
+import type { SlashCommandSubcommandsOnlyBuilder } from "discord.js";
+import { SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from "discord.js";
+import type { SlashCommandDefition } from "./command.type";
 
 export const haveSubcommands = (slashCommandBuilder: SlashCommandDefition): slashCommandBuilder is SlashCommandSubcommandsOnlyBuilder => {
   const subCommand =  slashCommandBuilder.options.find(option => {

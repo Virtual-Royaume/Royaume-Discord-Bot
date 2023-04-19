@@ -1,4 +1,4 @@
-import { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { guilds } from "$core/configs/guild";
 import { gqlRequest } from "$core/utils/request";
 import { getRoles, removeRole } from "$core/api/requests/main-role";

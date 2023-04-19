@@ -2,7 +2,7 @@ import { setAlwaysOnServer } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { guilds } from "$core/configs/guild";
 import { getGuildMembers } from "$core/utils/discord/guild";
-import { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
 import { userWithId } from "$core/utils/user";

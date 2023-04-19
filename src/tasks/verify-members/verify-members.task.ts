@@ -2,7 +2,7 @@ import { createMember, getMember, getMembersOnServerStatus, setAlwaysOnServer } 
 import { client } from "$core/client";
 import { getGuild } from "$core/configs/guild";
 import { getGuildMembers } from "$core/utils/discord/guild";
-import { TaskExecute, TaskInterval } from "$core/utils/handler/task";
+import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
 import { userWithId } from "$core/utils/user";

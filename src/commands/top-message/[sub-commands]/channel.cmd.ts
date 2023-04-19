@@ -1,10 +1,10 @@
 import { getChannelMessageCount } from "$core/api/requests/member";
 import { memberPerPage } from "../top-message.const";
-import { MembersData } from "../top-message.type";
+import type { MembersData } from "../top-message.type";
 import { formatPage, getPage } from "../top-message.util";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
-import { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { logger } from "$core/utils/logger";

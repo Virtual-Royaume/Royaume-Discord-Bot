@@ -1,5 +1,5 @@
 import { commands } from "$core/configs/message/command";
-import { SlashCommandDefition } from "$core/utils/handler/command";
+import type { SlashCommandDefition } from "$core/utils/handler/command";
 import { ChannelType, SlashCommandBuilder } from "discord.js";
 
 export const slashCommand: SlashCommandDefition = new SlashCommandBuilder()

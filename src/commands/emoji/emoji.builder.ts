@@ -1,4 +1,4 @@
-import { SlashCommandDefition } from "$core/utils/handler/command";
+import type { SlashCommandDefition } from "$core/utils/handler/command";
 import { SlashCommandBuilder } from "discord.js";
 import { commands } from "$core/configs/message/command";
 

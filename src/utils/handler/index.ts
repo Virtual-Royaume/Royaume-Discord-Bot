@@ -1,1 +1,1 @@
-export { EnableInDev } from "./handler.type";
+export type { EnableInDev } from "./handler.type";

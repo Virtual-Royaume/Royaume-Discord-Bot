@@ -1,7 +1,8 @@
-import { Client, Collection, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from "discord.js";
+import type { Client } from "discord.js";
+import { Collection, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
 import { isDevEnvironment } from "$core/utils/environment";
-import { CommandsCollection, CommandExecute,
+import type { CommandsCollection, CommandExecute,
   CommandsBuilderCollection, LoadedCommands, GuildCommandsCollection, GuildsCommand } from "./command.type";
 import { haveSubcommands, serializeCommandName } from "./command.util";
 import { doesFolderExist } from "$core/utils/function";

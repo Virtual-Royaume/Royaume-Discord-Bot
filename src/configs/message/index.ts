@@ -1,1 +1,1 @@
-export { BaseMessage } from "./message.type";
+export type { BaseMessage } from "./message.type";

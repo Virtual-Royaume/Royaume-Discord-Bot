@@ -1,7 +1,7 @@
 import { addRole } from "$core/api/requests/main-role";
 import { simpleEmbed } from "$core/utils/embed";
 import { commands } from "$core/configs/message/command";
-import { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
 import { msgParams } from "$core/utils/message";
 import { logger } from "$core/utils/logger";

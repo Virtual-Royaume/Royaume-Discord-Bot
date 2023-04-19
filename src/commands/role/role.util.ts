@@ -1,6 +1,7 @@
 import { getRolesByCategory } from "$core/api/func/main-role";
 import { interactionId } from "$core/configs";
-import { ActionRowBuilder, Guild, GuildMember, SelectMenuComponentOptionData, StringSelectMenuBuilder } from "discord.js";
+import type { Guild, GuildMember, SelectMenuComponentOptionData } from "discord.js";
+import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 
 export const generateActionRow = async(member: GuildMember, guild: Guild): Promise<ActionRowBuilder<StringSelectMenuBuilder>[]> => {
   const messageActionRows: ActionRowBuilder<StringSelectMenuBuilder>[] = [];

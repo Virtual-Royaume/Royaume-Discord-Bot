@@ -1,4 +1,4 @@
-import { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
 import { global } from "$core/configs/global.config";
 import { DayJS } from "$core/utils/day-js";
 import { existsSync, statSync } from "fs";

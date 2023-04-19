@@ -1,4 +1,4 @@
-import { Guild, GuildType } from "./guild.type";
+import type { Guild, GuildType } from "./guild.type";
 
 export const guilds: Record<GuildType, Guild> = {
   "pro": {

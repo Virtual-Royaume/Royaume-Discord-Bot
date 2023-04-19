@@ -1,6 +1,6 @@
 import { getMonthActivity } from "$core/api/requests/member";
 import { gqlRequest } from "$core/utils/request";
-import { GetMonthActivityQuery } from "$core/utils/request/graphql/graphql";
+import type { GetMonthActivityQuery } from "$core/utils/request/graphql/graphql";
 
 export const getInactiveMembers = async(): Promise<GetMonthActivityQuery["members"] | null> => {
   const monthActivityQuery = await gqlRequest(getMonthActivity);

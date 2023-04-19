@@ -1,4 +1,4 @@
-import { ProposalType, Proposal } from "./global.type";
+import type { ProposalType, Proposal } from "./global.type";
 
 export const global = {
   localFormat: "fr-FR",

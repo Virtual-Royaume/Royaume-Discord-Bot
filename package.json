@@ -20,22 +20,22 @@
     "discord.js": "^14.9.0"
   },
   "devDependencies": {
-    "@bluzzi/eslint-config": "^0.9.0",
+    "@bluzzi/eslint-config": "^1.0.0",
     "@graphql-codegen/cli": "3.3.0",
     "@graphql-codegen/client-preset": "3.0.0",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@swc-node/register": "^1.6.3",
-    "@swc/core": "^1.3.46",
+    "@swc-node/register": "^1.6.4",
+    "@swc/core": "^1.3.52",
     "@types/cron": "^2.0.1",
     "@types/node": "^18.15.11",
-    "@vitest/ui": "^0.29.8",
+    "@vitest/ui": "^0.30.1",
     "dotenv": "^16.0.3",
-    "eslint": "^8.37.0",
+    "eslint": "^8.38.0",
     "graphql": "^16.6.0",
     "nodemon": "^2.0.22",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.0.3",
-    "vitest": "^0.29.8"
+    "typescript": "^5.0.4",
+    "vitest": "^0.30.1"
   },
   "eslintConfig": {
     "extends": "@bluzzi",

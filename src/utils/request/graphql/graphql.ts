@@ -13,7 +13,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** Date without time */
-  Date: any;
+  Date: string;
 };
 
 export type ActivityPoints = {
@@ -294,7 +294,7 @@ export type GetMemberQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberQuery = { __typename?: 'Query', member?: { __typename?: 'Member', _id: string, username: string, profilePicture: string, birthday?: any | null, isOnServer: boolean, activity: { __typename?: 'DiscordActivity', tier: number, voiceMinute: number, monthVoiceMinute: number, messages: { __typename?: 'DiscordMessageActivity', totalCount: number, monthCount: number, perChannel: Array<{ __typename?: 'ChannelMessageCount', channelId: string, messageCount: number }> }, points: { __typename?: 'ActivityPoints', count: number, progress: TierUpdate } } } | null };
+export type GetMemberQuery = { __typename?: 'Query', member?: { __typename?: 'Member', _id: string, username: string, profilePicture: string, birthday?: string | null, isOnServer: boolean, activity: { __typename?: 'DiscordActivity', tier: number, voiceMinute: number, monthVoiceMinute: number, messages: { __typename?: 'DiscordMessageActivity', totalCount: number, monthCount: number, perChannel: Array<{ __typename?: 'ChannelMessageCount', channelId: string, messageCount: number }> }, points: { __typename?: 'ActivityPoints', count: number, progress: TierUpdate } } } | null };
 
 export type GetMemberTierQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -309,7 +309,7 @@ export type GetMemberOnServerStatusQuery = { __typename?: 'Query', members: Arra
 export type GetBirthdaysQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBirthdaysQuery = { __typename?: 'Query', members: Array<{ __typename?: 'Member', _id: string, username: string, birthday?: any | null, profilePicture: string }> };
+export type GetBirthdaysQuery = { __typename?: 'Query', members: Array<{ __typename?: 'Member', _id: string, username: string, birthday?: string | null, profilePicture: string }> };
 
 export type GetVoiceTimeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -371,14 +371,14 @@ export type RemoePresenceMessageMutation = { __typename?: 'Mutation', removePres
 export type GetCurrentServerActivityQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentServerActivityQuery = { __typename?: 'Query', todayServerActivity: { __typename?: 'ServerActivity', date: any, voiceMinute: number, messageCount: number, memberCount: number } };
+export type GetCurrentServerActivityQuery = { __typename?: 'Query', todayServerActivity: { __typename?: 'ServerActivity', date: string, voiceMinute: number, messageCount: number, memberCount: number } };
 
 export type GetServerActivityHistoryQueryVariables = Exact<{
   historyCount: Scalars['Int'];
 }>;
 
 
-export type GetServerActivityHistoryQuery = { __typename?: 'Query', serverActivity: Array<{ __typename?: 'ServerActivity', date: any, voiceMinute: number, messageCount: number, memberCount: number }> };
+export type GetServerActivityHistoryQuery = { __typename?: 'Query', serverActivity: Array<{ __typename?: 'ServerActivity', date: string, voiceMinute: number, messageCount: number, memberCount: number }> };
 
 export type SetMemberCountMutationVariables = Exact<{
   count: Scalars['Int'];

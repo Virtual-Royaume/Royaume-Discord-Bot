@@ -12,7 +12,12 @@ const config: CodegenConfig = {
   generates: {
     "./src/utils/request/graphql/": {
       preset: "client",
-      plugins: []
+      plugins: [],
+      config: {
+        scalars: {
+          Date: "string"
+        }
+      }
     }
   }
 };

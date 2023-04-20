@@ -1,6 +1,6 @@
+import type { CommandExecute } from "$core/utils/handler/command";
 import { StopReason, maxEmojiByGuildTier } from "./emoji.const";
 import { simpleEmbed } from "$core/utils/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { commands } from "$core/configs/message/command";
 import { AttachmentBuilder, BaseGuildTextChannel } from "discord.js";
@@ -13,7 +13,7 @@ export const execute: CommandExecute = async(command) => {
   const guild = command.guild;
 
   if (!guild) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.emoji.exec.isntInGuild, "error")],
       ephemeral: true
     });
@@ -23,7 +23,7 @@ export const execute: CommandExecute = async(command) => {
   const guildType = getGuildTypeById(guild.id);
 
   if (!guildType) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.emoji.exec.isntInOfficialGuild, "error")],
       ephemeral: true
     });
@@ -34,7 +34,7 @@ export const execute: CommandExecute = async(command) => {
   const emojis = await guild.emojis.fetch(undefined, { cache: true });
 
   if (emojis.filter(emoji => !emoji.animated).size >= maxEmoji) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.emoji.exec.emojiLimit, "error")],
       ephemeral: true
     });
@@ -44,7 +44,7 @@ export const execute: CommandExecute = async(command) => {
   const generalChannel = await guild.channels.fetch(guilds[guildType].channels.general);
 
   if (!generalChannel) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.emoji.exec.generalChannelDoesntExist, "error")],
       ephemeral: true
     });
@@ -52,7 +52,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   if (!(generalChannel instanceof BaseGuildTextChannel)) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.emoji.exec.generalChannelIsntText, "error")],
       ephemeral: true
     });
@@ -62,7 +62,7 @@ export const execute: CommandExecute = async(command) => {
   const emojiId = command.options.getString(commands.emoji.options.name.name, true);
 
   if (guild.emojis.cache.find(emoji => emoji.name == emojiId)) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(msgParams(commands.emoji.exec.emojiAlreadyExist, [emojiId]), "error")],
       ephemeral: true
     });
@@ -86,7 +86,7 @@ export const execute: CommandExecute = async(command) => {
   await voteMessage.react(proposals.emoji.upVote.emoji);
   await voteMessage.react(proposals.emoji.downVote.emoji);
 
-  command.reply({
+  void command.reply({
     embeds: [simpleEmbed(msgParams(commands.emoji.exec.pollSent, [generalChannel.id]))],
     ephemeral: true
   });
@@ -115,7 +115,7 @@ export const execute: CommandExecute = async(command) => {
 
     switch (reason) {
       case StopReason.TIME: {
-        voteMessage.reply({
+        void voteMessage.reply({
           embeds: [simpleEmbed(commands.emoji.exec.pollTimeout)]
         });
         break;
@@ -123,20 +123,20 @@ export const execute: CommandExecute = async(command) => {
 
       case StopReason.ACCEPTED: {
         try {
-          guild.emojis.create({ attachment: attachment?.url, name: emojiId });
-          voteMessage.reply({
+          void guild.emojis.create({ attachment: attachment?.url, name: emojiId });
+          void voteMessage.reply({
             embeds: [simpleEmbed(commands.emoji.exec.pollAccepted)]
           });
 
           logger.info(`Emoji ${emojiId} proposed by ${command.user.username} (${command.user.id}) is accepted`);
         } catch (e) {
-          logger.error(`Error while adding emoji : ${e}`);
+          logger.error(`Error while adding emoji : ${String(e)}`);
         }
         break;
       }
 
       case StopReason.REFUSED: {
-        voteMessage.reply({
+        void voteMessage.reply({
           embeds: [simpleEmbed(commands.emoji.exec.pollRefused)]
         });
 
@@ -145,6 +145,6 @@ export const execute: CommandExecute = async(command) => {
       }
     }
 
-    voteMessage.reactions.removeAll();
+    void voteMessage.reactions.removeAll();
   });
 };

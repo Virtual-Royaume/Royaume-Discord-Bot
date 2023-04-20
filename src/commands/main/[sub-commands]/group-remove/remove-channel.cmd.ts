@@ -12,7 +12,7 @@ export const execute: CommandExecute = async(command) => {
   const removeChannelQuery = await gqlRequest(removeChannel, { channelId: channel.id });
 
   if (!removeChannelQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.main.exec.remove.channel.error, "error")],
       ephemeral: true
     });
@@ -20,7 +20,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  command.reply({
+  void command.reply({
     embeds: [simpleEmbed(msgParams(commands.main.exec.remove.channel.succes, [channel.id]))],
     ephemeral: true
   });

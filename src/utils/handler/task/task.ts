@@ -1,7 +1,10 @@
-import { isDevEnvironment } from "$core/utils/environment";
-import type { EnableInDev } from "$core/utils/handler/handler.type";
-import { existsSync, readdirSync, statSync } from "fs";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import type { TaskExecute, TaskInterval } from "$core/utils/handler/task/task.type";
+import type { EnableInDev } from "$core/utils/handler/handler.type";
+import { isDevEnvironment } from "$core/utils/environment";
+import { existsSync, readdirSync, statSync } from "fs";
 import { startCronJob } from "$core/utils/cron";
 import { sep } from "path";
 
@@ -31,7 +34,7 @@ export const load = async(tasksFolder: string): Promise<number> => {
 
     if (!execute) throw new Error(`"execute" isn't defined in ${path}${taskFileName}`);
 
-    startCronJob(taskInterval, execute);
+    startCronJob(taskInterval, () => void execute());
 
     tasksLoaded++;
   }

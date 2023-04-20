@@ -1,4 +1,5 @@
 import type { GuildType } from "$core/configs/guild";
+import type { MaybePromise } from "$core/utils/typing/promise";
 import type { ChatInputCommandInteraction, Collection, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
 export type GuildsCommand = GuildType[];
@@ -6,7 +7,7 @@ export type GuildsCommand = GuildType[];
 export type SlashCommandDefition = SlashCommandSubcommandsOnlyBuilder |
   Omit<SlashCommandBuilder, "addSubcommandGroup" | "addSubcommand">;
 
-export type CommandExecute = (command: ChatInputCommandInteraction) => void;
+export type CommandExecute = (command: ChatInputCommandInteraction) => MaybePromise<void>;
 
 export type LoadedCommands = {
   commands: CommandsCollection;

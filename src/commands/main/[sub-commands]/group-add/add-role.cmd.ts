@@ -1,7 +1,7 @@
+import type { CommandExecute } from "$core/utils/handler/command";
 import { addRole } from "$core/api/requests/main-role";
 import { simpleEmbed } from "$core/utils/embed";
 import { commands } from "$core/configs/message/command";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
 import { msgParams } from "$core/utils/message";
 import { logger } from "$core/utils/logger";
@@ -13,7 +13,7 @@ export const execute: CommandExecute = async(command) => {
   const addRoleQuery = await gqlRequest(addRole, { roleId: role.id, category: category });
 
   if (!addRoleQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.main.exec.add.role.error, "error")],
       ephemeral: true
     });
@@ -21,7 +21,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  command.reply({
+  void command.reply({
     embeds: [simpleEmbed(msgParams(commands.main.exec.add.role.succes, [role.id, category]))],
     ephemeral: true
   });

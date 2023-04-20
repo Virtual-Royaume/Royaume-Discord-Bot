@@ -1,12 +1,12 @@
+import type { CommandExecute } from "$core/utils/handler/command";
+import type { CacheType, ComponentType, ModalSubmitInteraction } from "discord.js";
 import { getInactiveMembers } from "$core/api/func/member";
 import { confirmationModal, getActionRow, getEmbed, getPage, pageNumberByMember } from "./inactive.util";
 import { interactionId } from "$core/configs";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
-import type { CacheType, ComponentType, ModalSubmitInteraction } from "discord.js";
 import { GuildMember, PermissionFlagsBits } from "discord.js";
 import { reasonId } from "./inactive.const";
 import { logger } from "$core/utils/logger";
@@ -15,7 +15,7 @@ import { getGuildMembers } from "$core/utils/discord/guild";
 
 export const execute: CommandExecute = async(command) => {
   if (command.guild?.id !== guilds.pro.guildId) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.notInGuild, "error")],
       ephemeral: true
     });
@@ -23,7 +23,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   if (!command.channel) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.noChannel, "error")],
       ephemeral: true
     });
@@ -33,7 +33,7 @@ export const execute: CommandExecute = async(command) => {
   const member = command.member;
 
   if (!(member instanceof GuildMember)) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.notGuildMember, "error")],
       ephemeral: true
     });
@@ -44,7 +44,7 @@ export const execute: CommandExecute = async(command) => {
 
   // Query error
   if (!inactiveMembers) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.activityQueryError, "error")],
       ephemeral: true
     });
@@ -53,7 +53,7 @@ export const execute: CommandExecute = async(command) => {
 
   // No inactive
   if (inactiveMembers.length < 1) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.noInactiveMembers, "error")],
       ephemeral: true
     });
@@ -64,7 +64,7 @@ export const execute: CommandExecute = async(command) => {
   const guildMembers = await getGuildMembers(command.guild);
 
   if (!guildMembers) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.unableFetchGuildMembers, "error")],
       ephemeral: true
     });
@@ -78,7 +78,7 @@ export const execute: CommandExecute = async(command) => {
   const page = await getPage(inactiveMembersOnServer, command.options.getInteger(commands.inactive.options.page.name) ?? 1);
 
   if (!page) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.memberQueryError, "error")],
       ephemeral: true
     });
@@ -109,7 +109,7 @@ export const execute: CommandExecute = async(command) => {
     if (id === ids.inactiveKick) {
       // Member has permission to kick
       if (!member.permissions.has(PermissionFlagsBits.KickMembers)) {
-        interaction.reply({
+        void interaction.reply({
           embeds: [simpleEmbed(commands.inactive.exec.kick.noPermission, "error")],
           ephemeral: true
         });
@@ -120,7 +120,7 @@ export const execute: CommandExecute = async(command) => {
 
       // Is inactivveMember kickable by bot
       if (!inactiveMember.kickable) {
-        interaction.reply({
+        void interaction.reply({
           embeds: [simpleEmbed(commands.inactive.exec.kick.botCantKick, "error")],
           ephemeral: true
         });
@@ -141,7 +141,7 @@ export const execute: CommandExecute = async(command) => {
 
           // Modal time expires
         } catch (error) {
-          interaction.followUp({
+          void interaction.followUp({
             embeds: [simpleEmbed(commands.inactive.exec.kick.kickTimeExpired, "error")],
             ephemeral: true
           });
@@ -166,7 +166,7 @@ export const execute: CommandExecute = async(command) => {
 
         // No more inactive members
         if (inactiveMembersOnServer.length < 1) {
-          command.editReply({
+          void command.editReply({
             embeds: [simpleEmbed(commands.inactive.exec.noInactiveMembers)],
             components: []
           });
@@ -175,12 +175,12 @@ export const execute: CommandExecute = async(command) => {
 
         // Can't kick selected user
       } catch (error) {
-        interaction.followUp({
+        void interaction.followUp({
           embeds: [simpleEmbed(commands.inactive.exec.kick.errorWhileKicking, "error")],
           ephemeral: true
         });
 
-        logger.error(`Error while kicking user ${inactiveMember.user.username} by ${member.user.username}: ${error}`);
+        logger.error(`Error while kicking user ${inactiveMember.user.username} by ${member.user.username}: ${String(error)}`);
         return;
       }
     }
@@ -194,7 +194,7 @@ export const execute: CommandExecute = async(command) => {
     const newPage = await getPage(inactiveMembersOnServer, newPageNum);
 
     if (!newPage) {
-      command.editReply({
+      void command.editReply({
         embeds: [simpleEmbed(commands.inactive.exec.memberQueryError, "error")],
         components: []
       });
@@ -210,16 +210,16 @@ export const execute: CommandExecute = async(command) => {
 
     // If interaction open kick reason modal
     if (interaction.replied) {
-      command.editReply(message);
+      void command.editReply(message);
       return;
     }
 
-    interaction.update(message);
+    void interaction.update(message);
   });
 
 
   collector.on("end", () => {
-    command.editReply({ components: [] });
+    void command.editReply({ components: [] });
     pageNumberByMember.delete(member.id);
   });
 };

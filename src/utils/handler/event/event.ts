@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import type { EventName, EventExecute, EventOnce } from "$core/utils/handler/event";
-import { isDevEnvironment } from "$core/utils/environment";
 import type { EnableInDev } from "$core/utils/handler/handler.type";
 import type { Client } from "discord.js";
+import { isDevEnvironment } from "$core/utils/environment";
 import { existsSync, readdirSync, statSync } from "fs";
 import { sep } from "path";
 

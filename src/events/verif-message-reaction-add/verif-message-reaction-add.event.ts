@@ -1,11 +1,11 @@
+import type { EventExecute, EventName } from "$core/utils/handler/event";
+import type { GuildMember, Message } from "discord.js";
 import { proposals } from "$core/configs";
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { simpleEmbed } from "$core/utils/embed";
-import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import type { GuildMember, Message } from "discord.js";
 
 export const event: EventName = "messageReactionAdd";
 
@@ -39,14 +39,14 @@ export const execute: EventExecute<"messageReactionAdd"> = async(messageReaction
 
       logger.info(`Member ${member?.user.id} has been accepted in the guild.`);
     } catch (e) {
-      logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
+      logger.error(`Error while updating member ${member?.user.id} roles : ${String(e)}`);
     }
 
     const embed = simpleEmbed(events.verifMessageReactionAdd.accepted);
 
-    messageReaction.message.reply({ content: msgParams(events.verifMessageReactionAdd.welcome, [member.id]), embeds: [embed] });
+    void messageReaction.message.reply({ content: msgParams(events.verifMessageReactionAdd.welcome, [member.id]), embeds: [embed] });
 
-    removeReactions();
+    void removeReactions();
   }
 
   // Check if the member is rejected :
@@ -66,9 +66,9 @@ export const execute: EventExecute<"messageReactionAdd"> = async(messageReaction
 
     await member.send({ embeds: [simpleEmbed(events.verifMessageReactionAdd.rejectedMp, "error")] });
 
-    member.kick();
+    void member.kick();
 
     logger.info(`Member ${member?.user.id} has been rejected from the guild.`);
-    removeReactions();
+    void removeReactions();
   }
 };

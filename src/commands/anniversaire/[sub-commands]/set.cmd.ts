@@ -1,5 +1,5 @@
-import { DayJS } from "$core/utils/day-js";
 import type { CommandExecute } from "$core/utils/handler/command";
+import { DayJS } from "$core/utils/day-js";
 import { commands } from "$core/configs/message/command";
 import { global } from "$core/configs/global.config";
 import { getAge } from "$core/utils/function";
@@ -15,7 +15,7 @@ export const execute: CommandExecute = async(command) => {
 
   // Check if string is of type: 99/99/9999 or 9/9/9999
   if (!dateString.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/)) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.birthday.exec.set.badFormat, "error")],
       ephemeral: true
     });
@@ -26,7 +26,7 @@ export const execute: CommandExecute = async(command) => {
   const date = DayJS(`${values[2]}-${values[1]}-${values[0]}Z`);
 
   if (!date.isValid()) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.birthday.exec.set.invalid, "error")],
       ephemeral: true
     });
@@ -34,7 +34,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   if (getAge(date) < global.minimumAge) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(msgParams(commands.birthday.exec.set.tooYoung, [global.minimumAge]), "error")],
       ephemeral: true
     });
@@ -44,14 +44,14 @@ export const execute: CommandExecute = async(command) => {
   const setBirthdayQuery = await gqlRequest(setBirthday, { id: command.user.id, date });
 
   if (!setBirthdayQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.birthday.exec.set.queryError, "error")],
       ephemeral: true
     });
     return;
   }
 
-  command.reply({
+  void command.reply({
     embeds: [simpleEmbed(msgParams(commands.birthday.exec.set.success, [dateString]))],
     ephemeral: true
   });

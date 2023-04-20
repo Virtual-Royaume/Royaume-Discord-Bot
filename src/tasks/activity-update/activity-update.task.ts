@@ -17,7 +17,7 @@ export const execute: TaskExecute = async() => {
   // Update daily member count:
   const memberCount = proGuild.memberCount;
 
-  if (memberCount) gqlRequest(setMemberCount, { count: memberCount });
+  if (memberCount) void gqlRequest(setMemberCount, { count: memberCount });
 
   // Update voice time of members:
   const updatedMembers: GuildMember[] = [];
@@ -27,7 +27,7 @@ export const execute: TaskExecute = async() => {
       voiceState.member && !voiceState.member.user.bot
       && voiceState.channel && (!voiceState.selfMute || !voiceState.mute)
     ) {
-      gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
+      void gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
       updatedMembers.push(voiceState.member);
     }
   }
@@ -37,7 +37,7 @@ export const execute: TaskExecute = async() => {
       voiceState.member && !voiceState.member.user.bot
       && voiceState.channel && (!voiceState.selfMute || !voiceState.mute)
     ) {
-      gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
+      void gqlRequest(incVoiceMinute, { id: voiceState.member.user.id });
       updatedMembers.push(voiceState.member);
     }
   }

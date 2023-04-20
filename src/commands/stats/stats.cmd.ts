@@ -1,10 +1,10 @@
-import { getServerActivityHistory } from "$core/api/requests/server-activity";
+import type { CommandExecute } from "$core/utils/handler/command";
 import type { GraphType } from "./stats.type";
+import { getServerActivityHistory } from "$core/api/requests/server-activity";
 import { generateChartConfig } from "./stats.util";
 import { global } from "$core/configs";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { isHexColor } from "$core/utils/validator";
@@ -20,7 +20,7 @@ export const execute: CommandExecute = async(command) => {
   });
 
   if (!serverActivityQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.stats.exec.historyQueryError, "error")],
       ephemeral: true
     });
@@ -63,5 +63,5 @@ export const execute: CommandExecute = async(command) => {
   }
 
   logger.info(`Stats command executed by ${userWithId(command.user)} with ${serverActivity.length} server activity entries`);
-  command.editReply({ content: msgParams(commands.stats.exec.title, [serverActivity.length]), embeds, files });
+  void command.editReply({ content: msgParams(commands.stats.exec.title, [serverActivity.length]), embeds, files });
 };

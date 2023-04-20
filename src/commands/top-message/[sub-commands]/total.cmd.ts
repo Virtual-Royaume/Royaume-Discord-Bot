@@ -1,10 +1,10 @@
+import type { CommandExecute } from "$core/utils/handler/command";
+import type { MembersData } from "../top-message.type";
 import { getTotalMessageCount } from "$core/api/requests/member";
 import { memberPerPage } from "../top-message.const";
-import type { MembersData } from "../top-message.type";
 import { formatPage, getPage } from "../top-message.util";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { logger } from "$core/utils/logger";
@@ -15,7 +15,7 @@ export const execute: CommandExecute = async(command) => {
   const membersMessagesCountQuery = await gqlRequest(getTotalMessageCount);
 
   if (!membersMessagesCountQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [
         simpleEmbed(commands.topMessage.exec.activityQueryError, "error")
       ],
@@ -38,7 +38,7 @@ export const execute: CommandExecute = async(command) => {
   const message = formatPage(page, memberPerPage, commands.topMessage.exec.embed.format);
 
   // Send leaderboard :
-  command.reply({
+  void command.reply({
     embeds: [
       simpleEmbed(message, "normal", msgParams(commands.topMessage.exec.embed.title, [commands.topMessage.subcmds.total.name]))
         .setFooter({ text: msgParams(commands.topMessage.exec.embed.footer, [page.page, page.maxPage]) })

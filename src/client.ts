@@ -36,7 +36,7 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
 
 
 logger.info(`Sarting ${displayName} v${version}...`);
-client.login(getStringEnv("BOT_TOKEN"));
+void client.login(getStringEnv("BOT_TOKEN"));
 client.on("ready", async client => {
   const eventsLoaded = await loadEvents(client, `${__dirname}${sep}events`);
 

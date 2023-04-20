@@ -49,6 +49,6 @@ export const execute: TaskExecute = async() => {
       .setFooter({ text: msgParams(tasks.birthdayChecker.footer, [getAge(birthday)]) });
 
     logger.info(`Sending birthday message to ${member._id} (${member.username})`);
-    generalChannelInstance.send({ embeds: [embed] });
+    void generalChannelInstance.send({ embeds: [embed] });
   }
 };

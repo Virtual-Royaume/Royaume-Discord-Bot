@@ -1,6 +1,6 @@
-import { modal } from "./roulette.util";
 import type { CommandExecute } from "$core/utils/handler/command";
+import { modal } from "./roulette.util";
 
 export const execute: CommandExecute = (command) => {
-  command.showModal(modal);
+  void command.showModal(modal);
 };

@@ -1,14 +1,14 @@
+import type { EventExecute, EventName } from "$core/utils/handler/event";
+import type { ForumChannel, GuildTextBasedChannel, TextBasedChannel } from "discord.js";
 import { getChannels } from "$core/api/requests/main-channel";
 import { incChannelMessage } from "$core/api/requests/member";
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { simpleEmbed } from "$core/utils/embed";
-import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { userWithId } from "$core/utils/user";
-import type { ForumChannel, GuildTextBasedChannel, TextBasedChannel } from "discord.js";
 import { ChannelType } from "discord.js";
 
 export const event: EventName = "messageCreate";
@@ -57,12 +57,12 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
 
   // Send an announcement when the member reaches a message count step :
   if (messageCount < 10_000 && messageCount % 1_000 === 0) {
-    generalChannel.send({ embeds: [simpleEmbed(msgParams(events.messageCreate.stepMessage, [message.author.id, messageCount]))] });
+    void generalChannel.send({ embeds: [simpleEmbed(msgParams(events.messageCreate.stepMessage, [message.author.id, messageCount]))] });
     logger.info(`Member ${userWithId(message.author)} reached ${messageCount} messages in the server`);
   }
 
   if (messageCount % 10_000 === 0) {
-    generalChannel.send({ embeds: [simpleEmbed(msgParams(events.messageCreate.stepMessage, [message.author.id, messageCount]))] });
+    void generalChannel.send({ embeds: [simpleEmbed(msgParams(events.messageCreate.stepMessage, [message.author.id, messageCount]))] });
     logger.info(`Member ${userWithId(message.author)} reached ${messageCount} messages in the server`);
   }
 };

@@ -1,7 +1,7 @@
+import type { CommandExecute } from "$core/utils/handler/command";
 import { removeRole } from "$core/api/requests/main-role";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
 import { commands } from "$core/configs/message/command";
 import { logger } from "$core/utils/logger";
@@ -12,7 +12,7 @@ export const execute: CommandExecute = async(command) => {
   const removeRoleQuery = await gqlRequest(removeRole, { roleId: role.id });
 
   if (!removeRoleQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.main.exec.remove.role.error, "error")],
       ephemeral: true
     });
@@ -20,7 +20,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  command.reply({
+  void command.reply({
     embeds: [simpleEmbed(msgParams(commands.main.exec.remove.role.succes, [role.id]))],
     ephemeral: true
   });

@@ -1,9 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import type { Client } from "discord.js";
 import { Collection, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
 import { isDevEnvironment } from "$core/utils/environment";
-import type { CommandsCollection, CommandExecute,
-  CommandsBuilderCollection, LoadedCommands, GuildCommandsCollection, GuildsCommand } from "./command.type";
+import type {
+  CommandsCollection, CommandExecute,
+  CommandsBuilderCollection, LoadedCommands,
+  GuildCommandsCollection, GuildsCommand
+} from "./command.type";
 import { haveSubcommands, serializeCommandName } from "./command.util";
 import { doesFolderExist } from "$core/utils/function";
 import { getGuild } from "$core/configs/guild";
@@ -144,7 +151,7 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
 };
 
 export const listener = (client: Client, commands: CommandsCollection): void => {
-  client.on("interactionCreate", async interaction => {
+  client.on("interactionCreate", interaction => {
     if (!interaction.isChatInputCommand()) return;
 
     const commandExecute = commands.get(serializeCommandName(
@@ -157,7 +164,7 @@ export const listener = (client: Client, commands: CommandsCollection): void => 
 
     logger.info(`${userWithId(interaction.user)} uses the command "${interaction.commandName}"`);
 
-    commandExecute(interaction);
+    void commandExecute(interaction);
   });
 };
 

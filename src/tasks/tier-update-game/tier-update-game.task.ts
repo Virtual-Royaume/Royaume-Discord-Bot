@@ -47,11 +47,11 @@ export const execute: TaskExecute = async() => {
 
       try {
         await member.roles.remove(Object.values(tiers));
-        member.roles.add(tierRole);
+        void member.roles.add(tierRole);
 
         logger.info(`Member ${userWithId(member.user)} tier updated`);
       } catch (e) {
-        logger.error(`Error while updating member ${member.id} tier : ${e}`);
+        logger.error(`Error while updating member ${member.id} tier : ${String(e)}`);
       }
 
       updates.push({ member: member, newRole: tierRole, oldRole: oldRole });
@@ -84,7 +84,7 @@ export const execute: TaskExecute = async() => {
     }
   }
 
-  generalChannelInstance.send({
+  void generalChannelInstance.send({
     embeds: [simpleEmbed(message, "normal", tasks.tierUpdate.title)]
   });
 

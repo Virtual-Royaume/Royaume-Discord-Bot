@@ -1,3 +1,4 @@
+import type { CommandExecute } from "$core/utils/handler/command";
 import { getChannels } from "$core/api/requests/main-channel";
 import { getMember } from "$core/api/requests/member";
 import { getGuildTypeById, guilds } from "$core/configs/guild";
@@ -5,7 +6,6 @@ import { commands } from "$core/configs/message/command";
 import { DayJS } from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, firstLetterToUppercase, formatMinutes, getAge, numberFormat } from "$core/utils/function";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
@@ -17,7 +17,7 @@ export const execute: CommandExecute = async(command) => {
   const member = command.options.getMember(commands.member.options.member.name) ?? command.member;
 
   if (!(member instanceof GuildMember) || !command.guild) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.member.exec.isntInGuild, "error")],
       ephemeral: true
     });
@@ -27,7 +27,7 @@ export const execute: CommandExecute = async(command) => {
   const guildType = getGuildTypeById(command.guild.id);
 
   if (!guildType) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.member.exec.isntInOfficialGuild, "error")],
       ephemeral: true
     });
@@ -38,7 +38,7 @@ export const execute: CommandExecute = async(command) => {
   const memberQuery = await gqlRequest(getMember, { id: member.id });
 
   if (!memberQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.member.exec.memberQueryError, "error")],
       ephemeral: true
     });
@@ -48,7 +48,7 @@ export const execute: CommandExecute = async(command) => {
   const memberInfo = memberQuery.data.member;
 
   if (!memberInfo) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.member.exec.memberDoesntExist, "error")],
       ephemeral: true
     });
@@ -59,7 +59,7 @@ export const execute: CommandExecute = async(command) => {
   const channelsQuery = await gqlRequest(getChannels);
 
   if (!channelsQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.member.exec.channelsQueryError, "error")],
       ephemeral: true
     });
@@ -126,7 +126,7 @@ export const execute: CommandExecute = async(command) => {
   const avatar = (await member.user.fetch()).displayAvatarURL();
   if (avatar) embed.setThumbnail(avatar);
 
-  command.reply({
+  void command.reply({
     embeds: [embed]
   });
 

@@ -10,7 +10,7 @@ export const execute: CommandExecute = async(command) => {
   const number = command.options.getNumber(commands.clean.options.count.name) ?? 10;
 
   if (command.channel?.type !== ChannelType.GuildText) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.clean.exec.needTextChannel, "error")],
       ephemeral: true
     });
@@ -19,13 +19,13 @@ export const execute: CommandExecute = async(command) => {
 
   try {
     await command.channel.bulkDelete(number);
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(msgParams(commands.clean.exec.succes, [number]))],
       ephemeral: true
     });
 
     logger.info(`${userWithId(command.user)} bulk deleted ${number} messages in ${command.channel.name}`);
   } catch (e) {
-    logger.error(`Error while bulk deleting in a channel : ${e}`);
+    logger.error(`Error while bulk deleting in a channel : ${String(e)}`);
   }
 };

@@ -1,8 +1,8 @@
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { setAlwaysOnServer } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { guilds } from "$core/configs/guild";
 import { getGuildMembers } from "$core/utils/discord/guild";
-import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
 import { userWithId } from "$core/utils/user";
@@ -17,7 +17,7 @@ export const execute: EventExecute<"guildMemberRemove"> = async(member) => {
 
   if ((await getGuildMembers(pro))?.find(m => m.id === member.id) || (await getGuildMembers(game))?.find(m => m.id === member.id)) return;
 
-  gqlRequest(setAlwaysOnServer, {
+  void gqlRequest(setAlwaysOnServer, {
     id: member.id,
     value: false
   });

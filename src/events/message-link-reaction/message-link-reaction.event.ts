@@ -1,11 +1,11 @@
+import type { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EmbedBuilder, Message } from "discord.js";
 import { client } from "$core/client";
 import { events } from "$core/configs/message/event";
 import { messageUrlRegex } from "./message-link-reaction.const";
 import { simpleEmbed } from "$core/utils/embed";
-import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import type { EmbedBuilder, Message } from "discord.js";
 import { BaseGuildTextChannel } from "discord.js";
 
 export const event: EventName = "messageCreate";
@@ -41,7 +41,7 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
 
       messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
     } catch (e) {
-      logger.error(`Error while getting message: ${e}`);
+      logger.error(`Error while getting message: ${String(e)}`);
       return;
     }
 
@@ -51,9 +51,9 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
   // Send link reaction messages :
   const embeds: EmbedBuilder[] = [];
 
-  for (const index in messages) {
-    const url = messages[index].url;
-    const message = messages[index].message;
+  for (const [index, msg] of Object.entries(messages)) {
+    const url = msg.url;
+    const message = msg.message;
 
     const attachment = message.attachments.size ? msgParams(events.messageLinkReaction.attachment, [message.attachments.size]) : "";
     const content = message.content ? message.content + (attachment.length ? `\n\n${attachment}` : "") : attachment;
@@ -67,6 +67,6 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
     );
   }
 
-  message.reply({ embeds, allowedMentions: { repliedUser: false } });
+  void message.reply({ embeds, allowedMentions: { repliedUser: false } });
   logger.info(`Message link reaction sent for message ${message.id}`);
 };

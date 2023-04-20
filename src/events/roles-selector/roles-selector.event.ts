@@ -1,8 +1,8 @@
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { interactionId } from "$core/configs";
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { simpleEmbed } from "$core/utils/embed";
-import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { GuildMemberRoleManager } from "discord.js";
@@ -26,7 +26,7 @@ export const execute: EventExecute<"interactionCreate"> = async(interaction) => 
   const memberRoles = interaction.member?.roles;
 
   if (!(memberRoles instanceof GuildMemberRoleManager)) {
-    interaction.reply({ embeds: [simpleEmbed(events.rolesSelector.fetchError, "error")] });
+    void interaction.reply({ embeds: [simpleEmbed(events.rolesSelector.fetchError, "error")] });
     return;
   }
 
@@ -35,17 +35,17 @@ export const execute: EventExecute<"interactionCreate"> = async(interaction) => 
     await memberRoles.add(selectedRoles);
     await memberRoles.remove(unselectedRoles);
 
-    let msg = `Member ${interaction.member?.user.username} roles updated :`;
+    let msg = `Member ${interaction.member?.user.username || "unknow username"} roles updated :`;
     if (selectedRoles.length > 0) msg += ` ${selectedRoles.length} added`;
     if (unselectedRoles.length > 0) msg += ` ${unselectedRoles.length} removed`;
 
     logger.info(msg);
   } catch (e) {
-    logger.error(`Error while updating member ${interaction.member?.user.id} roles : ${e}`);
+    logger.error(`Error while updating member ${interaction.member?.user.id || "unknow ID"} roles : ${String(e)}`);
   }
 
   // Send confirmation :
-  interaction.reply({
+  void interaction.reply({
     embeds: [simpleEmbed(msgParams(events.rolesSelector.succes, [category]))],
     ephemeral: true
   });

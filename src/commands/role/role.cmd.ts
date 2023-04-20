@@ -9,7 +9,7 @@ export const execute: CommandExecute = async(command) => {
   const guild = command.guild;
 
   if (!(member instanceof GuildMember) || !guild) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.role.exec.notInGuild, "error")],
       ephemeral: true
     });
@@ -17,7 +17,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   // Send the interaction :
-  command.reply({
+  void command.reply({
     embeds: [simpleEmbed("", "normal", commands.role.exec.selectRole)],
     components: await generateActionRow(member, guild),
     ephemeral: true

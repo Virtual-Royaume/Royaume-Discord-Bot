@@ -1,8 +1,8 @@
-import { simpleEmbed } from "$core/utils/embed";
+import type { Message } from "discord.js";
 import type { CommandExecute } from "$core/utils/handler/command";
+import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
 import { commands } from "$core/configs/message/command";
-import type { Message } from "discord.js";
 import { ChannelType, ForumChannel } from "discord.js";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
@@ -11,7 +11,7 @@ export const execute: CommandExecute = async(command) => {
   const channel = command.channel;
 
   if (channel?.type !== ChannelType.PublicThread || !(channel.parent instanceof ForumChannel)) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.channelNotPost, "error")],
       ephemeral: true
     });
@@ -21,7 +21,7 @@ export const execute: CommandExecute = async(command) => {
   const answerLink = command.options.getString(commands.forum.subcmds.resolve.options.answer.name, true);
 
   if (!answerLink.match(/^http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}$/gi)) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.resolve.isntDiscordMessageLink, "error")],
       ephemeral: true
     });
@@ -31,7 +31,7 @@ export const execute: CommandExecute = async(command) => {
   const ids = [...answerLink.match(/(\d+)/g) ?? []];
 
   if (ids[0] !== channel.guildId || ids[1] !== channel.id) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.resolve.badLocation, "error")],
       ephemeral: true
     });
@@ -43,7 +43,7 @@ export const execute: CommandExecute = async(command) => {
   try {
     message = await channel.messages.fetch(ids[2]);
   } catch (error) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.resolve.unknownMessage, "error")],
       ephemeral: true
     });
@@ -51,7 +51,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   if (!message.pinnable) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.resolve.unpinnableMessage, "error")],
       ephemeral: true
     });
@@ -64,5 +64,5 @@ export const execute: CommandExecute = async(command) => {
   });
 
   logger.info(`Forum: ${userWithId(command.user)} resolved ${channel.name} with ${answerLink}`);
-  channel.setArchived(true, "resolved");
+  void channel.setArchived(true, "resolved");
 };

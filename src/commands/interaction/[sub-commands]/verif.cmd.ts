@@ -11,7 +11,7 @@ export const execute: CommandExecute = async(command) => {
   const interactionType = command.options.getString(commands.interaction.subcmds.verif.name, true);
 
   if (channel?.type !== ChannelType.GuildText) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.interaction.exec.verif.notGuildText, "error")],
       ephemeral: true
     });

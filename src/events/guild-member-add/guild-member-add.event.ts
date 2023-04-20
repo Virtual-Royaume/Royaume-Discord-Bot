@@ -1,9 +1,9 @@
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { createMember, getMemberActivityTier, setAlwaysOnServer } from "$core/api/requests/member";
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { defaultAvatar } from "./guild-member-add.const";
 import { simpleEmbed } from "$core/utils/embed";
-import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
@@ -22,7 +22,7 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
     profilePicture: member.user.avatarURL() ?? defaultAvatar
   });
 
-  if (response.success && !response.data.createMember) gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
+  if (response.success && !response.data.createMember) void gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
 
   // Stop here if is game server:
   if (member.guild.id !== guilds.pro.guildId) return;
@@ -34,10 +34,10 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
     const role = await guild.roles.fetch(guilds.pro.roles.waiting);
 
     try {
-      if (role) member.roles.add(role);
+      if (role) void member.roles.add(role);
       logger.info(`Member ${userWithId(member.user)} added to waiting role`);
     } catch (e) {
-      logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
+      logger.error(`Error while updating member ${member?.user.id} roles : ${String(e)}`);
     }
     return;
   }
@@ -54,7 +54,7 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
       embeds.push(embed);
     }
 
-    (await channel.send({ content: msgParams(events.guildMemberAdd.welcomePresentation, [member.id]), embeds })).react("👋");
+    void (await channel.send({ content: msgParams(events.guildMemberAdd.welcomePresentation, [member.id]), embeds })).react("👋");
   }
 
   const tierQuery = await gqlRequest(getMemberActivityTier, {
@@ -67,10 +67,10 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
 
   if (tierQuery.data.member.activity.tier) {
     try {
-      member.roles.add(tiers[tierQuery.data.member.activity.tier]);
+      void member.roles.add(tiers[tierQuery.data.member.activity.tier]);
       logger.info(`Member ${userWithId(member.user)} added to tier ${tierQuery.data.member.activity.tier}`);
     } catch (e) {
-      logger.error(`Error while updating member ${member?.user.id} roles : ${e}`);
+      logger.error(`Error while updating member ${member?.user.id} roles : ${String(e)}`);
     }
   }
 

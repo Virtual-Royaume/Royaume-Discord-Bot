@@ -1,10 +1,10 @@
+import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
+import type { RoleUpdate } from "./tier-update.type";
 import { getMembersTier } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { getGuild, guilds } from "$core/configs/guild";
 import { tasks } from "$core/configs/message/task/task.config";
-import type { RoleUpdate } from "./tier-update.type";
 import { simpleEmbed } from "$core/utils/embed";
-import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
@@ -47,9 +47,9 @@ export const execute: TaskExecute = async() => {
 
       try {
         await member.roles.remove(Object.values(tiers));
-        member.roles.add(tierRole);
+        void member.roles.add(tierRole);
       } catch (e) {
-        logger.error(`Error while updating member ${member.id} tier : ${e}`);
+        logger.error(`Error while updating member ${member.id} tier : ${String(e)}`);
       }
 
       updates.push({ member: member, newRole: tierRole, oldRole: oldRole });
@@ -82,7 +82,7 @@ export const execute: TaskExecute = async() => {
     }
   }
 
-  generalChannelInstance.send({
+  void generalChannelInstance.send({
     embeds: [simpleEmbed(message, "normal", tasks.tierUpdate.title)]
   });
 

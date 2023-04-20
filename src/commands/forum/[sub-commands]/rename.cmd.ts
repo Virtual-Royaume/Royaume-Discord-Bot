@@ -9,7 +9,7 @@ export const execute: CommandExecute = async(command) => {
   const channel = command.channel;
 
   if (channel?.type !== ChannelType.PublicThread || !(channel.parent instanceof ForumChannel)) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.channelNotPost, "error")],
       ephemeral: true
     });
@@ -20,15 +20,15 @@ export const execute: CommandExecute = async(command) => {
 
   try {
     await channel.setName(name);
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(msgParams(commands.forum.exec.rename.succes, [name]))],
       ephemeral: true
     });
 
     logger.info(`Post channel "${channel.name}" renamed to "${name}"`);
   } catch (e) {
-    logger.error(`Error while renaming post channel "${channel.name}" to "${name}" : ${e}`);
-    command.reply({
+    logger.error(`Error while renaming post channel "${channel.name}" to "${name}" : ${String(e)}`);
+    void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.rename.error, "error")],
       ephemeral: true
     });

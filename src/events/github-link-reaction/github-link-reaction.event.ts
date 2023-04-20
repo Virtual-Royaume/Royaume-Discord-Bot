@@ -1,7 +1,7 @@
 import type { CodeElement } from "./github-link-reaction.type";
+import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { githubPermalinkRegex, githubRawUrl } from "./github-link-reaction.const";
 import { getStringEnv } from "$core/utils/env-variable";
-import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { restTextRequest } from "$core/utils/request/request";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
@@ -64,7 +64,7 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
     let selectedCode = "";
 
     for (let i = linesNumber[0]; i <= linesNumber[1]; i++) {
-      selectedCode += `${mainLine === i ? ">" + i : " " + i} ${fileContent[i - 1]}\n`;
+      selectedCode += `${mainLine === i ? `>${i}` : ` ${i}`} ${fileContent[i - 1]}\n`;
     }
 
     // Push informations :
@@ -82,14 +82,14 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
 
   if (codeElements.length) {
     // Remove link integration :
-    message.suppressEmbeds(true);
+    void message.suppressEmbeds(true);
 
     // Send code messages :
     for (const element of codeElements) {
       const codeBlock = `\`\`\`${element.fileExtension}\n${element.code}\n\`\`\``;
       const lines = element.mainLine ? `Ligne ${element.mainLine}` : `Lignes ${element.lines.join("-")}`;
 
-      message.reply({
+      void message.reply({
         content: `> ${lines} de \`${element.link}\`\n${codeBlock}`,
         allowedMentions: {
           repliedUser: false

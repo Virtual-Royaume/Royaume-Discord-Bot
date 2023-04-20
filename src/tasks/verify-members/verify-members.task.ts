@@ -41,7 +41,7 @@ export const execute: TaskExecute = async() => {
 
     // Remove members :
     logger.info(`Change ${apiMember.username} (${apiMember._id}) value of "isOnServer" API field to false`);
-    gqlRequest(setAlwaysOnServer, { id: apiMember._id, value: false });
+    void gqlRequest(setAlwaysOnServer, { id: apiMember._id, value: false });
   }
 
   for (const realMember of members.values()) {

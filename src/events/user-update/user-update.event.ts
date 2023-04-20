@@ -6,8 +6,8 @@ import { userWithId } from "$core/utils/user";
 
 export const event: EventName = "userUpdate";
 
-export const execute: EventExecute<"userUpdate"> = async(_, newUser) => {
-  gqlRequest(setUsernameAndProfilePicture, {
+export const execute: EventExecute<"userUpdate"> = (_, newUser) => {
+  void gqlRequest(setUsernameAndProfilePicture, {
     id: newUser.id,
     username: newUser.username,
     profilePicture: newUser.displayAvatarURL()

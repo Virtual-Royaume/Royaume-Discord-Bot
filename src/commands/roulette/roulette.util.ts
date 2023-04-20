@@ -1,8 +1,7 @@
 import { choicesInputId, titleInputId } from "./roulette.const";
 import { interactionId } from "$core/configs";
 import { commands } from "$core/configs/message/command";
-import { ActionRowBuilder } from "@discordjs/builders";
-import { ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
+import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 
 export const modal = new ModalBuilder()
   .setCustomId(interactionId.modal.roulette)

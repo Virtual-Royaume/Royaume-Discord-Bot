@@ -13,7 +13,7 @@ export const execute: EventExecute<"roleDelete"> = async(role) => {
 
   if (!rolesQuery.success) return;
 
-  if (rolesQuery.data.roles.find(r => r.roleId === role.id)) gqlRequest(removeRole, { roleId: role.id });
+  if (rolesQuery.data.roles.find(r => r.roleId === role.id)) void gqlRequest(removeRole, { roleId: role.id });
 
   logger.info(`Role ${role.name} (${role.id}) deleted`);
 };

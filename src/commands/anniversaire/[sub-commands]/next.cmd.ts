@@ -1,6 +1,6 @@
+import type { CommandExecute } from "$core/utils/handler/command";
 import { getBirthdays } from "$core/api/requests/member";
 import { simpleEmbed } from "$core/utils/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { commands } from "$core/configs/message/command";
 import { gqlRequest } from "$core/utils/request";
 import { DayJS } from "$core/utils/day-js";
@@ -11,20 +11,20 @@ export const execute: CommandExecute = async(command) => {
   const response = await gqlRequest(getBirthdays);
 
   if (!response.success) {
-    command.reply({ embeds: [simpleEmbed(commands.birthday.exec.apiError, "error")] });
+    void command.reply({ embeds: [simpleEmbed(commands.birthday.exec.apiError, "error")] });
     return;
   }
 
   const birthdays = [...response.data.members.map(member => ({ ...member }))].filter(member => member.birthday).map(member => {
     member.birthday = DayJS(member.birthday).set(
       "year", DayJS().year() + (DayJS().valueOf() > DayJS(member.birthday).set("year", DayJS().year()).valueOf() ? 1 : 0)
-    ).valueOf();
+    ).valueOf().toString();
 
     return member;
   });
 
   if (!birthdays.length) {
-    command.reply({ embeds: [simpleEmbed(commands.birthday.exec.noBirthdays, "error")] });
+    void command.reply({ embeds: [simpleEmbed(commands.birthday.exec.noBirthdays, "error")] });
     return;
   }
 
@@ -41,5 +41,5 @@ export const execute: CommandExecute = async(command) => {
     ]
   );
 
-  command.reply({ embeds: [simpleEmbed(message)] });
+  void command.reply({ embeds: [simpleEmbed(message)] });
 };

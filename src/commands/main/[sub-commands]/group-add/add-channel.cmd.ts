@@ -1,6 +1,6 @@
+import type { CommandExecute } from "$core/utils/handler/command";
 import { addChannel } from "$core/api/requests/main-channel";
 import { simpleEmbed } from "$core/utils/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { commands } from "$core/configs/message/command";
@@ -13,7 +13,7 @@ export const execute: CommandExecute = async(command) => {
   const addChannelQuery = await gqlRequest(addChannel, { channelId: channel.id, category: category });
 
   if (!addChannelQuery.success) {
-    command.reply({
+    void command.reply({
       embeds: [simpleEmbed(commands.main.exec.add.channel.error, "error")],
       ephemeral: true
     });
@@ -21,7 +21,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  command.reply({
+  void command.reply({
     embeds: [simpleEmbed(msgParams(commands.main.exec.add.channel.succes, [channel.id, category]))],
     ephemeral: true
   });

@@ -42,7 +42,7 @@ export const restJsonRequest = async<T extends object>(method: Method, endpoint:
 
   return {
     success: response.success,
-    data: await response.data.json()
+    data: await response.data.json() as T
   };
 };
 
@@ -83,6 +83,6 @@ export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variabl
 
   return {
     success: true,
-    data: (await response.json()).data
+    data: (await response.json() as { data: D }).data
   };
 };

@@ -20,7 +20,7 @@
     "discord.js": "^14.9.0"
   },
   "devDependencies": {
-    "@bluzzi/eslint-config": "^1.0.0",
+    "@bluzzi/eslint-config": "^1.1.0",
     "@graphql-codegen/cli": "3.3.0",
     "@graphql-codegen/client-preset": "3.0.0",
     "@graphql-typed-document-node/core": "^3.2.0",

@@ -41,7 +41,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  const setBirthdayQuery = await gqlRequest(setBirthday, { id: command.user.id, date });
+  const setBirthdayQuery = await gqlRequest(setBirthday, { id: command.user.id, date: date.valueOf().toString() });
 
   if (!setBirthdayQuery.success) {
     void command.reply({

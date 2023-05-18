@@ -143,7 +143,7 @@ export const commands = {
         isntDiscordMessageLink: "Veuillez saisir un vers un message discord valide",
         succes: "Ce [message]({url}) a été défini comme réponse",
         unknownMessage: "Le message n'éxiste pas...",
-        unpinnableMessage: "Le message n'éxiste pas..."
+        unpinnableMessage: "Le message ne peut pas être épinglé..."
       },
       why: {
         user: "<@{userId}> pourquoi n'as-tu pas utilisé le salon forum ?",

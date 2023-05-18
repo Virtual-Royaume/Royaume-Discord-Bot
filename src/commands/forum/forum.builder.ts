@@ -1,5 +1,5 @@
 import type { SlashCommandDefition } from "$core/utils/handler/command";
-import { SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 import { commands } from "$core/configs/message/command";
 import type { GuildsCommand } from "$core/utils/handler/command/command.type";
 

@@ -146,7 +146,9 @@ export const commands = {
         unpinnableMessage: "Le message n'éxiste pas..."
       },
       why: {
+        user: "<@{userId}> pourquoi n'as-tu pas utilisé le salon forum ?",
         message: [
+          "• Les salons forums sont la pour éviter que vos questions ou problèmes soit perdu dans la masse des messages du salon <#{channelId}>\n\n",
           "• Y ajouter un titre correct permet de vérifier rapidement si votre problème est déjà résolu ou non.\n\n",
           "• Les salons forum sont là pour vous permettre de poser des questions et de trouver des réponses.\n\n",
           "• Cela permet de garder un maximum de clarté car vous ne vous mélanger pas avec la discussion générale.\n\n",
@@ -183,6 +185,12 @@ export const commands = {
         }
       },
       why: {
+        options: {
+          user: {
+            name: "user",
+            description: "Utilisateur à cibler"
+          }
+        },
         description: "Pourquoi utiliser les salons forum ?",
         name: "why"
       }

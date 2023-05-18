@@ -1,5 +1,5 @@
 import type { SlashCommandDefition } from "$core/utils/handler/command";
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
 import { commands } from "$core/configs/message/command";
 import type { GuildsCommand } from "$core/utils/handler/command/command.type";
 
@@ -12,7 +12,10 @@ export const slashCommand: SlashCommandDefition = new SlashCommandBuilder()
   // why
   .addSubcommand(subCommand => subCommand
     .setName(commands.forum.subcmds.why.name)
-    .setDescription(commands.forum.subcmds.why.description))
+    .setDescription(commands.forum.subcmds.why.description)
+    .addUserOption(userOption => userOption
+      .setName(commands.forum.subcmds.why.options.user.name)
+      .setDescription(commands.forum.subcmds.why.options.user.description)))
 
   // rename
   .addSubcommand(subCommand => subCommand

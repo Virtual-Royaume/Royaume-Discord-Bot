@@ -61,7 +61,7 @@ export const load = async(commandsFolder: string): Promise<LoadedCommands> => {
     commandsBuilders.set(builder.name, builder);
 
     // Is a command guild
-    const guilds: GuildsCommand | undefined = dynamicBuilderImport.guild;
+    const guilds: GuildsCommand | undefined = dynamicBuilderImport.guilds;
 
     if (guilds) {
       for (const guild of guilds) {

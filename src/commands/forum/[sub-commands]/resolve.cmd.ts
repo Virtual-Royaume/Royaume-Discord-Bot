@@ -20,7 +20,7 @@ export const execute: CommandExecute = async(command) => {
 
   const answerLink = command.options.getString(commands.forum.subcmds.resolve.options.answer.name, true);
 
-  if (!answerLink.match(/^http(s?):\/\/(www\.)?discord.com\/channels(\/\d*){3}$/gi)) {
+  if (answerLink.match(/^http(s?):\/\/(www\.)?(discord.com|canary.discord.com|ptb.discord.com)\/channels(\/\d*){3}$/gi)) {
     void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.resolve.isntDiscordMessageLink, "error")],
       ephemeral: true

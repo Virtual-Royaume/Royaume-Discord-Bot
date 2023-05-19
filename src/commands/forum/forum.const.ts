@@ -1,0 +1,1 @@
+export const trustDiscordLinks = /^http(s?):\/\/(www\.)?(discord.com|canary.discord.com|ptb.discord.com)\/channels(\/\d*){3}$/gi;

@@ -6,6 +6,7 @@ import { commands } from "$core/configs/message/command";
 import { ChannelType, ForumChannel } from "discord.js";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
+import { trustDiscordLinks } from "../forum.const";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.channel;
@@ -20,7 +21,7 @@ export const execute: CommandExecute = async(command) => {
 
   const answerLink = command.options.getString(commands.forum.subcmds.resolve.options.answer.name, true);
 
-  if (answerLink.match(/^http(s?):\/\/(www\.)?(discord.com|canary.discord.com|ptb.discord.com)\/channels(\/\d*){3}$/gi)) {
+  if (answerLink.match(trustDiscordLinks)) {
     void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.resolve.isntDiscordMessageLink, "error")],
       ephemeral: true

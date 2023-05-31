@@ -7,7 +7,7 @@ import { tasks } from "$core/configs/message/task/task.config";
 import { simpleEmbed } from "$core/utils/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
 import { userWithId } from "$core/utils/user";
 import { getGuildMembers } from "$core/utils/discord/guild";
@@ -25,7 +25,7 @@ export const execute: TaskExecute = async() => {
     return;
   }
 
-  if (!apiMembersQuery.success) {
+  if (!apiMembersQuery.ok) {
     logger.error("Tier update task fail for PRO server, the API does not respond");
     return;
   }
@@ -36,7 +36,7 @@ export const execute: TaskExecute = async() => {
   for (const [id, member] of discordMembers) {
     if (member.user.bot || member.roles.cache.has(guilds.pro.roles.waiting)) continue;
 
-    const tierRole = tiers[apiMembersQuery.data.members.find(element => element._id === id)?.activity.tier.toString() ?? ""];
+    const tierRole = tiers[apiMembersQuery.value.members.find(element => element._id === id)?.activity.tier.toString() ?? ""];
 
     if (!tierRole) return logger.error(`Undefined role tier for member ${member.id} ${member.displayName}`);
 

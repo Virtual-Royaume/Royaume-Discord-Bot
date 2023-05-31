@@ -5,19 +5,19 @@ import { DayJS } from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, getAge } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { commands } from "$core/configs/message/command";
 
 export const execute: CommandExecute = async(command) => {
   let page = command.options.getNumber(commands.birthday.subcmds.list.options.page.name) ?? 1;
   const response = await gqlRequest(getBirthdays);
 
-  if (!response.success) {
+  if (!response.ok) {
     void command.reply({ embeds: [simpleEmbed(commands.birthday.exec.apiError, "error")] });
     return;
   }
 
-  let birthdays = response.data.members.filter(member => member.birthday)
+  let birthdays = response.value.members.filter(member => member.birthday)
     .sort((a, b) => DayJS(a.birthday).valueOf() - DayJS(b.birthday).valueOf());
 
   if (!birthdays.length) {

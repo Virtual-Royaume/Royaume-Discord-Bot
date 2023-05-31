@@ -8,8 +8,8 @@ import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, firstLetterToUppercase, formatMinutes, getAge, numberFormat } from "$core/utils/function";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
-import { TierUpdate } from "$core/utils/request/graphql/code-gen/graphql";
+import { gqlRequest } from "$core/utils/request";
+import { TierUpdate } from "$core/utils/request/graphql";
 import { userWithId } from "$core/utils/user";
 import { GuildMember } from "discord.js";
 
@@ -37,7 +37,7 @@ export const execute: CommandExecute = async(command) => {
   // Get member info :
   const memberQuery = await gqlRequest(getMember, { id: member.id });
 
-  if (!memberQuery.success) {
+  if (!memberQuery.ok) {
     void command.reply({
       embeds: [simpleEmbed(commands.member.exec.memberQueryError, "error")],
       ephemeral: true
@@ -45,7 +45,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  const memberInfo = memberQuery.data.member;
+  const memberInfo = memberQuery.value.member;
 
   if (!memberInfo) {
     void command.reply({
@@ -58,7 +58,7 @@ export const execute: CommandExecute = async(command) => {
   // Get main channels en sort it :
   const channelsQuery = await gqlRequest(getChannels);
 
-  if (!channelsQuery.success) {
+  if (!channelsQuery.ok) {
     void command.reply({
       embeds: [simpleEmbed(commands.member.exec.channelsQueryError, "error")],
       ephemeral: true
@@ -66,7 +66,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  const channels = channelsQuery.data.channels;
+  const channels = channelsQuery.value.channels;
   const channelsIdsByCategory: Record<string, string[]> = {};
 
   for (const channel of channels) {

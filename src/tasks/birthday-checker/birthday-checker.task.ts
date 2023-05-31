@@ -8,7 +8,7 @@ import { getAge } from "$core/utils/function";
 import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
 
 export const interval: TaskInterval = "0 0 0 * * *";
@@ -17,10 +17,10 @@ export const execute: TaskExecute = async() => {
   // Check birthdays of the day :
   const birthdaysQuery = await gqlRequest(getBirthdays);
 
-  if (!birthdaysQuery.success) return;
+  if (!birthdaysQuery.ok) return;
 
   const currentDate = DayJS().tz();
-  const birthdays = birthdaysQuery.data.members.filter(member => {
+  const birthdays = birthdaysQuery.value.members.filter(member => {
     if (!member.birthday) return false;
 
     const birthday = DayJS(member.birthday).tz();

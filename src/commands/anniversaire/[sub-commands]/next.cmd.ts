@@ -2,7 +2,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import { getBirthdays } from "$core/api/requests/member";
 import { simpleEmbed } from "$core/utils/embed";
 import { commands } from "$core/configs/message/command";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { DayJS } from "$core/utils/day-js";
 import { msgParams } from "$core/utils/message";
 import { getAge } from "$core/utils/function";
@@ -10,12 +10,12 @@ import { getAge } from "$core/utils/function";
 export const execute: CommandExecute = async(command) => {
   const response = await gqlRequest(getBirthdays);
 
-  if (!response.success) {
+  if (!response.ok) {
     void command.reply({ embeds: [simpleEmbed(commands.birthday.exec.apiError, "error")] });
     return;
   }
 
-  const birthdays = [...response.data.members.map(member => ({ ...member }))].filter(member => member.birthday).map(member => {
+  const birthdays = [...response.value.members.map(member => ({ ...member }))].filter(member => member.birthday).map(member => {
     member.birthday = DayJS(member.birthday).set(
       "year", DayJS().year() + (DayJS().valueOf() > DayJS(member.birthday).set("year", DayJS().year()).valueOf() ? 1 : 0)
     ).valueOf().toString();
@@ -37,7 +37,7 @@ export const execute: CommandExecute = async(command) => {
     [
       nextBirthday.username,
       DayJS(nextBirthday.birthday).format("DD/MM"),
-      getAge(DayJS(response.data.members.find(member => member._id === nextBirthday._id)?.birthday)) + 1
+      getAge(DayJS(response.value.members.find(member => member._id === nextBirthday._id)?.birthday)) + 1
     ]
   );
 

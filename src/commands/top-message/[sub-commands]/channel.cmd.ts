@@ -6,7 +6,7 @@ import { formatPage, getPage } from "../top-message.util";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
 
@@ -14,7 +14,7 @@ export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];
   const membersMessagesCountQuery = await gqlRequest(getChannelMessageCount);
 
-  if (!membersMessagesCountQuery.success) {
+  if (!membersMessagesCountQuery.ok) {
     void command.reply({
       embeds: [
         simpleEmbed(commands.topMessage.exec.activityQueryError, "error")
@@ -26,7 +26,7 @@ export const execute: CommandExecute = async(command) => {
 
   const channel = command.options.getChannel(commands.topMessage.subcmds.channel.options.channel.name, true);
   // Sort members & change format (QueryType => MembersData)
-  members = membersMessagesCountQuery.data.members.map(member => {
+  members = membersMessagesCountQuery.value.members.map(member => {
     const selectChannel = member.activity.messages.perChannel.find(c => channel.id === c.channelId);
 
     return {

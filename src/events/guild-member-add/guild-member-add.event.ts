@@ -6,7 +6,7 @@ import { defaultAvatar } from "./guild-member-add.const";
 import { simpleEmbed } from "$core/utils/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { ChannelType } from "discord.js";
 import { userWithId } from "$core/utils/user";
 
@@ -22,7 +22,7 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
     profilePicture: member.user.avatarURL() ?? defaultAvatar
   });
 
-  if (response.success && !response.data.createMember) void gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
+  if (response.ok && !response.value.createMember) void gqlRequest(setAlwaysOnServer, { id: member.id, value: true });
 
   // Stop here if is game server:
   if (member.guild.id !== guilds.pro.guildId) return;
@@ -61,14 +61,14 @@ export const execute: EventExecute<"guildMemberAdd"> = async(member) => {
     memberId: member.id
   });
 
-  if (!tierQuery.success || !tierQuery.data.member) return;
+  if (!tierQuery.ok || !tierQuery.value.member) return;
 
   const tiers: Record<string, string> = guilds.pro.tiers;
 
-  if (tierQuery.data.member.activity.tier) {
+  if (tierQuery.value.member.activity.tier) {
     try {
-      void member.roles.add(tiers[tierQuery.data.member.activity.tier]);
-      logger.info(`Member ${userWithId(member.user)} added to tier ${tierQuery.data.member.activity.tier}`);
+      void member.roles.add(tiers[tierQuery.value.member.activity.tier]);
+      logger.info(`Member ${userWithId(member.user)} added to tier ${tierQuery.value.member.activity.tier}`);
     } catch (e) {
       logger.error(`Error while updating member ${member?.user.id} roles : ${String(e)}`);
     }

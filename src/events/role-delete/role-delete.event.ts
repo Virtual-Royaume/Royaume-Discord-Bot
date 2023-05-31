@@ -1,6 +1,6 @@
 import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { guilds } from "$core/configs/guild";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { getRoles, removeRole } from "$core/api/requests/main-role";
 import { logger } from "$core/utils/logger";
 
@@ -11,9 +11,9 @@ export const execute: EventExecute<"roleDelete"> = async(role) => {
 
   const rolesQuery = await gqlRequest(getRoles);
 
-  if (!rolesQuery.success) return;
+  if (!rolesQuery.ok) return;
 
-  if (rolesQuery.data.roles.find(r => r.roleId === role.id)) void gqlRequest(removeRole, { roleId: role.id });
+  if (rolesQuery.value.roles.find(r => r.roleId === role.id)) void gqlRequest(removeRole, { roleId: role.id });
 
   logger.info(`Role ${role.name} (${role.id}) deleted`);
 };

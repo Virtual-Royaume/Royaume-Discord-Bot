@@ -4,7 +4,7 @@ import { getGuild } from "$core/configs/guild";
 import { getGuildMembers } from "$core/utils/discord/guild";
 import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { userWithId } from "$core/utils/user";
 
 export const interval: TaskInterval = "0 */3 * * * *";
@@ -29,9 +29,9 @@ export const execute: TaskExecute = async() => {
   );
   const apiMembersQuery = await gqlRequest(getMembersOnServerStatus);
 
-  if (!apiMembersQuery.success) return;
+  if (!apiMembersQuery.ok) return;
 
-  for (const apiMember of apiMembersQuery.data.members) {
+  for (const apiMember of apiMembersQuery.value.members) {
     const realMember = members.get(apiMember._id);
 
     if (realMember && !realMember.user.bot) {
@@ -49,12 +49,12 @@ export const execute: TaskExecute = async() => {
 
     const apiMember = await gqlRequest(getMember, { id: realMember.id });
 
-    if (!apiMember.success) {
+    if (!apiMember.ok) {
       logger.error(`Can not create an API member ${realMember.id} (${realMember.user.tag})`);
       return;
     }
     // Create member if he does not exist :
-    if (!apiMember.data.member) {
+    if (!apiMember.value.member) {
       await gqlRequest(createMember, {
         id: realMember.id,
         username: realMember.displayName,

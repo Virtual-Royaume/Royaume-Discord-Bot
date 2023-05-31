@@ -6,7 +6,7 @@ import { formatPage, getPage } from "../top-message.util";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
 
@@ -14,7 +14,7 @@ export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];
   const membersMessagesCountQuery = await gqlRequest(getTotalMessageCount);
 
-  if (!membersMessagesCountQuery.success) {
+  if (!membersMessagesCountQuery.ok) {
     void command.reply({
       embeds: [
         simpleEmbed(commands.topMessage.exec.activityQueryError, "error")
@@ -25,7 +25,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   // Sort members & change format (QueryType => MembersData)
-  members = membersMessagesCountQuery.data.members.sort((a, b) => {
+  members = membersMessagesCountQuery.value.members.sort((a, b) => {
     return (b?.activity.messages.totalCount ?? 0) - (a?.activity.messages.totalCount ?? 0);
   }).map(member => {
     return {

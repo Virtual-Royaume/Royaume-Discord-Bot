@@ -25,5 +25,5 @@ export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variabl
     return error(Error("GraphQL request failed"));
   }
 
-  return ok((await response.json()).data)
+  return ok((await response.json()).value)
 };

@@ -6,7 +6,7 @@ import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
 import { objectKeys } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import type {
   GuildMember,
   Snowflake } from "discord.js";
@@ -29,11 +29,11 @@ export const getPage = async(members: GuildMember[], page: number): Promise<Page
   const guildMember = members[page - 1];
   const memberQuery = await gqlRequest(getMember, { id: guildMember.id });
 
-  if (!memberQuery.success || !memberQuery.data.member) {
+  if (!memberQuery.ok || !memberQuery.value.member) {
     return null;
   }
 
-  const member = memberQuery.data.member;
+  const member = memberQuery.value.member;
   const user = await guildMember.user.fetch();
 
   return {

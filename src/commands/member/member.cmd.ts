@@ -8,8 +8,8 @@ import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, firstLetterToUppercase, formatMinutes, getAge, numberFormat } from "$core/utils/function";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
-import { TierUpdate } from "$core/utils/request/graphql/graphql";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { TierUpdate } from "$core/utils/request/graphql/code-gen/graphql";
 import { userWithId } from "$core/utils/user";
 import { GuildMember } from "discord.js";
 

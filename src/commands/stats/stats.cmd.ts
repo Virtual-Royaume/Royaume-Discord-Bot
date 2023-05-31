@@ -6,7 +6,7 @@ import { global } from "$core/configs";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { isHexColor } from "$core/utils/validator";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { AttachmentBuilder, EmbedBuilder } from "discord.js";

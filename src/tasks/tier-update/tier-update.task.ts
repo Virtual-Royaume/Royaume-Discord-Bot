@@ -7,7 +7,7 @@ import { tasks } from "$core/configs/message/task/task.config";
 import { simpleEmbed } from "$core/utils/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { BaseGuildTextChannel } from "discord.js";
 import { userWithId } from "$core/utils/user";
 import { getGuildMembers } from "$core/utils/discord/guild";

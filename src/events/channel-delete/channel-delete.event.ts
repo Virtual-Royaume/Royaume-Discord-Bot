@@ -2,7 +2,7 @@ import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { getChannels, removeChannel } from "$core/api/requests/main-channel";
 import { guilds } from "$core/configs/guild";
 import { logger } from "$core/utils/logger";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { GuildChannel, TextChannel } from "discord.js";
 
 export const event: EventName = "channelDelete";

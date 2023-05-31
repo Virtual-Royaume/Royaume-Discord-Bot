@@ -7,7 +7,7 @@ import { events } from "$core/configs/message/event";
 import { simpleEmbed } from "$core/utils/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { userWithId } from "$core/utils/user";
 import { ChannelType } from "discord.js";
 

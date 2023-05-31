@@ -2,7 +2,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import { removeRole } from "$core/api/requests/main-role";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { commands } from "$core/configs/message/command";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";

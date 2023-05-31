@@ -8,7 +8,7 @@ import { getAge } from "$core/utils/function";
 import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { BaseGuildTextChannel } from "discord.js";
 
 export const interval: TaskInterval = "0 0 0 * * *";

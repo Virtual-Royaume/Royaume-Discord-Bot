@@ -1,6 +1,6 @@
 import type { Message } from "discord.js";
 import type { CommandExecute } from "$core/utils/handler/command";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { commands } from "$core/configs/message/command";
 import { ChannelType, ForumChannel } from "discord.js";

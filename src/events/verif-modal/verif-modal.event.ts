@@ -1,9 +1,9 @@
 import type { EventExecute, EventName } from "$core/utils/handler/event";
-import { interactionId, proposals } from "$core/configs";
+import { interactionId, proposals } from "$core/configs/global";
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { modal } from "./verif-modal.util";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { BaseGuildTextChannel, GuildMember } from "discord.js";
 import { presentationId } from "./verif-modal.const";

@@ -1,9 +1,9 @@
 import type { EventExecute, EventName } from "$core/utils/handler/event";
 import type { GuildMember, Message } from "discord.js";
-import { proposals } from "$core/configs";
+import { proposals } from "$core/configs/global";
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 

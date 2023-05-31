@@ -3,7 +3,7 @@ import type { EmbedBuilder, Message } from "discord.js";
 import { client } from "$core/client";
 import { events } from "$core/configs/message/event";
 import { messageUrlRegex } from "./message-link-reaction.const";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { BaseGuildTextChannel } from "discord.js";

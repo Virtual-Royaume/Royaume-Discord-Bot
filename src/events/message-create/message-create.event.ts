@@ -4,7 +4,7 @@ import { getChannels } from "$core/api/requests/main-channel";
 import { incChannelMessage } from "$core/api/requests/member";
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";

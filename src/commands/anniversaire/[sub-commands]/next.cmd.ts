@@ -1,6 +1,6 @@
 import type { CommandExecute } from "$core/utils/handler/command";
 import { getBirthdays } from "$core/api/requests/member";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { commands } from "$core/configs/message/command";
 import { gqlRequest } from "$core/utils/request";
 import { DayJS } from "$core/configs/day-js";

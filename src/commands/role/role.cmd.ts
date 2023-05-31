@@ -1,6 +1,6 @@
 import { generateActionRow } from "./role.util";
 import { commands } from "$core/configs/message/command";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import type { CommandExecute } from "$core/utils/handler/command";
 import { GuildMember } from "discord.js";
 

@@ -3,7 +3,7 @@ import { createMember, getMemberActivityTier, setAlwaysOnServer } from "$core/ap
 import { guilds } from "$core/configs/guild";
 import { events } from "$core/configs/message/event";
 import { defaultAvatar } from "./guild-member-add.const";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";

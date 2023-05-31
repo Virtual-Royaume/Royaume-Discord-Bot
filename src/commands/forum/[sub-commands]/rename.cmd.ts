@@ -1,4 +1,4 @@
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import type { CommandExecute } from "$core/utils/handler/command";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";

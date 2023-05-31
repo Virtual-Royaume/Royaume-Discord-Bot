@@ -2,7 +2,7 @@ import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { choicesInputId, titleInputId } from "$core/commands/roulette/roulette.const";
 import { interactionId } from "$core/configs";
 import { events } from "$core/configs/message/event";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 

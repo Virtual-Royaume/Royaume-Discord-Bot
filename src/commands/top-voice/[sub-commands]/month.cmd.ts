@@ -3,7 +3,7 @@ import type { MembersData } from "../top-voice.type";
 import { getMonthVoiceMinute } from "$core/api/requests/member";
 import { formatPage, getPage } from "../top-voice.util";
 import { commands } from "$core/configs/message/command";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { memberPerPage } from "../top-voice.const";

@@ -30,20 +30,15 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
 
     if (!ids.length) return;
 
-    // Get channel and message instances :
-    let messageQuoted: Message;
+    const guildQuoted = await client.guilds.fetch(ids[0][0]);
+    const channelQuoted = await guildQuoted.channels.fetch(ids[1][0]);
 
-    try {
-      const guildQuoted = await client.guilds.fetch(ids[0][0]);
-      const channelQuoted = await guildQuoted.channels.fetch(ids[1][0]);
-
-      if (!channelQuoted || !channelQuoted.isTextBased()) throw new Error("Channel not found");
-
-      messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
-    } catch (e) {
-      logger.error(`Error while getting message: ${String(e)}`);
+    if (!channelQuoted || !channelQuoted.isTextBased()) {
+      logger.error("Error while getting message: channel not found");
       return;
     }
+
+    const messageQuoted = await channelQuoted.messages.fetch(ids[2][0]);
 
     messages.push({ url, message: messageQuoted });
   }

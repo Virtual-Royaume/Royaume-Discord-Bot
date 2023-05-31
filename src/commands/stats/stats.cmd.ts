@@ -1,6 +1,5 @@
 import type { CommandExecute } from "#/utils/handler/command";
 import type { GraphType } from "./stats.type";
-import { getServerActivityHistory } from "#/api/requests/server-activity";
 import { generateChartConfig } from "./stats.util";
 import { global } from "#/configs/global";
 import { commands } from "#/configs/message/command";
@@ -11,6 +10,7 @@ import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { AttachmentBuilder, EmbedBuilder } from "discord.js";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { getServerActivityHistory } from "./stats.gql";
 
 export const execute: CommandExecute = async(command) => {
   // Get server activity :

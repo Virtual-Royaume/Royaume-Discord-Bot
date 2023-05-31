@@ -1,5 +1,4 @@
 import type { EventExecute, EventName } from "#/utils/handler/event";
-import { createMember, getMemberActivityTier, setAlwaysOnServer } from "#/api/requests/member";
 import { guilds } from "#/configs/guild";
 import { events } from "#/configs/message/event";
 import { defaultAvatar } from "./guild-member-add.const";
@@ -9,6 +8,7 @@ import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
 import { ChannelType } from "discord.js";
 import { userWithId } from "#/utils/discord/user";
+import { createMember, getMemberActivityTier, setAlwaysOnServer } from "./guild-member-add.gql";
 
 export const event: EventName = "guildMemberAdd";
 

@@ -210,6 +210,7 @@ export const commands = {
         }
       },
       list: {
+        error: "Erreur lors de l'obtention des salons",
         channels: {
           channel: "**{category} :** {members}",
           title: "Salons principaux"
@@ -402,6 +403,7 @@ export const commands = {
     description: "Choisir ses rôles",
     exec: {
       notInGuild: "Veuillez éxecuter cette commande sur un serveur",
+      apiError: "Erreur lors de l'obtention des rôles",
       selectRole: "Veuillez choisir vos rôles"
     }
   },

@@ -1,11 +1,11 @@
 import type { CommandExecute } from "#/utils/handler/command";
-import { addChannel } from "#/api/requests/main-channel";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
 import { commands } from "#/configs/message/command";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { addChannel } from "./add-channel.gql";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.options.getChannel(commands.main.groups.add.subcmds.channel.options.channel.name, true);

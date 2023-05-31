@@ -1,5 +1,4 @@
 import type { TaskExecute, TaskInterval } from "#/utils/handler/task";
-import { getBirthdays } from "#/api/requests/member";
 import { client } from "#/client";
 import { getGuild, guilds } from "#/configs/guild";
 import { tasks } from "#/configs/message/task/task.config";
@@ -10,6 +9,7 @@ import { logger } from "#/utils/logger";
 import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
+import { getBirthdays } from "./birthday-checker.gql";
 
 export const interval: TaskInterval = "0 0 0 * * *";
 

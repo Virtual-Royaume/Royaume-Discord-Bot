@@ -1,11 +1,11 @@
 import type { CommandExecute } from "#/utils/handler/command";
-import { addRole } from "#/api/requests/main-role";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { commands } from "#/configs/message/command";
 import { gqlRequest } from "#/utils/request";
 import { msgParams } from "#/utils/message";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { addRole } from "./add-role.gql";
 
 export const execute: CommandExecute = async(command) => {
   const role = command.options.getRole(commands.main.groups.add.subcmds.role.options.role.name, true);

@@ -1,11 +1,11 @@
 import type { CommandExecute } from "#/utils/handler/command";
-import { getBirthdays } from "#/api/requests/member";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { commands } from "#/configs/message/command";
 import { gqlRequest } from "#/utils/request";
 import { DayJS } from "#/configs/day-js";
 import { msgParams } from "#/utils/message";
 import { getAge } from "#/utils/function/date";
+import { getBirthdays } from "./next.gql";
 
 export const execute: CommandExecute = async(command) => {
   const response = await gqlRequest(getBirthdays);

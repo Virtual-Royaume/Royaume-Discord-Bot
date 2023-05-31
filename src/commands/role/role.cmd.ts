@@ -1,7 +1,7 @@
+import type { CommandExecute } from "#/utils/handler/command";
 import { generateActionRow } from "./role.util";
 import { commands } from "#/configs/message/command";
 import { simpleEmbed } from "#/utils/discord/embed";
-import type { CommandExecute } from "#/utils/handler/command";
 import { GuildMember } from "discord.js";
 
 export const execute: CommandExecute = async(command) => {
@@ -16,10 +16,16 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  // Send the interaction :
+  const actionRow = await generateActionRow(member, guild);
+
+  if (!actionRow.ok) {
+    void command.reply({ embeds: [simpleEmbed(commands.role.exec.apiError)] });
+    return;
+  }
+
   void command.reply({
     embeds: [simpleEmbed("", "normal", commands.role.exec.selectRole)],
-    components: await generateActionRow(member, guild),
+    components: actionRow.value,
     ephemeral: true
   });
 };

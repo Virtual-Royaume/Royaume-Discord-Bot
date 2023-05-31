@@ -1,6 +1,5 @@
 import type { TaskExecute, TaskInterval } from "#/utils/handler/task";
 import type { RoleUpdate } from "./tier-update.type";
-import { getMembersTier } from "#/api/requests/member";
 import { client } from "#/client";
 import { getGuild, guilds } from "#/configs/guild";
 import { tasks } from "#/configs/message/task/task.config";
@@ -11,6 +10,7 @@ import { gqlRequest } from "#/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
 import { userWithId } from "#/utils/discord/user";
 import { getGuildMembers } from "#/utils/discord/guild";
+import { getMembersTier } from "./tier-update.gql";
 
 export const interval: TaskInterval = "0 * * * * *";
 

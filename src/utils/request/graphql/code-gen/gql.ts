@@ -13,35 +13,41 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n    mutation addChannel($channelId: ID!, $category: String!){\n        addChannel(channelId: $channelId, category: $category)\n    }\n": types.AddChannelDocument,
-    "\n    mutation removeChannel($channelId: ID!){\n        removeChannel(channelId: $channelId)\n    }\n": types.RemoveChannelDocument,
-    "\n    query getChannels {\n        channels {\n            channelId\n            category\n        }\n    }\n": types.GetChannelsDocument,
-    "\n    mutation addRole($roleId: ID!, $category: String!){\n        addRole(roleId: $roleId, category: $category)\n    }\n": types.AddRoleDocument,
-    "\n    mutation removeRole($roleId: ID!){\n        removeRole(roleId: $roleId)\n    }\n": types.RemoveRoleDocument,
-    "\n    query getRoles {\n        roles {\n            roleId\n            category\n        }\n    }\n": types.GetRolesDocument,
-    "\n    mutation createMember($id: ID!, $username: String!, $profilePicture: String!){\n        createMember(id: $id, username: $username, profilePicture: $profilePicture){\n            _id\n        }\n    }\n": types.CreateMemberDocument,
-    "\n    mutation setAlwaysOnServer($id: ID!, $value: Boolean!){\n        updateMember(id: $id, input: {\n            isOnServer: $value\n        })\n    }\n": types.SetAlwaysOnServerDocument,
-    "\n    mutation setUsernameAndProfilePicture($id: ID!, $username: String!, $profilePicture: String!){\n        updateMember(id: $id, input: {\n            username: $username\n            profilePicture: $profilePicture\n        })\n    }\n": types.SetUsernameAndProfilePictureDocument,
-    "\n    mutation setBirthday($id: ID!, $date: Date!){\n        updateMember(id: $id, input: {\n            birthday: $date\n        })\n    }\n": types.SetBirthdayDocument,
-    "\n    mutation incChannelMessage($id: ID!, $channelId: ID!){\n        incMemberDiscordActivityChannel(id: $id, channelId: $channelId)\n    }\n": types.IncChannelMessageDocument,
-    "\n    mutation incVoiceMinute($id: ID!){\n        incMemberDiscordVoiceMinute(id: $id)\n    }\n": types.IncVoiceMinuteDocument,
-    "\n    query getMember($id: ID!){\n        member(id: $id) {\n          _id\n          username\n          profilePicture\n          birthday\n          isOnServer\n          activity {\n            tier\n            voiceMinute\n            monthVoiceMinute\n            messages {\n              totalCount\n              monthCount\n              perChannel {\n                channelId\n                messageCount\n              }\n            }\n            points {\n              count\n              progress\n            }\n          }\n        }\n      }\n": types.GetMemberDocument,
-    "\n    query getMemberTier {\n        members {\n            _id\n            activity {\n                tier\n            }\n        }\n    }\n": types.GetMemberTierDocument,
-    "\n    query getMemberOnServerStatus {\n        members {\n            _id\n            username\n            isOnServer\n        }\n    }\n": types.GetMemberOnServerStatusDocument,
-    "\n    query getBirthdays {\n        members {\n            _id\n            username\n            birthday\n            profilePicture\n        }\n    }\n": types.GetBirthdaysDocument,
-    "\n    query getVoiceTime {\n        members {\n            _id\n            username\n            activity {\n                voiceMinute\n            }\n        }\n    }\n": types.GetVoiceTimeDocument,
-    "\n    query getMonthMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    monthCount\n                }\n            }\n        }\n    }\n": types.GetMonthMessageCountDocument,
-    "\n    query getMonthVoiceMinute {\n        members {\n            _id\n            username\n            activity {\n                monthVoiceMinute\n            }\n        }\n    }\n": types.GetMonthVoiceMinuteDocument,
-    "\n    query getMonthActivity {\n        members {\n            _id\n            username\n            activity {\n                monthVoiceMinute\n                messages {\n                    monthCount\n                }\n            }\n        }\n    }\n": types.GetMonthActivityDocument,
-    "\n    query getTotalMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    totalCount\n                }\n            }\n        }\n    }\n": types.GetTotalMessageCountDocument,
-    "\n    query getChannelMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    perChannel {\n                        channelId\n                        messageCount\n                    }\n                }\n            }\n        }\n    }\n": types.GetChannelMessageCountDocument,
-    "\n    query getMemberActivityTier($memberId: ID!) {\n        member(id: $memberId) {\n            activity {\n                tier\n            }\n        }\n    }\n": types.GetMemberActivityTierDocument,
-    "\n    query getPresenceMessages {\n        presenceMessages {\n            _id\n            type\n            text\n        }\n    }\n": types.GetPresenceMessagesDocument,
-    "\n    mutation addPresenceMessage($type: PresenceType!, $text: String!) {\n        addPresenceMessage(type: $type, text: $text)\n    }\n": types.AddPresenceMessageDocument,
-    "\n    mutation remoePresenceMessage($id: ID!){\n        removePresenceMessage(id: $id)\n    }\n": types.RemoePresenceMessageDocument,
-    "\n    query getCurrentServerActivity {\n        todayServerActivity {\n            date\n            voiceMinute\n            messageCount\n            memberCount\n        }\n    }\n": types.GetCurrentServerActivityDocument,
-    "\n    query getServerActivityHistory($historyCount: Int!){\n        serverActivity(historyCount: $historyCount){\n            date\n            voiceMinute\n            messageCount\n            memberCount\n        }\n    }\n": types.GetServerActivityHistoryDocument,
-    "\n    mutation setMemberCount($count: Int!) {\n        setServerActivityMemberCount(count: $count)\n    }\n": types.SetMemberCountDocument,
+    "\n  query getBirthdaysForList {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n": types.GetBirthdaysForListDocument,
+    "\n  query getBirthdaysForNext {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n": types.GetBirthdaysForNextDocument,
+    "\n  mutation setBirthday($id: ID!, $date: Date!) {\n    updateMember(id: $id, input: {\n      birthday: $date\n    })\n  }\n": types.SetBirthdayDocument,
+    "\n  query getMemberForInactiveCommand($id: ID!){\n    member(id: $id) {\n      _id\n      activity {\n        tier\n        voiceMinute\n        monthVoiceMinute\n        messages {\n          totalCount\n          monthCount\n        }\n      }\n    }\n  }\n": types.GetMemberForInactiveCommandDocument,
+    "\n  query getMonthActivityForCommand {\n    members {\n      _id\n      username\n      activity {\n        monthVoiceMinute\n        messages {\n          monthCount\n        }\n      }\n    }\n  }\n": types.GetMonthActivityForCommandDocument,
+    "\n  mutation addChannel($channelId: ID!, $category: String!) {\n    addChannel(channelId: $channelId, category: $category)\n  }\n": types.AddChannelDocument,
+    "\n  mutation addRole($roleId: ID!, $category: String!) {\n    addRole(roleId: $roleId, category: $category)\n  }\n": types.AddRoleDocument,
+    "\n  mutation removeChannelForCommandRemove($channelId: ID!) {\n    removeChannel(channelId: $channelId)\n  }\n": types.RemoveChannelForCommandRemoveDocument,
+    "\n  mutation removeRoleForEvent($roleId: ID!){\n    removeRole(roleId: $roleId)\n  }\n": types.RemoveRoleForEventDocument,
+    "\n  query getMemberForCommand($id: ID!) {\n    member(id: $id) {\n      _id\n      birthday\n      activity {\n        tier\n        voiceMinute\n        monthVoiceMinute\n        messages {\n          totalCount\n          monthCount\n          perChannel {\n            channelId\n            messageCount\n          }\n        }\n        points {\n          progress\n        }\n      }\n    }\n  }\n": types.GetMemberForCommandDocument,
+    "\n  query getServerActivityHistory($historyCount: Int!) {\n    serverActivity(historyCount: $historyCount) {\n      date\n      voiceMinute\n      messageCount\n      memberCount\n    }\n  }\n": types.GetServerActivityHistoryDocument,
+    "\n  query getChannelMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          perChannel {\n            channelId\n            messageCount\n          }\n        }\n      }\n    }\n  }\n": types.GetChannelMessageCountDocument,
+    "\n  query getMonthMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          monthCount\n        }\n      }\n    }\n  }\n": types.GetMonthMessageCountDocument,
+    "\n  query getTotalMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          totalCount\n        }\n      }\n    }\n  }\n": types.GetTotalMessageCountDocument,
+    "\n  query getMonthVoiceMinute {\n    members {\n      _id\n      username\n      activity {\n        monthVoiceMinute\n      }\n    }\n  }\n": types.GetMonthVoiceMinuteDocument,
+    "\n  query getVoiceTime {\n    members {\n      _id\n      username\n      activity {\n        voiceMinute\n      }\n    }\n  }\n": types.GetVoiceTimeDocument,
+    "\n  mutation removeChannel($channelId: ID!) {\n    removeChannel(channelId: $channelId)\n  }\n": types.RemoveChannelDocument,
+    "\n  mutation createMemberForEvent($id: ID!, $username: String!, $profilePicture: String!) {\n    createMember(id: $id, username: $username, profilePicture: $profilePicture) {\n      _id\n    }\n  }\n": types.CreateMemberForEventDocument,
+    "\n  query getMemberActivityTierEvent($memberId: ID!) {\n    member(id: $memberId) {\n      activity {\n        tier\n      }\n    }\n  }\n": types.GetMemberActivityTierEventDocument,
+    "\n  mutation setAlwaysOnServerForEventAdd($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n": types.SetAlwaysOnServerForEventAddDocument,
+    "\n  mutation setAlwaysOnServerForEventRemove($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n": types.SetAlwaysOnServerForEventRemoveDocument,
+    "\n  mutation incChannelMessage($id: ID!, $channelId: ID!) {\n    incMemberDiscordActivityChannel(id: $id, channelId: $channelId)\n  }\n": types.IncChannelMessageDocument,
+    "\n  mutation removeRole($roleId: ID!) {\n    removeRole(roleId: $roleId)\n  }\n": types.RemoveRoleDocument,
+    "\n  mutation setUsernameAndProfilePicture($id: ID!, $username: String!, $profilePicture: String!) {\n    updateMember(id: $id, input: {\n      username: $username\n      profilePicture: $profilePicture\n    })\n  }\n": types.SetUsernameAndProfilePictureDocument,
+    "\n  mutation incVoiceMinute($id: ID!) {\n    incMemberDiscordVoiceMinute(id: $id)\n  }\n": types.IncVoiceMinuteDocument,
+    "\n  mutation setMemberCount($count: Int!) {\n    setServerActivityMemberCount(count: $count)\n  }\n": types.SetMemberCountDocument,
+    "\n  query getBirthdaysForTask {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n": types.GetBirthdaysForTaskDocument,
+    "\n  query getMemberTierForTaskGame {\n    members {\n      _id\n      activity {\n        tier\n      }\n    }\n  }\n": types.GetMemberTierForTaskGameDocument,
+    "\n  query getMemberTierForTask {\n    members {\n      _id\n      activity {\n        tier\n      }\n    }\n  }\n": types.GetMemberTierForTaskDocument,
+    "\n  mutation createMemberForTask($id: ID!, $username: String!, $profilePicture: String!) {\n    createMember(id: $id, username: $username, profilePicture: $profilePicture) {\n      _id\n    }\n  }\n": types.CreateMemberForTaskDocument,
+    "\n  mutation setAlwaysOnServerForTask($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n": types.SetAlwaysOnServerForTaskDocument,
+    "\n  query getMemberForTask($id: ID!) {\n    member(id: $id) {\n      _id\n    }\n  }\n": types.GetMemberForTaskDocument,
+    "\n  query getMemberOnServerStatusForTask {\n    members {\n      _id\n      username\n      isOnServer\n    }\n  }\n": types.GetMemberOnServerStatusForTaskDocument,
+    "\n  query getChannels {\n    channels {\n      channelId\n      category\n    }\n  }\n": types.GetChannelsDocument,
+    "\n  query getRoles {\n    roles {\n      roleId\n      category\n    }\n  }\n": types.GetRolesDocument,
 };
 
 /**
@@ -61,119 +67,143 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation addChannel($channelId: ID!, $category: String!){\n        addChannel(channelId: $channelId, category: $category)\n    }\n"): (typeof documents)["\n    mutation addChannel($channelId: ID!, $category: String!){\n        addChannel(channelId: $channelId, category: $category)\n    }\n"];
+export function graphql(source: "\n  query getBirthdaysForList {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n"): (typeof documents)["\n  query getBirthdaysForList {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation removeChannel($channelId: ID!){\n        removeChannel(channelId: $channelId)\n    }\n"): (typeof documents)["\n    mutation removeChannel($channelId: ID!){\n        removeChannel(channelId: $channelId)\n    }\n"];
+export function graphql(source: "\n  query getBirthdaysForNext {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n"): (typeof documents)["\n  query getBirthdaysForNext {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getChannels {\n        channels {\n            channelId\n            category\n        }\n    }\n"): (typeof documents)["\n    query getChannels {\n        channels {\n            channelId\n            category\n        }\n    }\n"];
+export function graphql(source: "\n  mutation setBirthday($id: ID!, $date: Date!) {\n    updateMember(id: $id, input: {\n      birthday: $date\n    })\n  }\n"): (typeof documents)["\n  mutation setBirthday($id: ID!, $date: Date!) {\n    updateMember(id: $id, input: {\n      birthday: $date\n    })\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation addRole($roleId: ID!, $category: String!){\n        addRole(roleId: $roleId, category: $category)\n    }\n"): (typeof documents)["\n    mutation addRole($roleId: ID!, $category: String!){\n        addRole(roleId: $roleId, category: $category)\n    }\n"];
+export function graphql(source: "\n  query getMemberForInactiveCommand($id: ID!){\n    member(id: $id) {\n      _id\n      activity {\n        tier\n        voiceMinute\n        monthVoiceMinute\n        messages {\n          totalCount\n          monthCount\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getMemberForInactiveCommand($id: ID!){\n    member(id: $id) {\n      _id\n      activity {\n        tier\n        voiceMinute\n        monthVoiceMinute\n        messages {\n          totalCount\n          monthCount\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation removeRole($roleId: ID!){\n        removeRole(roleId: $roleId)\n    }\n"): (typeof documents)["\n    mutation removeRole($roleId: ID!){\n        removeRole(roleId: $roleId)\n    }\n"];
+export function graphql(source: "\n  query getMonthActivityForCommand {\n    members {\n      _id\n      username\n      activity {\n        monthVoiceMinute\n        messages {\n          monthCount\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getMonthActivityForCommand {\n    members {\n      _id\n      username\n      activity {\n        monthVoiceMinute\n        messages {\n          monthCount\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getRoles {\n        roles {\n            roleId\n            category\n        }\n    }\n"): (typeof documents)["\n    query getRoles {\n        roles {\n            roleId\n            category\n        }\n    }\n"];
+export function graphql(source: "\n  mutation addChannel($channelId: ID!, $category: String!) {\n    addChannel(channelId: $channelId, category: $category)\n  }\n"): (typeof documents)["\n  mutation addChannel($channelId: ID!, $category: String!) {\n    addChannel(channelId: $channelId, category: $category)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation createMember($id: ID!, $username: String!, $profilePicture: String!){\n        createMember(id: $id, username: $username, profilePicture: $profilePicture){\n            _id\n        }\n    }\n"): (typeof documents)["\n    mutation createMember($id: ID!, $username: String!, $profilePicture: String!){\n        createMember(id: $id, username: $username, profilePicture: $profilePicture){\n            _id\n        }\n    }\n"];
+export function graphql(source: "\n  mutation addRole($roleId: ID!, $category: String!) {\n    addRole(roleId: $roleId, category: $category)\n  }\n"): (typeof documents)["\n  mutation addRole($roleId: ID!, $category: String!) {\n    addRole(roleId: $roleId, category: $category)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation setAlwaysOnServer($id: ID!, $value: Boolean!){\n        updateMember(id: $id, input: {\n            isOnServer: $value\n        })\n    }\n"): (typeof documents)["\n    mutation setAlwaysOnServer($id: ID!, $value: Boolean!){\n        updateMember(id: $id, input: {\n            isOnServer: $value\n        })\n    }\n"];
+export function graphql(source: "\n  mutation removeChannelForCommandRemove($channelId: ID!) {\n    removeChannel(channelId: $channelId)\n  }\n"): (typeof documents)["\n  mutation removeChannelForCommandRemove($channelId: ID!) {\n    removeChannel(channelId: $channelId)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation setUsernameAndProfilePicture($id: ID!, $username: String!, $profilePicture: String!){\n        updateMember(id: $id, input: {\n            username: $username\n            profilePicture: $profilePicture\n        })\n    }\n"): (typeof documents)["\n    mutation setUsernameAndProfilePicture($id: ID!, $username: String!, $profilePicture: String!){\n        updateMember(id: $id, input: {\n            username: $username\n            profilePicture: $profilePicture\n        })\n    }\n"];
+export function graphql(source: "\n  mutation removeRoleForEvent($roleId: ID!){\n    removeRole(roleId: $roleId)\n  }\n"): (typeof documents)["\n  mutation removeRoleForEvent($roleId: ID!){\n    removeRole(roleId: $roleId)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation setBirthday($id: ID!, $date: Date!){\n        updateMember(id: $id, input: {\n            birthday: $date\n        })\n    }\n"): (typeof documents)["\n    mutation setBirthday($id: ID!, $date: Date!){\n        updateMember(id: $id, input: {\n            birthday: $date\n        })\n    }\n"];
+export function graphql(source: "\n  query getMemberForCommand($id: ID!) {\n    member(id: $id) {\n      _id\n      birthday\n      activity {\n        tier\n        voiceMinute\n        monthVoiceMinute\n        messages {\n          totalCount\n          monthCount\n          perChannel {\n            channelId\n            messageCount\n          }\n        }\n        points {\n          progress\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getMemberForCommand($id: ID!) {\n    member(id: $id) {\n      _id\n      birthday\n      activity {\n        tier\n        voiceMinute\n        monthVoiceMinute\n        messages {\n          totalCount\n          monthCount\n          perChannel {\n            channelId\n            messageCount\n          }\n        }\n        points {\n          progress\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation incChannelMessage($id: ID!, $channelId: ID!){\n        incMemberDiscordActivityChannel(id: $id, channelId: $channelId)\n    }\n"): (typeof documents)["\n    mutation incChannelMessage($id: ID!, $channelId: ID!){\n        incMemberDiscordActivityChannel(id: $id, channelId: $channelId)\n    }\n"];
+export function graphql(source: "\n  query getServerActivityHistory($historyCount: Int!) {\n    serverActivity(historyCount: $historyCount) {\n      date\n      voiceMinute\n      messageCount\n      memberCount\n    }\n  }\n"): (typeof documents)["\n  query getServerActivityHistory($historyCount: Int!) {\n    serverActivity(historyCount: $historyCount) {\n      date\n      voiceMinute\n      messageCount\n      memberCount\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation incVoiceMinute($id: ID!){\n        incMemberDiscordVoiceMinute(id: $id)\n    }\n"): (typeof documents)["\n    mutation incVoiceMinute($id: ID!){\n        incMemberDiscordVoiceMinute(id: $id)\n    }\n"];
+export function graphql(source: "\n  query getChannelMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          perChannel {\n            channelId\n            messageCount\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getChannelMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          perChannel {\n            channelId\n            messageCount\n          }\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getMember($id: ID!){\n        member(id: $id) {\n          _id\n          username\n          profilePicture\n          birthday\n          isOnServer\n          activity {\n            tier\n            voiceMinute\n            monthVoiceMinute\n            messages {\n              totalCount\n              monthCount\n              perChannel {\n                channelId\n                messageCount\n              }\n            }\n            points {\n              count\n              progress\n            }\n          }\n        }\n      }\n"): (typeof documents)["\n    query getMember($id: ID!){\n        member(id: $id) {\n          _id\n          username\n          profilePicture\n          birthday\n          isOnServer\n          activity {\n            tier\n            voiceMinute\n            monthVoiceMinute\n            messages {\n              totalCount\n              monthCount\n              perChannel {\n                channelId\n                messageCount\n              }\n            }\n            points {\n              count\n              progress\n            }\n          }\n        }\n      }\n"];
+export function graphql(source: "\n  query getMonthMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          monthCount\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getMonthMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          monthCount\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getMemberTier {\n        members {\n            _id\n            activity {\n                tier\n            }\n        }\n    }\n"): (typeof documents)["\n    query getMemberTier {\n        members {\n            _id\n            activity {\n                tier\n            }\n        }\n    }\n"];
+export function graphql(source: "\n  query getTotalMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          totalCount\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getTotalMessageCount {\n    members {\n      _id\n      username\n      activity {\n        messages {\n          totalCount\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getMemberOnServerStatus {\n        members {\n            _id\n            username\n            isOnServer\n        }\n    }\n"): (typeof documents)["\n    query getMemberOnServerStatus {\n        members {\n            _id\n            username\n            isOnServer\n        }\n    }\n"];
+export function graphql(source: "\n  query getMonthVoiceMinute {\n    members {\n      _id\n      username\n      activity {\n        monthVoiceMinute\n      }\n    }\n  }\n"): (typeof documents)["\n  query getMonthVoiceMinute {\n    members {\n      _id\n      username\n      activity {\n        monthVoiceMinute\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getBirthdays {\n        members {\n            _id\n            username\n            birthday\n            profilePicture\n        }\n    }\n"): (typeof documents)["\n    query getBirthdays {\n        members {\n            _id\n            username\n            birthday\n            profilePicture\n        }\n    }\n"];
+export function graphql(source: "\n  query getVoiceTime {\n    members {\n      _id\n      username\n      activity {\n        voiceMinute\n      }\n    }\n  }\n"): (typeof documents)["\n  query getVoiceTime {\n    members {\n      _id\n      username\n      activity {\n        voiceMinute\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getVoiceTime {\n        members {\n            _id\n            username\n            activity {\n                voiceMinute\n            }\n        }\n    }\n"): (typeof documents)["\n    query getVoiceTime {\n        members {\n            _id\n            username\n            activity {\n                voiceMinute\n            }\n        }\n    }\n"];
+export function graphql(source: "\n  mutation removeChannel($channelId: ID!) {\n    removeChannel(channelId: $channelId)\n  }\n"): (typeof documents)["\n  mutation removeChannel($channelId: ID!) {\n    removeChannel(channelId: $channelId)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getMonthMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    monthCount\n                }\n            }\n        }\n    }\n"): (typeof documents)["\n    query getMonthMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    monthCount\n                }\n            }\n        }\n    }\n"];
+export function graphql(source: "\n  mutation createMemberForEvent($id: ID!, $username: String!, $profilePicture: String!) {\n    createMember(id: $id, username: $username, profilePicture: $profilePicture) {\n      _id\n    }\n  }\n"): (typeof documents)["\n  mutation createMemberForEvent($id: ID!, $username: String!, $profilePicture: String!) {\n    createMember(id: $id, username: $username, profilePicture: $profilePicture) {\n      _id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getMonthVoiceMinute {\n        members {\n            _id\n            username\n            activity {\n                monthVoiceMinute\n            }\n        }\n    }\n"): (typeof documents)["\n    query getMonthVoiceMinute {\n        members {\n            _id\n            username\n            activity {\n                monthVoiceMinute\n            }\n        }\n    }\n"];
+export function graphql(source: "\n  query getMemberActivityTierEvent($memberId: ID!) {\n    member(id: $memberId) {\n      activity {\n        tier\n      }\n    }\n  }\n"): (typeof documents)["\n  query getMemberActivityTierEvent($memberId: ID!) {\n    member(id: $memberId) {\n      activity {\n        tier\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getMonthActivity {\n        members {\n            _id\n            username\n            activity {\n                monthVoiceMinute\n                messages {\n                    monthCount\n                }\n            }\n        }\n    }\n"): (typeof documents)["\n    query getMonthActivity {\n        members {\n            _id\n            username\n            activity {\n                monthVoiceMinute\n                messages {\n                    monthCount\n                }\n            }\n        }\n    }\n"];
+export function graphql(source: "\n  mutation setAlwaysOnServerForEventAdd($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n"): (typeof documents)["\n  mutation setAlwaysOnServerForEventAdd($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getTotalMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    totalCount\n                }\n            }\n        }\n    }\n"): (typeof documents)["\n    query getTotalMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    totalCount\n                }\n            }\n        }\n    }\n"];
+export function graphql(source: "\n  mutation setAlwaysOnServerForEventRemove($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n"): (typeof documents)["\n  mutation setAlwaysOnServerForEventRemove($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getChannelMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    perChannel {\n                        channelId\n                        messageCount\n                    }\n                }\n            }\n        }\n    }\n"): (typeof documents)["\n    query getChannelMessageCount {\n        members {\n            _id\n            username\n            activity {\n                messages {\n                    perChannel {\n                        channelId\n                        messageCount\n                    }\n                }\n            }\n        }\n    }\n"];
+export function graphql(source: "\n  mutation incChannelMessage($id: ID!, $channelId: ID!) {\n    incMemberDiscordActivityChannel(id: $id, channelId: $channelId)\n  }\n"): (typeof documents)["\n  mutation incChannelMessage($id: ID!, $channelId: ID!) {\n    incMemberDiscordActivityChannel(id: $id, channelId: $channelId)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getMemberActivityTier($memberId: ID!) {\n        member(id: $memberId) {\n            activity {\n                tier\n            }\n        }\n    }\n"): (typeof documents)["\n    query getMemberActivityTier($memberId: ID!) {\n        member(id: $memberId) {\n            activity {\n                tier\n            }\n        }\n    }\n"];
+export function graphql(source: "\n  mutation removeRole($roleId: ID!) {\n    removeRole(roleId: $roleId)\n  }\n"): (typeof documents)["\n  mutation removeRole($roleId: ID!) {\n    removeRole(roleId: $roleId)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getPresenceMessages {\n        presenceMessages {\n            _id\n            type\n            text\n        }\n    }\n"): (typeof documents)["\n    query getPresenceMessages {\n        presenceMessages {\n            _id\n            type\n            text\n        }\n    }\n"];
+export function graphql(source: "\n  mutation setUsernameAndProfilePicture($id: ID!, $username: String!, $profilePicture: String!) {\n    updateMember(id: $id, input: {\n      username: $username\n      profilePicture: $profilePicture\n    })\n  }\n"): (typeof documents)["\n  mutation setUsernameAndProfilePicture($id: ID!, $username: String!, $profilePicture: String!) {\n    updateMember(id: $id, input: {\n      username: $username\n      profilePicture: $profilePicture\n    })\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation addPresenceMessage($type: PresenceType!, $text: String!) {\n        addPresenceMessage(type: $type, text: $text)\n    }\n"): (typeof documents)["\n    mutation addPresenceMessage($type: PresenceType!, $text: String!) {\n        addPresenceMessage(type: $type, text: $text)\n    }\n"];
+export function graphql(source: "\n  mutation incVoiceMinute($id: ID!) {\n    incMemberDiscordVoiceMinute(id: $id)\n  }\n"): (typeof documents)["\n  mutation incVoiceMinute($id: ID!) {\n    incMemberDiscordVoiceMinute(id: $id)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation remoePresenceMessage($id: ID!){\n        removePresenceMessage(id: $id)\n    }\n"): (typeof documents)["\n    mutation remoePresenceMessage($id: ID!){\n        removePresenceMessage(id: $id)\n    }\n"];
+export function graphql(source: "\n  mutation setMemberCount($count: Int!) {\n    setServerActivityMemberCount(count: $count)\n  }\n"): (typeof documents)["\n  mutation setMemberCount($count: Int!) {\n    setServerActivityMemberCount(count: $count)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getCurrentServerActivity {\n        todayServerActivity {\n            date\n            voiceMinute\n            messageCount\n            memberCount\n        }\n    }\n"): (typeof documents)["\n    query getCurrentServerActivity {\n        todayServerActivity {\n            date\n            voiceMinute\n            messageCount\n            memberCount\n        }\n    }\n"];
+export function graphql(source: "\n  query getBirthdaysForTask {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n"): (typeof documents)["\n  query getBirthdaysForTask {\n    members {\n      _id\n      username\n      birthday\n      profilePicture\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query getServerActivityHistory($historyCount: Int!){\n        serverActivity(historyCount: $historyCount){\n            date\n            voiceMinute\n            messageCount\n            memberCount\n        }\n    }\n"): (typeof documents)["\n    query getServerActivityHistory($historyCount: Int!){\n        serverActivity(historyCount: $historyCount){\n            date\n            voiceMinute\n            messageCount\n            memberCount\n        }\n    }\n"];
+export function graphql(source: "\n  query getMemberTierForTaskGame {\n    members {\n      _id\n      activity {\n        tier\n      }\n    }\n  }\n"): (typeof documents)["\n  query getMemberTierForTaskGame {\n    members {\n      _id\n      activity {\n        tier\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation setMemberCount($count: Int!) {\n        setServerActivityMemberCount(count: $count)\n    }\n"): (typeof documents)["\n    mutation setMemberCount($count: Int!) {\n        setServerActivityMemberCount(count: $count)\n    }\n"];
+export function graphql(source: "\n  query getMemberTierForTask {\n    members {\n      _id\n      activity {\n        tier\n      }\n    }\n  }\n"): (typeof documents)["\n  query getMemberTierForTask {\n    members {\n      _id\n      activity {\n        tier\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation createMemberForTask($id: ID!, $username: String!, $profilePicture: String!) {\n    createMember(id: $id, username: $username, profilePicture: $profilePicture) {\n      _id\n    }\n  }\n"): (typeof documents)["\n  mutation createMemberForTask($id: ID!, $username: String!, $profilePicture: String!) {\n    createMember(id: $id, username: $username, profilePicture: $profilePicture) {\n      _id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation setAlwaysOnServerForTask($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n"): (typeof documents)["\n  mutation setAlwaysOnServerForTask($id: ID!, $value: Boolean!) {\n    updateMember(id: $id, input: {\n      isOnServer: $value\n    })\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getMemberForTask($id: ID!) {\n    member(id: $id) {\n      _id\n    }\n  }\n"): (typeof documents)["\n  query getMemberForTask($id: ID!) {\n    member(id: $id) {\n      _id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getMemberOnServerStatusForTask {\n    members {\n      _id\n      username\n      isOnServer\n    }\n  }\n"): (typeof documents)["\n  query getMemberOnServerStatusForTask {\n    members {\n      _id\n      username\n      isOnServer\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getChannels {\n    channels {\n      channelId\n      category\n    }\n  }\n"): (typeof documents)["\n  query getChannels {\n    channels {\n      channelId\n      category\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getRoles {\n    roles {\n      roleId\n      category\n    }\n  }\n"): (typeof documents)["\n  query getRoles {\n    roles {\n      roleId\n      category\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

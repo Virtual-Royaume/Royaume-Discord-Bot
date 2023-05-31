@@ -1,11 +1,11 @@
 import type { CommandExecute } from "#/utils/handler/command";
-import { removeRole } from "#/api/requests/main-role";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
 import { commands } from "#/configs/message/command";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { removeRole } from "./remove-role.gql";
 
 export const execute: CommandExecute = async(command) => {
   const role = command.options.getRole(commands.main.groups.remove.subcmds.role.options.role.name, true);

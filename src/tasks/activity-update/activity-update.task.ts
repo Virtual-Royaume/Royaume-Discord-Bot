@@ -1,12 +1,11 @@
-import { incVoiceMinute } from "#/api/requests/member";
-import { setMemberCount } from "#/api/requests/server-activity";
+import type { GuildMember } from "discord.js";
+import type { TaskExecute, TaskInterval } from "#/utils/handler/task";
 import { client } from "#/client";
 import { getGuild } from "#/configs/guild";
-import type { TaskExecute, TaskInterval } from "#/utils/handler/task";
 import { logger } from "#/utils/logger";
 import { gqlRequest } from "#/utils/request";
 import { userWithId } from "#/utils/discord/user";
-import type { GuildMember } from "discord.js";
+import { incVoiceMinute, setMemberCount } from "./activity-update.gql";
 
 export const interval: TaskInterval = "0 * * * * *";
 

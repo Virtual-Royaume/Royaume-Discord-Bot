@@ -1,4 +1,4 @@
-import { DayJS } from "$core/utils/day-js";
+import { DayJS } from "$core/configs/day-js";
 
 export enum ConsoleEffect {
   Reset = "\x1b[0m",

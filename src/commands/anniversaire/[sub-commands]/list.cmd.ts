@@ -1,7 +1,7 @@
 import type { CommandExecute } from "$core/utils/handler/command";
 import { getBirthdays } from "$core/api/requests/member";
 import { memberPerPage } from "./list.const";
-import { DayJS } from "$core/utils/day-js";
+import { DayJS } from "$core/configs/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, getAge } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";

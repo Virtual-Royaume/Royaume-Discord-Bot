@@ -1,5 +1,5 @@
 import { EmbedBuilder } from "discord.js";
-import { global } from "$core/configs/global.config";
+import { global } from "$core/configs";
 
 type EmbedType = "normal" | "error";
 

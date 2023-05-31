@@ -1,7 +1,7 @@
 import { Client as DiscordClient, GatewayIntentBits, Partials, Team, User } from "discord.js";
 import { logger } from "$core/utils/logger";
 import { version, displayName } from "../package.json";
-import { getStringEnv } from "./utils/env-variable";
+import { env } from "./configs/env/env.config";
 import { listener, load as loadCommands, register } from "$core/utils/handler/command";
 import { load as loadEvents } from "$core/utils/handler/event";
 import { load as loadTasks } from "$core/utils/handler/task";
@@ -36,7 +36,7 @@ export const getDevTeam = (client: DiscordClient): User[] | null => {
 
 
 logger.info(`Sarting ${displayName} v${version}...`);
-void client.login(getStringEnv("BOT_TOKEN"));
+void client.login(env.BOT_TOKEN);
 client.on("ready", async client => {
   const eventsLoaded = await loadEvents(client, `${__dirname}${sep}events`);
 

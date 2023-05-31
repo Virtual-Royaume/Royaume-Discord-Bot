@@ -1,14 +1,14 @@
 import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
-import { getStringEnv } from "$core/utils/env-variable";
 import { print } from "graphql";
 import { logger } from "$core/utils/logger";
 import { Result, error, ok } from "rustic-error";
+import { env } from "$core/configs/env";
 
 export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variables?: V): Promise<Result<D, Error>> => {
-  const response = await fetch(getStringEnv("API_LINK"), {
+  const response = await fetch(env.API_LINK, {
     method: "post",
     headers: {
-      "authorization": getStringEnv("API_TOKEN"),
+      "authorization": env.API_TOKEN,
       "content-type": "application/json"
     },
     body: JSON.stringify({

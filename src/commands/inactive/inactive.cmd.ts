@@ -1,7 +1,6 @@
 import type { CommandExecute } from "#/utils/handler/command";
 import type { CacheType, ComponentType, ModalSubmitInteraction } from "discord.js";
-import { getInactiveMembers } from "#/api/func/member";
-import { confirmationModal, getActionRow, getEmbed, getPage, pageNumberByMember } from "./inactive.util";
+import { confirmationModal, getActionRow, getEmbed, getInactiveMembers, getPage, pageNumberByMember } from "./inactive.util";
 import { interactionId } from "#/configs/global";
 import { guilds } from "#/configs/guild";
 import { commands } from "#/configs/message/command";
@@ -43,7 +42,7 @@ export const execute: CommandExecute = async(command) => {
   const inactiveMembers = await getInactiveMembers();
 
   // Query error
-  if (!inactiveMembers) {
+  if (!inactiveMembers.ok) {
     void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.activityQueryError, "error")],
       ephemeral: true
@@ -52,7 +51,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   // No inactive
-  if (inactiveMembers.length < 1) {
+  if (inactiveMembers.value.length < 1) {
     void command.reply({
       embeds: [simpleEmbed(commands.inactive.exec.noInactiveMembers, "error")],
       ephemeral: true
@@ -72,7 +71,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   const inactiveMembersOnServer = Array.from(
-    guildMembers.filter(member => inactiveMembers.find(inactiveMember => inactiveMember._id === member.id)),
+    guildMembers.filter(member => inactiveMembers.value.find(inactiveMember => inactiveMember._id === member.id)),
     member => member[1]
   );
   const page = await getPage(inactiveMembersOnServer, command.options.getInteger(commands.inactive.options.page.name) ?? 1);

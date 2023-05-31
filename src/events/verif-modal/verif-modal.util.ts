@@ -1,4 +1,4 @@
-import { interactionId } from "$core/configs";
+import { interactionId } from "$core/configs/global";
 import { events } from "$core/configs/message/event";
 import { presentationId } from "./verif-modal.const";
 import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";

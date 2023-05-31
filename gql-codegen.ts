@@ -1,12 +1,9 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import { getStringEnv } from "./src/utils/env-variable";
-
-const apiLink = getStringEnv("API_LINK");
-const apiToken = getStringEnv("API_TOKEN");
+import { env } from "./src/configs/env";
 
 const config: CodegenConfig = {
   schema: [
-    { [apiLink]: { headers: { authorization: apiToken } } }
+    { [env.API_LINK]: { headers: { authorization: env.API_TOKEN } } }
   ],
   documents: "./src/**/*.ts",
   generates: {

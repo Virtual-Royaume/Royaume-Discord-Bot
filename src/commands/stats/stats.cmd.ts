@@ -7,7 +7,6 @@ import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
-import { isHexColor } from "$core/utils/validator";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { AttachmentBuilder, EmbedBuilder } from "discord.js";
 import { logger } from "$core/utils/logger";
@@ -45,20 +44,16 @@ export const execute: CommandExecute = async(command) => {
   for (const type of types) {
     const config = generateChartConfig(type, serverActivity, command.options.getBoolean(commands.stats.options.darkMode.name) ?? false);
 
-    // Embed :
-    if (!isHexColor(global.colors.primary)) throw new Error("Invalid config: \"colors\" field in information.json need to be a valid hex color code");
-
     embeds.push(new EmbedBuilder()
       .setTitle(type.description)
       .setColor(global.colors.primary)
-      .setImage(`attachment://${type.columnName}-chart.png`));
+      .setImage(`attachment://${String(type.columnName)}-chart.png`));
 
-    // Attachment :
     const chart = new ChartJSNodeCanvas({ height: 500, width: 1100 });
 
     files.push(new AttachmentBuilder(
       chart.renderToBufferSync(config),
-      { name: `${type.columnName}-chart.png` }
+      { name: `${String(type.columnName)}-chart.png` }
     ));
   }
 

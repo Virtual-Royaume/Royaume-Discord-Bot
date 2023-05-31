@@ -2,7 +2,6 @@
   "name": "royaume-discord-bot",
   "displayName": "Royaume-Discord-Bot",
   "version": "3.0.0",
-  "main": "build/src/client.js",
   "scripts": {
     "dev": "npx nodemon --exec node -r @swc-node/register -r tsconfig-paths/register ./src/client.ts dev",
     "start": "node -r @swc-node/register -r tsconfig-paths/register ./src/client.ts",

@@ -17,7 +17,7 @@ import { getGuild } from "$core/configs/guild";
 import { subCommandDirName, subCommandGroupDirNamePrefix } from "./command.const";
 import { sep } from "path";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 // Some of tests in this function can be removed when this issue https://github.com/microsoft/TypeScript/issues/38511 will be solved
 export const load = async(commandsFolder: string): Promise<LoadedCommands> => {

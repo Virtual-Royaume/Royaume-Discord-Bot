@@ -8,7 +8,7 @@ import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { setBirthday } from "$core/api/requests/member";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const dateString = command.options.getString(commands.birthday.subcmds.set.options.date.name, true);

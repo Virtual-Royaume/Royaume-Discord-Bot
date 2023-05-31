@@ -5,7 +5,7 @@ import { guilds } from "$core/configs/guild";
 import { getGuildMembers } from "$core/utils/discord/guild";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const event: EventName = "guildMemberRemove";
 

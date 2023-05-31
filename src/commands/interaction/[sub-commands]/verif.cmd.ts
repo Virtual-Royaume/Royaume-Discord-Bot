@@ -4,7 +4,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import { commands } from "$core/configs/message/command";
 import { ChannelType } from "discord.js";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.channel;

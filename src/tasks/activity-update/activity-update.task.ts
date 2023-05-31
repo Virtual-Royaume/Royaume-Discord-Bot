@@ -5,7 +5,7 @@ import { getGuild } from "$core/configs/guild";
 import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { gqlRequest } from "$core/utils/request";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 import type { GuildMember } from "discord.js";
 
 export const interval: TaskInterval = "0 * * * * *";

@@ -9,7 +9,7 @@ import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 import { getGuildMembers } from "$core/utils/discord/guild";
 
 export const interval: TaskInterval = "0 * * * * *";

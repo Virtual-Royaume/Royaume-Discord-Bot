@@ -8,7 +8,7 @@ import { simpleEmbed } from "$core/utils/discord/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 import { ChannelType } from "discord.js";
 
 export const event: EventName = "messageCreate";

@@ -1,16 +1,16 @@
-import type { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "#/utils/handler/command";
 import type { GraphType } from "./stats.type";
-import { getServerActivityHistory } from "$core/api/requests/server-activity";
+import { getServerActivityHistory } from "#/api/requests/server-activity";
 import { generateChartConfig } from "./stats.util";
-import { global } from "$core/configs/global";
-import { commands } from "$core/configs/message/command";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { global } from "#/configs/global";
+import { commands } from "#/configs/message/command";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { msgParams } from "#/utils/message";
+import { gqlRequest } from "#/utils/request";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { AttachmentBuilder, EmbedBuilder } from "discord.js";
-import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/discord/user";
+import { logger } from "#/utils/logger";
+import { userWithId } from "#/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   // Get server activity :

@@ -1,7 +1,7 @@
-import type { SlashCommandDefition } from "$core/utils/handler/command";
+import type { SlashCommandDefition } from "#/utils/handler/command";
 import { ChannelType, SlashCommandBuilder } from "discord.js";
-import { commands } from "$core/configs/message/command";
-import type { GuildsCommand } from "$core/utils/handler/command/command.type";
+import { commands } from "#/configs/message/command";
+import type { GuildsCommand } from "#/utils/handler/command/command.type";
 
 export const guilds: GuildsCommand = ["pro"];
 

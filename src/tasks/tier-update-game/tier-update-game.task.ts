@@ -1,16 +1,16 @@
-import { getMembersTier } from "$core/api/requests/member";
-import { client } from "$core/client";
-import { getGuild, guilds } from "$core/configs/guild";
-import { tasks } from "$core/configs/message/task/task.config";
+import { getMembersTier } from "#/api/requests/member";
+import { client } from "#/client";
+import { getGuild, guilds } from "#/configs/guild";
+import { tasks } from "#/configs/message/task/task.config";
 import type { RoleUpdate } from "./tier-update-game.type";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
-import { logger } from "$core/utils/logger";
-import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { simpleEmbed } from "#/utils/discord/embed";
+import type { TaskExecute, TaskInterval } from "#/utils/handler/task";
+import { logger } from "#/utils/logger";
+import { msgParams } from "#/utils/message";
+import { gqlRequest } from "#/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
-import { userWithId } from "$core/utils/discord/user";
-import { getGuildMembers } from "$core/utils/discord/guild";
+import { userWithId } from "#/utils/discord/user";
+import { getGuildMembers } from "#/utils/discord/guild";
 
 export const interval: TaskInterval = "0 * * * * *";
 

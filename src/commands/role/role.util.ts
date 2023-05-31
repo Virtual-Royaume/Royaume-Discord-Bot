@@ -1,5 +1,5 @@
-import { getRolesByCategory } from "$core/api/func/main-role";
-import { interactionId } from "$core/configs/global";
+import { getRolesByCategory } from "#/api/func/main-role";
+import { interactionId } from "#/configs/global";
 import type { Guild, GuildMember, SelectMenuComponentOptionData } from "discord.js";
 import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 

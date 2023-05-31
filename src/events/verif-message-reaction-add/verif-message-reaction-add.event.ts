@@ -1,11 +1,11 @@
-import type { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "#/utils/handler/event";
 import type { GuildMember, Message } from "discord.js";
-import { proposals } from "$core/configs/global";
-import { guilds } from "$core/configs/guild";
-import { events } from "$core/configs/message/event";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { logger } from "$core/utils/logger";
-import { msgParams } from "$core/utils/message";
+import { proposals } from "#/configs/global";
+import { guilds } from "#/configs/guild";
+import { events } from "#/configs/message/event";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { logger } from "#/utils/logger";
+import { msgParams } from "#/utils/message";
 
 export const event: EventName = "messageReactionAdd";
 

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import type { TaskExecute, TaskInterval } from "$core/utils/handler/task/task.type";
-import type { EnableInDev } from "$core/utils/handler/handler.type";
-import { isDevEnvironment } from "$core/configs/env";
+import type { TaskExecute, TaskInterval } from "#/utils/handler/task/task.type";
+import type { EnableInDev } from "#/utils/handler/handler.type";
+import { isDevEnvironment } from "#/configs/env";
 import { existsSync, readdirSync, statSync } from "fs";
-import { startCronJob } from "$core/utils/cron";
+import { startCronJob } from "#/utils/cron";
 import { sep } from "path";
 
 export const load = async(tasksFolder: string): Promise<number> => {

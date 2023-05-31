@@ -1,4 +1,4 @@
-import { graphql } from "$core/utils/request";
+import { graphql } from "#/utils/request";
 
 export const addRole = graphql(`
     mutation addRole($roleId: ID!, $category: String!){

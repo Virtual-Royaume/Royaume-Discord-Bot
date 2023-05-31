@@ -2,7 +2,7 @@ import type { Method, RequestParams } from "./rest.type";
 import type { Result } from "rustic-error";
 import { ok, error } from "rustic-error";
 import { URLSearchParams } from "url";
-import { logger } from "$core/utils/logger";
+import { logger } from "#/utils/logger";
 
 export const restRequest = async(method: Method, endpoint: string, config: RequestParams = {}): Promise<Result<Response, Error>> => {
   if (config.query) {

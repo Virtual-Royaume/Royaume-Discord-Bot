@@ -1,14 +1,14 @@
-import type { CommandExecute } from "$core/utils/handler/command";
-import { DayJS } from "$core/configs/day-js";
-import { commands } from "$core/configs/message/command";
-import { global } from "$core/configs/global";
-import { getAge } from "$core/utils/function/date";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
-import { setBirthday } from "$core/api/requests/member";
-import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/discord/user";
+import type { CommandExecute } from "#/utils/handler/command";
+import { DayJS } from "#/configs/day-js";
+import { commands } from "#/configs/message/command";
+import { global } from "#/configs/global";
+import { getAge } from "#/utils/function/date";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { msgParams } from "#/utils/message";
+import { gqlRequest } from "#/utils/request";
+import { setBirthday } from "#/api/requests/member";
+import { logger } from "#/utils/logger";
+import { userWithId } from "#/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const dateString = command.options.getString(commands.birthday.subcmds.set.options.date.name, true);

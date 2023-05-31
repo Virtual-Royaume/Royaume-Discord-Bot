@@ -1,12 +1,12 @@
-import type { CommandExecute } from "$core/utils/handler/command";
-import { getBirthdays } from "$core/api/requests/member";
+import type { CommandExecute } from "#/utils/handler/command";
+import { getBirthdays } from "#/api/requests/member";
 import { memberPerPage } from "./list.const";
-import { DayJS } from "$core/configs/day-js";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { dateFormat, getAge } from "$core/utils/function/date";
-import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
-import { commands } from "$core/configs/message/command";
+import { DayJS } from "#/configs/day-js";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { dateFormat, getAge } from "#/utils/function/date";
+import { msgParams } from "#/utils/message";
+import { gqlRequest } from "#/utils/request";
+import { commands } from "#/configs/message/command";
 
 export const execute: CommandExecute = async(command) => {
   let page = command.options.getNumber(commands.birthday.subcmds.list.options.page.name) ?? 1;

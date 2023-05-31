@@ -1,10 +1,10 @@
-import { simpleEmbed } from "$core/utils/discord/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
-import { logger } from "$core/utils/logger";
-import { msgParams } from "$core/utils/message";
-import { commands } from "$core/configs/message/command";
+import { simpleEmbed } from "#/utils/discord/embed";
+import type { CommandExecute } from "#/utils/handler/command";
+import { logger } from "#/utils/logger";
+import { msgParams } from "#/utils/message";
+import { commands } from "#/configs/message/command";
 import { ChannelType } from "discord.js";
-import { userWithId } from "$core/utils/discord/user";
+import { userWithId } from "#/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const number = command.options.getNumber(commands.clean.options.count.name) ?? 10;

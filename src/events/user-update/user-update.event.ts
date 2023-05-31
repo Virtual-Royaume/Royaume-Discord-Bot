@@ -1,8 +1,8 @@
-import type { EventExecute, EventName } from "$core/utils/handler/event";
-import { gqlRequest } from "$core/utils/request";
-import { setUsernameAndProfilePicture } from "$core/api/requests/member";
-import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/discord/user";
+import type { EventExecute, EventName } from "#/utils/handler/event";
+import { gqlRequest } from "#/utils/request";
+import { setUsernameAndProfilePicture } from "#/api/requests/member";
+import { logger } from "#/utils/logger";
+import { userWithId } from "#/utils/discord/user";
 
 export const event: EventName = "userUpdate";
 

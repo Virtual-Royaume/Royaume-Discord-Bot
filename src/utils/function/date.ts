@@ -1,5 +1,5 @@
 import type { Dayjs } from "dayjs";
-import { DayJS } from "$core/configs/day-js";
+import { DayJS } from "#/configs/day-js";
 
 export const dateFormat = (date: Dayjs, separator = "-"): string => {
   return date.format(`DD[${separator}]MM[${separator}]YYYY`);

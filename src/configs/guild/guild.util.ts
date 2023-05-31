@@ -1,4 +1,4 @@
-import { objectKeys } from "$core/utils/function/object";
+import { objectKeys } from "#/utils/function/object";
 import { guilds } from "./guild.config";
 import type { GuildType } from "./guild.type";
 import type { Client, Guild, Snowflake } from "discord.js";

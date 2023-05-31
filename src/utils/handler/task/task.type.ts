@@ -1,4 +1,4 @@
-import type { MaybePromise } from "$core/utils/typing/promise";
+import type { MaybePromise } from "#/utils/typing/promise";
 
 export type TaskInterval = string;
 

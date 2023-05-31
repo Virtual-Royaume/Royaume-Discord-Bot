@@ -1,14 +1,14 @@
-import type { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "#/utils/handler/command";
 import type { MembersData } from "../top-voice.type";
-import { getMonthVoiceMinute } from "$core/api/requests/member";
+import { getMonthVoiceMinute } from "#/api/requests/member";
 import { formatPage, getPage } from "../top-voice.util";
-import { commands } from "$core/configs/message/command";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { commands } from "#/configs/message/command";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { msgParams } from "#/utils/message";
+import { gqlRequest } from "#/utils/request";
 import { memberPerPage } from "../top-voice.const";
-import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/discord/user";
+import { logger } from "#/utils/logger";
+import { userWithId } from "#/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];

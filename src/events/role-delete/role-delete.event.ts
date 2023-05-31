@@ -1,8 +1,8 @@
-import type { EventExecute, EventName } from "$core/utils/handler/event";
-import { guilds } from "$core/configs/guild";
-import { gqlRequest } from "$core/utils/request";
-import { getRoles, removeRole } from "$core/api/requests/main-role";
-import { logger } from "$core/utils/logger";
+import type { EventExecute, EventName } from "#/utils/handler/event";
+import { guilds } from "#/configs/guild";
+import { gqlRequest } from "#/utils/request";
+import { getRoles, removeRole } from "#/api/requests/main-role";
+import { logger } from "#/utils/logger";
 
 export const event: EventName = "roleDelete";
 

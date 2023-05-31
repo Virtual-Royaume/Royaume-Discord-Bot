@@ -1,17 +1,17 @@
-import type { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "#/utils/handler/command";
 import type { CacheType, ComponentType, ModalSubmitInteraction } from "discord.js";
-import { getInactiveMembers } from "$core/api/func/member";
+import { getInactiveMembers } from "#/api/func/member";
 import { confirmationModal, getActionRow, getEmbed, getPage, pageNumberByMember } from "./inactive.util";
-import { interactionId } from "$core/configs/global";
-import { guilds } from "$core/configs/guild";
-import { commands } from "$core/configs/message/command";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { msgParams } from "$core/utils/message";
+import { interactionId } from "#/configs/global";
+import { guilds } from "#/configs/guild";
+import { commands } from "#/configs/message/command";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { msgParams } from "#/utils/message";
 import { GuildMember, PermissionFlagsBits } from "discord.js";
 import { reasonId } from "./inactive.const";
-import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/discord/user";
-import { getGuildMembers } from "$core/utils/discord/guild";
+import { logger } from "#/utils/logger";
+import { userWithId } from "#/utils/discord/user";
+import { getGuildMembers } from "#/utils/discord/guild";
 
 export const execute: CommandExecute = async(command) => {
   if (command.guild?.id !== guilds.pro.guildId) {

@@ -1,4 +1,4 @@
-import type { Tier } from "$core/configs/guild/guild.type";
+import type { Tier } from "#/configs/guild/guild.type";
 import type { ActionRowBuilder, ButtonBuilder, EmbedBuilder, Snowflake } from "discord.js";
 
 export type Page = {

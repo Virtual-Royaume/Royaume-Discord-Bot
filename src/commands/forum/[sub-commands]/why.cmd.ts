@@ -1,7 +1,7 @@
-import { simpleEmbed } from "$core/utils/discord/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
-import { commands } from "$core/configs/message/command";
-import { msgParams } from "$core/utils/message";
+import { simpleEmbed } from "#/utils/discord/embed";
+import type { CommandExecute } from "#/utils/handler/command";
+import { commands } from "#/configs/message/command";
+import { msgParams } from "#/utils/message";
 
 export const execute: CommandExecute = (command) => {
   const user = command.options.getUser(commands.forum.subcmds.why.options.user.name, false);

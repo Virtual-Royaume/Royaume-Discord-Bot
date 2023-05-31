@@ -1,10 +1,10 @@
 import { Client as DiscordClient, GatewayIntentBits, Partials, Team, User } from "discord.js";
-import { logger } from "$core/utils/logger";
+import { logger } from "#/utils/logger";
 import { version, displayName } from "../package.json";
 import { env } from "./configs/env/env.config";
-import { listener, load as loadCommands, register } from "$core/utils/handler/command";
-import { load as loadEvents } from "$core/utils/handler/event";
-import { load as loadTasks } from "$core/utils/handler/task";
+import { listener, load as loadCommands, register } from "#/utils/handler/command";
+import { load as loadEvents } from "#/utils/handler/event";
+import { load as loadTasks } from "#/utils/handler/task";
 import { sep } from "path";
 
 export const client = new DiscordClient({

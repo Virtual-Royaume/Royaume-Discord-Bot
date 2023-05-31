@@ -1,14 +1,14 @@
-import type { EventExecute, EventName } from "$core/utils/handler/event";
+import type { EventExecute, EventName } from "#/utils/handler/event";
 import type { ForumChannel, GuildTextBasedChannel, TextBasedChannel } from "discord.js";
-import { getChannels } from "$core/api/requests/main-channel";
-import { incChannelMessage } from "$core/api/requests/member";
-import { guilds } from "$core/configs/guild";
-import { events } from "$core/configs/message/event";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { logger } from "$core/utils/logger";
-import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
-import { userWithId } from "$core/utils/discord/user";
+import { getChannels } from "#/api/requests/main-channel";
+import { incChannelMessage } from "#/api/requests/member";
+import { guilds } from "#/configs/guild";
+import { events } from "#/configs/message/event";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { logger } from "#/utils/logger";
+import { msgParams } from "#/utils/message";
+import { gqlRequest } from "#/utils/request";
+import { userWithId } from "#/utils/discord/user";
 import { ChannelType } from "discord.js";
 
 export const event: EventName = "messageCreate";

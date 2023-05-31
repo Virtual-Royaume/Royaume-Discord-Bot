@@ -1,14 +1,14 @@
-import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
-import { getBirthdays } from "$core/api/requests/member";
-import { client } from "$core/client";
-import { getGuild, guilds } from "$core/configs/guild";
-import { tasks } from "$core/configs/message/task/task.config";
-import { DayJS } from "$core/configs/day-js";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { getAge } from "$core/utils/function/date";
-import { logger } from "$core/utils/logger";
-import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import type { TaskExecute, TaskInterval } from "#/utils/handler/task";
+import { getBirthdays } from "#/api/requests/member";
+import { client } from "#/client";
+import { getGuild, guilds } from "#/configs/guild";
+import { tasks } from "#/configs/message/task/task.config";
+import { DayJS } from "#/configs/day-js";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { getAge } from "#/utils/function/date";
+import { logger } from "#/utils/logger";
+import { msgParams } from "#/utils/message";
+import { gqlRequest } from "#/utils/request";
 import { BaseGuildTextChannel } from "discord.js";
 
 export const interval: TaskInterval = "0 0 0 * * *";

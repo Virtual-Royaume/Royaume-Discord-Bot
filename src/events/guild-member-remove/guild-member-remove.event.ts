@@ -1,11 +1,11 @@
-import type { EventExecute, EventName } from "$core/utils/handler/event";
-import { setAlwaysOnServer } from "$core/api/requests/member";
-import { client } from "$core/client";
-import { guilds } from "$core/configs/guild";
-import { getGuildMembers } from "$core/utils/discord/guild";
-import { logger } from "$core/utils/logger";
-import { gqlRequest } from "$core/utils/request";
-import { userWithId } from "$core/utils/discord/user";
+import type { EventExecute, EventName } from "#/utils/handler/event";
+import { setAlwaysOnServer } from "#/api/requests/member";
+import { client } from "#/client";
+import { guilds } from "#/configs/guild";
+import { getGuildMembers } from "#/utils/discord/guild";
+import { logger } from "#/utils/logger";
+import { gqlRequest } from "#/utils/request";
+import { userWithId } from "#/utils/discord/user";
 
 export const event: EventName = "guildMemberRemove";
 

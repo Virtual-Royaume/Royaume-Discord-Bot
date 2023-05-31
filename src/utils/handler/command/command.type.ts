@@ -1,5 +1,5 @@
-import type { GuildType } from "$core/configs/guild";
-import type { MaybePromise } from "$core/utils/typing/promise";
+import type { GuildType } from "#/configs/guild";
+import type { MaybePromise } from "#/utils/typing/promise";
 import type { ChatInputCommandInteraction, Collection, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
 export type GuildsCommand = GuildType[];

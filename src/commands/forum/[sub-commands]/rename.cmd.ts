@@ -1,8 +1,8 @@
-import { simpleEmbed } from "$core/utils/discord/embed";
-import type { CommandExecute } from "$core/utils/handler/command";
-import { logger } from "$core/utils/logger";
-import { msgParams } from "$core/utils/message";
-import { commands } from "$core/configs/message/command";
+import { simpleEmbed } from "#/utils/discord/embed";
+import type { CommandExecute } from "#/utils/handler/command";
+import { logger } from "#/utils/logger";
+import { msgParams } from "#/utils/message";
+import { commands } from "#/configs/message/command";
 import { ChannelType, ForumChannel } from "discord.js";
 
 export const execute: CommandExecute = async(command) => {

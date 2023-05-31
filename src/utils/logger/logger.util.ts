@@ -1,4 +1,4 @@
-import { DayJS } from "$core/configs/day-js";
+import { DayJS } from "#/configs/day-js";
 import { ConsoleEffect, ConsoleForground } from "./logger.enum";
 
 export const logger = {

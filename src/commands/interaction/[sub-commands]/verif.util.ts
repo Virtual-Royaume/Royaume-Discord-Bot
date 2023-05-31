@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import { interactionId } from "$core/configs/global.config";
+import { interactionId } from "$core/configs/global";
 import { commands } from "$core/configs/message/command";
 
 export const candidatBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder()

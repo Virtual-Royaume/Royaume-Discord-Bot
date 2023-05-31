@@ -1,7 +1,7 @@
+import type { Page } from "./inactive.type";
 import { getMember } from "$core/api/requests/member";
 import { reasonId } from "./inactive.const";
-import type { Page } from "./inactive.type";
-import { interactionId } from "$core/configs";
+import { interactionId } from "$core/configs/global";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
 import { objectKeys } from "$core/utils/function";

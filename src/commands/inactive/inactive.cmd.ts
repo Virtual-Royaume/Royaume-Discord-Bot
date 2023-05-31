@@ -5,7 +5,7 @@ import { confirmationModal, getActionRow, getEmbed, getPage, pageNumberByMember 
 import { interactionId } from "$core/configs/global";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { GuildMember, PermissionFlagsBits } from "discord.js";
 import { reasonId } from "./inactive.const";

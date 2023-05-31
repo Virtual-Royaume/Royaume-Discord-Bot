@@ -4,7 +4,7 @@ import { getServerActivityHistory } from "$core/api/requests/server-activity";
 import { generateChartConfig } from "./stats.util";
 import { global } from "$core/configs/global";
 import { commands } from "$core/configs/message/command";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";

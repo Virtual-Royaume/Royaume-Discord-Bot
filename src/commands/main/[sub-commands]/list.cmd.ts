@@ -1,7 +1,7 @@
 import type { CommandExecute } from "$core/utils/handler/command";
 import { getChannelsByCategory } from "$core/api/func/main-channel";
 import { getRolesByCategory } from "$core/api/func/main-role";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { commands } from "$core/configs/message/command";
 import { msgParams } from "$core/utils/message";
 

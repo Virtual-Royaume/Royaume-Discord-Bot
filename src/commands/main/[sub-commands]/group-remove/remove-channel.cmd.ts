@@ -1,5 +1,5 @@
 import { removeChannel } from "$core/api/requests/main-channel";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import type { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";

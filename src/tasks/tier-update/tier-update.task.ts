@@ -4,7 +4,7 @@ import { getMembersTier } from "$core/api/requests/member";
 import { client } from "$core/client";
 import { getGuild, guilds } from "$core/configs/guild";
 import { tasks } from "$core/configs/message/task/task.config";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";

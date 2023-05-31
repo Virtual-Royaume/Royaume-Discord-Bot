@@ -3,7 +3,7 @@ import { client } from "$core/client";
 import { getGuild, guilds } from "$core/configs/guild";
 import { tasks } from "$core/configs/message/task/task.config";
 import type { RoleUpdate } from "./tier-update-game.type";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";

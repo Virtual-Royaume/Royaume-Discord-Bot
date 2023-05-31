@@ -3,7 +3,7 @@ import { DayJS } from "$core/configs/day-js";
 import { commands } from "$core/configs/message/command";
 import { global } from "$core/configs/global";
 import { getAge } from "$core/utils/function";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { setBirthday } from "$core/api/requests/member";

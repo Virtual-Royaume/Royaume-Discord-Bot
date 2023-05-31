@@ -4,7 +4,7 @@ import { getMonthMessageCount } from "$core/api/requests/member";
 import { memberPerPage } from "../top-message.const";
 import { formatPage, getPage } from "../top-message.util";
 import { commands } from "$core/configs/message/command";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { logger } from "$core/utils/logger";

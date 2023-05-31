@@ -4,7 +4,7 @@ import { getMember } from "$core/api/requests/member";
 import { getGuildTypeById, guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
 import { DayJS } from "$core/configs/day-js";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { dateFormat, firstLetterToUppercase, formatMinutes, getAge, numberFormat } from "$core/utils/function";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";

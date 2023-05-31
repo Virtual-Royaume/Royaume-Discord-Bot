@@ -1,6 +1,6 @@
 import type { CommandExecute } from "$core/utils/handler/command";
 import { StopReason, maxEmojiByGuildTier } from "./emoji.const";
-import { simpleEmbed } from "$core/utils/embed";
+import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { commands } from "$core/configs/message/command";
 import { AttachmentBuilder, BaseGuildTextChannel } from "discord.js";

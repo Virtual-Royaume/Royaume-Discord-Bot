@@ -1,13 +1,13 @@
-import type { CommandExecute } from "$core/utils/handler/command";
+import type { CommandExecute } from "#/utils/handler/command";
 import { StopReason, maxEmojiByGuildTier } from "./emoji.const";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { msgParams } from "$core/utils/message";
-import { commands } from "$core/configs/message/command";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { msgParams } from "#/utils/message";
+import { commands } from "#/configs/message/command";
 import { AttachmentBuilder, BaseGuildTextChannel } from "discord.js";
-import { proposals } from "$core/configs/global";
-import { logger } from "$core/utils/logger";
-import { getGuildTypeById, guilds } from "$core/configs/guild";
-import { userWithId } from "$core/utils/discord/user";
+import { proposals } from "#/configs/global";
+import { logger } from "#/utils/logger";
+import { getGuildTypeById, guilds } from "#/configs/guild";
+import { userWithId } from "#/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const guild = command.guild;

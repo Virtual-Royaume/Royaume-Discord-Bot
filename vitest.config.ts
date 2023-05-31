@@ -6,7 +6,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "$core/": "./src/"
+      "#/": "./src/"
     }
   }
 });

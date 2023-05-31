@@ -1,9 +1,9 @@
-import type { CommandExecute } from "$core/utils/handler/command";
-import { getChannelsByCategory } from "$core/api/func/main-channel";
-import { getRolesByCategory } from "$core/api/func/main-role";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { commands } from "$core/configs/message/command";
-import { msgParams } from "$core/utils/message";
+import type { CommandExecute } from "#/utils/handler/command";
+import { getChannelsByCategory } from "#/api/func/main-channel";
+import { getRolesByCategory } from "#/api/func/main-role";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { commands } from "#/configs/message/command";
+import { msgParams } from "#/utils/message";
 
 export const execute: CommandExecute = async(command) => {
   // Get mains channels and roles:

@@ -1,11 +1,11 @@
 import type { Message } from "discord.js";
-import type { CommandExecute } from "$core/utils/handler/command";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { msgParams } from "$core/utils/message";
-import { commands } from "$core/configs/message/command";
+import type { CommandExecute } from "#/utils/handler/command";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { msgParams } from "#/utils/message";
+import { commands } from "#/configs/message/command";
 import { ChannelType, ForumChannel } from "discord.js";
-import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/discord/user";
+import { logger } from "#/utils/logger";
+import { userWithId } from "#/utils/discord/user";
 import { trustDiscordLinks } from "../forum.const";
 
 export const execute: CommandExecute = async(command) => {

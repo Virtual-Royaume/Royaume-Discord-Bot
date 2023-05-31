@@ -1,4 +1,4 @@
-import type { MaybePromise } from "$core/utils/typing/promise";
+import type { MaybePromise } from "#/utils/typing/promise";
 import type { ClientEvents } from "discord.js";
 
 export type EventName = keyof ClientEvents;

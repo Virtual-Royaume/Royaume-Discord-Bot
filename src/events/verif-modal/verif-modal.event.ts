@@ -1,14 +1,14 @@
-import type { EventExecute, EventName } from "$core/utils/handler/event";
-import { interactionId, proposals } from "$core/configs/global";
-import { guilds } from "$core/configs/guild";
-import { events } from "$core/configs/message/event";
+import type { EventExecute, EventName } from "#/utils/handler/event";
+import { interactionId, proposals } from "#/configs/global";
+import { guilds } from "#/configs/guild";
+import { events } from "#/configs/message/event";
 import { modal } from "./verif-modal.util";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { msgParams } from "$core/utils/message";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { msgParams } from "#/utils/message";
 import { BaseGuildTextChannel, GuildMember } from "discord.js";
 import { presentationId } from "./verif-modal.const";
-import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/discord/user";
+import { logger } from "#/utils/logger";
+import { userWithId } from "#/utils/discord/user";
 
 export const event: EventName = "interactionCreate";
 

@@ -1,6 +1,6 @@
-import type { SlashCommandDefition } from "$core/utils/handler/command";
+import type { SlashCommandDefition } from "#/utils/handler/command";
 import { SlashCommandBuilder } from "discord.js";
-import { commands } from "$core/configs/message/command";
+import { commands } from "#/configs/message/command";
 
 export const slashCommand: SlashCommandDefition = new SlashCommandBuilder()
   .setName(commands.birthday.name)

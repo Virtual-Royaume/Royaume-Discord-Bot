@@ -1,8 +1,8 @@
 import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
-import { logger } from "$core/utils/logger";
+import { logger } from "#/utils/logger";
 import { Result, error, ok } from "rustic-error";
-import { env } from "$core/configs/env";
+import { env } from "#/configs/env";
 
 export const gqlRequest = async<D, V>(document: TypedDocumentNode<D, V>, variables?: V): Promise<Result<D, Error>> => {
   const response = await fetch(env.API_LINK, {

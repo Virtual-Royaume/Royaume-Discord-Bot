@@ -1,6 +1,6 @@
 import type { MembersData, Page } from "./top-voice.type";
-import { formatMinutes } from "$core/utils/function/date";
-import { msgParams } from "$core/utils/message";
+import { formatMinutes } from "#/utils/function/date";
+import { msgParams } from "#/utils/message";
 
 export const getPage = (members: MembersData[], memberPerPage: number, page: number): Page => {
   const maxPage = Math.ceil(members.length / memberPerPage);

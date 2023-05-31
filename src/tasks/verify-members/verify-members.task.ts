@@ -1,11 +1,11 @@
-import { createMember, getMember, getMembersOnServerStatus, setAlwaysOnServer } from "$core/api/requests/member";
-import { client } from "$core/client";
-import { getGuild } from "$core/configs/guild";
-import { getGuildMembers } from "$core/utils/discord/guild";
-import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
-import { logger } from "$core/utils/logger";
-import { gqlRequest } from "$core/utils/request";
-import { userWithId } from "$core/utils/discord/user";
+import { createMember, getMember, getMembersOnServerStatus, setAlwaysOnServer } from "#/api/requests/member";
+import { client } from "#/client";
+import { getGuild } from "#/configs/guild";
+import { getGuildMembers } from "#/utils/discord/guild";
+import type { TaskExecute, TaskInterval } from "#/utils/handler/task";
+import { logger } from "#/utils/logger";
+import { gqlRequest } from "#/utils/request";
+import { userWithId } from "#/utils/discord/user";
 
 export const interval: TaskInterval = "0 */3 * * * *";
 

@@ -1,10 +1,10 @@
-import type { EventExecute, EventName } from "$core/utils/handler/event";
-import { choicesInputId, titleInputId } from "$core/commands/roulette/roulette.const";
-import { interactionId } from "$core/configs/global";
-import { events } from "$core/configs/message/event";
-import { simpleEmbed } from "$core/utils/discord/embed";
-import { logger } from "$core/utils/logger";
-import { msgParams } from "$core/utils/message";
+import type { EventExecute, EventName } from "#/utils/handler/event";
+import { choicesInputId, titleInputId } from "#/commands/roulette/roulette.const";
+import { interactionId } from "#/configs/global";
+import { events } from "#/configs/message/event";
+import { simpleEmbed } from "#/utils/discord/embed";
+import { logger } from "#/utils/logger";
+import { msgParams } from "#/utils/message";
 
 export const event: EventName = "interactionCreate";
 

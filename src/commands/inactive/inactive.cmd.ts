@@ -2,7 +2,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import type { CacheType, ComponentType, ModalSubmitInteraction } from "discord.js";
 import { getInactiveMembers } from "$core/api/func/member";
 import { confirmationModal, getActionRow, getEmbed, getPage, pageNumberByMember } from "./inactive.util";
-import { interactionId } from "$core/configs";
+import { interactionId } from "$core/configs/global";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";

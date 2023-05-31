@@ -1,5 +1,5 @@
 import { choicesInputId, titleInputId } from "./roulette.const";
-import { interactionId } from "$core/configs";
+import { interactionId } from "$core/configs/global";
 import { commands } from "$core/configs/message/command";
 import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 

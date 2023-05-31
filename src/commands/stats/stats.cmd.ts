@@ -2,7 +2,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import type { GraphType } from "./stats.type";
 import { getServerActivityHistory } from "$core/api/requests/server-activity";
 import { generateChartConfig } from "./stats.util";
-import { global } from "$core/configs";
+import { global } from "$core/configs/global";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";

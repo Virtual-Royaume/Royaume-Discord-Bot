@@ -5,7 +5,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import { gqlRequest } from "$core/utils/request";
 import { commands } from "$core/configs/message/command";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.options.getChannel(commands.main.groups.remove.subcmds.channel.options.channel.name, true);

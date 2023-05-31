@@ -8,7 +8,7 @@ import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];

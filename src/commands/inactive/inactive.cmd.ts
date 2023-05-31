@@ -10,7 +10,7 @@ import { msgParams } from "$core/utils/message";
 import { GuildMember, PermissionFlagsBits } from "discord.js";
 import { reasonId } from "./inactive.const";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 import { getGuildMembers } from "$core/utils/discord/guild";
 
 export const execute: CommandExecute = async(command) => {

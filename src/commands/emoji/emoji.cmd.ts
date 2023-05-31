@@ -7,7 +7,7 @@ import { AttachmentBuilder, BaseGuildTextChannel } from "discord.js";
 import { proposals } from "$core/configs/global";
 import { logger } from "$core/utils/logger";
 import { getGuildTypeById, guilds } from "$core/configs/guild";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const guild = command.guild;

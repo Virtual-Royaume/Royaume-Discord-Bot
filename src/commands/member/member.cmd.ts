@@ -10,7 +10,7 @@ import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { TierUpdate } from "$core/utils/request/graphql";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 import { GuildMember } from "discord.js";
 
 export const execute: CommandExecute = async(command) => {

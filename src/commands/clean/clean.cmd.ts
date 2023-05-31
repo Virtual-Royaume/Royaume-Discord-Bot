@@ -4,7 +4,7 @@ import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { commands } from "$core/configs/message/command";
 import { ChannelType } from "discord.js";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const number = command.options.getNumber(commands.clean.options.count.name) ?? 10;

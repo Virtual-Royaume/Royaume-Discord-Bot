@@ -8,7 +8,7 @@ import { msgParams } from "$core/utils/message";
 import { BaseGuildTextChannel, GuildMember } from "discord.js";
 import { presentationId } from "./verif-modal.const";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const event: EventName = "interactionCreate";
 

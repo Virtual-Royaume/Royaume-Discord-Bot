@@ -4,7 +4,7 @@ import { githubPermalinkRegex, githubRawUrl } from "./github-link-reaction.const
 import { env } from "$core/configs/env";
 import { restTextRequest } from "$core/utils/request";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const event: EventName = "messageCreate";
 

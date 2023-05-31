@@ -5,7 +5,7 @@ import { commands } from "$core/configs/message/command";
 import { gqlRequest } from "$core/utils/request";
 import { msgParams } from "$core/utils/message";
 import { logger } from "$core/utils/logger";
-import { userWithId } from "$core/utils/user";
+import { userWithId } from "$core/utils/discord/user";
 
 export const execute: CommandExecute = async(command) => {
   const role = command.options.getRole(commands.main.groups.add.subcmds.role.options.role.name, true);

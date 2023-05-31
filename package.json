@@ -8,8 +8,7 @@
     "start": "node -r @swc-node/register -r tsconfig-paths/register ./src/client.ts",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "gen:gql": "graphql-codegen --config gql-codegen.ts",
-    "gen:gql:watch": "graphql-codegen --watch --config gql-codegen.ts",
+    "gql:gen": "graphql-codegen --config gql-codegen.ts",
     "test:unit": "vitest --ui",
     "ts:check": "tsc --noEmit"
   },

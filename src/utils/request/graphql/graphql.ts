@@ -5,156 +5,158 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string | number; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
   /** Date without time */
-  Date: string;
+  Date: { input: string; output: string; }
 };
 
 export type ActivityPoints = {
   __typename?: 'ActivityPoints';
-  count: Scalars['Int'];
+  count: Scalars['Int']['output'];
   progress: TierUpdate;
 };
 
 export type ChannelMessageCount = {
   __typename?: 'ChannelMessageCount';
-  channelId: Scalars['String'];
-  messageCount: Scalars['Int'];
+  channelId: Scalars['String']['output'];
+  messageCount: Scalars['Int']['output'];
 };
 
 export type DiscordActivity = {
   __typename?: 'DiscordActivity';
   messages: DiscordMessageActivity;
-  monthVoiceMinute: Scalars['Int'];
+  monthVoiceMinute: Scalars['Int']['output'];
   points: ActivityPoints;
-  tier: Scalars['Int'];
-  voiceMinute: Scalars['Int'];
+  tier: Scalars['Int']['output'];
+  voiceMinute: Scalars['Int']['output'];
 };
 
 export type DiscordMessageActivity = {
   __typename?: 'DiscordMessageActivity';
-  monthCount: Scalars['Int'];
+  monthCount: Scalars['Int']['output'];
   perChannel: Array<ChannelMessageCount>;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 };
 
 export type MainChannel = {
   __typename?: 'MainChannel';
-  category: Scalars['String'];
-  channelId: Scalars['ID'];
+  category: Scalars['String']['output'];
+  channelId: Scalars['ID']['output'];
 };
 
 export type MainRole = {
   __typename?: 'MainRole';
-  category: Scalars['String'];
-  roleId: Scalars['ID'];
+  category: Scalars['String']['output'];
+  roleId: Scalars['ID']['output'];
 };
 
 export type Member = {
   __typename?: 'Member';
-  _id: Scalars['String'];
+  _id: Scalars['String']['output'];
   activity: DiscordActivity;
-  birthday?: Maybe<Scalars['Date']>;
-  isOnServer: Scalars['Boolean'];
-  profilePicture: Scalars['String'];
-  username: Scalars['String'];
+  birthday?: Maybe<Scalars['Date']['output']>;
+  isOnServer: Scalars['Boolean']['output'];
+  profilePicture: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type MemberInput = {
-  birthday?: InputMaybe<Scalars['Date']>;
-  isOnServer?: InputMaybe<Scalars['Boolean']>;
-  profilePicture?: InputMaybe<Scalars['String']>;
-  username?: InputMaybe<Scalars['String']>;
+  birthday?: InputMaybe<Scalars['Date']['input']>;
+  isOnServer?: InputMaybe<Scalars['Boolean']['input']>;
+  profilePicture?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addChannel: Scalars['Boolean'];
-  addPresenceMessage: Scalars['Boolean'];
-  addRole: Scalars['Boolean'];
+  addChannel: Scalars['Boolean']['output'];
+  addPresenceMessage: Scalars['Boolean']['output'];
+  addRole: Scalars['Boolean']['output'];
   createMember?: Maybe<Member>;
-  incMemberDiscordActivityChannel: Scalars['Int'];
-  incMemberDiscordVoiceMinute: Scalars['Int'];
-  removeChannel: Scalars['Boolean'];
-  removePresenceMessage: Scalars['Boolean'];
-  removeRole: Scalars['Boolean'];
-  setServerActivityMemberCount: Scalars['Boolean'];
-  updateMember: Scalars['Boolean'];
+  incMemberDiscordActivityChannel: Scalars['Int']['output'];
+  incMemberDiscordVoiceMinute: Scalars['Int']['output'];
+  removeChannel: Scalars['Boolean']['output'];
+  removePresenceMessage: Scalars['Boolean']['output'];
+  removeRole: Scalars['Boolean']['output'];
+  setServerActivityMemberCount: Scalars['Boolean']['output'];
+  updateMember: Scalars['Boolean']['output'];
 };
 
 
 export type MutationAddChannelArgs = {
-  category: Scalars['String'];
-  channelId: Scalars['ID'];
+  category: Scalars['String']['input'];
+  channelId: Scalars['ID']['input'];
 };
 
 
 export type MutationAddPresenceMessageArgs = {
-  text: Scalars['String'];
+  text: Scalars['String']['input'];
   type: PresenceType;
 };
 
 
 export type MutationAddRoleArgs = {
-  category: Scalars['String'];
-  roleId: Scalars['ID'];
+  category: Scalars['String']['input'];
+  roleId: Scalars['ID']['input'];
 };
 
 
 export type MutationCreateMemberArgs = {
-  id: Scalars['ID'];
-  isOnServer?: InputMaybe<Scalars['Boolean']>;
-  profilePicture: Scalars['String'];
-  username: Scalars['String'];
+  id: Scalars['ID']['input'];
+  isOnServer?: InputMaybe<Scalars['Boolean']['input']>;
+  profilePicture: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 
 export type MutationIncMemberDiscordActivityChannelArgs = {
-  channelId: Scalars['ID'];
-  id: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationIncMemberDiscordVoiceMinuteArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationRemoveChannelArgs = {
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
 };
 
 
 export type MutationRemovePresenceMessageArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationRemoveRoleArgs = {
-  roleId: Scalars['ID'];
+  roleId: Scalars['ID']['input'];
 };
 
 
 export type MutationSetServerActivityMemberCountArgs = {
-  count: Scalars['Int'];
+  count: Scalars['Int']['input'];
 };
 
 
 export type MutationUpdateMemberArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: MemberInput;
 };
 
 export type PresenceMessage = {
   __typename?: 'PresenceMessage';
-  _id: Scalars['ID'];
-  text: Scalars['String'];
+  _id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
   type: PresenceType;
 };
 
@@ -178,20 +180,20 @@ export type Query = {
 
 
 export type QueryMemberArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryServerActivityArgs = {
-  historyCount: Scalars['Int'];
+  historyCount: Scalars['Int']['input'];
 };
 
 export type ServerActivity = {
   __typename?: 'ServerActivity';
-  date: Scalars['Date'];
-  memberCount: Scalars['Int'];
-  messageCount: Scalars['Int'];
-  voiceMinute: Scalars['Int'];
+  date: Scalars['Date']['output'];
+  memberCount: Scalars['Int']['output'];
+  messageCount: Scalars['Int']['output'];
+  voiceMinute: Scalars['Int']['output'];
 };
 
 export enum TierUpdate {
@@ -201,15 +203,15 @@ export enum TierUpdate {
 }
 
 export type AddChannelMutationVariables = Exact<{
-  channelId: Scalars['ID'];
-  category: Scalars['String'];
+  channelId: Scalars['ID']['input'];
+  category: Scalars['String']['input'];
 }>;
 
 
 export type AddChannelMutation = { __typename?: 'Mutation', addChannel: boolean };
 
 export type RemoveChannelMutationVariables = Exact<{
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
 }>;
 
 
@@ -221,15 +223,15 @@ export type GetChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetChannelsQuery = { __typename?: 'Query', channels: Array<{ __typename?: 'MainChannel', channelId: string, category: string }> };
 
 export type AddRoleMutationVariables = Exact<{
-  roleId: Scalars['ID'];
-  category: Scalars['String'];
+  roleId: Scalars['ID']['input'];
+  category: Scalars['String']['input'];
 }>;
 
 
 export type AddRoleMutation = { __typename?: 'Mutation', addRole: boolean };
 
 export type RemoveRoleMutationVariables = Exact<{
-  roleId: Scalars['ID'];
+  roleId: Scalars['ID']['input'];
 }>;
 
 
@@ -241,56 +243,56 @@ export type GetRolesQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetRolesQuery = { __typename?: 'Query', roles: Array<{ __typename?: 'MainRole', roleId: string, category: string }> };
 
 export type CreateMemberMutationVariables = Exact<{
-  id: Scalars['ID'];
-  username: Scalars['String'];
-  profilePicture: Scalars['String'];
+  id: Scalars['ID']['input'];
+  username: Scalars['String']['input'];
+  profilePicture: Scalars['String']['input'];
 }>;
 
 
 export type CreateMemberMutation = { __typename?: 'Mutation', createMember?: { __typename?: 'Member', _id: string } | null };
 
 export type SetAlwaysOnServerMutationVariables = Exact<{
-  id: Scalars['ID'];
-  value: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  value: Scalars['Boolean']['input'];
 }>;
 
 
 export type SetAlwaysOnServerMutation = { __typename?: 'Mutation', updateMember: boolean };
 
 export type SetUsernameAndProfilePictureMutationVariables = Exact<{
-  id: Scalars['ID'];
-  username: Scalars['String'];
-  profilePicture: Scalars['String'];
+  id: Scalars['ID']['input'];
+  username: Scalars['String']['input'];
+  profilePicture: Scalars['String']['input'];
 }>;
 
 
 export type SetUsernameAndProfilePictureMutation = { __typename?: 'Mutation', updateMember: boolean };
 
 export type SetBirthdayMutationVariables = Exact<{
-  id: Scalars['ID'];
-  date: Scalars['Date'];
+  id: Scalars['ID']['input'];
+  date: Scalars['Date']['input'];
 }>;
 
 
 export type SetBirthdayMutation = { __typename?: 'Mutation', updateMember: boolean };
 
 export type IncChannelMessageMutationVariables = Exact<{
-  id: Scalars['ID'];
-  channelId: Scalars['ID'];
+  id: Scalars['ID']['input'];
+  channelId: Scalars['ID']['input'];
 }>;
 
 
 export type IncChannelMessageMutation = { __typename?: 'Mutation', incMemberDiscordActivityChannel: number };
 
 export type IncVoiceMinuteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type IncVoiceMinuteMutation = { __typename?: 'Mutation', incMemberDiscordVoiceMinute: number };
 
 export type GetMemberQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -342,7 +344,7 @@ export type GetChannelMessageCountQueryVariables = Exact<{ [key: string]: never;
 export type GetChannelMessageCountQuery = { __typename?: 'Query', members: Array<{ __typename?: 'Member', _id: string, username: string, activity: { __typename?: 'DiscordActivity', messages: { __typename?: 'DiscordMessageActivity', perChannel: Array<{ __typename?: 'ChannelMessageCount', channelId: string, messageCount: number }> } } }> };
 
 export type GetMemberActivityTierQueryVariables = Exact<{
-  memberId: Scalars['ID'];
+  memberId: Scalars['ID']['input'];
 }>;
 
 
@@ -355,14 +357,14 @@ export type GetPresenceMessagesQuery = { __typename?: 'Query', presenceMessages:
 
 export type AddPresenceMessageMutationVariables = Exact<{
   type: PresenceType;
-  text: Scalars['String'];
+  text: Scalars['String']['input'];
 }>;
 
 
 export type AddPresenceMessageMutation = { __typename?: 'Mutation', addPresenceMessage: boolean };
 
 export type RemoePresenceMessageMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -374,14 +376,14 @@ export type GetCurrentServerActivityQueryVariables = Exact<{ [key: string]: neve
 export type GetCurrentServerActivityQuery = { __typename?: 'Query', todayServerActivity: { __typename?: 'ServerActivity', date: string, voiceMinute: number, messageCount: number, memberCount: number } };
 
 export type GetServerActivityHistoryQueryVariables = Exact<{
-  historyCount: Scalars['Int'];
+  historyCount: Scalars['Int']['input'];
 }>;
 
 
 export type GetServerActivityHistoryQuery = { __typename?: 'Query', serverActivity: Array<{ __typename?: 'ServerActivity', date: string, voiceMinute: number, messageCount: number, memberCount: number }> };
 
 export type SetMemberCountMutationVariables = Exact<{
-  count: Scalars['Int'];
+  count: Scalars['Int']['input'];
 }>;
 
 

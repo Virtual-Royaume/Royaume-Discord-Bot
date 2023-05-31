@@ -6,7 +6,7 @@ import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
 import { objectKeys } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import type {
   GuildMember,
   Snowflake } from "discord.js";

@@ -1,4 +1,4 @@
-import { graphql } from "$core/utils/request/graphql";
+import { graphql } from "$core/utils/request/graphql/code-gen";
 
 export const getCurrentServerActivity = graphql(`
     query getCurrentServerActivity {

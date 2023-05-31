@@ -1,1 +1,2 @@
-export { restRequest, restJsonRequest, restTextRequest, gqlRequest } from "./request";
+export * from "./graphql"
+export * from "./rest"

@@ -5,7 +5,7 @@ import { formatPage, getPage } from "../top-voice.util";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { memberPerPage } from "../top-voice.const";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";

@@ -5,7 +5,7 @@ import { DayJS } from "$core/utils/day-js";
 import { simpleEmbed } from "$core/utils/embed";
 import { dateFormat, getAge } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { commands } from "$core/configs/message/command";
 
 export const execute: CommandExecute = async(command) => {

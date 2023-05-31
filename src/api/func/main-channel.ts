@@ -1,5 +1,5 @@
 import { getChannels } from "$core/api/requests/main-channel";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 
 type ChannelsByCategory = {
   [category: string]: string[];

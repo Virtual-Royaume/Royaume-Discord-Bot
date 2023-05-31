@@ -5,7 +5,7 @@ import { global } from "$core/configs/global.config";
 import { getAge } from "$core/utils/function";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { setBirthday } from "$core/api/requests/member";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";

@@ -1,4 +1,4 @@
-import { graphql } from "$core/utils/request/graphql";
+import { graphql } from "$core/utils/request/graphql/code-gen";
 
 export const getPresenceMessages = graphql(`
     query getPresenceMessages {

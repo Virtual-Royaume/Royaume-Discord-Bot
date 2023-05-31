@@ -1,6 +1,6 @@
 import type { EventExecute, EventName } from "$core/utils/handler/event";
 import { guilds } from "$core/configs/guild";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { getRoles, removeRole } from "$core/api/requests/main-role";
 import { logger } from "$core/utils/logger";
 

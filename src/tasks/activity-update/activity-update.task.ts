@@ -4,7 +4,7 @@ import { client } from "$core/client";
 import { getGuild } from "$core/configs/guild";
 import type { TaskExecute, TaskInterval } from "$core/utils/handler/task";
 import { logger } from "$core/utils/logger";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 import { userWithId } from "$core/utils/user";
 import type { GuildMember } from "discord.js";
 

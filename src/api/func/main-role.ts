@@ -1,5 +1,5 @@
 import { getRoles } from "$core/api/requests/main-role";
-import { gqlRequest } from "$core/utils/request";
+import { gqlRequest } from "$core/utils/request/graphql/code-gen";
 
 type RolesByCategory = {
   [category: string]: string[];

@@ -26,4 +26,4 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run typecheck
-        run: npx tsc --noEmit
+        run: npm run ts:check

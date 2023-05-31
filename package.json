@@ -10,7 +10,8 @@
     "lint:fix": "eslint ./src --fix",
     "gen:gql": "graphql-codegen --config gql-codegen.ts",
     "gen:gql:watch": "graphql-codegen --watch --config gql-codegen.ts",
-    "test:unit": "vitest --ui"
+    "test:unit": "vitest --ui",
+    "ts:check": "tsc --noEmit"
   },
   "dependencies": {
     "chart.js": "^3.9.1",

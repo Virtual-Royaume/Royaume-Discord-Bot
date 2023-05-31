@@ -50,9 +50,9 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
       }
     });
 
-    if (!response.success) return;
+    if (!response.ok) return;
 
-    const fileContent = response.data.split("\n");
+    const fileContent = response.value.split("\n");
 
     // Check if the line number is not too high :
     if (linesNumber[1] > fileContent.length) {

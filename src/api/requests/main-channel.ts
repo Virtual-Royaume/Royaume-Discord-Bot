@@ -1,4 +1,4 @@
-import { graphql } from "$core/utils/request/graphql/code-gen";
+import { graphql } from "$core/utils/request";
 
 export const addChannel = graphql(`
     mutation addChannel($channelId: ID!, $category: String!){

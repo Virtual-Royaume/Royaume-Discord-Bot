@@ -2,7 +2,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import { addChannel } from "$core/api/requests/main-channel";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { commands } from "$core/configs/message/command";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
@@ -12,7 +12,7 @@ export const execute: CommandExecute = async(command) => {
   const category = command.options.getString(commands.main.groups.add.subcmds.channel.options.category.name, true);
   const addChannelQuery = await gqlRequest(addChannel, { channelId: channel.id, category: category });
 
-  if (!addChannelQuery.success) {
+  if (!addChannelQuery.ok) {
     void command.reply({
       embeds: [simpleEmbed(commands.main.exec.add.channel.error, "error")],
       ephemeral: true

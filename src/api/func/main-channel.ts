@@ -1,5 +1,5 @@
 import { getChannels } from "$core/api/requests/main-channel";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 
 type ChannelsByCategory = {
   [category: string]: string[];
@@ -9,9 +9,9 @@ export const getChannelsByCategory = async(): Promise<ChannelsByCategory> => {
   // Get mains channels :
   const response = await gqlRequest(getChannels);
 
-  if (!response.success) return {};
+  if (!response.ok) return {};
 
-  const channels = response.data.channels;
+  const channels = response.value.channels;
 
   // Sort channels by category :
   const channelsIdsByCategory: ChannelsByCategory = {};

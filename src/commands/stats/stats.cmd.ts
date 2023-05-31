@@ -6,7 +6,7 @@ import { global } from "$core/configs";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { isHexColor } from "$core/utils/validator";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { AttachmentBuilder, EmbedBuilder } from "discord.js";
@@ -19,7 +19,7 @@ export const execute: CommandExecute = async(command) => {
     historyCount: command.options.getNumber(commands.stats.options.history.name) ?? 30
   });
 
-  if (!serverActivityQuery.success) {
+  if (!serverActivityQuery.ok) {
     void command.reply({
       embeds: [simpleEmbed(commands.stats.exec.historyQueryError, "error")],
       ephemeral: true
@@ -27,7 +27,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  const serverActivity = serverActivityQuery.data.serverActivity.reverse();
+  const serverActivity = serverActivityQuery.value.serverActivity.reverse();
 
   // Start defering response
   await command.deferReply();

@@ -5,7 +5,7 @@ import { global } from "$core/configs/global.config";
 import { getAge } from "$core/utils/function";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { setBirthday } from "$core/api/requests/member";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
@@ -43,7 +43,7 @@ export const execute: CommandExecute = async(command) => {
 
   const setBirthdayQuery = await gqlRequest(setBirthday, { id: command.user.id, date: date.valueOf().toString() });
 
-  if (!setBirthdayQuery.success) {
+  if (!setBirthdayQuery.ok) {
     void command.reply({
       embeds: [simpleEmbed(commands.birthday.exec.set.queryError, "error")],
       ephemeral: true

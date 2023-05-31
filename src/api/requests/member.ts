@@ -1,4 +1,4 @@
-import { graphql } from "$core/utils/request/graphql/code-gen";
+import { graphql } from "$core/utils/request";
 
 export const createMember = graphql(`
     mutation createMember($id: ID!, $username: String!, $profilePicture: String!){

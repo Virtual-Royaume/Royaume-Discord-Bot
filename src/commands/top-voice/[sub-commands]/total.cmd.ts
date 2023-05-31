@@ -5,7 +5,7 @@ import { formatPage, getPage } from "../top-voice.util";
 import { commands } from "$core/configs/message/command";
 import { simpleEmbed } from "$core/utils/embed";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { memberPerPage } from "../top-voice.const";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
@@ -14,7 +14,7 @@ export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];
   const membersMinutesQuery = await gqlRequest(getVoiceTime);
 
-  if (!membersMinutesQuery.success) {
+  if (!membersMinutesQuery.ok) {
     void command.reply({
       embeds: [
         simpleEmbed(commands.topVoice.exec.activityQueryError, "error")
@@ -25,7 +25,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   // Sort members & change format (QueryType => MembersData)
-  members = membersMinutesQuery.data.members.sort((a, b) => {
+  members = membersMinutesQuery.value.members.sort((a, b) => {
     return (b.activity.voiceMinute ?? 0) - (a.activity.voiceMinute ?? 0);
   }).map(member => {
     return {

@@ -2,7 +2,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import { addRole } from "$core/api/requests/main-role";
 import { simpleEmbed } from "$core/utils/embed";
 import { commands } from "$core/configs/message/command";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { msgParams } from "$core/utils/message";
 import { logger } from "$core/utils/logger";
 import { userWithId } from "$core/utils/user";
@@ -12,7 +12,7 @@ export const execute: CommandExecute = async(command) => {
   const category = command.options.getString(commands.main.groups.add.subcmds.role.options.category.name, true);
   const addRoleQuery = await gqlRequest(addRole, { roleId: role.id, category: category });
 
-  if (!addRoleQuery.success) {
+  if (!addRoleQuery.ok) {
     void command.reply({
       embeds: [simpleEmbed(commands.main.exec.add.role.error, "error")],
       ephemeral: true

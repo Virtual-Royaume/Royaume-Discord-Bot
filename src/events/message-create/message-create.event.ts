@@ -7,7 +7,7 @@ import { events } from "$core/configs/message/event";
 import { simpleEmbed } from "$core/utils/embed";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
-import { gqlRequest } from "$core/utils/request/graphql/code-gen";
+import { gqlRequest } from "$core/utils/request";
 import { userWithId } from "$core/utils/user";
 import { ChannelType } from "discord.js";
 
@@ -34,17 +34,17 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
   // Check is the channel exist in mains channels :
   const channels = await gqlRequest(getChannels);
 
-  if (!channels.success || !channels.data.channels.find(c => c.channelId === channel.id)) return;
+  if (!channels.ok || !channels.value.channels.find(c => c.channelId === channel.id)) return;
 
   // Increment channel message count and get current message count :
   const messageCountResponse = await gqlRequest(incChannelMessage, { id: message.author.id, channelId: channel.id });
 
-  if (!messageCountResponse.success) {
+  if (!messageCountResponse.ok) {
     logger.error(`Increment message count does work for member ${message.author.id} in channel ${channel.id}`);
     return;
   }
 
-  const messageCount = messageCountResponse.data.incMemberDiscordActivityChannel;
+  const messageCount = messageCountResponse.value.incMemberDiscordActivityChannel;
 
   if (messageCount === 0) return;
 

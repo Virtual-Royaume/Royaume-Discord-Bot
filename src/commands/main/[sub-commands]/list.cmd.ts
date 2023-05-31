@@ -19,11 +19,11 @@ export const execute: CommandExecute = async(command) => {
   let channelMessage = "";
   let roleMessage = "";
 
-  for (const [category, ids] of Object.entries(channels)) {
+  for (const [category, ids] of Object.entries(channels.value)) {
     channelMessage += msgParams(commands.main.exec.list.channels.channel, [category, ids.map(id => "<#" + id + ">").join(", ")]) + "\n\n";
   }
 
-  for (const [category, ids] of Object.entries(roles)) {
+  for (const [category, ids] of Object.entries(roles.value)) {
     roleMessage += msgParams(commands.main.exec.list.roles.role, [category, ids.map(id => "<@&" + id + ">").join(", ")]) + "\n\n";
   }
 

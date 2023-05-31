@@ -5,13 +5,15 @@ import { getGuildTypeById, guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
 import { DayJS } from "$core/configs/day-js";
 import { simpleEmbed } from "$core/utils/discord/embed";
-import { dateFormat, firstLetterToUppercase, formatMinutes, getAge, numberFormat } from "$core/utils/function";
+import { dateFormat, formatMinutes, getAge } from "$core/utils/function/date";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import { TierUpdate } from "$core/utils/request/graphql";
 import { userWithId } from "$core/utils/discord/user";
 import { GuildMember } from "discord.js";
+import { numberFormat } from "$core/utils/function/number";
+import { firstLetterToUppercase } from "$core/utils/function/string";
 
 export const execute: CommandExecute = async(command) => {
   const member = command.options.getMember(commands.member.options.member.name) ?? command.member;

@@ -12,7 +12,7 @@ import type {
   GuildCommandsCollection, GuildsCommand
 } from "./command.type";
 import { haveSubcommands, serializeCommandName } from "./command.util";
-import { doesFolderExist } from "$core/utils/function";
+import { doesFolderExist } from "$core/utils/function/folder";
 import { getGuild } from "$core/configs/guild";
 import { subCommandDirName, subCommandGroupDirNamePrefix } from "./command.const";
 import { sep } from "path";

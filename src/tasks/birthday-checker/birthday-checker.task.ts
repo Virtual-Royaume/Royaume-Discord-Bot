@@ -5,7 +5,7 @@ import { getGuild, guilds } from "$core/configs/guild";
 import { tasks } from "$core/configs/message/task/task.config";
 import { DayJS } from "$core/configs/day-js";
 import { simpleEmbed } from "$core/utils/discord/embed";
-import { getAge } from "$core/utils/function";
+import { getAge } from "$core/utils/function/date";
 import { logger } from "$core/utils/logger";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";

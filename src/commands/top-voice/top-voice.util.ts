@@ -1,5 +1,5 @@
 import type { MembersData, Page } from "./top-voice.type";
-import { formatMinutes } from "$core/utils/function";
+import { formatMinutes } from "$core/utils/function/date";
 import { msgParams } from "$core/utils/message";
 
 export const getPage = (members: MembersData[], memberPerPage: number, page: number): Page => {

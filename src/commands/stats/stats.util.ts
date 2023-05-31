@@ -3,7 +3,7 @@ import type { GetServerActivityHistoryQuery } from "$core/utils/request/graphql"
 import type { ChartConfiguration } from "chart.js";
 import { global } from "$core/configs/global";
 import { DayJS } from "$core/configs/day-js";
-import { dateFormat } from "$core/utils/function";
+import { dateFormat } from "$core/utils/function/date";
 
 export const generateChartConfig = (
   type: GraphType,

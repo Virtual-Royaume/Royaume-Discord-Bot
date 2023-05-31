@@ -2,7 +2,7 @@ import type { CommandExecute } from "$core/utils/handler/command";
 import { DayJS } from "$core/configs/day-js";
 import { commands } from "$core/configs/message/command";
 import { global } from "$core/configs/global";
-import { getAge } from "$core/utils/function";
+import { getAge } from "$core/utils/function/date";
 import { simpleEmbed } from "$core/utils/discord/embed";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";

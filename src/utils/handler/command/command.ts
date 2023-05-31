@@ -5,7 +5,7 @@
 import type { Client } from "discord.js";
 import { Collection, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from "discord.js";
 import { existsSync, readdirSync, statSync } from "fs";
-import { isDevEnvironment } from "$core/utils/environment";
+import { isDevEnvironment } from "$core/configs/env";
 import type {
   CommandsCollection, CommandExecute,
   CommandsBuilderCollection, LoadedCommands,

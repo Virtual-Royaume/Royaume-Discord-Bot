@@ -3,7 +3,7 @@
 
 import type { TaskExecute, TaskInterval } from "$core/utils/handler/task/task.type";
 import type { EnableInDev } from "$core/utils/handler/handler.type";
-import { isDevEnvironment } from "$core/utils/environment";
+import { isDevEnvironment } from "$core/configs/env";
 import { existsSync, readdirSync, statSync } from "fs";
 import { startCronJob } from "$core/utils/cron";
 import { sep } from "path";

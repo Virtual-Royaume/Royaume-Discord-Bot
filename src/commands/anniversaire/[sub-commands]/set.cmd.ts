@@ -1,5 +1,5 @@
 import type { CommandExecute } from "$core/utils/handler/command";
-import { DayJS } from "$core/utils/day-js";
+import { DayJS } from "$core/configs/day-js";
 import { commands } from "$core/configs/message/command";
 import { global } from "$core/configs/global";
 import { getAge } from "$core/utils/function";

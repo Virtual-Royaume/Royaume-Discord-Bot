@@ -7,5 +7,6 @@ export const startCronJob = (interval: string, execute: CronCommand): void => {
     onTick: execute,
     timeZone: "Europe/Paris"
   });
+
   job.start();
 };

@@ -1,6 +1,6 @@
-import type { ProposalType, Proposal } from "./global.type";
+import type { ProposalType, Proposal, GlobalConfig } from "./global.type";
 
-export const global = {
+export const global: GlobalConfig = {
   localFormat: "fr-FR",
   minimumAge: 14,
   colors: {

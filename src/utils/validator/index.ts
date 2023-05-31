@@ -1,1 +1,0 @@
-export { isHexColor } from "./color.util";

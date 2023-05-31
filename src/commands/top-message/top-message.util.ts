@@ -1,6 +1,6 @@
 import type { MembersData, Page } from "./top-message.type";
-import { numberFormat } from "$core/utils/function";
 import { msgParams } from "$core/utils/message";
+import { numberFormat } from "$core/utils/function/number";
 
 export const getPage = (members: MembersData[], memberPerPage: number, page: number): Page => {
   const maxPage = Math.ceil(members.length / memberPerPage);

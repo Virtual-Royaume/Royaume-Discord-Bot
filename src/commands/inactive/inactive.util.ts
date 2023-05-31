@@ -4,7 +4,7 @@ import { reasonId } from "./inactive.const";
 import { interactionId } from "$core/configs/global";
 import { guilds } from "$core/configs/guild";
 import { commands } from "$core/configs/message/command";
-import { objectKeys } from "$core/utils/function";
+import { objectKeys } from "$core/utils/function/object";
 import { msgParams } from "$core/utils/message";
 import { gqlRequest } from "$core/utils/request";
 import type {

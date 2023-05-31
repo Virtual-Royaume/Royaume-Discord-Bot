@@ -5,7 +5,7 @@ import { commands } from "$core/configs/message/command";
 import { gqlRequest } from "$core/utils/request";
 import { DayJS } from "$core/configs/day-js";
 import { msgParams } from "$core/utils/message";
-import { getAge } from "$core/utils/function";
+import { getAge } from "$core/utils/function/date";
 
 export const execute: CommandExecute = async(command) => {
   const response = await gqlRequest(getBirthdays);

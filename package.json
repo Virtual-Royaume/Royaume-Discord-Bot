@@ -8,6 +8,7 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "gql:gen": "graphql-codegen --config gql-codegen.ts",
+    "gql:gen:watch": "graphql-codegen --watch --config gql-codegen.ts",
     "test:unit": "vitest --ui",
     "ts:check": "tsc --noEmit"
   },

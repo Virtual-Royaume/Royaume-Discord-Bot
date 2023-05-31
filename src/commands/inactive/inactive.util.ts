@@ -1,5 +1,6 @@
+import type { GuildMember, Snowflake } from "discord.js";
 import type { Page } from "./inactive.type";
-import { getMember } from "#/api/requests/member";
+import type { GetMonthActivityQuery } from "#/utils/request";
 import { reasonId } from "./inactive.const";
 import { interactionId } from "#/configs/global";
 import { guilds } from "#/configs/guild";
@@ -7,9 +8,6 @@ import { commands } from "#/configs/message/command";
 import { objectKeys } from "#/utils/function/object";
 import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
-import type {
-  GuildMember,
-  Snowflake } from "discord.js";
 import { Collection,
   ActionRowBuilder,
   ButtonBuilder,
@@ -19,6 +17,7 @@ import { Collection,
   TextInputBuilder,
   TextInputStyle
 } from "discord.js";
+import { getMember, getMonthActivity } from "./inactive.gql";
 
 export const pageNumberByMember: Collection<Snowflake, number> = new Collection();
 
@@ -162,4 +161,19 @@ export const confirmationModal = (username: string): ModalBuilder => {
         .setPlaceholder(commands.inactive.exec.kick.kickDefaultReason)
         .setRequired(false)
     ));
+};
+
+export const getInactiveMembers = async(): Promise<GetMonthActivityQuery["members"] | null> => {
+  const monthActivityQuery = await gqlRequest(getMonthActivity);
+
+  if (!monthActivityQuery.ok) return null;
+
+  const inactiveMembers = monthActivityQuery.value.members.filter(member => {
+    const monthMessage = member.activity?.messages.monthCount;
+    const monthVoice = member.activity?.monthVoiceMinute;
+
+    return !monthMessage && !monthVoice;
+  });
+
+  return inactiveMembers;
 };

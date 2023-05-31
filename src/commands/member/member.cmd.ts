@@ -1,6 +1,4 @@
 import type { CommandExecute } from "#/utils/handler/command";
-import { getChannels } from "#/api/requests/main-channel";
-import { getMember } from "#/api/requests/member";
 import { getGuildTypeById, guilds } from "#/configs/guild";
 import { commands } from "#/configs/message/command";
 import { DayJS } from "#/configs/day-js";
@@ -14,6 +12,8 @@ import { userWithId } from "#/utils/discord/user";
 import { GuildMember } from "discord.js";
 import { numberFormat } from "#/utils/function/number";
 import { firstLetterToUppercase } from "#/utils/function/string";
+import { getMember } from "./member.gql";
+import { getChannelsAsArray } from "#/utils/api/channel/channel.util";
 
 export const execute: CommandExecute = async(command) => {
   const member = command.options.getMember(commands.member.options.member.name) ?? command.member;
@@ -58,7 +58,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   // Get main channels en sort it :
-  const channelsQuery = await gqlRequest(getChannels);
+  const channelsQuery = await getChannelsAsArray();
 
   if (!channelsQuery.ok) {
     void command.reply({
@@ -68,7 +68,7 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  const channels = channelsQuery.value.channels;
+  const channels = channelsQuery.value;
   const channelsIdsByCategory: Record<string, string[]> = {};
 
   for (const channel of channels) {

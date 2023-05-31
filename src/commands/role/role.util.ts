@@ -1,12 +1,19 @@
-import { getRolesByCategory } from "#/api/func/main-role";
-import { interactionId } from "#/configs/global";
 import type { Guild, GuildMember, SelectMenuComponentOptionData } from "discord.js";
+import type { Result } from "rustic-error";
+import { ok } from "rustic-error";
+import { error } from "rustic-error";
+import { interactionId } from "#/configs/global";
 import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
+import { getRolesByCategory } from "#/utils/api/role";
 
-export const generateActionRow = async(member: GuildMember, guild: Guild): Promise<ActionRowBuilder<StringSelectMenuBuilder>[]> => {
+export const generateActionRow = async(member: GuildMember, guild: Guild): Promise<Result<ActionRowBuilder<StringSelectMenuBuilder>[], Error>> => {
   const messageActionRows: ActionRowBuilder<StringSelectMenuBuilder>[] = [];
 
-  for (const [category, rolesId] of Object.entries(await getRolesByCategory())) {
+  const roles = await getRolesByCategory();
+
+  if (!roles.ok) return error(Error("Unable to fetch roles from API"));
+
+  for (const [category, rolesId] of Object.entries(roles.value)) {
     const options: SelectMenuComponentOptionData[] = [];
 
     for (const roleId of rolesId) {
@@ -37,5 +44,5 @@ export const generateActionRow = async(member: GuildMember, guild: Guild): Promi
     );
   }
 
-  return messageActionRows;
+  return ok(messageActionRows);
 };

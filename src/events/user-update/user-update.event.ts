@@ -1,8 +1,8 @@
 import type { EventExecute, EventName } from "#/utils/handler/event";
 import { gqlRequest } from "#/utils/request";
-import { setUsernameAndProfilePicture } from "#/api/requests/member";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { setUsernameAndProfilePicture } from "./user-update.gql";
 
 export const event: EventName = "userUpdate";
 

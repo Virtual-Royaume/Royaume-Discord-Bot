@@ -1,11 +1,11 @@
 import type { EventExecute, EventName } from "#/utils/handler/event";
-import { setAlwaysOnServer } from "#/api/requests/member";
 import { client } from "#/client";
 import { guilds } from "#/configs/guild";
 import { getGuildMembers } from "#/utils/discord/guild";
 import { logger } from "#/utils/logger";
 import { gqlRequest } from "#/utils/request";
 import { userWithId } from "#/utils/discord/user";
+import { setAlwaysOnServer } from "./guild-member-remove.gql";
 
 export const event: EventName = "guildMemberRemove";
 

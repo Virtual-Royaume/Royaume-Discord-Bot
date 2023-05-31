@@ -1,11 +1,11 @@
-import { removeChannel } from "#/api/requests/main-channel";
+import type { CommandExecute } from "#/utils/handler/command";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { msgParams } from "#/utils/message";
-import type { CommandExecute } from "#/utils/handler/command";
 import { gqlRequest } from "#/utils/request";
 import { commands } from "#/configs/message/command";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { removeChannel } from "./remove-channel.gql";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.options.getChannel(commands.main.groups.remove.subcmds.channel.options.channel.name, true);

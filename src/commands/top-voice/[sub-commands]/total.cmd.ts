@@ -1,6 +1,5 @@
 import type { CommandExecute } from "#/utils/handler/command";
 import type { MembersData } from "../top-voice.type";
-import { getVoiceTime } from "#/api/requests/member";
 import { formatPage, getPage } from "../top-voice.util";
 import { commands } from "#/configs/message/command";
 import { simpleEmbed } from "#/utils/discord/embed";
@@ -9,6 +8,7 @@ import { gqlRequest } from "#/utils/request";
 import { memberPerPage } from "../top-voice.const";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { getVoiceTime } from "./total.gql";
 
 export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];

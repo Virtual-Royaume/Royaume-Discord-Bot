@@ -1,6 +1,5 @@
 import type { CommandExecute } from "#/utils/handler/command";
 import type { MembersData } from "../top-message.type";
-import { getChannelMessageCount } from "#/api/requests/member";
 import { memberPerPage } from "../top-message.const";
 import { formatPage, getPage } from "../top-message.util";
 import { commands } from "#/configs/message/command";
@@ -9,6 +8,7 @@ import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { getChannelMessageCount } from "./channel.gql";
 
 export const execute: CommandExecute = async(command) => {
   let members: MembersData[] = [];

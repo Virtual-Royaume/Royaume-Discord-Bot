@@ -6,9 +6,9 @@ import { getAge } from "#/utils/function/date";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
-import { setBirthday } from "#/api/requests/member";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
+import { setBirthday } from "./set.gql";
 
 export const execute: CommandExecute = async(command) => {
   const dateString = command.options.getString(commands.birthday.subcmds.set.options.date.name, true);

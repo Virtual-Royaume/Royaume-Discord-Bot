@@ -1,5 +1,4 @@
 import type { CommandExecute } from "#/utils/handler/command";
-import { getBirthdays } from "#/api/requests/member";
 import { memberPerPage } from "./list.const";
 import { DayJS } from "#/configs/day-js";
 import { simpleEmbed } from "#/utils/discord/embed";
@@ -7,6 +6,7 @@ import { dateFormat, getAge } from "#/utils/function/date";
 import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
 import { commands } from "#/configs/message/command";
+import { getBirthdays } from "./list.gql";
 
 export const execute: CommandExecute = async(command) => {
   let page = command.options.getNumber(commands.birthday.subcmds.list.options.page.name) ?? 1;

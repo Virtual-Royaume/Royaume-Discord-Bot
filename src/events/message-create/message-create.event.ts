@@ -1,7 +1,5 @@
 import type { EventExecute, EventName } from "#/utils/handler/event";
 import type { ForumChannel, GuildTextBasedChannel, TextBasedChannel } from "discord.js";
-import { getChannels } from "#/api/requests/main-channel";
-import { incChannelMessage } from "#/api/requests/member";
 import { guilds } from "#/configs/guild";
 import { events } from "#/configs/message/event";
 import { simpleEmbed } from "#/utils/discord/embed";
@@ -10,6 +8,8 @@ import { msgParams } from "#/utils/message";
 import { gqlRequest } from "#/utils/request";
 import { userWithId } from "#/utils/discord/user";
 import { ChannelType } from "discord.js";
+import { incChannelMessage } from "./message-create.gql";
+import { getChannelsAsArray } from "#/utils/api/channel/channel.util";
 
 export const event: EventName = "messageCreate";
 
@@ -32,9 +32,9 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
   }
 
   // Check is the channel exist in mains channels :
-  const channels = await gqlRequest(getChannels);
+  const channels = await getChannelsAsArray();
 
-  if (!channels.ok || !channels.value.channels.find(c => c.channelId === channel.id)) return;
+  if (!channels.ok || !channels.value.find(c => c.channelId === channel.id)) return;
 
   // Increment channel message count and get current message count :
   const messageCountResponse = await gqlRequest(incChannelMessage, { id: message.author.id, channelId: channel.id });

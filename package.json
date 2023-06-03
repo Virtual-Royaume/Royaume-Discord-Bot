@@ -42,7 +42,7 @@
   "eslintConfig": {
     "extends": "@bluzzi",
     "ignorePatterns": [
-      "src/utils/request/graphql"
+      "src/utils/request/graphql/code-gen"
     ]
   },
   "engines": {

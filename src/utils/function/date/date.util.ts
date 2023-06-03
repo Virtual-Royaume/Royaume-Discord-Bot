@@ -1,4 +1,4 @@
-import type { Dayjs } from "dayjs";
+import type { Dayjs } from "#/configs/day-js";
 import { DayJS } from "#/configs/day-js";
 
 export const dateFormat = (date: Dayjs, separator = "-"): string => {
@@ -6,9 +6,11 @@ export const dateFormat = (date: Dayjs, separator = "-"): string => {
 };
 
 export const formatMinutes = (minutes: number): string => {
+  const isNegative = minutes < 0;
+  minutes = Math.abs(minutes);
+
   const days = Math.floor(minutes / (60 * 24));
   const hours = Math.floor(minutes % (60 * 24) / 60);
-
   minutes = Math.floor(minutes % 60);
 
   const format = [];
@@ -18,7 +20,9 @@ export const formatMinutes = (minutes: number): string => {
   if (minutes) format.push(`${minutes} minutes`);
   if (!format.length) format.push("0 minutes");
 
-  return format.join(", ").replace(/(, )(?=[^,]*$)/, " et ");
+  const formatTime = isNegative ? `-${format.join(", ")}` : format.join(", ");
+
+  return formatTime.replace(/(, )(?=[^,]*$)/, " et ");
 };
 
 export const getAge = (birth: Dayjs): number => {

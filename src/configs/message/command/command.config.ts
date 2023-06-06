@@ -493,7 +493,7 @@ export const commands = {
       activityQueryError: "Erreur lors de la récupération des statistiques",
       embed: {
         title: "Classements des membres les plus actifs *(source: {source})*",
-        format: "**{position}. {username} :** {nbrMessages}\n",
+        format: "**{position}\\. {username} :** {nbrMessages}\n",
         footer: "Page: {page}/{maxPage}"
       }
     }
@@ -527,7 +527,7 @@ export const commands = {
       activityQueryError: "Erreur lors de la récupération des statistiques",
       embed: {
         title: "Classements des membres les plus actifs *(source: {source})*",
-        format: "**{position}. {username} :** {nbrMessages}\n",
+        format: "**{position}\\. {username} :** {nbrMessages}\n",
         footer: "Page: {page}/{maxPage}"
       }
     }

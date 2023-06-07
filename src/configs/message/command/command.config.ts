@@ -7,7 +7,7 @@ export const commands = {
     exec: {
       apiError: "Erreur lors de la récupération des dates d'anniversaires",
       list: {
-        birthdayLine: "**{position}. {username} :** {age} ans ({date})\n",
+        birthdayLine: "**{position}\\. {username} :** {age} ans ({date})\n",
         birthdayTitle: "Anniversaires des membres (page {page}/{maxPage})"
       },
       next: {

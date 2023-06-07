@@ -7,3 +7,7 @@ export const msgParams = (message: string, params: (string | number)[]): string 
 
   return message;
 };
+
+export const isDiscordLink = (link: string): boolean => {
+  return link.match(/^http(s?):\/\/(www\.|canary\.|ptb\.)?discord.com\/channels(\/\d*){3}$/gi) !== null;
+};

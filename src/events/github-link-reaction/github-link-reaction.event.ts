@@ -46,7 +46,7 @@ export const execute: EventExecute<"messageCreate"> = async(message) => {
     // Request for get the code :
     const response = await restTextRequest("get", githubRawUrl + filePath.join("/"), {
       headers: {
-        authorization: `token ${env.GITHUB_TOKEN}`
+        authorization: `token ${env.GH_TOKEN}`
       }
     });
 

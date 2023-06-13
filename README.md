@@ -8,7 +8,7 @@ You must set this environment variables in your .env file :
 BOT_TOKEN="your token"
 
 # GitHub token :
-GITHUB_TOKEN="your GitHub PAT (personal access token)"
+GH_TOKEN="your GitHub PAT (personal access token)"
 
 # Royaume API :
 API_LINK="https://dev-api.royaume.world"

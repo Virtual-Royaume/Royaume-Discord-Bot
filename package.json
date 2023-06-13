@@ -27,17 +27,17 @@
     "@graphql-codegen/client-preset": "4.0.0",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@swc-node/register": "^1.6.5",
-    "@swc/core": "^1.3.61",
+    "@swc/core": "^1.3.63",
     "@types/cron": "^2.0.1",
-    "@types/node": "^20.2.5",
-    "@vitest/ui": "^0.31.4",
-    "dotenv": "^16.1.3",
+    "@types/node": "^20.3.1",
+    "@vitest/ui": "^0.32.0",
+    "dotenv": "^16.1.4",
     "eslint": "^8.42.0",
     "graphql": "^16.6.0",
     "nodemon": "^2.0.22",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.3",
-    "vitest": "^0.31.4"
+    "vitest": "^0.32.0"
   },
   "eslintConfig": {
     "extends": "@bluzzi",

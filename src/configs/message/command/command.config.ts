@@ -7,7 +7,7 @@ export const commands = {
     exec: {
       apiError: "Erreur lors de la récupération des dates d'anniversaires",
       list: {
-        birthdayLine: "**{position}. {username} :** {age} ans ({date})\n",
+        birthdayLine: "**{position}\\. {username} :** {age} ans ({date})\n",
         birthdayTitle: "Anniversaires des membres (page {page}/{maxPage})"
       },
       next: {
@@ -148,16 +148,16 @@ export const commands = {
       why: {
         user: "<@{userId}> pourquoi n'as-tu pas utilisé le salon forum ?",
         message: [
-          "• Les salons forums sont la pour éviter que vos questions ou problèmes soit perdu dans la masse des messages du salon <#{channelId}>\n\n",
-          "• Y ajouter un titre correct permet de vérifier rapidement si votre problème est déjà résolu ou non.\n\n",
-          "• Les salons forum sont là pour vous permettre de poser des questions et de trouver des réponses.\n\n",
-          "• Cela permet de garder un maximum de clarté car vous ne vous mélanger pas avec la discussion générale.\n\n",
-          "• Garder une trace des questions et des réponses, il est plus facile pour les membres de retrouver la réponse dont ils pourraient avoir",
+          "- Les salons forums sont la pour éviter que vos questions ou problèmes soit perdu dans la masse des messages du salon <#{channelId}>\n\n",
+          "- Y ajouter un titre correct permet de vérifier rapidement si votre problème est déjà résolu ou non.\n\n",
+          "- Les salons forum sont là pour vous permettre de poser des questions et de trouver des réponses.\n\n",
+          "- Cela permet de garder un maximum de clarté car vous ne vous mélanger pas avec la discussion générale.\n\n",
+          "- Garder une trace des questions et des réponses, il est plus facile pour les membres de retrouver la réponse dont ils pourraient avoir",
           " besoin dans les salons forums.\n\n",
-          "• Il est plus motivant pour la personne qui vous aide à pouvoir le faire de manière isolée avec une trace dans le temps plus forte.\n\n",
-          "• Que votre question soit très simple ou complexe les forums seront mieux, une aide sur plusieurs jours dans un salon isolé permet ",
+          "- Il est plus motivant pour la personne qui vous aide à pouvoir le faire de manière isolée avec une trace dans le temps plus forte.\n\n",
+          "- Que votre question soit très simple ou complexe les forums seront mieux, une aide sur plusieurs jours dans un salon isolé permet ",
           "un meilleur suivi et les meilleures questions du célèbre forum d'aide Stack overflow sont les plus simples.\n\n",
-          "• Avant de créer votre propre post avec une question similaire ou identique",
+          "- Avant de créer votre propre post avec une question similaire ou identique",
           ", pensez à vérifier si un post sur ce sujet n'a pas déjà été créé."
         ].join("")
       }
@@ -493,7 +493,7 @@ export const commands = {
       activityQueryError: "Erreur lors de la récupération des statistiques",
       embed: {
         title: "Classements des membres les plus actifs *(source: {source})*",
-        format: "**{position}. {username} :** {nbrMessages}\n",
+        format: "**{position}\\. {username} :** {nbrMessages}\n",
         footer: "Page: {page}/{maxPage}"
       }
     }
@@ -527,7 +527,7 @@ export const commands = {
       activityQueryError: "Erreur lors de la récupération des statistiques",
       embed: {
         title: "Classements des membres les plus actifs *(source: {source})*",
-        format: "**{position}. {username} :** {nbrMessages}\n",
+        format: "**{position}\\. {username} :** {nbrMessages}\n",
         footer: "Page: {page}/{maxPage}"
       }
     }

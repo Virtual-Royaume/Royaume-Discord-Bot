@@ -1,0 +1,1 @@
+export const discordLinkRegex = /http(s?):\/\/(www\.|canary\.|ptb\.)?discord.com\/channels(\/\d*){3}/gi;

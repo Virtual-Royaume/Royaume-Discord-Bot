@@ -11,7 +11,7 @@ export const msgParams = (message: string, params: (string | number)[]): string 
 };
 
 export const containsDiscordLink = (content: string): boolean => {
-  return discordLinkRegex.test(content);
+  return content.match(discordLinkRegex) !== null;
 };
 
 export const extractDiscordLink = (content: string): string | string[] | null => {

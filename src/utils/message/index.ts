@@ -1,1 +1,1 @@
-export { msgParams, containsDiscordLink } from "./message.util";
+export { msgParams, containsDiscordLink, extractDiscordLink } from "./message.util";

@@ -6,7 +6,7 @@ import { commands } from "#/configs/message/command";
 import { ChannelType, ForumChannel } from "discord.js";
 import { logger } from "#/utils/logger";
 import { userWithId } from "#/utils/discord/user";
-import { isDiscordLink } from "#/utils/message/message.util";
+import { containsDiscordLink } from "#/utils/message/message.util";
 
 export const execute: CommandExecute = async(command) => {
   const channel = command.channel;
@@ -21,7 +21,7 @@ export const execute: CommandExecute = async(command) => {
 
   const answerLink = command.options.getString(commands.forum.subcmds.resolve.options.answer.name, true);
 
-  if (!isDiscordLink(answerLink)) {
+  if (!containsDiscordLink(answerLink)) {
     void command.reply({
       embeds: [simpleEmbed(commands.forum.exec.resolve.isntDiscordMessageLink, "error")],
       ephemeral: true

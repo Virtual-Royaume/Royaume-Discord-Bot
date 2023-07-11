@@ -13,10 +13,10 @@ export const msgParams = (message: string, params: (string | number)[]): string 
   return message;
 };
 
-export const extractDiscordLink = (content: string): DiscordMessage | [] => {
-  if (!content.match(messageUrlRegex)) return [];
+export const extractDiscordLink = (content: string): DiscordMessage | null => {
+  if (!content.match(messageUrlRegex)) return null;
   const [guildID, channelID, messageID] = [...content.match(/(\d+)/g) ?? []];
-  if (!guildID || !channelID || !messageID) return [];
+  if (!guildID || !channelID || !messageID) return null;
 
   return {
     guildID,

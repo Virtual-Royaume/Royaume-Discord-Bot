@@ -1,6 +1,7 @@
 import type { Message } from "discord.js";
-import { discordLinkRegex } from "./message.type";
+import type { DiscordMessage } from "./message.type";
 import { client } from "#/client";
+import { messageUrlRegex } from "#/events/message-link-reaction/message-link-reaction.const";
 
 export const msgParams = (message: string, params: (string | number)[]): string => {
   const words = message.match(/{[^}]+}/g);
@@ -12,14 +13,16 @@ export const msgParams = (message: string, params: (string | number)[]): string 
   return message;
 };
 
-export const containsDiscordLink = (content: string): boolean => {
-  return content.match(discordLinkRegex) !== null;
-};
+export const extractDiscordLink = (content: string): DiscordMessage | [] => {
+  if (!content.match(messageUrlRegex)) return [];
+  const [guildID, channelID, messageID] = [...content.match(/(\d+)/g) ?? []];
+  if (!guildID || !channelID || !messageID) return [];
 
-export const extractDiscordLink = (content: string): string | string[] | null => {
-  const discordLinks = content.match(discordLinkRegex);
-  if (discordLinks) return discordLinks;
-  return null;
+  return {
+    guildID,
+    channelID,
+    messageID
+  };
 };
 
 export const getMessageFromLink = async(link: string): Promise<Message<true> | null> => {

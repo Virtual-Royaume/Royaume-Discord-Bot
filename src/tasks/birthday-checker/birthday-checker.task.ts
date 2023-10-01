@@ -2,7 +2,7 @@ import type { TaskExecute, TaskInterval } from "#/utils/handler/task";
 import { client } from "#/client";
 import { getGuild, guilds } from "#/configs/guild";
 import { tasks } from "#/configs/message/task/task.config";
-import { DayJS } from "#/configs/day-js";
+import { dayJS } from "#/configs/day-js";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { getAge } from "#/utils/function/date";
 import { logger } from "#/utils/logger";
@@ -19,11 +19,11 @@ export const execute: TaskExecute = async() => {
 
   if (!birthdaysQuery.ok) return;
 
-  const currentDate = DayJS().tz();
+  const currentDate = dayJS().tz();
   const birthdays = birthdaysQuery.value.members.filter(member => {
     if (!member.birthday) return false;
 
-    const birthday = DayJS(member.birthday).tz();
+    const birthday = dayJS(member.birthday).tz();
 
     return birthday.date() === currentDate.date()
     && birthday.month() === currentDate.month();
@@ -42,7 +42,7 @@ export const execute: TaskExecute = async() => {
     if (!member.birthday) continue;
 
     const message = messages[Math.floor(Math.random() * messages.length)];
-    const birthday = DayJS(member.birthday).tz();
+    const birthday = dayJS(member.birthday).tz();
 
     const embed = simpleEmbed(msgParams(message.text, [member._id]), "normal", message.title)
       .setThumbnail(member.profilePicture)

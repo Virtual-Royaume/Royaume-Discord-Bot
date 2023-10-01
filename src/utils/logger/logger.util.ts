@@ -1,4 +1,4 @@
-import { DayJS } from "#/configs/day-js";
+import { dayJS } from "#/configs/day-js";
 import { ConsoleEffect, ConsoleForground } from "./logger.enum";
 
 export const logger = {
@@ -19,7 +19,7 @@ export const formatLog = (color: ConsoleForground, type: string, message: string
   const maxSpace = 8;
   const spaceSize = maxSpace - type.length;
 
-  const datetime = DayJS().format("YYYY-MM-DD HH:mm:ss");
+  const datetime = dayJS().format("YYYY-MM-DD HH:mm:ss");
 
   const prefix = `${ConsoleForground.White}[${datetime}] ${ConsoleEffect.Bold}${color}${type.toUpperCase()}`;
   const separator = `${ConsoleEffect.Reset} ${ConsoleForground.Gray}${"-".repeat(spaceSize)}» `;

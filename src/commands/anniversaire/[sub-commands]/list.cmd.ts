@@ -1,6 +1,6 @@
 import type { CommandExecute } from "#/utils/handler/command";
 import { memberPerPage } from "./list.const";
-import { DayJS } from "#/configs/day-js";
+import { dayJS } from "#/configs/day-js";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { dateFormat, getAge } from "#/utils/function/date";
 import { msgParams } from "#/utils/message";
@@ -18,7 +18,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   let birthdays = response.value.members.filter(member => member.birthday)
-    .sort((a, b) => DayJS(a.birthday).valueOf() - DayJS(b.birthday).valueOf());
+    .sort((a, b) => dayJS(a.birthday).valueOf() - dayJS(b.birthday).valueOf());
 
   if (!birthdays.length) {
     void command.reply({ embeds: [simpleEmbed(commands.birthday.exec.noBirthdays, "error")] });
@@ -33,7 +33,7 @@ export const execute: CommandExecute = async(command) => {
 
   for (let i = 0; i < birthdays.length; i++) {
     const member = birthdays[i];
-    const birthday = DayJS(member.birthday ?? 0);
+    const birthday = dayJS(member.birthday ?? 0);
     const position = i + 1 + (page - 1) * memberPerPage;
 
     lines += msgParams(commands.birthday.exec.list.birthdayLine, [position, member.username, getAge(birthday), dateFormat(birthday)]);

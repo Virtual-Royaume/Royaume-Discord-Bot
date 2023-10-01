@@ -1,5 +1,5 @@
 import type { CommandExecute } from "#/utils/handler/command";
-import { DayJS } from "#/configs/day-js";
+import { dayJS } from "#/configs/day-js";
 import { commands } from "#/configs/message/command";
 import { global } from "#/configs/global";
 import { getAge } from "#/utils/function/date";
@@ -22,8 +22,8 @@ export const execute: CommandExecute = async(command) => {
     return;
   }
 
-  const values = dateString.split("/").map(value => Number(value));
-  const date = DayJS(`${values[2]}-${values[1]}-${values[0]}Z`);
+  const [day, month, year] = dateString.split("/").map(value => Number(value));
+  const date = dayJS.utc({ day, month: month - 1, year });
 
   if (!date.isValid()) {
     void command.reply({

@@ -2,7 +2,7 @@ import type { GraphType } from "./stats.type";
 import type { GetServerActivityHistoryQuery } from "#/utils/request/graphql";
 import type { ChartConfiguration } from "chart.js";
 import { global } from "#/configs/global";
-import { DayJS } from "#/configs/day-js";
+import { dayJS } from "#/configs/day-js";
 import { dateFormat } from "#/utils/function/date";
 
 export const generateChartConfig = (
@@ -14,7 +14,7 @@ export const generateChartConfig = (
     type: "line",
     data: {
       labels: serverActivity.map(element => {
-        return dateFormat(DayJS(element.date).tz());
+        return dateFormat(dayJS(element.date).tz());
       }),
       datasets: [{
         label: type.description,

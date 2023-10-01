@@ -1,7 +1,7 @@
 import type { CommandExecute } from "#/utils/handler/command";
 import { getGuildTypeById, guilds } from "#/configs/guild";
 import { commands } from "#/configs/message/command";
-import { DayJS } from "#/configs/day-js";
+import { dayJS } from "#/configs/day-js";
 import { simpleEmbed } from "#/utils/discord/embed";
 import { dateFormat, formatMinutes, getAge } from "#/utils/function/date";
 import { logger } from "#/utils/logger";
@@ -81,7 +81,7 @@ export const execute: CommandExecute = async(command) => {
   let message = "";
 
   if (memberInfo.birthday) {
-    const birthday = DayJS(memberInfo.birthday).tz();
+    const birthday = dayJS(memberInfo.birthday).tz();
     message += msgParams(commands.member.exec.embed.birth, [dateFormat(birthday, "/"), getAge(birthday)]);
   }
 

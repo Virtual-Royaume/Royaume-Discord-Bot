@@ -1,5 +1,5 @@
 import type { Dayjs } from "#/configs/day-js";
-import { DayJS } from "#/configs/day-js";
+import { dayJS } from "#/configs/day-js";
 
 export const dateFormat = (date: Dayjs, separator = "-"): string => {
   return date.format(`DD[${separator}]MM[${separator}]YYYY`);
@@ -26,5 +26,5 @@ export const formatMinutes = (minutes: number): string => {
 };
 
 export const getAge = (birth: Dayjs): number => {
-  return DayJS().tz().diff(birth, "year");
+  return dayJS().tz().diff(birth, "year");
 };

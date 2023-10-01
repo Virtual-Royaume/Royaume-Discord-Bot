@@ -15,30 +15,30 @@
   "dependencies": {
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
-    "cron": "^2.3.1",
-    "dayjs": "^1.11.9",
-    "discord.js": "^14.11.0",
+    "cron": "^3.0.0",
+    "dayjs": "^1.11.10",
+    "discord.js": "^14.13.0",
     "mdast-util-from-markdown": "1.3.1",
     "rustic-error": "^0.2.1",
-    "zod": "^3.21.4"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@bluzzi/eslint-config": "^1.1.0",
     "@graphql-codegen/cli": "4.0.1",
     "@graphql-codegen/client-preset": "4.0.1",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@swc-node/register": "^1.6.6",
-    "@swc/core": "^1.3.69",
-    "@types/cron": "^2.0.1",
-    "@types/node": "^20.4.2",
-    "@vitest/ui": "^0.33.0",
+    "@swc-node/register": "^1.6.8",
+    "@swc/core": "^1.3.91",
+    "@types/cron": "^2.4.0",
+    "@types/node": "^20.8.0",
+    "@vitest/ui": "^0.34.6",
     "dotenv": "^16.3.1",
-    "eslint": "^8.45.0",
+    "eslint": "^8.50.0",
     "graphql": "^16.7.1",
     "nodemon": "^3.0.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.6",
-    "vitest": "^0.33.0"
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
   },
   "eslintConfig": {
     "extends": "@bluzzi",

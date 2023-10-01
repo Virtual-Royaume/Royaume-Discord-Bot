@@ -23,7 +23,7 @@ export const execute: CommandExecute = async(command) => {
   }
 
   const values = dateString.split("/").map(value => Number(value));
-  const date = DayJS(`${values[2]}-${values[1]}-${values[0]}T00:00:00Z`);
+  const date = DayJS(`${values[2]}-${values[1]}-${values[0]}Z`);
 
   if (!date.isValid()) {
     void command.reply({

@@ -1,8 +1,6 @@
 import type { EventExecute, EventName } from "#/utils/handler/event";
 import { twitterLinkRegex, extractTwitterLink } from "./twitter-link-reaction.const";
 
-export const enableInDev = true;
-
 export const event: EventName = "messageCreate";
 
 export const execute: EventExecute<"messageCreate"> = async(message) => {

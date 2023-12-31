@@ -5,6 +5,8 @@ import type { GuildsCommand } from "#/utils/handler/command/command.type";
 
 export const guilds: GuildsCommand = ["pro"];
 
+export const enableInDev = true;
+
 export const slashCommand: SlashCommandDefition = new SlashCommandBuilder()
   .setName(commands.forum.name)
   .setDescription(commands.forum.description)

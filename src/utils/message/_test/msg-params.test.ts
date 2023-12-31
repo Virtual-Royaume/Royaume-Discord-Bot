@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { msgParams } from "./message.util";
+import { msgParams } from "#/utils/message";
 
 describe("msgParams function", () => {
   it("should correctly replace placeholders with provided words", () => {
